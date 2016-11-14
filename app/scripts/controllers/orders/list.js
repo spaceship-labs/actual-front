@@ -47,11 +47,12 @@ function OrdersListCtrl(
     },
   ];
   vm.apiResourceOrders = orderService.getList;
-  vm.goal = 600000;
+  vm.getFortnightNumber = getFortnightNumber;
+  vm.goal = 600000; 
 
   function getOrdersData(){
     var dateRange = {
-      startDate: moment().startOf('month'),
+      startDate: moment().startOf('day'),
       endDate: moment().endOf('day'),
     };
 
@@ -64,10 +65,10 @@ function OrdersListCtrl(
       .then(function(results){
         var commisionResult = results[0];
         var totalsResult = results[1].data;
-
-        vm.current = totalsResult.dateRange || 0;
-        vm.goal = commisionResult.goal;
-        vm.rest = vm.goal - vm.current;
+        console.log('commisionResult', commisionResult);
+        vm.current = totalsResult.fortnight || 0;
+        vm.goal = (commisionResult.goal / 2) / commisionResult.sellers;
+        vm.remaining = vm.goal - vm.current;
         vm.currentPercent = 100 - ( vm.current  / (vm.goal / 100) );
         vm.chartOptions = {
           labels: [
@@ -221,6 +222,15 @@ function OrdersListCtrl(
     var end = moment().endOf('month').toDate();
     var storeId = localStorageService.get('activeStore');
     return commissionService.getGoal(storeId, start, end);
+  }
+
+  function getFortnightNumber(){
+    var number = 1;
+    var day = moment().format('D');
+    if(day > 15){
+      number = 2;
+    }
+    return number;
   }
 
   init();

@@ -204,7 +204,10 @@
       <div layout="row" class="container container-md">
         <div class="chart-section-col" flex="70">
           <p class="chart-section-col-txt">
-            Alcance de meta: <strong>{{vm.currentDate | date:'MMMM yyyy'}}</strong>
+            Alcance de meta: 
+            <strong ng-if="vm.getFortnightNumber() === 1">Primera quincena {{vm.currentDate | date:'MMMM yyyy'}}</strong>
+            <strong ng-if="vm.getFortnightNumber() === 2">Segunda quincena {{vm.currentDate | date:'MMMM yyyy'}}</strong>
+
           </p>
           <canvas id="pie"
             class="chart chart-pie"
@@ -238,7 +241,7 @@
             </li>
             <li>
               <span><strong>Falta para objetivo</strong>
-              </span><span>{{vm.rest | currency}}</span>
+              </span><span>{{vm.remaining | currency}}</span>
             </li>
           </ul>
         </div>

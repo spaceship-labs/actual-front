@@ -80,12 +80,12 @@ function QuotationsListCtrl(
     quotationService.getTotalsByUser($rootScope.user.id, dateRange)
       .then(function(res){
         vm.quotationsData.todayAmmount = res.data.dateRange;
-        vm.quotationsData.rangeAmmount = res.data.all;
+        vm.quotationsData.fortnightAmount = res.data.fortnight;
         vm.quotationsData.ammounts = {
-          labels: ["Hoy", "Resto del mes"],
+          labels: ["Hoy", "Resto de la quincena"],
           data: [
             vm.quotationsData.todayAmmount,
-            (vm.quotationsData.rangeAmmount - vm.quotationsData.todayAmmount)
+            (vm.quotationsData.fortnightAmount - vm.quotationsData.todayAmmount)
           ],
           colors: ["#C92933", "#48C7DB", "#FFCE56"],
           options:{
@@ -105,7 +105,7 @@ function QuotationsListCtrl(
       .then(function(res){
         console.log(res);
         vm.quotationsData.todayQty = res.data.dateRange;
-        vm.quotationsData.rangeQty = res.data.all;
+        vm.quotationsData.rangeQty = res.data.fortnight;
         vm.quotationsData.quantities = {
           labels: ["Hoy", "Resto del mes"],
           data: [

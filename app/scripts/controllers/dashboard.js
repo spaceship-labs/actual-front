@@ -27,12 +27,12 @@ function DashboardCtrl($rootScope, $filter, orderService, quotationService){
     quotationService.getTotalsByUser($rootScope.user.id, dateRange)
       .then(function(res){
         vm.quotationsData.todayAmmount = res.data.dateRange;
-        vm.quotationsData.monthAmmount = res.data.all;
+        vm.quotationsData.fortnightAmount = res.data.fortnight;
         vm.quotationsData.ammounts = {
-          labels: ["Hoy", "Resto del mes"],
+          labels: ["Hoy", "Resto de la quincena"],
           data: [
             vm.quotationsData.todayAmmount,
-            (vm.quotationsData.monthAmmount - vm.quotationsData.todayAmmount)
+            (vm.quotationsData.fortnightAmount - vm.quotationsData.todayAmmount)
           ],
           colors: ["#C92933", "#48C7DB", "#FFCE56"],
           options:{
@@ -49,16 +49,18 @@ function DashboardCtrl($rootScope, $filter, orderService, quotationService){
 
     quotationService.getCountByUser($rootScope.user.id, dateRange)
       .then(function(res){
+        console.log('res',res);
         vm.quotationsData.todayQty = res.data.dateRange;
-        vm.quotationsData.monthQty = res.data.all;
+        vm.quotationsData.fortnightQty = res.data.fortnight;
         vm.quotationsData.quantities = {
           labels: ["Hoy", "Resto del mes"],
           data: [
             vm.quotationsData.todayQty,
-            (vm.quotationsData.monthQty - vm.quotationsData.todayQty)
+            (vm.quotationsData.fortnightQty - vm.quotationsData.todayQty)
           ],
           colors: ["#C92933", "#48C7DB", "#FFCE56"]
         };
+        console.log('quotationsData', vm.quotationsData);
       });
   }
 

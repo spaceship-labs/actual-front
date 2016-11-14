@@ -159,7 +159,7 @@
 
       <div class="chart-section-col chart-section-legends" flex="20">
         <p><span class="chart-section-sqr"></span> Hoy</p>
-        <p><span class="chart-section-sqr chart-section-sqr2"></span> Resto del mes</p>
+        <p><span class="chart-section-sqr chart-section-sqr2"></span> Resto de la quincena</p>
       </div>
 
       <div class="chart-section-col" flex="40">
@@ -172,7 +172,7 @@
           chart-labels="vm.quotationsData.ammounts.labels"
           chart-colors="vm.quotationsData.ammounts.colors"></canvas>
         <p><strong>Hoy</strong> | <strong>Total</strong></p>
-        <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.rangeAmmount | currency}}</p>
+        <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
       </div>
     </div>
 

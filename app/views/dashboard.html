@@ -17,7 +17,7 @@
             chart-colors="vm.quotationsData.quantities.colors">
           </canvas>
           <p><strong>Hoy</strong> | <strong>Total</strong></p>
-          <p>{{vm.quotationsData.todayQty}} | {{vm.quotationsData.monthQty}}</p>
+          <p>{{vm.quotationsData.todayQty}} | {{vm.quotationsData.fortnightQty}}</p>
         </div>
 
         <div class="chart-section-col" flex="45">
@@ -30,13 +30,13 @@
             chart-colors="vm.quotationsData.ammounts.colors">
           </canvas>
           <p><strong>Hoy</strong> | <strong>Total</strong></p>
-          <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.monthAmmount | currency}}</p>
+          <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
         </div>
       </div>
 
       <div class="container container-xsm chart-section-legends" layout="row">
         <p flex><span class="chart-section-sqr"></span> Hoy</p>
-        <p flex><span class="chart-section-sqr chart-section-sqr2"></span> Resto del mes</p>
+        <p flex><span class="chart-section-sqr chart-section-sqr2"></span> Resto de la quincena</p>
       </div>
 
 
@@ -58,7 +58,7 @@
             chart-colors="vm.quotationsData.quantities.colors">
           </canvas>
           <p><strong>Hoy</strong> | <strong>Total</strong></p>
-          <p>{{vm.quotationsData.todayQty}} | {{vm.quotationsData.monthQty}}</p>
+          <p>{{vm.quotationsData.todayQty}} | {{vm.quotationsData.fortnightQty}}</p>
         </div>
 
         <div class="chart-section-col" flex="45">
@@ -72,7 +72,7 @@
             chart-colors="vm.quotationsData.ammounts.colors">
           </canvas>
           <p><strong>Hoy</strong> | <strong>Total</strong></p>
-          <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.monthAmmount | currency}}</p>
+          <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
         </div>
       </div>
 
