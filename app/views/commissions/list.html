@@ -136,4 +136,15 @@
       </div>
     </div>
   </div>
+  <div layout="row" class="container container-md" layout-align="center center">
+    <div class="chart-section-col" flex="90" layout="column" layout-align="center center">
+      <h3> Gráfico de comisiones del periodo actual</h3>
+      <canvas id="pie"
+        class="chart chart-line"
+        chart-data="vm.chart.data"
+        chart-labels="vm.chart.labels"
+        chart-options="vm.chart.options"
+      />
+    </div>
+  </div>
 </section>

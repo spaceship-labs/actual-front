@@ -3920,13 +3920,13 @@ padding-left: 16px;
 
 /*ICON LINK*/
 .icon-link.gray{
-  font-size:16px;
+  font-size:20px;
   color:gray!important;
 }
 .icon-link{
-  font-size:16px;
-   color: #039be5 !important;
- }
+  font-size:20px;
+  color: #039be5 !important;
+}
 
 /*----------
   #COMMISSIONS
