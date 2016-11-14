@@ -159,4 +159,6 @@
 .icon-vendedor:before {
   content: "\e92c";
 }
-
+.icon-link:before {
+  content: "\e904";
+}
