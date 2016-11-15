@@ -17,6 +17,7 @@ function ClientProfileCtrl(
     $rootScope,
     $timeout,
     $mdDialog,
+    $q,
     commonService,
     clientService,
     quotationService,
@@ -74,7 +75,6 @@ function ClientProfileCtrl(
     changeTab: changeTab,
     onPikadaySelect: onPikadaySelect,
     updatePersonalData: updatePersonalData,
-    updateFiscalAddress: updateFiscalAddress,
     apiResourceLeads: quotationService.getByClient,
     apiResourceOrders: orderService.getList,
     updateContact: updateContact,
@@ -234,63 +234,54 @@ function ClientProfileCtrl(
   }
 
   function createOrUpdateFiscalAddress(form){
-    console.log('vm.client.FiscalAddress', vm.client.FiscalAddress);
-    console.log('form', form);
     if(form.$valid){
-      console.log('valid');
+      var promises = [];
+      var creating = false;
+      vm.isLoading = true;
       if(vm.client.FiscalAddress && vm.client.FiscalAddress.id){
-        console.log('update');
-        updateFiscalAddress(vm.client.FiscalAddress);
+        promises.push(
+          clientService.updateFiscalAddress(
+            vm.client.FiscalAddress.id, 
+            vm.client.CardCode,vm.client.FiscalAddress
+          )
+        );
       }else{
-        console.log('update');
-        createFiscalAddress(vm.client.FiscalAddress);
+        creating = true;
+        promises.push(
+          clientService.createFiscalAddress(
+            vm.client.CardCode,
+            vm.client.FiscalAddress
+          )
+        );
       }
+
+      promises.push(
+        clientService.update(
+          vm.client.CardCode, {LicTradNum: vm.client.LicTradNum}
+        )
+      );
+
+      $q.all(promises)
+        .then(function(results){
+          vm.isLoading = false;        
+          if(creating){
+            var created = results[0].data;
+            vm.client.FiscalAddress = created;
+          }
+        })
+        .catch(function(err){
+          vm.isLoading = false;
+          console.log(err);
+          dialogService.showDialog('Hubo un error al guardar datos de facturación');
+        });
+
+
+
     }else{
       dialogService.showDialog('Datos incompletos, revisa tus datos e intenta de nuevo');
     }
   }
 
-  function createFiscalAddress(fiscalAddress){
-    console.log('createFiscalAddress');
-    vm.isLoading = true;
-    console.log(fiscalAddress);
-    clientService.createFiscalAddress(vm.client.CardCode,fiscalAddress)
-      .then(function(res){
-        console.log(res);
-        vm.isLoading = false;
-        vm.showNewFiscal = false;
-        fiscalAddress = {};
-        dialogService.showDialog('Dirección creada');
-        var created = res.data;
-        vm.client.FiscalAddress = created;
-      })
-      .catch(function(err){
-        vm.isLoading = false;
-        console.log(err);
-        dialogService.showDialog('Hubo un error');
-      });
-  }  
-
-  function updateFiscalAddress(fiscalAddress){
-    console.log('updateFiscalAddress');
-    fiscalAddress = fiscalAddress || {};
-    if(fiscalAddress.id){
-      vm.isLoading =  true;
-      clientService.updateFiscalAddress(fiscalAddress.id, vm.client.CardCode,fiscalAddress)
-        .then(function(res){
-          console.log(res);
-          vm.isLoading = false;
-          dialogService.showDialog('Datos de facturación actualizados');
-        })
-        .catch(function(err){
-          console.log(err);
-          vm.isLoading = false;
-          dialogService.showDialog('Hubo un error, revisa los campos');
-        });
-    }else{
-      dialogService.showDialog('La dirección no tiene un id asignado');
-    }
-  }  
 
   function openMapDialog(){
     $mdDialog.show({
