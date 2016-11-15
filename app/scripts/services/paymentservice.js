@@ -105,7 +105,10 @@ var paymentGroups = [
             ],
             cards: [
               'Afirme',
+              'American Express',
+              'Banamex',
               'Banbajio',
+              'Bancomer',
               'Banca Mifel',
               'Banco Ahorro Famsa',
               'Banjercito',
@@ -148,7 +151,10 @@ var paymentGroups = [
             ],
             cards:[
               'Afirme',
+              'American Express',
+              'Banamex',
               'Banbajio',
+              'Bancomer',
               'Banca Mifel',
               'Banco Ahorro Famsa',
               'Banjercito',
@@ -184,7 +190,9 @@ var paymentGroups = [
               'images/bancomer.png',
             ],
             cards:[
-              'Banorte',
+              'American Express',
+              'Banamex',
+              'Bancomer',
               'Santander'
             ],
             moreCards: true,
@@ -215,7 +223,10 @@ var paymentGroups = [
               'images/bancomer.png',
             ],
             cards:[
+              'American Express',
               'Afirme',
+              'Banamex',
+              'Bancomer',
               'Banbajio',
               'Banca Mifel',
               'Banco Ahorro Famsa',

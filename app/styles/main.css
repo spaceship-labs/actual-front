@@ -77,7 +77,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 .nomargin{margin: 0;}
 .center-content{text-align: center;}
 .comma-separated + .comma-separated:before{
-  content:', ';
+  content:',  ';
   display: inline-block;
 }
 .content-block{
@@ -2834,14 +2834,24 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 }
 .quotation-view .client-signature .signature-line{border-bottom: 2px solid #000;}
 .quotation-view .payments-options-totals {
+  background: #E2E2E2;
   border: 1px solid #000;
   padding: 20px;
+}
+.quotation-view .payments-options-totals .data-header{
+  margin-bottom: 10px;
+  text-align: center;
 }
 .quotation-view .payments-options-totals p{margin: 0;}
 .quotation-view .payments-options-totals .method-row{margin: 6px 0;}
 .quotation-view .payments-options-totals .totals{text-align: right;}
+.quotation-view .payments-options-totals .highlight{color: #E2023F}
+.quotation-view .payments-options-totals .data-head,
+.quotation-view .payments-options-totals .data-cell{
+  background: #fff;
+  padding: 8px;
 
-
+}
 /*--------------/
   #CART-VIEW
 /*--------------*/
