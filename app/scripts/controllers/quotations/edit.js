@@ -29,6 +29,7 @@ function QuotationsEditCtrl(
   paymentService,
   deliveryService,
   siteService,
+  pmPeriodService,
   DTOptionsBuilder, 
   DTColumnDefBuilder
 ){
@@ -78,7 +79,8 @@ function QuotationsEditCtrl(
     sendByEmail: sendByEmail,
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     print: print,
-    daysDiff: daysDiff
+    daysDiff: daysDiff,
+    isActiveGroup: isActiveGroup
   });
 
   var EWALLET_TYPE = 'ewallet';
@@ -153,6 +155,11 @@ function QuotationsEditCtrl(
     userService.getBrokers().then(function(brokers){
       vm.brokers = brokers;
     });
+
+    pmPeriodService.getActive().then(function(res){
+      vm.validMethods = res.data;
+    });
+
   }
 
   function showAlerts(){
@@ -208,19 +215,12 @@ function QuotationsEditCtrl(
           mG.subtotal = totalsByGroup[index].subtotal || 0;
           mG.discount = totalsByGroup[index].discount || 0;
           mG.methods = mG.methods.map(function(m){
-            var discountKey = discountKeys[mG.group - 1]
+            var discountKey = discountKeys[mG.group - 1];
             m.discountKey = discountKey;
             m.total = mG.total;
             m.subtotal = mG.subtotal;
             m.discount = mG.discount;
             m.exchangeRate = exchangeRate;
-            if(m.type === CASH_USD_TYPE){
-              var exrStr = $filter('currency')(exchangeRate);
-              m.description = 'Tipo de cambio '+exrStr+' MXN';
-            }
-            else if(m.type === EWALLET_TYPE){
-              var balance = vm.quotation.Client.ewallet || 0;
-            }
             return m;
           });
           return mG;
@@ -244,6 +244,15 @@ function QuotationsEditCtrl(
     });
     return deferred.promise;
   }  
+
+  function isActiveGroup(index){
+    var activeKeys = ['paymentGroup1','paymentGroup2','paymentGroup3','paymentGroup4','paymentGroup5'];
+    if(vm.validMethods){
+      return vm.validMethods[activeKeys[index]];
+    }else{
+      return false;
+    }
+  }
 
   function print(){
     window.print();
@@ -611,6 +620,7 @@ QuotationsEditCtrl.$inject = [
   'paymentService',
   'deliveryService',
   'siteService',
+  'pmPeriodService',
   'DTOptionsBuilder', 
   'DTColumnDefBuilder'
 ];

@@ -104,7 +104,7 @@
             chart-colors="vm.ordersData.quantities.colors">
           </canvas>
           <p><strong>Hoy</strong> | <strong>Total</strong></p>
-          <p>{{vm.ordersData.todayQty}} | {{vm.ordersData.monthQty}}</p>
+          <p>{{vm.ordersData.todayQty}} | {{vm.ordersData.fortnightQty}}</p>
         </div>
 
         <div class="chart-section-col" flex="45">
@@ -118,13 +118,13 @@
             chart-options="vm.ordersData.ammounts.options">
           </canvas>
           <p><strong>Hoy</strong> | <strong>Total</strong></p>
-          <p>{{vm.ordersData.todayAmmount | currency}} | {{vm.ordersData.monthAmmount | currency}}</p>
+          <p>{{vm.ordersData.todayAmmount | currency}} | {{vm.ordersData.fortnightAmount | currency}}</p>
         </div>
       </div>
 
       <div class="container container-xsm chart-section-legends" layout="row">
         <p flex><span class="chart-section-sqr"></span> Hoy</p>
-        <p flex><span class="chart-section-sqr chart-section-sqr2"></span> Resto del mes</p>
+        <p flex><span class="chart-section-sqr chart-section-sqr2"></span> Resto de la quincena</p>
       </div>
 
 
@@ -137,7 +137,7 @@
       <div class="chart-section-inner performance-card">
         
         <div class="performance-card-title">
-          <p>Estadisticas del <strong>28 de mayo</strong></p>
+          <p>Estadisticas al <strong>{{ vm.currentDate | date: 'd MMMM'}}</strong></p>
         </div>
 
         <!--PERFORMANCE TABLE-->
@@ -157,7 +157,7 @@
           <div class="performance-table-row" layout="row" layout-align="start center">
             <div flex="60">
               <p class="row-label">#Oportunidades</p>
-              <p><strong>{{vm.quotationsData.monthQty}}</strong></p>
+              <p><strong>{{vm.quotationsData.fortnightQty}}</strong></p>
             </div>
             <div flex="20">
               <p><strong>1</strong> | <span>3</span></p>
@@ -170,7 +170,7 @@
           <div class="performance-table-row" layout="row" layout-align="start center">
             <div flex="60">
               <p class="row-label">#Tickets</p>
-              <p><strong>{{vm.ordersData.monthQty}}</strong></p>
+              <p><strong>{{vm.ordersData.fortnightQty}}</strong></p>
             </div>
             <div flex="20">
               <p><strong>1</strong> | <span>3</span></p>

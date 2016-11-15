@@ -2833,6 +2833,14 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 40px 0;
 }
 .quotation-view .client-signature .signature-line{border-bottom: 2px solid #000;}
+.quotation-view .payments-options-totals {
+  border: 1px solid #000;
+  padding: 20px;
+}
+.quotation-view .payments-options-totals p{margin: 0;}
+.quotation-view .payments-options-totals .method-row{margin: 6px 0;}
+.quotation-view .payments-options-totals .totals{text-align: right;}
+
 
 /*--------------/
   #CART-VIEW
