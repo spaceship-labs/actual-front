@@ -20,12 +20,15 @@ function QuotationsEditCtrl(
   $rootScope,
   $mdMedia,
   $mdDialog,
+  $filter,
   quotationService,
   api,
   dialogService,
   userService,
   packageService,
+  paymentService,
   deliveryService,
+  siteService,
   DTOptionsBuilder, 
   DTColumnDefBuilder
 ){
@@ -78,6 +81,11 @@ function QuotationsEditCtrl(
     daysDiff: daysDiff
   });
 
+  var EWALLET_TYPE = 'ewallet';
+  var CASH_USD_TYPE = 'cash-usd';
+  var EWALLET_GROUP_INDEX = 0;
+
+
   $rootScope.$on('activeStoreAssigned', function(){
     vm.activeStore = $rootScope.activeStore;
   });
@@ -95,6 +103,7 @@ function QuotationsEditCtrl(
         if(vm.quotation.Order || vm.quotation.isClosed){
           vm.status = 'Cerrada';
         }
+        loadPaymentMethods();
         return quotationService.populateDetailsWithProducts(vm.quotation);
       })
       .then(function(details){
@@ -168,6 +177,73 @@ function QuotationsEditCtrl(
       $log.error(err);
     });
   }
+
+  function loadPaymentMethods(){
+    getPaymentMethodsGroups(vm.quotation.id).then(function(groups){
+      vm.paymentMethodsGroups = groups;
+    });          
+  }
+
+  function getPaymentMethodsGroups(quotationId){
+    var methodsGroups = paymentService.getPaymentMethodsGroups();
+    var discountKeys = ['discountPg1','discountPg2','discountPg3','discountPg4','discountPg5'];
+    var totalsPromises = [];
+    var exchangeRate = 18.76;
+    methodsGroups.forEach(function(mG){
+      totalsPromises.push(quotationService.getQuotationTotals(quotationId, {paymentGroup:mG.group}));
+    });
+
+    return getExchangeRate()
+      .then(function(exr){
+        exchangeRate = exr;
+        return $q.all(totalsPromises);
+      })
+      .then(function(responsePromises){
+        var totalsByGroup = responsePromises || [];
+        totalsByGroup = totalsByGroup.map(function(tbg){
+          return tbg.data || {};
+        });
+        methodsGroups = methodsGroups.map(function(mG, index){
+          mG.total = totalsByGroup[index].total || 0;
+          mG.subtotal = totalsByGroup[index].subtotal || 0;
+          mG.discount = totalsByGroup[index].discount || 0;
+          mG.methods = mG.methods.map(function(m){
+            var discountKey = discountKeys[mG.group - 1]
+            m.discountKey = discountKey;
+            m.total = mG.total;
+            m.subtotal = mG.subtotal;
+            m.discount = mG.discount;
+            m.exchangeRate = exchangeRate;
+            if(m.type === CASH_USD_TYPE){
+              var exrStr = $filter('currency')(exchangeRate);
+              m.description = 'Tipo de cambio '+exrStr+' MXN';
+            }
+            else if(m.type === EWALLET_TYPE){
+              var balance = vm.quotation.Client.ewallet || 0;
+            }
+            return m;
+          });
+          return mG;
+        });
+        console.log('methodsGroups', methodsGroups);
+        return methodsGroups;
+      })
+      .catch(function(err){
+        console.log(err);
+        return err;
+      });
+  }  
+
+  function getExchangeRate(){
+    var deferred = $q.defer();
+    siteService.findByHandle('actual-group').then(function(res){
+      var site = res.data || {};
+      deferred.resolve(site.exchangeRate);
+    }).catch(function(err){
+      deferred.reject(err);
+    });
+    return deferred.promise;
+  }  
 
   function print(){
     window.print();
@@ -526,12 +602,15 @@ QuotationsEditCtrl.$inject = [
   '$rootScope',
   '$mdMedia',
   '$mdDialog',
+  '$filter',
   'quotationService',
   'api',
   'dialogService',
   'userService',
   'packageService',
+  'paymentService',
   'deliveryService',
+  'siteService',
   'DTOptionsBuilder', 
   'DTColumnDefBuilder'
 ];
