@@ -41,8 +41,9 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test",
-    "postinstall": "npm install -g bower && npm install -g grunt-cli && bower install"
+    "postinstall": "./node_modules/bower/bin/bower install",
+    "start": "grunt serve",
+    "test": "grunt test"
   },
   "dependencies": {
     "async": "^2.1.2",
