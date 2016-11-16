@@ -46,7 +46,6 @@ function ProductCtrl(
     getPiecesString: getPiecesString,
     init: init,
     resetCartQuantity: resetCartQuantity,
-    showMessageCart: showMessageCart,
     trustAsHtml: trustAsHtml,
     sas:{
       '001': 'Studio',
@@ -295,21 +294,6 @@ function ProductCtrl(
     return productCartItems;
   }
 
-  function showMessageCart(ev) {
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
-    $mdDialog.show({
-      controller: DialogController,
-      templateUrl: 'views/partials/added-to-cart.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose:true,
-      fullscreen: useFullScreen
-    })
-    .then(function(answer) {
-      console.log(answer);
-    });
-  }
-
   function getQtyArray(n){
     n = n || 0;
     var arr = [];
@@ -317,18 +301,6 @@ function ProductCtrl(
       arr.push(i+1);
     }
     return arr;
-  }
-
-  function DialogController($scope, $mdDialog) {
-    $scope.hide = function() {
-      $mdDialog.hide();
-    };
-    $scope.cancel = function() {
-      $mdDialog.cancel();
-    };
-    $scope.answer = function(answer) {
-      $mdDialog.hide(answer);
-    };
   }
 
 }
