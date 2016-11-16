@@ -591,7 +591,7 @@ function CheckoutPaymentsCtrl(
           }
         }).catch(function(err){
           if(err !== 'cancelled-by-user'){
-            commonService.showDialog('Hubo un error, revisa los datos e intenta de nuevo');
+            commonService.showDialog('Hubo un error, revisa los datos e intenta de nuevo <br/>' + err.data);
             vm.isLoadingProgress = false;
             console.log(err);
           }

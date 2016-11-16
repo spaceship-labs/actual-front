@@ -84,16 +84,20 @@ function CheckoutClientCtrl(
   }
 
   function continueProcess(){
-    vm.isLoading = true;
-    var params = angular.copy(vm.quotation);
-    quotationService.update(vm.quotation.id, params).then(function(res){
-      vm.isLoading = false;
-      $location.path('/checkout/paymentmethod/' + vm.quotation.id);
-    })
-    .catch(function(err){
-      console.log(err);
-      dialogService.showDialog('Hubo un error: <br/>' + err);
-    });
+    if(vm.quotation.Address){
+      vm.isLoading = true;
+      var params = angular.copy(vm.quotation);
+      quotationService.update(vm.quotation.id, params).then(function(res){
+        vm.isLoading = false;
+        $location.path('/checkout/paymentmethod/' + vm.quotation.id);
+      })
+      .catch(function(err){
+        console.log(err);
+        dialogService.showDialog('Hubo un error: <br/>' + err);
+      });
+    }else{
+      dialogService.showDialog('Asigna una dirección de entrega');
+    }
   }
 
   init();
