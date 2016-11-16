@@ -122,7 +122,6 @@
       </div>
 
       <div ng-show="seller.selected" class="nested-content">
-
         <section ng-if="seller.selected" class="table-list-wrap table-list-wrap-nomargin">
           <div
             table-list
@@ -175,6 +174,36 @@
     END IF SELLER
     -->
 
+    <!--
+      IF BROKER
+    -->
+
+    <div
+      ng-if="vm.isBroker"
+      class="nested-item"
+    >
+      <div
+        class="nested-bar nested-bar3"
+        layout="row"
+        layout-align="space-between center"
+      >
+        <span>BROKER: {{vm.user.firstName + ' ' + vm.user.lastName}} </span>
+      </div>
+
+      <div  class="nested-content">
+        <section class="table-list-wrap table-list-wrap-nomargin">
+          <div
+            table-list
+            class="table-list table-list-v2"
+            columns="vm.columnsOrders"
+            api-resource="vm.apiResourceOrders"
+            date-range="vm.dateRange"
+            filters="vm.filters"></div>
+        </section>
+      </div>
+    </div>
+
+    <!--END IF BROKER-->
 
     <!--
     <div class="nested-item" ng-repeat="manager in vm.managers track by $index">
@@ -197,7 +226,7 @@
     -->
   </div>
 
-  <section class="chart-section">
+  <section ng-if="!vm.isBroker" class="chart-section">
     <h2><i class="icon-login"></i> <strong>GRÁFICA DETALLADA DE VENTAS</strong></h2>
     <div class="chart-section-inner">
 

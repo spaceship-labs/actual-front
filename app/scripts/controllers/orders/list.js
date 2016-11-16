@@ -65,7 +65,6 @@ function OrdersListCtrl(
       .then(function(results){
         var commisionResult = results[0];
         var totalsResult = results[1].data;
-        console.log('commisionResult', commisionResult);
         vm.current = totalsResult.fortnight || 0;
         vm.goal = (commisionResult.goal / 2) / commisionResult.sellers;
         vm.remaining = vm.goal - vm.current;
@@ -118,7 +117,7 @@ function OrdersListCtrl(
       startDate: vm.startDate,
       endDate: vm.endDate,
     });
-    if(vm.user.role.name == 'store manager' && vm.user.mainCompany){
+    if(vm.user.role.name === 'store manager' && vm.user.mainCompany){
       getSellersByStore(vm.user.mainCompany.id);
     }
   }
