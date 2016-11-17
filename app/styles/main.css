@@ -3927,7 +3927,7 @@ padding-left: 16px;
   .quotation-view .client-signature{
     display: flex;
   }
-  .quotation-view .company-data,
+  .quotation-view .quotation-data p{font-size: 13px;} .company-data,
   .quotation-view .quotation-validity{display: block;}
 
 }
