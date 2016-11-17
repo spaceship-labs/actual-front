@@ -335,6 +335,16 @@ function QuotationsEditCtrl(
     }
   }
 
+
+  function getLastTracingDate(quotation){
+    var tracingDate = new Date();
+    if(quotation.Records && quotation.Records.length > 1){
+      var lastIndex = quotation.Records.length - 2;
+      tracingDate = quotation.Records[lastIndex].dateTime;
+    }
+    return tracingDate;
+  }
+
   function closeQuotation(form,closeReason, extraNotes){
     if(closeReason){
       vm.isLoading = true;
@@ -353,7 +363,8 @@ function QuotationsEditCtrl(
             isClosed: true,
             isClosedReason: closeReason,
             isClosedNotes: extraNotes,
-            status: 'closed'
+            status: 'closed',
+            tracing: getLastTracingDate(vm.quotation)
           };
           return quotationService.update(vm.quotation.id, updateParams);
         })

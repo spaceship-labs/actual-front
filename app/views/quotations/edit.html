@@ -23,7 +23,7 @@
         <span 
           ng-class="{
             'active': !vm.quotation.Order,
-            'closed': vm.quotation.Order
+            'closed': vm.quotation.Order || vm.quotation.isClosed,
           }">
           {{vm.status}}
         </span>

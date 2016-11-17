@@ -65,12 +65,17 @@
     	return groups;
     }
 
+    function convertDatetimeToDate(datetime){
+    	var date = moment(datetime).startOf('day').toDate();
+    	return date;
+    }
+
     function groupDeliveryDates(deliveries){
 	    var groups = [];
 	    for(var i= (deliveries.length-1); i>= 0; i--){
 	    	var items = _.filter(deliveries, function(delivery){
 	    		if(delivery.companyFrom !== deliveries[i].companyFrom && 
-	    			new Date(delivery.date) <= new Date(deliveries[i].date)
+	    			convertDatetimeToDate(delivery.date) <= convertDatetimeToDate(deliveries[i].date)
 	    		){
 	    			return true;
 	    		}

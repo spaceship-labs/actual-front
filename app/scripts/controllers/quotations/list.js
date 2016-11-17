@@ -27,9 +27,7 @@ function QuotationsListCtrl(
   vm.getTotalByDateRange = getTotalByDateRange;
   vm.filters = false;
   vm.dateEnd = false;
-  vm.defaultSort = [6, 'desc'];
-  vm.orderBy = 'tracing';
-  vm.sortDirection = 'DESC';
+  vm.defaultSort = [6, 'asc'];
   vm.columnsLeads = [
     {key: 'folio', label:'Folio'},
     {key:'Client.CardName', label:'Cliente', defaultValue:'Sin cliente'},

@@ -211,16 +211,20 @@
                     ng-repeat="deliveryGroup in vm.deliveriesGroups"
                   >
                     <td>
-                      {{deliveryGroup.date | date: "d/MMM/yyyy"}} (en {{deliveryGroup.days}} días)
+                      {{deliveryGroup.date | date: "d/MMM/yyyy"}} 
+                      <span ng-show="!vm.isImmediateDelivery(deliveryGroup.date)">
+                        (en {{deliveryGroup.days}} días)
+                      </span>
+                      <span ng-show="vm.isImmediateDelivery(deliveryGroup.date)" class="immediate-delivery">
+                        Entrega inmediata
+                      </span>                        
                       <!--
-                      <p>
-                        <span 
+                      <span 
                           class="comma-separated"
                           ng-repeat="d in deliveryGroup.deliveries track by $index"
                         >
-                          {{ vm.getWarehouseName(d.companyFrom) }}: {{d.available}} ({{d.date | date: 'd/MMM/yyyy'}})
-                        </span>
-                      </p>
+                        {{ vm.getWarehouseName(d.companyFrom) }}: {{d.available}} ({{d.date | date: 'd/MMM/yyyy'}})
+                      </span>
                       -->
                     </td>
                     <td class="delivery-date-stock">

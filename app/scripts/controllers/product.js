@@ -45,6 +45,7 @@ function ProductCtrl(
     getWarehouseName: getWarehouseName,
     getPiecesString: getPiecesString,
     init: init,
+    isImmediateDelivery: isImmediateDelivery,
     resetCartQuantity: resetCartQuantity,
     trustAsHtml: trustAsHtml,
     sas:{
@@ -301,6 +302,12 @@ function ProductCtrl(
       arr.push(i+1);
     }
     return arr;
+  }
+
+  function isImmediateDelivery(date){
+    var currentDate = moment().startOf('date');
+    date = moment(date).startOf('date');
+    return (currentDate.format() === date.format());
   }
 
 }
