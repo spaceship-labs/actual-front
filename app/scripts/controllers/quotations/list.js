@@ -123,6 +123,7 @@ function QuotationsListCtrl(
     vm.endDate = fortnightRange.end.toString();
     vm.filters = {
       User: $rootScope.user.id,
+      isClosed: {'!': true}
     };
     vm.dateRange = {
       field: 'createdAt',
