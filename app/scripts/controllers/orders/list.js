@@ -31,7 +31,7 @@ function OrdersListCtrl(
   vm.currentDate = new Date();
   vm.dateRange = false;
   vm.ordersData = {};
-
+  vm.listScopes = [];
   vm.columnsOrders = [
     {key: 'folio', label:'Folio'},
     {key:'Client.CardName', label:'Cliente'},
@@ -105,6 +105,10 @@ function OrdersListCtrl(
       vm.filters = {
         User: $rootScope.user.id,
       };
+      vm.listScopes = [
+        {label: 'Mis ventas', value: $rootScope.user.id},
+        {label: 'Todas las ventas', value:'none'}
+      ];      
     }
     vm.dateRange = {
       field: 'createdAt',
@@ -143,7 +147,7 @@ function OrdersListCtrl(
       };
     }
 
-    vm.getTotalByDateRange(vm.user.id, {
+    getTotalByDateRange(vm.user.id, {
       startDate: vm.dateRange.start,
       endDate: vm.dateRange.end,
     });

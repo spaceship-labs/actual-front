@@ -39,13 +39,11 @@
       class="input-element select-element-wrapper"
     >
       <label><strong>Buscar sobre:</strong></label>
-      <select ng-model="vm.filters.User" class="select-element">
-        <option ng-selected="vm.user.id == vm.filters.User" ng-value="vm.user.id">
-          Mis ventas
-        </option>
-        <option ng-value="'none'">
-          Todas las ventas
-        </option>
+      <select 
+        ng-if="vm.listScopes.length > 0" 
+        ng-model="vm.filters.User" 
+        ng-options="option.value as option.label for option in vm.listScopes"
+        class="select-element">
       </select>
     </div>
     <div ng-if="!vm.isBroker" flex="20">

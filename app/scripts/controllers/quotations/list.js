@@ -60,6 +60,12 @@ function QuotationsListCtrl(
   ];
   vm.quotationsData = {};
   vm.apiResourceLeads = quotationService.getList;
+  vm.listScopes = [];
+  vm.closedOptions = [
+    {label: 'Abiertas', value: {'!': true}},
+    {label:'Cerradas', value: true}
+  ];
+
   vm.createdRowCb = function(row, data, index){
     var day = moment().startOf('day').format('MM-DD-YYYY');
     if(data.tracing){
@@ -145,6 +151,12 @@ function QuotationsListCtrl(
     if(vm.user.role.name == 'store manager' && vm.user.mainStore){
       getSellersByStore(vm.user.mainStore.id);
     }
+
+    vm.listScopes = [
+      {label: 'Mis oportunidades', value: vm.user.id},
+      {label: 'Todas las oportunidades', value:'none'}
+    ];
+    
   }
 
   function getTotalByDateRange(userId, dateRange){
