@@ -237,6 +237,7 @@ function ProductCtrl(
         id: vm.product.id,
         quantity: item.quantity,
         shipDate: item.date,
+        productDate: item.productDate,
         shipCompany: item.company,
         shipCompanyFrom: item.companyFrom
       };
@@ -247,6 +248,7 @@ function ProductCtrl(
           id: vm.product.id,
           quantity: item.quantity,
           shipDate: item.date,
+          productDate: item.productDate,
           shipCompany: item.company,
           shipCompanyFrom: item.companyFrom
         };

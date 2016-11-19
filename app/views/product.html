@@ -217,15 +217,15 @@
                       </span>
                       <span ng-show="vm.isImmediateDelivery(deliveryGroup.date)" class="immediate-delivery">
                         Entrega inmediata
-                      </span>                        
-                      <!--
+                      </span> 
+
+                      <p>Debug</p>                       
                       <span 
                           class="comma-separated"
                           ng-repeat="d in deliveryGroup.deliveries track by $index"
                         >
                         {{ vm.getWarehouseName(d.companyFrom) }}: {{d.available}} ({{d.date | date: 'd/MMM/yyyy'}})
                       </span>
-                      -->
                     </td>
                     <td class="delivery-date-stock">
                       {{deliveryGroup.available | number: 0}} {{vm.getPiecesString(deliveryGroup.available)}}

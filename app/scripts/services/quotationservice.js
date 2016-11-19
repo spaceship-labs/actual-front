@@ -249,6 +249,7 @@
           quantity: params.quantity,
           Quotation: quotationId,
           shipDate: params.shipDate,
+          productDate: params.productDate,
           shipCompany: params.shipCompany,
           shipCompanyFrom: params.shipCompanyFrom,
           PromotionPackage: params.promotionPackage || null
