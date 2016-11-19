@@ -40,7 +40,8 @@ angular
     $httpProvider,
     $locationProvider,
     $mdThemingProvider,
-    localStorageServiceProvider
+    localStorageServiceProvider,
+    pikadayConfigProvider
   ) {
 
 
@@ -48,7 +49,6 @@ angular
       .accentPalette('red', {
         'default': '700' // use shade 200 for default, and keep all other shades the same
       });
-
 
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');
@@ -344,6 +344,20 @@ angular
 
     localStorageServiceProvider.setPrefix('actualFront');
 
+    moment.locale('es');
+    var locales = {
+      es: {
+        months        : moment.localeData()._months,
+        weekdays      : moment.localeData()._weekdays,
+        weekdaysShort : moment.localeData()._weekdaysShort,
+      }
+    };
+    pikadayConfigProvider.setConfig({
+      i18n: locales.es,
+      locales: locales,
+      format: 'D/MM/YYYY'
+    });
+
     //JWT TOKENS CONFIG
     $httpProvider.interceptors.push(['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
       return {
@@ -370,7 +384,6 @@ angular
 
 
   .run(function(localStorageService, authService, jwtHelper, userService, $location, $rootScope, $route){
-
       var _token = localStorageService.get('token') || false;
       var _user  = localStorageService.get('user')  || false;
 

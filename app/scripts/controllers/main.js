@@ -101,6 +101,7 @@
         getBrokers();
         //getActiveQuotation();
       }
+      moment.locale('es');
     }
 
     function buildPointersSidenav(){
