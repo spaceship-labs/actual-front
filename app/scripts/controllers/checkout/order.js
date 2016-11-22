@@ -122,9 +122,15 @@ function CheckoutOrderCtrl(
     var type = '1 sola exhibición';
     if(payment.type === 'cash' || payment.type === 'cash-usd'){
       type = 'Pago de contado';
-    }else if(payment.terminal && payment.msi){
+    }else if(payment.msi){
       type = payment.msi + ' meses sin intereses';
-    }
+    }else if(payment.type === 'transfer'){
+      type = 'Transferencia';
+    }else if(payment.type === 'deposit'){
+      type = 'Deposito';
+    }else if(payment.type === 'ewallet'){
+      type = 'Monedero electrónico';
+    }    
     return type;
   }
 

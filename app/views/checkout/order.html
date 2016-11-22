@@ -136,14 +136,8 @@
             <span><i class="icon-cash"></i></span> <strong>Pago en efectivo (USD)</strong>
             <p class="small-note">Tipo de cambio: {{payment.exchangeRate | roundCurrency}} MXN</p>
           </div>
-          <div ng-if="payment.type != 'cash' && payment.type != 'cash-usd' && payment.type != 'cheque' && payment.type != 'transfer' " flex class="order-payment-item-data">
-            <span><i class="icon-terminal"></i></span> <strong>Pago con terminal</strong>
-          </div>
-          <div ng-if="payment.type === 'cheque' " flex class="order-payment-item-data">
-            <span><i class="icon-terminal"></i></span> <strong>Cheque</strong>
-          </div>          
-          <div ng-if="payment.type === 'transfer' " flex class="order-payment-item-data">
-            <span><i class="icon-terminal"></i></span> <strong>Transferencia</strong>
+          <div ng-if="payment.type !== 'cash' && payment.type !== 'cash-usd' " flex class="order-payment-item-data">
+            <span><i class="icon-terminal"></i></span> <strong>{{payment.name}}</strong>
           </div>          
 
           <div flex class="order-payment-item-data">
