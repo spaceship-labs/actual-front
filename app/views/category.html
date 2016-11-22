@@ -173,6 +173,10 @@
         </div>
         <!--END RESULTS-->
 
+        <div ng-if="vm.isLoadingProducts" layout="row" layout-align="center center" class="loading-circle">
+          <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
+        </div>
+
       </div>
     </div>
     <!-- END SUBCATEGORIES-->

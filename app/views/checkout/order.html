@@ -178,7 +178,7 @@
         </div>
         <div flex="20">
           <p><strong>{{vm.order.subtotal | roundCurrency:false}} MXN</strong></p>
-          <p><strong>{{vm.order.discount | roundCurrency:false}} MXN</strong></p>
+          <p><strong>-{{vm.order.discount | roundCurrency:false}} MXN</strong></p>
           <p><strong>{{vm.order.total | roundCurrency:false}} MXN</strong></p>
           <p><strong>{{vm.order.ammountPaid | roundCurrency:false}} MXN</strong></p>
           <p><strong>{{( vm.order.ammountPaid - vm.order.total ) | roundCurrency:false }} MXN</strong></p>

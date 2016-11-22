@@ -67,9 +67,10 @@ function QuotationsListCtrl(
   ];
 
   vm.createdRowCb = function(row, data, index){
-    var day = moment().startOf('day').format('MM-DD-YYYY');
+    var day = moment().startOf('day').toDate();
     if(data.tracing){
-      if(moment(data.tracing).startOf('day').format('MM-DD-YYYY') === day){
+      var tracing = moment(data.tracing).startOf('day').toDate();
+      if(tracing <= day){
         $(row).addClass('highlight').children().css( "background-color", "#faadb2" );
       }
     }
