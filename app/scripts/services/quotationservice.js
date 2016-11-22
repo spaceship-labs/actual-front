@@ -41,6 +41,7 @@
         update: update,
         updateSource: updateSource,
         updateBroker: updateBroker,
+        validateQuotationStockById: validateQuotationStockById
       };
 
       return service;
@@ -406,6 +407,23 @@
           }
         }
         return true;
+      }
+
+      function validateQuotationStockById(id){
+        var url = '/quotation/validatestock/' + id;
+        var deferred = $q.defer();
+        api.$http.post(url)
+          .then(function(response){
+            if(response.data.isValid){
+              deferred.resolve(true);
+            }else{
+              deferred.resolve(false);
+            }
+          })
+          .catch(function(err){
+            deferred.reject(err);
+          });
+        return deferred.promise;
       }
 
     }

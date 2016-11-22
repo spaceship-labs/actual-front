@@ -67,12 +67,10 @@ function CheckoutPaymentsCtrl(
 
     quotationService.getById($routeParams.id).then(function(res){
         vm.quotation = res.data;
-        return quotationService.getCurrentStock(vm.quotation.id); 
+        return quotationService.validateQuotationStockById(vm.quotation.id); 
       })
-      .then(function(response){
-  
-        var quotationDetailsStock = response.data;
-        if( !quotationService.isValidStock(quotationDetailsStock) ){
+      .then(function(isValidStock){
+        if( !isValidStock){
           $location.path('/quotations/edit/' + vm.quotation.id)
             .search({stockAlert:true});
         }
