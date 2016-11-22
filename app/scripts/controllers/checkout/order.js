@@ -26,6 +26,7 @@ function CheckoutOrderCtrl(
 
 
   angular.extend(vm,{
+    calculateBalance: calculateBalance,
     print: print,
     getPaymentType: getPaymentType,
     formatAddress: formatAddress,
@@ -79,6 +80,13 @@ function CheckoutOrderCtrl(
       vm.isLoading = false;
     });
 
+  }
+
+  function calculateBalance(paid, total){
+    var paidRounded = commonService.roundCurrency(paid);
+    var totalRounded = commonService.roundCurrency(total);
+    return (paid - total);
+    //return (paidRounded - totalRounded);
   }
 
   function getEwalletAmmount(ewalletRecords, type){

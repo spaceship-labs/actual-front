@@ -381,7 +381,7 @@
     function roundCurrency(ammount, options){
       options = options || {up:true};
       var integers = Math.floor(ammount);
-      var cents = (ammount - integers);
+      var cents = (ammount - integers).toPrecision(6);
       var roundedCents = 0;
       if(cents > 0){
         if(options.up){
