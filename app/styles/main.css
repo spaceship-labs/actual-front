@@ -73,6 +73,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   height: 100%;
   width: 100%;
 }
+.hide-print{display: none;}
 .to-upper{text-transform: uppercase;}
 .nomargin{margin: 0;}
 .center-content{text-align: center;}
@@ -3910,15 +3911,23 @@ padding-left: 16px;
   #profile-view,
   .print-btn,
   .records-view,
+  .cart-title,
+  .hide-print,
   #footer{display: none!important;}
+
+  .show-print{display: block;}
 
   .cash-report h1{font-size: 16px;}
   .quotation-view .client-signature{
-    display: flex;
+    display: none;
   }
   .quotation-view .quotation-data p{font-size: 13px;} 
   .company-data,
   .quotation-view .quotation-validity{display: block;}
+
+  .quotation-view .cart-list{max-width: 100%;}
+  .quotation-view .cart-aside{display: none;}
+
 
 }
 
