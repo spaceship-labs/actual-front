@@ -64,15 +64,15 @@
         <strong>Cantidad:</strong> <small>Se muestra el saldo total pendiente por cobrar. Puedes cobrar cualquier monto menor, pero después debes aplicar otro cobro para saldar esta venta.</small>
       </p>
       <br/>
-      <p><strong>Restante:</strong> {{payment.remaining | roundCurrency}}</p>
+      <p><strong>Restante:</strong> {{payment.remaining | currency}}</p>
       
-      <!--<p ng-if="payment.ammount > maxAmmount">
-        Máximo excedido
-      </p>
-      -->
       <p class="error-msg" ng-if="errMsg">{{errMsg}}</p>
 
-      <div class="ammount-input" layout="row" layout-align="start center">
+      <div 
+        class="ammount-input" 
+        layout="row" 
+        layout-align="start center"
+      >
         <div class="input-element" flex="60">
           <div class="input-element-inner">
             <input
@@ -80,6 +80,7 @@
               type="text"
               max="{{maxAmmount}}"
               ng-model="payment.ammount"
+              class="with-maxammount"
               ng-currency
               >
             <input

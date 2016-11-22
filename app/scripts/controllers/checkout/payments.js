@@ -300,7 +300,8 @@ function CheckoutPaymentsCtrl(
             delete vm.activeMethod;
 
             if(vm.quotation.ammountPaid >= vm.quotation.total){
-              dialogService.showDialog('Cantidad total pagada');
+              createOrder();
+              //dialogService.showDialog('Cantidad total pagada');
             }else{
               dialogService.showDialog('Pago aplicado');
             }
@@ -321,7 +322,8 @@ function CheckoutPaymentsCtrl(
           dialogService.showDialog('Error: <br/>' + err.data);
         });
     }else{
-      dialogService.showDialog('Cantidad total pagada');
+      createOrder();
+      //dialogService.showDialog('Cantidad total pagada');
     }
   }
 
@@ -415,14 +417,7 @@ function CheckoutPaymentsCtrl(
   function DepositController($scope, $mdDialog, formatService, commonService, payment) {
 
     $scope.init = function(){
-      console.log('init DepositController');
       $scope.payment = payment;
-      /*
-      if(payment.type !== EWALLET_TYPE){ 
-        $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);
-        console.log('$scope.payment.ammount', $scope.payment.ammount);
-      }
-      */
       $scope.needsVerification = payment.needsVerification;
       $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
 
@@ -430,6 +425,14 @@ function CheckoutPaymentsCtrl(
         $scope.payment.ammount = $scope.payment.ammount / $scope.payment.exchangeRate;
         $scope.payment.ammountMXN = $scope.getAmmountMXN($scope.payment.ammount);
       }
+
+      //ROUNDING
+      if(payment.type !== EWALLET_TYPE){ 
+        $scope.payment.remaining = commonService.roundCurrency($scope.payment.remaining); 
+        $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);
+        $scope.maxAmmount = commonService.roundCurrency($scope.maxAmmount);
+      }
+
     };
 
     $scope.getAmmountMXN = function(ammount){
@@ -450,7 +453,6 @@ function CheckoutPaymentsCtrl(
       $mdDialog.cancel();
     };
     $scope.save = function() {
-      //if(false){
       if( $scope.isvalidPayment() ){
         $mdDialog.hide($scope.payment);
       }else{
@@ -464,10 +466,17 @@ function CheckoutPaymentsCtrl(
   function TerminalController($scope, $mdDialog, formatService, commonService, payment) {
     $scope.payment = payment;
     $scope.needsVerification = payment.needsVerification;
-    //$scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount); 
-    console.log('$scope.payment.ammount', $scope.payment.ammount);
-    
     $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
+
+    //ROUNDING
+    $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);     
+    $scope.payment.remaining = commonService.roundCurrency($scope.payment.remaining); 
+    if($scope.maxAmmount){
+      $scope.maxAmmount = commonService.roundCurrency($scope.maxAmmount);
+    }
+    if($scope.payment.min){
+      $scope.payment.min = commonService.roundCurrency($scope.payment.min);      
+    }
 
     $scope.numToLetters = function(num){
       return formatService.numberToLetters(num);
@@ -493,7 +502,6 @@ function CheckoutPaymentsCtrl(
     } 
 
     $scope.isvalidPayment = function(){
-      console.log('scope payment in isValidStock', $scope.payment.ammount);
       $scope.payment.min = $scope.payment.min || 0;
       if($scope.payment.ammount < $scope.payment.min){
         $scope.minStr = $filter('currency')($scope.payment.min);
@@ -536,7 +544,6 @@ function CheckoutPaymentsCtrl(
 
     $scope.save = function() {
       if( $scope.isvalidPayment() ){
-      //if(false){
         if($scope.payment.options.length > 0){
           $scope.terminal = getSelectedTerminal($scope.payment.card);
           $scope.payment.terminal = $scope.terminal.value;
