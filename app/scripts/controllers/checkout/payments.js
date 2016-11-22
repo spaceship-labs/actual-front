@@ -36,7 +36,6 @@ function CheckoutPaymentsCtrl(
   var vm = this;
 
   angular.extend(vm,{
-    addPayment: addPayment,
     applyTransaction: applyTransaction,
     authorizeOrder: authorizeOrder,
     calculateRemaining: calculateRemaining,
@@ -351,7 +350,7 @@ function CheckoutPaymentsCtrl(
       })
       .then(function(payment) {
         console.log('Pago aplicado');
-        vm.addPayment(payment);
+        addPayment(payment);
       }, function() {
         console.log('Pago no aplicado');
         vm.clearActiveMethod();
@@ -451,6 +450,7 @@ function CheckoutPaymentsCtrl(
       $mdDialog.cancel();
     };
     $scope.save = function() {
+      //if(false){
       if( $scope.isvalidPayment() ){
         $mdDialog.hide($scope.payment);
       }else{
@@ -536,6 +536,7 @@ function CheckoutPaymentsCtrl(
 
     $scope.save = function() {
       if( $scope.isvalidPayment() ){
+      //if(false){
         if($scope.payment.options.length > 0){
           $scope.terminal = getSelectedTerminal($scope.payment.card);
           $scope.payment.terminal = $scope.terminal.value;

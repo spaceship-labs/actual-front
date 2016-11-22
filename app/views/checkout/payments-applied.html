@@ -20,7 +20,7 @@
         <div class="method-data" flex="60" layout="row">
           <div flex="33">
             <p><strong>CANTIDAD</strong></p>
-            <p ng-if="payment.type !=='cash'">{{payment.ammount | roundCurrency}}</p>
+            <p ng-if="payment.type !=='cash-usd'">{{payment.ammount | roundCurrency}}</p>
             <p ng-if="payment.type ==='cash-usd'">{{payment.ammount | roundCurrency}} USD.</p>
           </div>
         </div>
