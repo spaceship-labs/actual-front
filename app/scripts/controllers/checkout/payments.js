@@ -487,17 +487,33 @@ function CheckoutPaymentsCtrl(
       $mdDialog.cancel();
     };
 
-    function isPaymentMinValid(){
+    $scope.isMinimumValid = function(){
       $scope.payment.min = $scope.payment.min || 0;   
       if($scope.payment.ammount === $scope.payment.remaining){
+        $scope.errMsg = '';
         return true;
       }
       else if( ($scope.payment.remaining - $scope.payment.ammount) >= $scope.payment.min ){
+        $scope.errMsg = '';
         return true;
       }
-      $scope.errMsg = 'La cantidad restante es menor al monto minimo';
+      
+      if($scope.remaining < $scope.payment.min){
+        $scope.errMsg = 'El monto mínimo para esta forma de pago es '+$filter('currency')($scope.payment.min)+' pesos. Favor de seleccionar otra forma de pago.';
+      }
+      else{
+        $scope.errMsg = 'El monto mínimo para esta forma de pago es ' + $filter('currency')($scope.payment.min) + ' pesos. ';
+        $scope.errMsg += 'Por lo mismo, el monto que se puede aplicar es ' + $filter('currency')($scope.payment.remaining) + ' pesos ' ;
+        $scope.errMsg += 'o una cantidad entre $0.01 peso y '+ $filter('currency')($scope.payment.remaining - $scope.payment.min) +' pesos.';
+      }
       return false;
-    } 
+    }; 
+
+    $scope.$watch('payment.ammount', function(newVal, oldVal){
+      if(newVal !== oldVal){
+        $scope.isMinimumValid();
+      }
+    });
 
     $scope.isvalidPayment = function(){
       $scope.payment.min = $scope.payment.min || 0;
@@ -510,7 +526,7 @@ function CheckoutPaymentsCtrl(
 
       if( $scope.maxAmmount ){
         return (
-          isPaymentMinValid() &&
+          isMinimumValid() &&
           ($scope.payment.ammount <= $scope.maxAmmount) &&
           $scope.payment.ammount && 
           $scope.payment.verificationCode &&

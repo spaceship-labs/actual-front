@@ -81,6 +81,12 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   content:',  ';
   display: inline-block;
 }
+.client-signature{
+  display: none;
+  padding: 40px 0;
+}
+.client-signature .signature-line{border-bottom: 2px solid #000;}
+
 .content-block{
   padding: 40px 20px;
   position: relative;
@@ -2818,11 +2824,6 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   color:#000;
   text-decoration: underline;
 }
-.quotation-view .client-signature{
-  display: none;
-  padding: 40px 0;
-}
-.quotation-view .client-signature .signature-line{border-bottom: 2px solid #000;}
 .quotation-view .payments-options-totals {}
 .quotation-view .payments-options-totals .data-header{
   margin-bottom: 10px;
@@ -3460,12 +3461,18 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-weight: 400;
   margin: 4px 0;
 }
+.deposit-dialog .deposit-type{
+  margin:0 0 10px;
+}
 .deposit-dialog p{margin: 0;}
 .deposit-dialog .action-btn-save{margin: 0}
 .deposit-dialog small{
   font-size: 12px;
   font-style: italic;
 }
+.deposit-dialog .dialog-block:first-child,
+.deposit-dialog .dialog-block:first-of-type{margin-top: 0}
+.deposit-dialog .main-dialog-block{margin-top:0!important;}
 .deposit-dialog .dialog-block{margin: 12px 0;}
 .deposit-dialog .dialog-block md-select{margin: 0;}
 .deposit-dialog .dialog-block .error-msg{
@@ -3698,6 +3705,11 @@ padding-left: 16px;
   color: #000;
   text-decoration: underline;
 }
+.order-view .signature-section{display: none;}
+.order-view .signature-section p{
+  font-style: italic;
+  margin: 0;
+}
 
 /*---------------/
   #CASH-REPORT
@@ -3915,11 +3927,12 @@ padding-left: 16px;
   .hide-print,
   #footer{display: none!important;}
 
+  .order-view .signature-section,
   .show-print{display: block;}
 
   .cash-report h1{font-size: 16px;}
-  .quotation-view .client-signature{
-    display: none;
+  .order-view .client-signature{
+    display: flex;
   }
   .quotation-view .quotation-data p{font-size: 13px;} 
   .company-data,
