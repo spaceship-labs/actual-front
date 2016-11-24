@@ -537,6 +537,13 @@ function CheckoutPaymentsCtrl(
       }
     });
 
+    function isValidVerificationCode(){
+      if($scope.payment.type !== 'deposit'){
+        return $scope.payment.verificationCode && $scope.payment.verificationCode !== '';
+      }
+      return true;
+    }
+
     $scope.isvalidPayment = function(){
       $scope.payment.min = $scope.payment.min || 0;
       if($scope.payment.ammount < $scope.payment.min){
@@ -548,18 +555,15 @@ function CheckoutPaymentsCtrl(
 
       if( $scope.maxAmmount ){
         return (
-          isMinimumValid() &&
+          $scope.isMinimumValid() &&
           ($scope.payment.ammount <= $scope.maxAmmount) &&
-          $scope.payment.ammount && 
-          $scope.payment.verificationCode &&
-          $scope.payment.verificationCode != '' &&
+          isValidVerificationCode() &&
           $scope.payment.ammount >= $scope.payment.min
         );
       }
       return (
         $scope.payment.ammount && 
-        $scope.payment.verificationCode &&
-        $scope.payment.verificationCode != '' &&
+        isValidVerificationCode() &&
         $scope.payment.ammount >= $scope.payment.min        
       );
     };
