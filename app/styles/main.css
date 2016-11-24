@@ -73,7 +73,9 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   height: 100%;
   width: 100%;
 }
-.hide-print{display: none;}
+.show-print{display: none;}
+.only-show-print{display: none;}
+.only-hide-print{display: block;}
 .to-upper{text-transform: uppercase;}
 .nomargin{margin: 0;}
 .center-content{text-align: center;}
@@ -85,7 +87,11 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   display: none;
   padding: 40px 0;
 }
-.client-signature .signature-line{border-bottom: 2px solid #000;}
+.client-signature .signature-line{
+  border-bottom: 2px solid #000;
+  width: 60%;
+  margin: 0 auto;
+}
 
 .content-block{
   padding: 40px 20px;
@@ -2829,7 +2835,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   margin-bottom: 10px;
   text-align: center;
 }
-.quotation-view .payments-options-totals p{margin: 0;}
+.quotation-view .payments-options-totals p{
+  font-size: 12px;
+  margin: 0;
+}
 .quotation-view .payments-options-totals .method-row{margin: 6px 0;}
 .quotation-view .payments-options-totals .totals{text-align: right;}
 .quotation-view .payments-options-totals .highlight{color: #E2023F}
@@ -2839,8 +2848,8 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .quotation-view .payments-options-totals .data-cell{
   margin: 2px;
   padding: 8px;
-
 }
+.quotation-view .seller-data p{margin: 0;}
 /*--------------/
   #CART-VIEW
 /*--------------*/
@@ -3705,11 +3714,19 @@ padding-left: 16px;
   color: #000;
   text-decoration: underline;
 }
-.order-view .signature-section{display: none;}
+/*.order-view .signature-section{display: none;}*/
+.order-view .signature-section,
+.order-view .client-signature,
+.order-view .signature-line{display: none;}
 .order-view .signature-section p{
   font-style: italic;
   margin: 0;
 }
+.order-view .client-signature p{
+  margin: 5px 0 0;
+  text-align: center;
+}
+.order-view .sap-docs{display: block;}
 
 /*---------------/
   #CASH-REPORT
@@ -3925,18 +3942,23 @@ padding-left: 16px;
   .records-view,
   .cart-title,
   .hide-print,
+  .order-view .sap-docs,
+  .only-hide-print,
   #footer{display: none!important;}
 
+  .only-show-print,
   .order-view .signature-section,
+  .order-view .signature-section .signature-line,
   .show-print{display: block;}
 
   .cash-report h1{font-size: 16px;}
   .order-view .client-signature{
-    display: flex;
+    display: block;
   }
   .quotation-view .quotation-data p{font-size: 13px;} 
+  
   .company-data,
-  .quotation-view .quotation-validity{display: block;}
+  .quotation-view .quotation-validity{display: block!important;}
 
   .quotation-view .cart-list{max-width: 100%;}
   .quotation-view .cart-aside{display: none;}

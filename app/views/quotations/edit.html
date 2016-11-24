@@ -18,7 +18,7 @@
 
 
   <section class="quotation-data">
-    <div>
+    <div class="only-hide-print">
       <label>Status</label>
       <p>
         <span 
@@ -49,7 +49,7 @@
         <label for="">Vendedor</label>
         <p>{{vm.quotation.User.firstName + ' ' + vm.quotation.User.lastName}}</p>
       </div>
-      <div flex="25">
+      <div flex="25" class="only-hide-print">
         <p><label for="">Broker</label></p>
         <select
           chosen

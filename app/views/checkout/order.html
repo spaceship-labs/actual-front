@@ -37,15 +37,17 @@
     <div class="order-text-block">
       <h3><strong>¡GRACIAS POR SU COMPRA!</strong></h3>
       <p>Estimado <strong>{{vm.order.Client.CardName}}</strong></p>
-      <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico <strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong></p>
+      <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico <strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>.</p>
       <br/>
-      <p>Documentos de SAP generados: 
-        <span 
-          ng-repeat="document in vm.order.documents track by $index"
-          class="comma-separated">
-          {{document}}
-        </span>
-      </p>
+      <div class="sap-docs">
+        <p>Documentos de SAP generados: 
+          <span 
+            ng-repeat="document in vm.order.documents track by $index"
+            class="comma-separated">
+            {{document}}
+          </span>
+        </p>
+      </div>
       <p>
         <a class="refunds-link" ng-href="/refunds/payments/{{vm.order.id}}">Generar reembolsos</a>
       </p>
@@ -240,14 +242,12 @@
 
     <!--VENDEDOR-->
     <div class="order-block seller-block order-block-info">
-      <h3><strong><i class="icon-vendedor"></i> VENDEDOR</strong></h3>
+      <h3><strong><i class="icon-vendedor"></i> ATENCIÓN A CLIENTES</strong></h3>
       <div class="order-block-inner" layout="row" layout-align="space-between center">
         <div flex="40">
-          <p><strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong></p>
-          <p>{{vm.order.User.email}}</p>
-          <p><strong>Télefono: </strong>{{vm.order.User.dialCode + ' ' + vm.order.User.phone }}</p>
-          <p><strong>Celular: </strong>{{vm.order.User.mobileDialCode + ' ' + vm.order.User.mobilePhone }}</p>
-          <p><strong>{{vm.order.Store.name}}</strong></p>
+          <p><strong>Celular: </strong>(998) 195 8376</p>
+          <p><strong>Celular: </strong>(998) 195 6839</p>
+          <p><strong>Email:</strong> clientes@actualg.com</p>
         </div>
         <div flex="20">
           <a href="#"  ng-click="vm.print()" class="action-btn action-btn-save print-btn">
