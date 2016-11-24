@@ -18,6 +18,7 @@
         calculateSubTotal: calculateSubTotal,
         calculateTotal: calculateTotal,
         calculateTotalDiscount: calculateTotalDiscount,
+        closeQuotation: closeQuotation,
         create: create,
         isValidStock: isValidStock,
         getActiveQuotation: getActiveQuotation,
@@ -116,6 +117,10 @@
         return api.$http.post(url,params);
       }
 
+      function closeQuotation(id, params){
+        var url = '/quotation/' + id  + '/close';
+        return api.$http.post(url,params);
+      }      
 
       function calculateSubTotal(quotation){
         var subTotal = 0;

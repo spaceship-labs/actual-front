@@ -349,28 +349,22 @@ function QuotationsEditCtrl(
     if(closeReason){
       vm.isLoading = true;
       var params = {
-        dateTime: new Date(),
-        eventType: 'Cierre',
         notes: extraNotes,
-        User: $rootScope.user.id
+        User: $rootScope.user.id,
+        tracing: getLastTracingDate(vm.quotation),
+        notes: extraNotes,
+        closeReason: closeReason,
+        extraNotes: extraNotes
       };
-      quotationService.addRecord(vm.quotation.id, params)
+      quotationService.closeQuotation(vm.quotation.id, params)
         .then(function(res){
-          if(res.data.id){
-            vm.quotation.Records.push(res.data);
+          var record = res.data.record;
+          var quotation = res.data.quotation;
+          if(record){
+            vm.quotation.Records.push(record);
           }
-          var updateParams = {
-            isClosed: true,
-            isClosedReason: closeReason,
-            isClosedNotes: extraNotes,
-            status: 'closed',
-            tracing: getLastTracingDate(vm.quotation)
-          };
-          return quotationService.update(vm.quotation.id, updateParams);
-        })
-        .then(function(result){
-          if(result.data){
-            vm.quotation.isClosed = result.data.isClosed;
+          if(quotation){
+            vm.quotation.isClosed = quotation.isClosed;
             if(vm.quotation.isClosed){
               vm.status = 'Cerrada';
             }
@@ -378,8 +372,8 @@ function QuotationsEditCtrl(
           vm.isLoading = false;
           vm.quotation.Records.forEach(function(rec){
             rec.isActive = false;
-          });
-        })
+          }); 
+        })         
         .catch(function(err){
           $log.error(err);
         });
