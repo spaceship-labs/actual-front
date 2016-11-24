@@ -128,7 +128,10 @@
 
               </div>
             </div>
-            <form ng-if="!vm.quotation.isClosed" name="closeQuotationForm" ng-submit="vm.closeQuotation(closeQuotationForm, vm.closeReason, vm.closeNote)">
+            <form 
+              ng-if="!vm.quotation.isClosed && vm.isUserAdmin()" 
+              name="closeQuotationForm" 
+              ng-submit="vm.closeQuotation(closeQuotationForm, vm.closeReason, vm.closeNote)">
               <div class="record-item-block" layout="row" layout-align="space-between start">
                 <div flex="55">
                   <p><label><strong>AGREGAR COMENTARIOS</strong></label></p>

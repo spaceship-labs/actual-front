@@ -80,7 +80,8 @@ function QuotationsEditCtrl(
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     print: print,
     daysDiff: daysDiff,
-    isActiveGroup: isActiveGroup
+    isActiveGroup: isActiveGroup,
+    isUserAdmin: isUserAdmin
   });
 
   var EWALLET_TYPE = 'ewallet';
@@ -343,6 +344,13 @@ function QuotationsEditCtrl(
       tracingDate = quotation.Records[lastIndex].dateTime;
     }
     return tracingDate;
+  }
+
+  function isUserAdmin(){
+    if($rootScope.user.role && $rootScope.user.role.name === 'admin'){
+      return true;
+    }
+    return false;
   }
 
   function closeQuotation(form,closeReason, extraNotes){
