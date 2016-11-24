@@ -52,7 +52,7 @@
           <div class="pay-method-wrap" >
             <ng-include
               ng-repeat="paymentGroup in vm.paymentMethodsGroups track by $index"
-              ng-if="vm.isActiveGroup($index)"
+              ng-if="vm.isActiveGroup(paymentGroup)"
               src="'views/checkout/payment-group.html'">
             </ng-include>
 

@@ -38,6 +38,7 @@ function CheckoutPaymentsCtrl(
   angular.extend(vm,{
     applyTransaction: applyTransaction,
     authorizeOrder: authorizeOrder,
+    areMethodsDisabled: areMethodsDisabled,
     calculateRemaining: calculateRemaining,
     createOrder: createOrder,
     clearActiveMethod: clearActiveMethod,
@@ -45,8 +46,10 @@ function CheckoutPaymentsCtrl(
     getExchangeRate:getExchangeRate,
     getPaidPercentage: getPaidPercentage,
     isActiveGroup: isActiveGroup,
+    isActiveMethod: isActiveMethod,
     isMinimumPaid: isMinimumPaid,
-    setMethod: setMethod,
+    setMethod: setMethod
+    ,
 
     customFullscreen: $mdMedia('xs') || $mdMedia('sm'),
     singlePayment: true,
@@ -194,20 +197,39 @@ function CheckoutPaymentsCtrl(
       });
   }
 
-  function isActiveGroup(index){
+  function areMethodsDisabled(methods){
+    var disabledCount = 0;
+    for(var i=0;i<methods.length > 0;i++){
+      if( !isActiveMethod(methods[i]) ){
+        disabledCount++;
+      }
+    }
+    return disabledCount === methods.length;
+  }
+
+  function isActiveGroup(group){
     var activeKeys = ['paymentGroup1','paymentGroup2','paymentGroup3','paymentGroup4','paymentGroup5'];
     if(vm.validMethods){
       var isGroupUsed = false;
+      var groupIndex = group.group - 1;
+      var groupNumber = group.group;
       var currentGroup = getGroupByQuotation(vm.quotation);
+      var areGroupMethodsDisabled = areMethodsDisabled(group.methods);
       if( currentGroup < 0 || currentGroup === 1){
         isGroupUsed = true;
-      }else if(currentGroup > 0 && currentGroup === index+1){
+      }else if(currentGroup > 0 && currentGroup === groupNumber){
         isGroupUsed = true;
       }
-      return vm.validMethods[activeKeys[index]] && isGroupUsed;
+      return vm.validMethods[activeKeys[groupIndex]] && isGroupUsed && !areGroupMethodsDisabled;
     }else{
       return false;
     }
+  }
+
+  function isActiveMethod(method){
+    var remaining = method.total - vm.quotation.ammountPaid;
+    var min = method.min || 0;
+    return remaining >= min;
   }
 
   function getGroupByQuotation(quotation){
@@ -635,7 +657,6 @@ function CheckoutPaymentsCtrl(
     var dialogMsg = 'El pedido ha sido pagado al ' + paidPercent + '%';
     dialogMsg += ' ( '+ $filter('currency')(vm.quotation.ammountPaid) +' de ';
     dialogMsg += ' '+ $filter('currency')(vm.quotation.total) +' )';
-    // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
           .title('CREAR PEDIDO')
           .textContent(dialogMsg)

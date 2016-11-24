@@ -28,9 +28,8 @@ function SidebarCategories(
       $scope.storeCode = false;
 
       $scope.init = function(){
-        console.log('init');
         $scope.isActiveOffers = false;
-        if($location.path() == '/ofertas'){
+        if($location.path() === '/ofertas'){
           $scope.isActiveOffers = true;
         }
 
@@ -40,8 +39,6 @@ function SidebarCategories(
         else{
           $scope.storeCode = 'productsNum';
         }
-
-        console.log('storeCode', $scope.storeCode);
       };
 
       $scope.$on('$routeChangeSuccess', function(next, current) {
@@ -64,7 +61,6 @@ function SidebarCategories(
 
       $rootScope.$on('activeStoreAssigned', function(e, data){
         $scope.activeStore = data;
-        console.log('activeStoreAssigned', data);
       });
 
       $scope.showSelectedCategoryId = function(){

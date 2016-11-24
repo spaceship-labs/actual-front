@@ -5,11 +5,12 @@
 
     <h4 class="deposit-type"><strong>{{payment.name}}</strong></h4>
 
-    <p 
+    <div 
       ng-if="( payment.terminals && payment.type !== 'transfer' && payment.type !== 'deposit')  || payment.type === 'single-payment-terminal' "
     >
-      <strong>Tarjeta:</strong> <small>Selecciona la tarjeta de credito/debito a utilizar </small>
-    </p>
+      <p><strong>Tarjeta</strong></p> 
+      <p><small>Selecciona la tarjeta de credito/debito a utilizar </small></p>
+    </div>
     
     <div ng-show="payment.type === 'transfer' || payment.type === 'deposit' ">
       <strong>Banco</strong>

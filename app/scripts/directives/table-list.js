@@ -147,9 +147,6 @@
         query.fields = [];
         query.filters = $scope.filters || false;
 
-        console.log('query filters', query.filters);
-
-
         //Cleaning filters
         var aux = {};
         for(var key in query.filters){
@@ -159,16 +156,13 @@
           }
           else if(query.filters[key] != 'none'){
             if(!isNaN(query.filters[key])){
-              console.log('if ' + key, aux[key]);
               aux[key] = parseFloat(query.filters[key]);
             }else{
               aux[key] = query.filters[key];
-              console.log('else ' + key, aux[key]);
             }
           }
         }
         query.filters = aux;
-        console.log('query.filters[key]', query.filters[key]);
 
         $scope.columns.forEach(function(col){
           if(!col.destroy && !col.editUrl && !col.quickEdit ){
@@ -182,7 +176,7 @@
 
         $scope.query = query;
         $scope.page = page;
-        //console.log('query', $scope.query);
+        console.log('query', $scope.query);
 
         $scope.apiResource(page,query)
           .then(

@@ -108,7 +108,6 @@ function QuotationsListCtrl(
 
     quotationService.getCountByUser($rootScope.user.id, dateRange)
       .then(function(res){
-        console.log(res);
         vm.quotationsData.todayQty = res.data.dateRange;
         vm.quotationsData.rangeQty = res.data.fortnight;
         vm.quotationsData.quantities = {
@@ -126,6 +125,7 @@ function QuotationsListCtrl(
   function init(){
     var monthRange = commonService.getMonthDateRange();
     var fortnightRange = commonService.getFortnightRange();
+    console.log('fortnightRange', fortnightRange);
     vm.startDate = fortnightRange.start.toString();
     vm.endDate = fortnightRange.end.toString();
     vm.filters = {
@@ -164,7 +164,6 @@ function QuotationsListCtrl(
     var params = angular.extend(dateRange, {all:false});
     quotationService.getTotalsByUser($rootScope.user.id, params)
       .then(function(res){
-        console.log(res);
         vm.totalDateRange = res.data.dateRange || 0;
       })
       .catch(function(err){
@@ -198,7 +197,6 @@ function QuotationsListCtrl(
   }
 
   function updateSellersTotals(){
-    console.log('updateSellersTotals');
     if(vm.sellers){
       var promisesTotals = [];
       for(var i = 0; i< vm.sellers.length; i++){
@@ -212,7 +210,6 @@ function QuotationsListCtrl(
       }
       $q.all(promisesTotals)
         .then(function(totals){
-          console.log(totals);
           vm.sellers = vm.sellers.map(function(s, index){
             s.total = totals[index].data.dateRange;
             return s;
@@ -241,7 +238,6 @@ function QuotationsListCtrl(
           promisesTotals.push(quotationService.getTotalsByUser(s.id, params));
           return s;
         });
-        console.log(vm.sellers);
         return $q.all(promisesTotals);
       })
       .then(function(totals){
@@ -249,7 +245,7 @@ function QuotationsListCtrl(
           s.total = totals[i].data.dateRange;
           return s;
         });
-        console.log(vm.sellers);
+        console.log('vm.sellers', vm.sellers)
       })
       .catch(function(err){
         console.log(err);
