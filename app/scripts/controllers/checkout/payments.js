@@ -306,7 +306,7 @@ function CheckoutPaymentsCtrl(
       ){
       vm.isLoadingPayments = true;
       vm.isLoading = true;
-      quotationService.addPayment(vm.quotation.id, payment)
+      paymentService.addPayment(vm.quotation.id, payment)
         .then(function(res){
           if(res.data){
             var quotation = res.data;

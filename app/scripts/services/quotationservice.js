@@ -10,7 +10,6 @@
 
       var service = {
         addDetail: addDetail,
-        addPayment: addPayment,
         addProduct: addProduct,
         addRecord: addRecord,
         addMultipleProducts: addMultipleProducts,
@@ -337,11 +336,6 @@
             console.log(err);
           });
         }
-      }
-
-      function addPayment(quotationId, params){
-        var url = '/quotation/addpayment/' + quotationId;
-        return api.$http.post(url,params);
       }
 
       function loadProductFilters(details){

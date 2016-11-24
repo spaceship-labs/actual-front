@@ -5,14 +5,15 @@
     .module('dashexampleApp')
     .factory('paymentService', paymentService);
 
-  function paymentService(api, $filter){
+  function paymentService(api, $filter, $http){
     var service = {
+      addPayment: addPayment,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getRefundsOptions: getRefundsOptions
     };
 
-var paymentGroups = [
+  var paymentGroups = [
       {
         group:1,
         discountKey:'discountPg1',
@@ -526,7 +527,12 @@ var paymentGroups = [
     function getRefundsOptions(){
       return refundsOptions;
     }
-    
+
+    function addPayment(quotationId, params){
+      var url = '/payment/add/' + quotationId;
+      return api.$http.post(url,params);
+    }    
+  
     return service;
   }
 
