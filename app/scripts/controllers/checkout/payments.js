@@ -678,7 +678,7 @@ function CheckoutPaymentsCtrl(
 
   function isMinimumPaid(){
     if(vm.quotation){
-      var minPaidPercentage = vm.quotation.minPaidPercentage || 100;
+      var minPaidPercentage = 100;
       if( getPaidPercentage() >= minPaidPercentage ){
         return true;
       }
