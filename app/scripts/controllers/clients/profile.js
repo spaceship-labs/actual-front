@@ -159,20 +159,33 @@ function ClientProfileCtrl(
     vm.client.Birthdate = pikaday._d;
   }
 
-  function updatePersonalData(){
-    vm.isLoading = true;
-    var params = angular.copy(vm.client);
-    delete params.FiscalAddress;
-    delete params.Contacts;
-    console.log('params', params);
-    clientService.update(vm.client.CardCode, params).then(function (res){
-      console.log(res);
+  function updatePersonalData(form){
+    var isValidEmail = commonService.isValidEmail(
+      vm.client.E_Mail,
+      {excludeActualDomains: true}
+    );
+    if(form.$valid && isValidEmail ){
+      vm.isLoading = true;
+      var params = angular.copy(vm.client);
+      delete params.FiscalAddress;
+      delete params.Contacts;
+      console.log('params', params);
+      clientService.update(vm.client.CardCode, params).then(function (res){
+        console.log(res);
+        vm.isLoading = false;
+        dialogService.showDialog('Datos personales actualizados');
+      }).catch(function(err){
+        console.log(err);
+        dialogService.showDialog('Hubo un error, revisa los campos');
+        vm.isLoading = false;
+      });
+    }else if(!isValidEmail){
       vm.isLoading = false;
-      dialogService.showDialog('Datos personales actualizados');
-    }).catch(function(err){
-      console.log(err);
-      dialogService.showDialog('Hubo un error, revisa los campos');
-    });
+      dialogService.showDialog('Email no valido');
+    }else{
+      vm.isLoading = false;
+      dialogService.showDialog('Campos incompletos');
+    }
   }
 
 
@@ -188,7 +201,11 @@ function ClientProfileCtrl(
 
 
   function updateContact(form, contact){
-    if(form.$valid){
+    var isValidEmail = commonService.isValidEmail(
+      contact.E_Mail,
+      {excludeActualDomains: true}
+    );
+    if( form.$valid && isValidEmail ){
       contact.isLoading = true;
       var params = _.clone(contact);
       delete params.formWrapper;
@@ -205,12 +222,23 @@ function ClientProfileCtrl(
       .catch(function(err){
         console.log(err);
         dialogService.showDialog('Hubo un error');
+        contact.isLoading = false;
       });
+    }else if(!isValidEmail){
+      vm.isLoading = false;
+      dialogService.showDialog('Email no valido');
+    }else{
+      vm.isLoading = false;
+      dialogService.showDialog('Campos incompletos');
     }
   }
 
   function createContact(form){
-    if(form.$valid){
+    var isValidEmail = commonService.isValidEmail(
+      vm.newContact.E_Mail,
+      {excludeActualDomains: true}
+    );
+    if(form.$valid && isValidEmail){
       vm.isLoading = true;
       console.log(vm.newContact);
       clientService.createContact(vm.client.CardCode,vm.newContact)
@@ -228,13 +256,21 @@ function ClientProfileCtrl(
           console.log(err);
           dialogService.showDialog('Hubo un error');
         });
+    }else if(!isValidEmail){
+      vm.isLoading = false;
+      dialogService.showDialog('Email no valido');
     }else{
+      vm.isLoading = false;
       dialogService.showDialog('Campos incompletos');
     }
   }
 
   function createOrUpdateFiscalAddress(form){
-    if(form.$valid){
+    var isValidEmail = commonService.isValidEmail(
+      vm.client.FiscalAddress.E_Mail,
+      {excludeActualDomains: true}
+    );
+    if(form.$valid && isValidEmail){
       var promises = [];
       var creating = false;
       vm.isLoading = true;
@@ -274,12 +310,14 @@ function ClientProfileCtrl(
           console.log(err);
           dialogService.showDialog('Hubo un error al guardar datos de facturación');
         });
-
-
-
+    }else if(!isValidEmail){
+      vm.isLoading = false;
+      dialogService.showDialog('Email no valido');
     }else{
-      dialogService.showDialog('Datos incompletos, revisa tus datos e intenta de nuevo');
+      vm.isLoading = false;
+      dialogService.showDialog('Campos incompletos');
     }
+
   }
 
 

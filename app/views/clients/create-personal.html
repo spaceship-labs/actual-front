@@ -1,4 +1,4 @@
-<section action="#" class="form-section-content">
+<form name="vm.createPersonalForm" class="form-section-content">
 
   <div class="checkbox-client-type">
     <md-checkbox
@@ -9,6 +9,7 @@
   </div>
 
   <div layout="row" ng-if="!vm.client.isMoral">
+    
     <div flex="20" class="input-element select-element-wrapper">
       <label><strong>Titulo</strong></label>
       <md-select
@@ -23,7 +24,7 @@
           ng-value="title.value"
         >
           {{title.label}}
-        </option>
+        </md-option>
       </md-select>
     </div>
 
@@ -42,7 +43,7 @@
           ng-value="gender.value"
         >
           {{gender.label}}
-        </option>
+        </md-option>
       </md-select>
     </div>
 
@@ -68,11 +69,16 @@
 
   <div layout="row">
     <div flex="50" class="input-element">
-      <label>
-        <strong>Nombre(s) del cliente
+      <label ng-show="!vm.client.isMoral">
+        <strong>Nombres
           <span class="hl-label">*</span>
         </strong>
       </label>
+      <label ng-show="vm.client.isMoral">
+        <strong>Razón social
+          <span class="hl-label">*</span>
+        </strong>
+      </label>      
       <div class="input-element-inner">
         <input
           type="text"
@@ -116,6 +122,7 @@
             name="phone"
             ng-model="vm.client.Phone1"
             placeholder="Lada + Número"
+            required
           >
         </div>
     </div>
@@ -133,6 +140,7 @@
           name="mobile"
           ng-model="vm.client.Cellular"
           placeholder="Lada + Número"
+          required
         >
       </div>
 
@@ -169,4 +177,5 @@
       </div>
     </div>
   </div>
-</section>
+
+</form>

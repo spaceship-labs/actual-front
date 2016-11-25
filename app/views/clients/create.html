@@ -2,11 +2,10 @@
   <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
 </div>
 
-<form
+<section
   name="createForm"
   novalidate
   ng-if="!vm.isLoading"
-  ng-submit="vm.create(createForm)"
   class="form-view container container-xlg">
   <h1><i class="icon-login"></i> <strong>NUEVO CLIENTE</strong></h1>
   <section class="form-view-content">
@@ -65,7 +64,7 @@
         Borrar todos los campos
       </button>
       <button
-        type="submit"
+        ng-click="vm.create(vm.createPersonalForm, vm.createFiscalForm, vm.createDeliveryForm)"
         class="form-view-btn form-view-btn-primary"
         flex
       >
@@ -75,4 +74,4 @@
 
   </section>
 
-</form>
+</section>

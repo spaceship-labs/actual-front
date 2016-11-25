@@ -25,13 +25,11 @@
   <div layout="row" layout-align="end end" class="form-view-filters">
     <div flex="30" class="input-element select-element-wrapper">
       <label><strong>Buscar sobre:</strong></label>
-      <select ng-model="vm.filters.SlpCode" class="select-element">
-        <option ng-selected="vm.user.SlpCode.id == vm.filters.SlpCode" ng-value="vm.user.SlpCode.id">
-          Mis clientes
-        </option>
-        <option ng-value="'none'">
-          Todos los clientes
-        </option>
+      <select 
+        ng-options="option.value as option.label for option in vm.filterOptions"
+        ng-model="vm.filters.SlpCode" 
+        class="select-element"
+      >
       </select>
     </div>
     <div flex="20">
