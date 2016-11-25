@@ -81,7 +81,9 @@ function ProductCtrl(
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);
-          loadVariants(vm.product);
+          $rootScope.$on('mainDataLoaded', function(ev, mainData){
+            loadVariants(vm.product);
+          });        
         }
         vm.isLoading = false;
         return productService.delivery(productId, activeStoreId);
@@ -131,8 +133,8 @@ function ProductCtrl(
           vm.hasVariants = checkIfHasVariants(vm.variants);
         });
     }else{
-      $rootScope.$on('activeStoreAssigned',function(e,data){
-        activeStore = data;
+      $rootScope.$on('mainDataLoaded',function(e,mainData){
+        activeStore = mainData.activeStore;
         getWarehouses(activeStore);
         productService.loadVariants(product, activeStore)
           .then(function(variants, activeStore){

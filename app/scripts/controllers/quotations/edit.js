@@ -89,8 +89,8 @@ function QuotationsEditCtrl(
   var EWALLET_GROUP_INDEX = 0;
 
 
-  $rootScope.$on('activeStoreAssigned', function(){
-    vm.activeStore = $rootScope.activeStore;
+  $rootScope.$on('mainDataLoaded', function(e, mainData){
+    vm.activeStore = mainData.activeStore;
   });
 
   function init(){
@@ -442,7 +442,7 @@ function QuotationsEditCtrl(
           );
           vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
         }
-        return $rootScope.getActiveQuotation();
+        return $rootScope.loadActiveQuotation();
       })
       .then(function(){
         deferred.resolve();
@@ -472,7 +472,7 @@ function QuotationsEditCtrl(
             updatedQuotation.Details
           );
         }
-        $rootScope.getActiveQuotation();
+        $rootScope.loadActiveQuotation();
       })
       .catch(function(err){
         $log.error(err);

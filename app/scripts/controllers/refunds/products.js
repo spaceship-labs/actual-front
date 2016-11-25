@@ -212,7 +212,7 @@ function RefundsProductsCtrl(
           );
           vm.order.DetailsGroups = deliveryService.groupDetails(vm.order.Details);
         }
-        return $rootScope.getActiveQuotation();
+        return $rootScope.loadActiveQuotation();
       })
       .then(function(){
         deferred.resolve();
@@ -242,7 +242,7 @@ function RefundsProductsCtrl(
             updatedQuotation.Details
           );
         }
-        $rootScope.getActiveQuotation();
+        $rootScope.loadActiveQuotation();
       })
       .catch(function(err){
         $log.error(err);

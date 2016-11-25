@@ -40,6 +40,7 @@
     	var groupedDetails = _.groupBy(details, function(detail){
     		var discountPercent = detail.discountPercent || 0;
     		var date = moment(detail.shipDate).startOf('day');
+    		console.log('detail', detail);
     		return detail.Product.ItemCode + '#' + date + discountPercent;
     	});
     	for(var key in groupedDetails){

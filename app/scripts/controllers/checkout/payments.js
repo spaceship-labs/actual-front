@@ -86,7 +86,7 @@ function CheckoutPaymentsCtrl(
         if($rootScope.activeStore){
           loadPaymentMethods();
         }else{
-          $rootScope.$on('activeStoreAssigned',function(e,data){
+          $rootScope.$on('mainDataLoaded',function(e,data){
             loadPaymentMethods();
           });
         }

@@ -66,8 +66,9 @@
       saveBroker: saveBroker,
       saveSource: saveSource
     });
-    $rootScope.getActiveQuotation = getActiveQuotation;
+    $rootScope.loadActiveQuotation = loadActiveQuotation;
 
+    init();
 
     function init(){
       vm.token = localStorageService.get('token');
@@ -79,7 +80,7 @@
         vm.searchingItemCode = true;
       }
       buildPointersSidenav();
-      getSiteInfo();
+      loadMainData();
       vm.isLoadingCategoriesTree = true;
       categoriesService.createCategoriesTree()
         .then(function(res){
@@ -97,11 +98,6 @@
         vm.quotation = quotation;
       });
 
-      if($rootScope.user){
-        getActiveStore();
-        getBrokers();
-        //getActiveQuotation();
-      }
       moment.locale('es');
     }
 
@@ -111,16 +107,6 @@
       }      
     }
 
-    function getSiteInfo(){
-      siteService.findByHandle('actual-group')
-        .then(function(res){
-          vm.site = res.data || {};
-          $rootScope.site = res.data || {};
-        })
-        .catch(function(err){
-          console.log(err);
-        });
-    }
 
     function buildMenuCategories(categoryTree){
       var menuCategories = [];
@@ -165,10 +151,101 @@
       }
 
       if($rootScope.user){
-        getActiveQuotation();
+        loadMainData();
       }      
-
     });    
+
+    function loadMainData(){
+      $q.all([
+        loadActiveQuotation(),
+        loadActiveStore(),
+        loadBrokers(),
+        loadSiteInfo()
+      ])
+      .then(function(data){
+        var mainData = {
+          activeQuotation: data[0],
+          activeStore: data[1],
+          brokers: data[2],
+          site: data[3]
+        };
+        $rootScope.$emit('mainDataLoaded', mainData);
+      })
+      .catch(function(err){
+        console.log('err', err);
+      });
+    }
+
+    function loadActiveStore() {
+      var deferred = $q.defer();
+      userService.getActiveStore()
+        .then(function(activeStore) {
+          vm.activeStore = activeStore;
+          $rootScope.activeStore = activeStore;
+          //$rootScope.$emit('activeStoreAssigned', activeStore);
+          deferred.resolve(activeStore);
+        })
+        .catch(function(err){
+          console.log(err);
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
+
+
+    function loadActiveQuotation(){
+      var deferred = $q.defer();
+      quotationService.getActiveQuotation()
+        .then(function(res){
+          $rootScope.activeQuotation = res.data;
+          vm.activeQuotation = res.data;
+          if(vm.activeQuotation && vm.activeQuotation.id){
+            quotationService.populateDetailsWithProducts(vm.activeQuotation)
+              .then(function(details){
+                $rootScope.activeQuotation.Details = details;
+                vm.activeQuotation.Details = details;
+                vm.activeQuotation.DetailsGroups = deliveryService.groupDetails(vm.activeQuotation.Details);
+                $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
+                deferred.resolve(vm.activeQuotation);
+              })
+              .catch(function(err){
+                console.log(err);
+                deferred.reject(err);
+              });
+          }
+        });
+      return deferred.promise;
+    }
+
+    function loadBrokers() {
+      var deferred = $q.defer();
+      userService.getBrokers()
+        .then(function(brokers) {
+          vm.brokers = brokers;
+          deferred.resolve(brokers);
+        })
+        .catch(function(err){
+          console.log(err);
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }    
+
+
+    function loadSiteInfo(){
+      var deferred = $q.defer();
+      siteService.findByHandle('actual-group')
+        .then(function(res){
+          vm.site = res.data || {};
+          $rootScope.site = res.data || {};
+          deferred.resolve(vm.site);
+        })
+        .catch(function(err){
+          console.log(err);
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
 
     function togglePointerSidenav(){
       $mdSidenav('right').toggle();
@@ -178,27 +255,6 @@
       return categoriesService.getCategoryIcon(handle);
     }
 
-    function getActiveQuotation(){
-      var deferred = $q.defer();
-      quotationService.getActiveQuotation().then(function(res){
-        $rootScope.activeQuotation = res.data;
-        vm.activeQuotation = res.data;
-        if($rootScope.activeQuotation){
-          quotationService.populateDetailsWithProducts(vm.activeQuotation)
-            .then(function(details){
-              $rootScope.activeQuotation.Details = details;
-              vm.activeQuotation.Details = details;
-              vm.activeQuotation.DetailsGroups = deliveryService.groupDetails(vm.activeQuotation.Details);
-              $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
-              deferred.resolve();
-            })
-            .catch(function(err){
-              console.log(err);
-            });
-        }
-      });
-      return deferred.promise;
-    }
 
     function validateUser(){
       var _token = localStorageService.get('token') || false;
@@ -233,7 +289,7 @@
     $scope.$on('$routeChangeStart', function(next, current) {
       vm.menuCategoriesOn = false;
       validateUser();
-      getSiteInfo();
+      loadSiteInfo();
       vm.menuCategories.forEach(function(category){
         category.isActive = false;
       });
@@ -266,14 +322,6 @@
       }
       return activeModule;
     }
-
-    /*
-    $rootScope.$on('newActiveQuotation', function(event, data){
-      if($rootScope.user){
-        getActiveQuotation();
-      }
-    });
-    */
 
 
     function toggleLoginModal(){
@@ -389,21 +437,6 @@
       });
     }
 
-    function getActiveStore() {
-      userService.getActiveStore().then(function(activeStore) {
-        console.log('getActiveStore', activeStore);
-        vm.activeStore = activeStore;
-        $rootScope.activeStore = activeStore;
-        $rootScope.$emit('activeStoreAssigned', activeStore);
-      });
-    }
-
-    function getBrokers() {
-      userService.getBrokers().then(function(brokers) {
-        vm.brokers = brokers;
-      });
-    }
-
     function saveBroker(broker) {
       localStorageService.set('broker', broker);
       togglePointerSidenav();
@@ -411,13 +444,11 @@
 
     function saveSource(source){
       if(source === 'Broker'){
-        console.log('broker',vm.activeQuotation.Broker);
         quotationService.updateBroker(vm.quotation, {brokerId:vm.activeQuotation.Broker})
           .then(function(res){
             vm.pointersLoading = false;
             togglePointerSidenav();
             dialogService.showDialog('Datos guardados');
-            console.log(res);
           })
           .catch(function(err){
             vm.pointersLoading = false;
@@ -444,8 +475,6 @@
         }
       }
     }
-
-    init();
 
     //$scope.$on('$destroy', $mdUtil.enableScrolling);
 

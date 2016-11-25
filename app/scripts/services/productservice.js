@@ -298,7 +298,7 @@
                     if($rootScope.activeQuotation){
                       product = substractProductStockByQuotationDetails(
                         product,
-                        $rootScope.activeQuotation.details
+                        $rootScope.activeQuotation.Details
                       );
                     }else{
                       console.log('no $rootScope.activeQuotation');

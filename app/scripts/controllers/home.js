@@ -27,13 +27,13 @@ function HomeCtrl(
     if($location.search().startQuotation){
       dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización')
     }
+    $rootScope.$on('mainDataLoaded', setCategoryStockProperty);
   }
 
-  $rootScope.$on('activeStoreAssigned', setCategoryStockProperty);
-
-  function setCategoryStockProperty(event, activeStore){
+  function setCategoryStockProperty(event, mainData){
+    var activeStore = mainData ?  mainData.activeStore : false;
     vm.stockProperty = 'productsNum';
-    if(activeStore && activeStore.code != 'proyectos'){
+    if(activeStore && activeStore.code !== 'proyectos'){
       vm.stockProperty = activeStore.code;
     }
   }

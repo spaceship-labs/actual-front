@@ -59,8 +59,8 @@ function SidebarCategories(
         }
       });
 
-      $rootScope.$on('activeStoreAssigned', function(e, data){
-        $scope.activeStore = data;
+      $rootScope.$on('mainDataLoaded', function(e, mainData){
+        $scope.activeStore = mainData.activeStore;
         $scope.storeCode = $scope.activeStore.code;
       });
 
