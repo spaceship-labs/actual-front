@@ -6,7 +6,14 @@
         .factory('productService', productService);
 
     /** @ngInject */
-    function productService($http, $q, api, storeService, localStorageService){
+    function productService(
+      $http, 
+      $q, 
+      api, 
+      storeService, 
+      localStorageService,
+      $rootScope
+    ){
       var FILTERS_VARIANTS = [
         {id:'5743703aef7d5e62e508e22d', key:'color', handle:'color', name: 'Color'},
         {id:'5743703aef7d5e62e508e223', key:'forma', handle:'forma', name: 'Forma'},
@@ -36,6 +43,7 @@
         searchByFilters: searchByFilters,
         sortProductImages: sortProductImages,
         searchCategoryByFilters: searchCategoryByFilters,
+        substractProductStockByQuotationDetails: substractProductStockByQuotationDetails,
         delivery: delivery
       };
 
@@ -286,7 +294,16 @@
                 FILTERS_VARIANTS.forEach(function (filter){
                   var values = _.where( product.FilterValues, { Filter: filter.id } );
                   values.forEach(function(val){
-                    console.log('product', product);
+
+                    if($rootScope.activeQuotation){
+                      product = substractProductStockByQuotationDetails(
+                        product,
+                        $rootScope.activeQuotation.details
+                      );
+                    }else{
+                      console.log('no $rootScope.activeQuotation');
+                    }
+
                     val.product = product.ItemCode;
                     val.stock   = product.Available;
                     val.stock   = product[activeStore.code];
@@ -308,6 +325,13 @@
           });
         return deferred.promise;
       }
+
+      function substractProductStockByQuotationDetails(product, details){
+        console.log('detials substractProductStockByQuotationDetails', details);
+        console.log('product substractProductStockByQuotationDetails', product);
+        return product;
+      }        
+
 
 
     }

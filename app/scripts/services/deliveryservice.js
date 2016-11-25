@@ -12,10 +12,10 @@
     	groupDeliveryDates2: groupDeliveryDates2,
     	groupDetails: groupDetails,
     	sortDeliveriesByHierarchy: sortDeliveriesByHierarchy,
-    	substractDeliveriesStockByDetails: substractDeliveriesStockByDetails
+    	substractDeliveriesStockByQuotationDetails: substractDeliveriesStockByQuotationDetails,
     };
 
-    function substractDeliveriesStockByDetails(details, deliveries, productId){
+    function substractDeliveriesStockByQuotationDetails(details, deliveries, productId){
     	details = details.filter(function(detail){
     		return detail.Product === productId || detail.Product.id === productId;
     	});

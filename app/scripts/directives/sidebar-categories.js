@@ -22,7 +22,7 @@ function SidebarCategories(
     scope:{
       categoriesTree: '=',
       selectedCategoryId: '=',
-      activeStore: '='
+      activeStore: '=?activeStore'
     },
     controller: ['$scope', '$rootScope' ,function($scope, $rootScope) {
       $scope.storeCode = false;
@@ -61,6 +61,7 @@ function SidebarCategories(
 
       $rootScope.$on('activeStoreAssigned', function(e, data){
         $scope.activeStore = data;
+        $scope.storeCode = $scope.activeStore.code;
       });
 
       $scope.showSelectedCategoryId = function(){

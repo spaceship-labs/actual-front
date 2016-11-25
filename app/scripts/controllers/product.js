@@ -81,24 +81,7 @@ function ProductCtrl(
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);
-          if($rootScope.activeStore){
-            getWarehouses($rootScope.activeStore);
-            productService.loadVariants(vm.product, $rootScope.activeStore)
-              .then(function(variants){
-                vm.variants = variants;
-                vm.hasVariants = checkIfHasVariants(vm.variants);
-              });
-          }else{
-            $rootScope.$on('activeStoreAssigned',function(e,data){
-              activeStore = data;
-              getWarehouses(activeStore);
-              productService.loadVariants(vm.product)
-                .then(function(variants, activeStore){
-                  vm.variants = variants;
-                  vm.hasVariants = checkIfHasVariants(vm.variants);
-                });
-            });
-          }
+          loadVariants(vm.product);
         }
         vm.isLoading = false;
         return productService.delivery(productId, activeStoreId);
@@ -107,7 +90,7 @@ function ProductCtrl(
         deliveries = $filter('orderBy')(deliveries, 'date');        
         vm.available = deliveryService.getAvailableByDeliveries(deliveries);
         if($rootScope.activeQuotation){
-          deliveries = deliveryService.substractDeliveriesStockByDetails(
+          deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
             $rootScope.activeQuotation.Details, 
             deliveries,
             vm.product.id
@@ -137,6 +120,27 @@ function ProductCtrl(
       .catch(function(err){
         $log.error(err);
       });
+  }
+
+  function loadVariants(product){
+    if($rootScope.activeStore){
+      getWarehouses($rootScope.activeStore);
+      productService.loadVariants(product, $rootScope.activeStore)
+        .then(function(variants){
+          vm.variants = variants;
+          vm.hasVariants = checkIfHasVariants(vm.variants);
+        });
+    }else{
+      $rootScope.$on('activeStoreAssigned',function(e,data){
+        activeStore = data;
+        getWarehouses(activeStore);
+        productService.loadVariants(product, activeStore)
+          .then(function(variants, activeStore){
+            vm.variants = variants;
+            vm.hasVariants = checkIfHasVariants(vm.variants);
+          });
+      });
+    }
   }
 
   function checkIfHasVariants(variants){

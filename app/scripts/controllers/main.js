@@ -37,6 +37,7 @@
     var vm = this;
     angular.extend(vm, {
       cart: {},
+      activeStore: {},
       isActiveBackdrop: false,
       isActiveCart: false,
       isActiveLogin: false,
@@ -188,6 +189,7 @@
               $rootScope.activeQuotation.Details = details;
               vm.activeQuotation.Details = details;
               vm.activeQuotation.DetailsGroups = deliveryService.groupDetails(vm.activeQuotation.Details);
+              $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
               deferred.resolve();
             })
             .catch(function(err){
@@ -389,6 +391,7 @@
 
     function getActiveStore() {
       userService.getActiveStore().then(function(activeStore) {
+        console.log('getActiveStore', activeStore);
         vm.activeStore = activeStore;
         $rootScope.activeStore = activeStore;
         $rootScope.$emit('activeStoreAssigned', activeStore);
