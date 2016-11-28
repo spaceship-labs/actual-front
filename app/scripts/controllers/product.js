@@ -80,11 +80,11 @@ function ProductCtrl(
           $location.path('/product/' + productId, false);
           loadProductFilters(vm.product);
         }else{
-          loadProductFilters(vm.product);
-          $rootScope.$on('mainDataLoaded', function(ev, mainData){
-            loadVariants(vm.product);
-          });        
+          loadProductFilters(vm.product);       
         }
+        $rootScope.$on('mainDataLoaded', function(ev, mainData){
+          loadVariants(vm.product);
+        });         
         vm.isLoading = false;
         return productService.delivery(productId, activeStoreId);
       })
