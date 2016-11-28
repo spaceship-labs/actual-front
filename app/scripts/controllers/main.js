@@ -107,7 +107,6 @@
       }      
     }
 
-
     function buildMenuCategories(categoryTree){
       var menuCategories = [];
       menuCategories.push( _.findWhere( categoryTree, {Handle: 'muebles'} ) );
@@ -151,7 +150,7 @@
       }
 
       if($rootScope.user){
-        loadMainData();
+        //loadMainData();
       }      
     });    
 
@@ -202,9 +201,10 @@
           if(vm.activeQuotation && vm.activeQuotation.id){
             quotationService.populateDetailsWithProducts(vm.activeQuotation)
               .then(function(details){
-                $rootScope.activeQuotation.Details = details;
                 vm.activeQuotation.Details = details;
                 vm.activeQuotation.DetailsGroups = deliveryService.groupDetails(vm.activeQuotation.Details);
+                $rootScope.activeQuotation.Details = details;
+                $rootScope.activeQuotation.Details = vm.activeQuotation.DetailsGroups;              
                 $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
                 deferred.resolve(vm.activeQuotation);
               })
@@ -231,7 +231,6 @@
       return deferred.promise;
     }    
 
-
     function loadSiteInfo(){
       var deferred = $q.defer();
       siteService.findByHandle('actual-group')
@@ -247,6 +246,10 @@
       return deferred.promise;
     }
 
+    $rootScope.$on('newActiveQuotation', function(ev, newQuotationId){
+      loadActiveQuotation();
+    });
+
     function togglePointerSidenav(){
       $mdSidenav('right').toggle();
     }
@@ -254,7 +257,6 @@
     function getCategoryIcon(handle){
       return categoriesService.getCategoryIcon(handle);
     }
-
 
     function validateUser(){
       var _token = localStorageService.get('token') || false;
@@ -264,8 +266,6 @@
       if(_token){
           var expiration = jwtHelper.getTokenExpirationDate(_token);
           if(expiration <= new Date()){
-            console.log(expiration);
-            console.log('expirado');
             authService.logout(function(){
               if($location.path() != '/'){
                 $location.path('/');

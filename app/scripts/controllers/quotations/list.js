@@ -130,7 +130,6 @@ function QuotationsListCtrl(
   function init(){
     var monthRange = commonService.getMonthDateRange();
     var fortnightRange = commonService.getFortnightRange();
-    console.log('fortnightRange', fortnightRange);
     vm.startDate = fortnightRange.start.toString();
     vm.endDate = fortnightRange.end.toString();
     vm.filters = {
@@ -250,7 +249,6 @@ function QuotationsListCtrl(
           s.total = totals[i].data.dateRange;
           return s;
         });
-        console.log('vm.sellers', vm.sellers)
       })
       .catch(function(err){
         console.log(err);

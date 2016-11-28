@@ -21,6 +21,7 @@
         create: create,
         isValidStock: isValidStock,
         getActiveQuotation: getActiveQuotation,
+        getActiveQuotationId: getActiveQuotationId,
         getByClient: getByClient,
         getById: getById,
         getCountByUser: getCountByUser,
@@ -226,6 +227,10 @@
           return deferred.promise;
         }
         return getById(quotationId);
+      }
+
+      function getActiveQuotationId(){
+        return localStorageService.get('quotation');
       }
 
       function setActiveQuotation(quotationId){

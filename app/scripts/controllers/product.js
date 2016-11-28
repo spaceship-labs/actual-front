@@ -46,6 +46,7 @@ function ProductCtrl(
     getPiecesString: getPiecesString,
     init: init,
     isImmediateDelivery: isImmediateDelivery,
+    isLoading: true,
     resetCartQuantity: resetCartQuantity,
     trustAsHtml: trustAsHtml,
     sas:{
@@ -56,7 +57,9 @@ function ProductCtrl(
     }  
   });
 
-  vm.init($routeParams.id);
+  $rootScope.$on('mainDataLoaded', function(ev, mainData){
+    init($routeParams.id);
+  });
 
   function init(productId, reload){
     vm.filters               = [];
@@ -69,7 +72,6 @@ function ProductCtrl(
         return productService.formatSingleProduct(res.data.data);
       })
       .then(function(fProduct){
-        var promises = [];
         vm.product = fProduct;
         vm.mainPromo = vm.product.mainPromo;
         vm.lowestCategory = getLowestCategory();
@@ -81,23 +83,20 @@ function ProductCtrl(
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);       
-        }
-        $rootScope.$on('mainDataLoaded', function(ev, mainData){
           loadVariants(vm.product);
-        });         
+        }
+
         vm.isLoading = false;
         return productService.delivery(productId, activeStoreId);
       })
       .then(function(deliveries){
         deliveries = $filter('orderBy')(deliveries, 'date');        
         vm.available = deliveryService.getAvailableByDeliveries(deliveries);
-        if($rootScope.activeQuotation){
-          deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
-            $rootScope.activeQuotation.Details, 
-            deliveries,
-            vm.product.id
-          );
-        }
+        deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
+          $rootScope.activeQuotation.Details, 
+          deliveries,
+          vm.product.id
+        );
         vm.deliveries  = deliveries;
         vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
         vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
@@ -125,24 +124,12 @@ function ProductCtrl(
   }
 
   function loadVariants(product){
-    if($rootScope.activeStore){
-      getWarehouses($rootScope.activeStore);
-      productService.loadVariants(product, $rootScope.activeStore)
-        .then(function(variants){
-          vm.variants = variants;
-          vm.hasVariants = checkIfHasVariants(vm.variants);
-        });
-    }else{
-      $rootScope.$on('mainDataLoaded',function(e,mainData){
-        activeStore = mainData.activeStore;
-        getWarehouses(activeStore);
-        productService.loadVariants(product, activeStore)
-          .then(function(variants, activeStore){
-            vm.variants = variants;
-            vm.hasVariants = checkIfHasVariants(vm.variants);
-          });
+    getWarehouses($rootScope.activeStore);
+    productService.loadVariants(product, $rootScope.activeStore)
+      .then(function(variants){
+        vm.variants = variants;
+        vm.hasVariants = checkIfHasVariants(vm.variants);
       });
-    }
   }
 
   function checkIfHasVariants(variants){

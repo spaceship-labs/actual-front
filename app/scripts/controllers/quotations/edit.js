@@ -102,6 +102,11 @@ function QuotationsEditCtrl(
       .then(function(res){
         vm.isLoading = false;
         vm.quotation = res.data;
+        if(vm.quotation.id !== quotationService.getActiveQuotationId()){
+          quotationService.setActiveQuotation(vm.quotation.id);          
+        }
+        //console.log('setActiveQuotation')
+
         vm.status = 'Abierta';
         if(vm.quotation.Order || vm.quotation.isClosed){
           vm.status = 'Cerrada';
@@ -226,7 +231,6 @@ function QuotationsEditCtrl(
           });
           return mG;
         });
-        console.log('methodsGroups', methodsGroups);
         return methodsGroups;
       })
       .catch(function(err){
@@ -585,25 +589,20 @@ function QuotationsEditCtrl(
 
   function StockDialogController($scope, $mdDialog, $location, detailGroup){
     
-    function setActiveQuotation(){
-      quotationService.setActiveQuotation(vm.quotation.id);
-      $rootScope.$emit('newActiveQuotation', vm.quotation.id);
-    }
-
     $scope.cancel = function(){
       $mdDialog.cancel();
     };
 
     $scope.delete = function(){
       $mdDialog.hide();
-      setActiveQuotation();        
+      quotationService.setActiveQuotation(vm.quotation.id);        
       removeDetailsGroup(detailGroup);
     };
   
     $scope.modify = function(){
       $mdDialog.hide();   
       var itemCode = angular.copy(detailGroup.Product.ItemCode);  
-      setActiveQuotation(); 
+      quotationService.setActiveQuotation(vm.quotation.id);
       removeDetailsGroup(detailGroup).then(function(){
         $location.path('/product/' + itemCode);
       });
