@@ -326,9 +326,8 @@
         return deferred.promise;
       }
 
+      //TODO complete function
       function substractProductStockByQuotationDetails(product, details){
-        console.log('detials substractProductStockByQuotationDetails', details);
-        console.log('product substractProductStockByQuotationDetails', product);
         return product;
       }        
 

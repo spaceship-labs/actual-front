@@ -521,12 +521,10 @@ function CheckoutPaymentsCtrl(
       }
       
       if($scope.remaining < $scope.payment.min){
-        $scope.errMsg = 'El monto mínimo para esta forma de pago es '+$filter('currency')($scope.payment.min)+' pesos. Favor de seleccionar otra forma de pago.';
+        $scope.errMsg = 'El monto mínimo para esta forma de pago es '+$filter('currency')($scope.payment.min)+' pesos.';
       }
       else{
-        $scope.errMsg = 'El monto mínimo para esta forma de pago es ' + $filter('currency')($scope.payment.min) + ' pesos. ';
-        $scope.errMsg += 'Por lo mismo, el monto que se puede aplicar es ' + $filter('currency')($scope.payment.remaining) + ' pesos ' ;
-        $scope.errMsg += 'o una cantidad entre $0.01 peso y '+ $filter('currency')($scope.payment.remaining - $scope.payment.min) +' pesos.';
+        $scope.errMsg = 'Favor de aplicar el saldo total';
       }
       return false;
     }; 

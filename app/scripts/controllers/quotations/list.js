@@ -50,8 +50,13 @@ function QuotationsListCtrl(
       dateTime: true
     },
     {
-      key:'Acciones',
-      label:'Acciones',
+      key:'source',
+      label:'Fuente',
+      defaultValue:'-'
+    },
+    {
+      key:'Acceder',
+      label:'Acceder',
       propId: 'id',
       actions:[
         {url:'/quotations/edit/',type:'edit'},

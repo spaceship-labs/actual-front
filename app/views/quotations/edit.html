@@ -81,6 +81,11 @@
       </div>
     </div>
 
+    <div ng-show="vm.quotation.source" class="quotation-data-row">
+      <label>¿Cómo se entero de Actual?</label>
+      <p>{{vm.quotation.source}}</p>
+    </div>
+
     <div class="quotation-data-row quotation-validity">
       <label>Vigencia</label>
       <p>Hasta agotar existencias y sujeto a términos de promociones.</p>
