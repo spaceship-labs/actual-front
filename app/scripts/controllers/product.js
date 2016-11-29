@@ -93,7 +93,8 @@ function ProductCtrl(
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);
-          if($rootScope.activeStore){       
+          if($rootScope.activeStore){ 
+            loadWarehouses($rootScope.activeStore);
             loadVariants(vm.product);
           }
         }
@@ -104,11 +105,13 @@ function ProductCtrl(
       .then(function(deliveries){
         deliveries = $filter('orderBy')(deliveries, 'date');        
         vm.available = deliveryService.getAvailableByDeliveries(deliveries);
-        deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
-          $rootScope.activeQuotation.Details, 
-          deliveries,
-          vm.product.id
-        );
+        if($rootScope.activeQuotation){
+          deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
+            $rootScope.activeQuotation.Details, 
+            deliveries,
+            vm.product.id
+          );
+        }
         vm.deliveries  = deliveries;
         vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
         vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
@@ -136,7 +139,6 @@ function ProductCtrl(
   }
 
   function loadVariants(product){
-    getWarehouses($rootScope.activeStore);
     productService.loadVariants(product, $rootScope.activeStore)
       .then(function(variants){
         vm.variants = variants;
@@ -170,7 +172,7 @@ function ProductCtrl(
     return name;
   }
 
-  function getWarehouses(activeStore){
+  function loadWarehouses(activeStore){
     api.$http.get('/company/find')
       .then(function(res) {
         vm.warehouses = res.data;
