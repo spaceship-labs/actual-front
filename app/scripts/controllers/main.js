@@ -169,6 +169,7 @@
           brokers: data[2],
           site: data[3]
         };
+        console.log('mainData', mainData);
         $rootScope.$emit('mainDataLoaded', mainData);
         $rootScope.isMainDataLoaded = true;
       })

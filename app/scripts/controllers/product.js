@@ -57,6 +57,7 @@ function ProductCtrl(
     }  
   });
 
+  /*
   if($rootScope.isMainDataLoaded){
     console.log('mainData previously loaded');
     init($routeParams.id);
@@ -67,6 +68,8 @@ function ProductCtrl(
       init($routeParams.id);
     });
   }
+  */
+  init($routeParams.id);
 
   function init(productId, reload){
     vm.filters               = [];
@@ -89,8 +92,10 @@ function ProductCtrl(
           $location.path('/product/' + productId, false);
           loadProductFilters(vm.product);
         }else{
-          loadProductFilters(vm.product);       
-          loadVariants(vm.product);
+          loadProductFilters(vm.product);
+          if($rootScope.activeStore){       
+            loadVariants(vm.product);
+          }
         }
 
         vm.isLoading = false;
