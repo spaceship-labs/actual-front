@@ -3190,9 +3190,8 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   width: 100%;
   padding: 6px;
 }
-.records-view .records-table .record-item-block img{
-  max-width: 80px;
-}
+.records-view .records-table .record-item-block img{max-width: 80px;}
+.records-view .note{font-size: 12px;}
 
 /*-------------/
   #CHECKOUT-VIEW

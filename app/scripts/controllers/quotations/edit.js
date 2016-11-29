@@ -336,6 +336,7 @@ function QuotationsEditCtrl(
         })
         .catch(function(err){
           $log.error(err);
+          vm.isLoadingRecords = false;
         });
     }
   }

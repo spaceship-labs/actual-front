@@ -30,14 +30,26 @@
           <div flex="30" class="input-element select-element-wrapper">
             <label><strong>Fecha de seguimiento</strong></label>
             <div class="input-element-inner">
-              <input pikaday="vm.newRecord.date" readonly type="text" on-select="onPikadaySelect(pikaday)">
+              <input 
+                ng-if="!vm.isLoadingRecords" 
+                pikaday="vm.newRecord.date" 
+                readonly 
+                type="text" 
+                on-select="onPikadaySelect(pikaday)"
+              >
             </div>
           </div>
 
           <div flex="30" class="input-element select-element-wrapper">
             <label><strong>Hora de seguimiento</strong></label>
             <div class="input-element-inner">
-              <input type="text" ui-timepicker ui-timepicker="vm.timePickerOptions"  ng-model="vm.newRecord.time">
+              <input
+                ng-if="!vm.isLoadingRecords" 
+                type="text" 
+                ui-timepicker 
+                ui-timepicker="vm.timePickerOptions"  
+                ng-model="vm.newRecord.time"
+              >
             </div>
           </div>
 
@@ -62,6 +74,10 @@
             </a>
           </div>
         </div>
+        <p ng-show="vm.newRecord.file" class="note">
+          1 imagen a subir
+        </p>
+        <p class="note">Limite de tamaño para imagenes: 2mb</p>
 
         <input
           type="submit"
