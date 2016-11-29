@@ -155,6 +155,7 @@
     });    
 
     function loadMainData(){
+      console.log('LOADING MAIN DATA');
       $q.all([
         loadActiveQuotation(),
         loadActiveStore(),
@@ -169,6 +170,7 @@
           site: data[3]
         };
         $rootScope.$emit('mainDataLoaded', mainData);
+        $rootScope.isMainDataLoaded = true;
       })
       .catch(function(err){
         console.log('err', err);

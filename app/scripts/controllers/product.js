@@ -57,9 +57,13 @@ function ProductCtrl(
     }  
   });
 
-  $rootScope.$on('mainDataLoaded', function(ev, mainData){
+  if($rootScope.isMainDataLoaded){
     init($routeParams.id);
-  });
+  }else{
+    $rootScope.$on('mainDataLoaded', function(ev, mainData){
+      init($routeParams.id);
+    });
+  }
 
   function init(productId, reload){
     vm.filters               = [];
