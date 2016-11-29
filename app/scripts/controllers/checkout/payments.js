@@ -515,12 +515,17 @@ function CheckoutPaymentsCtrl(
         $scope.errMsg = '';
         return true;
       }
-      else if( ($scope.payment.remaining - $scope.payment.ammount) >= $scope.payment.min ){
+      else if( ($scope.payment.remaining - $scope.payment.ammount) >= $scope.payment.min && 
+        $scope.payment.ammount >= $scope.payment.min
+      ){
         $scope.errMsg = '';
         return true;
       }
       
       if($scope.remaining < $scope.payment.min){
+        $scope.errMsg = 'El monto mínimo para esta forma de pago es '+$filter('currency')($scope.payment.min)+' pesos.';
+      }
+      else if($scope.payment.ammount < $scope.payment.min){
         $scope.errMsg = 'El monto mínimo para esta forma de pago es '+$filter('currency')($scope.payment.min)+' pesos.';
       }
       else{
