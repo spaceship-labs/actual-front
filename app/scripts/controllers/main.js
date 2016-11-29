@@ -24,7 +24,6 @@
     productService,
     categoriesService,
     quotationService,
-    jwtHelper,
     localStorageService,
     userService,
     siteService,
@@ -261,37 +260,9 @@
       return categoriesService.getCategoryIcon(handle);
     }
 
-    function validateUser(){
-      var _token = localStorageService.get('token') || false;
-      var _user = localStorageService.get('user') || false;
-
-      //Check if token is expired
-      if(_token){
-          var expiration = jwtHelper.getTokenExpirationDate(_token);
-          if(expiration <= new Date()){
-            authService.logout(function(){
-              if($location.path() != '/'){
-                $location.path('/');
-              }
-            });
-          }else{
-            userService.getUser(_user.id).then(function(res){
-              _user = res.data.data;
-              localStorageService.set('user', _user);
-              localStorageService.set('activeStore', _user.activeStore);              
-              $rootScope.user = _user;
-            });
-          }
-      }else{
-        console.log('no hay token');
-        $location.path('/');
-      }
-
-    }
-
     $scope.$on('$routeChangeStart', function(next, current) {
       vm.menuCategoriesOn = false;
-      validateUser();
+      authService.runPolicies();
       loadSiteInfo();
       vm.menuCategories.forEach(function(category){
         category.isActive = false;
@@ -308,21 +279,37 @@
     function getActiveModule(){
       var activeModule = false;
       var path = $location.path();
+      var policiesPaths = [
+        '/politicas-de-entrega',
+        '/politicas-de-garantia',
+        '/politicas-de-almacenaje',
+        '/politicas-de-instalacion-y-ensamble'
+      ];      
       if(path.indexOf('dashboard') >= 0){
         activeModule = 'dashboard';
-      }else if(path.indexOf('addquotation') >= 0){
+      }
+      else if(path.indexOf('addquotation') >= 0){
         activeModule = 'addquotation';
-      }else if(path.indexOf('clients') >= 0){
+      }
+      else if(path.indexOf('clients') >= 0){
         activeModule = 'clients';
-      }else if(path.indexOf('quotations') >= 0){
+      }
+      else if(path.indexOf('quotations') >= 0){
         activeModule = 'quotations';
-      }else if(path.indexOf('orders') >= 0){
+      }
+      else if(path.indexOf('orders') >= 0){
         activeModule = 'orders';
-      }else if(path.indexOf('commissions') >= 0){
+      }
+      else if(path.indexOf('commissions') >= 0){
         activeModule = 'commissions';
-      }else if(path.indexOf('scorecard') >= 0){
+      }
+      else if(path.indexOf('scorecard') >= 0){
         activeModule = 'scorecard';
       }
+      else if(policiesPaths.indexOf(path) > -1){
+        activeModule = 'policies';
+      }
+      console.log('activeModule', activeModule);
       return activeModule;
     }
 
@@ -499,7 +486,6 @@
     'productService',
     'categoriesService',
     'quotationService',
-    'jwtHelper',
     'localStorageService',
     'userService',
     'siteService',

@@ -368,14 +368,6 @@ angular
           }
           return config;
         },
-        /*
-        responseError: function (response) {
-          if (response.status === 401 || response.status === 403) {
-            $location.path('/');
-          }
-          return $q.reject(response);
-        }
-        */
       };
     }]);
 
@@ -383,33 +375,18 @@ angular
 
 
 
-  .run(function(localStorageService, authService, jwtHelper, userService, $location, $rootScope, $route){
-      var _token = localStorageService.get('token') || false;
-      var _user  = localStorageService.get('user')  || false;
+  .run(function(
+    localStorageService, 
+    authService, 
+    jwtHelper, 
+    userService, 
+    $location, 
+    $rootScope,
+    $route
+  ){
 
-      //Check if token is expired
-      if(_token){
-          var expiration = jwtHelper.getTokenExpirationDate(_token);
-          if(expiration <= new Date()){
-            console.log('expirado');
-            authService.logout(function(){
-              $location.path('/');
-            });
-          }else{
-            userService.getUser(_user.id).then(function(res){
-              _user = res.data.data;
-              console.log('getting _user');
-              console.log(_user);
-              localStorageService.set('user', _user);
-              $rootScope.user = _user;
-            });
-          }
-      }else{
-        console.log('no hay token');
-      }
-
+      authService.runPolicies();
       //Configures $location.path second parameter, for no reloading
-
       var original = $location.path;
       $location.path = function (path, reload) {
         if (reload === false) {
@@ -421,7 +398,4 @@ angular
         }
         return original.apply($location, [path]);
       };
-
-
-
   });

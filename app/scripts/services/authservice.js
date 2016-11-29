@@ -6,7 +6,15 @@
         .factory('authService', authService);
 
     /** @ngInject */
-    function authService($http,$rootScope,$location,localStorageService, api){
+    function authService(
+      $http,
+      $rootScope,
+      $location,
+      localStorageService, 
+      api,
+      jwtHelper,
+      userService
+    ){
 
       var service = {
         authManager: authManager,
@@ -15,7 +23,8 @@
         logout: logout,
         dennyAccessBroker: dennyAccessBroker,
         dennyAccessStoreManager: dennyAccessStoreManager,
-        isBroker: isBroker
+        isBroker: isBroker,
+        runPolicies: runPolicies
       };
 
       return service;
@@ -39,7 +48,7 @@
         return api.$http.post(url, params);
       }
 
-      function logout(success) {
+      function logout(successCB) {
         localStorageService.remove('token');
         localStorageService.remove('user');
         localStorageService.remove('quotation');
@@ -50,7 +59,9 @@
         localStorageService.remove('companyActiveName');
         localStorageService.remove('currentQuotation');
         delete $rootScope.user;
-        success();
+        if(successCB){
+          successCB();
+        }
       }
 
       function dennyAccessBroker(){
@@ -74,6 +85,45 @@
       function isStoreManager(user){
         return !!(user && user.role && user.role.name == 'store manager');
       }
+
+      function runPolicies(){
+        var _token = localStorageService.get('token') || false;
+        var _user  = localStorageService.get('user')  || false;
+        var currentPath = $location.path();
+        var publicPaths = [
+          '/',
+          '/politicas-de-entrega',
+          '/politicas-de-garantia',
+          '/politicas-de-almacenaje',
+          '/politicas-de-instalacion-y-ensamble'
+        ];
+        var isPublicPath = function(path){
+          return publicPaths.indexOf(path) > -1;
+        };
+
+        console.log('location',$location.path());
+
+        //Check if token is expired
+        if(_token){
+            var expiration = jwtHelper.getTokenExpirationDate(_token);
+            if(expiration <= new Date()){
+              logout(function(){
+                $location.path('/');
+              });
+            }else{
+              userService.getUser(_user.id).then(function(res){
+                _user = res.data.data;
+                localStorageService.set('user', _user);
+                $rootScope.user = _user;
+              });
+            }
+        }else{
+          logout();
+          if(!isPublicPath(currentPath)){
+            $location.path('/');
+          }
+        }
+      }      
 
     }
 })();
