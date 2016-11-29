@@ -58,9 +58,12 @@ function ProductCtrl(
   });
 
   if($rootScope.isMainDataLoaded){
+    console.log('mainData previously loaded');
     init($routeParams.id);
   }else{
+    console.log('set mainDataLoaded on');
     $rootScope.$on('mainDataLoaded', function(ev, mainData){
+      console.log('on mainData loaded');
       init($routeParams.id);
     });
   }
