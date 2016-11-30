@@ -139,7 +139,7 @@
             </tr>
             <tr>
               <td>Descuento:</td>
-              <td><strong>-{{ vm.quotation.discount | currency }}</strong></td>
+              <td><strong><span ng-show="vm.quotation.discount > 0">-</span>{{ vm.quotation.discount | currency }}</strong></td>
             </tr>
           </table>
           <hr>

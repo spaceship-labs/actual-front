@@ -247,7 +247,8 @@
             if(goToSearch){
               $location.path('/').search({startQuotation:true});
             }else{
-              $location.path('/quotations/edit/'+quotation.id);
+              $location.path('/quotations/edit/'+quotation.id)
+                .search({startQuotation:true});
             }
           }
         });

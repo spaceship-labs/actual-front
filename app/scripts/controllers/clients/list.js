@@ -38,7 +38,8 @@ function ClientsListCtrl($location,$routeParams, $q ,productService, clientServi
   ];
   vm.apiResourceClients = clientService.getClients;
   vm.filters = {
-    SlpCode: $rootScope.user.Seller.SlpCode
+    SlpCode: 'none'
+    //SlpCode: $rootScope.user.Seller.SlpCode
   };
 
   function applyFilters(){
