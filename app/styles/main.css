@@ -2795,6 +2795,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 /*--------------/
   #QUOTATION-VIEW
 /*--------------*/
+.quotation-view .hr{display: none;}
 .quotation-view .quotation-data{
   margin: 10px 0;
   padding: 0 20px;
@@ -3954,6 +3955,15 @@ padding-left: 16px;
   .order-view .client-signature{
     display: block;
   }
+  .quotation-view .hr{
+    display: block!important;
+    height: 1px;
+    background: transparent;
+    width: 100%;
+    border: none;
+    border-top: solid 1px #aaa;
+  }
+
   .quotation-view .quotation-data p{font-size: 13px;} 
   
   .company-data,

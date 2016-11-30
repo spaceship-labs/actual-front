@@ -90,6 +90,7 @@
       <label>Vigencia</label>
       <p>Hasta agotar existencias y sujeto a términos de promociones.</p>
     </div>
+  <div class="hr"><hr /></div>
 
   </section>
 
@@ -97,7 +98,6 @@
     ng-submit="vm.continueBuying()" 
     class="cart-view container container-xxlg" 
   >
-
     <div layout="row" layout-align="space-between start">
 
       <section flex="70" class="cart-list">
@@ -120,7 +120,7 @@
           class="action-btn print-btn">
           AGREGAR NUEVO ARTÍCULO
         </a>
-
+        
         <div class="client-signature" layout="row">
           <span flex="25">Firma cliente:</span>
           <span flex class="signature-line"></span>
@@ -207,16 +207,19 @@
   </form>
 
   <section>
+    <div class="hr"><hr /></div>
     <ng-include src="'views/quotations/payments-options.html'">
     </ng-include>
   </section>
 
+  <div class="hr"><hr /></div>
   <ng-include 
     src="'views/quotations/transfers-table.html'"></ng-include>    
-
+  
   <ng-include 
     src="'views/quotations/quotation-records.html'"></ng-include>    
-
+  
+  <div class="hr"><hr /></div>
   <ng-include src="'views/quotations/quotation-texts.html'"></ng-include>
 
 </section>
