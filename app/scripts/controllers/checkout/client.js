@@ -88,7 +88,8 @@ function CheckoutClientCtrl(
   }
 
   function continueProcess(){
-    if(vm.quotation.Address && isClientFiscalDataValid(vm.client)){
+    //if(vm.quotation.Address && isClientFiscalDataValid(vm.client)){
+    if(vm.quotation.Address){
       vm.isLoading = true;
       var params = angular.copy(vm.quotation);
       quotationService.update(vm.quotation.id, params).then(function(res){
@@ -100,9 +101,11 @@ function CheckoutClientCtrl(
         dialogService.showDialog('Hubo un error: <br/>' + err);
       });
     }
+    /*
     else if(!isClientFiscalDataValid(vm.client) ){
       dialogService.showDialog('Datos fiscales incompletos');
     }
+    */
     else{
       dialogService.showDialog('Asigna una dirección de entrega');
     }

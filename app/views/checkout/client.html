@@ -159,6 +159,7 @@
           </div>
         </div>
 
+        <!--
         <input 
           type="submit" 
           value="CONTINUAR" 
@@ -167,6 +168,14 @@
           ng-disabled="!vm.isClientFiscalDataValid(vm.client)"
           ng-class="{'cart-view-btn-disabled' : !vm.isClientFiscalDataValid(vm.client) }"
           >
+        -->
+        <input 
+          type="submit" 
+          value="CONTINUAR" 
+          ng-click="vm.continueProcess()" 
+          class="cart-view-btn"
+          >
+
 
         <p class="cart-summary-note">*Precios en Pesos Mexicanos con impuestos incluidos.</p>
 
