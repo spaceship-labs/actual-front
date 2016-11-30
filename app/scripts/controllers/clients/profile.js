@@ -194,7 +194,7 @@ function ClientProfileCtrl(
       User: $rootScope.user.id,
       Client: vm.client.id,
     };
-    var goToSearch = true;
+    var goToSearch = false;
     vm.isLoading = true;
     quotationService.newQuotation(params, goToSearch);
   }
