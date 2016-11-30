@@ -102,6 +102,7 @@
         };
 
         console.log('location',$location.path());
+        console.log('user', _user);
 
         //Check if token is expired
         if(_token){
