@@ -113,11 +113,13 @@ function ClientProfileCtrl(
   }
 
   function setClientDefaultData(client){
-    if(client.FiscalAddress){
-      if(!client.FiscalAddress.E_Mail || client.FiscalAddress.E_Mail === ''){
-        client.FiscalAddress.E_Mail = angular.copy(client.E_Mail);
-      }
+    if(!client.FiscalAddress){
+      client.FiscalAddress = {};
     }
+    if(!client.FiscalAddress.E_Mail || client.FiscalAddress.E_Mail === ''){
+      client.FiscalAddress.E_Mail = angular.copy(client.E_Mail);
+    }
+
     client.Contacts = client.Contacts.map(function(contact){
       if(!contact.E_Mail || contact.E_Mail === ''){
         contact.E_Mail = angular.copy(client.E_Mail);
@@ -234,12 +236,12 @@ function ClientProfileCtrl(
   }
 
   function createContact(form){
+    vm.isLoading = true;
     var isValidEmail = commonService.isValidEmail(
       vm.newContact.E_Mail,
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){
-      vm.isLoading = true;
       console.log(vm.newContact);
       clientService.createContact(vm.client.CardCode,vm.newContact)
         .then(function(res){
