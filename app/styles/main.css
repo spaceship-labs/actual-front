@@ -3950,7 +3950,6 @@ padding-left: 16px;
   .only-show-print,
   .order-view .reduction p{font-size: 11px;}
   .order-view .price-reduction p{font-size: 12px;}
-  .order-view .layout {display: block;}
   .order-view .signature-section,
   .order-view .signature-section .signature-line,
   .show-print{display: block;}
