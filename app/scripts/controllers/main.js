@@ -98,6 +98,29 @@
       });
 
       moment.locale('es');
+
+      $(document).click(function(e){
+        var $target = $(event.target);
+        var profileHeader = $('#profile-header');
+        var profileHeaderTrigger = $('#profile-header-trigger');
+        var loginHeader = $('#login-header');
+        var loginHeaderTrigger = $('#login-header-trigger');
+
+        if(
+          !$target.is(profileHeader) && !$target.is(profileHeaderTrigger) && 
+          !profileHeaderTrigger.find($target).length && vm.isActiveProfileHeader
+        ){
+          toggleProfileModal();
+        }
+        else if(
+          !$target.is(loginHeader) && !$target.is(loginHeaderTrigger) && 
+          !loginHeaderTrigger.find($target).length && vm.isActiveLogin
+        ){
+          toggleLoginModal();
+        }
+        $scope.$apply();
+      });
+
     }
 
     function buildPointersSidenav(){
@@ -321,20 +344,29 @@
       }else{
         vm.isActiveLogin = true;
         vm.isActiveBackdrop = true;
-        vm.toggleProfileHeader = false;
+        vm.isActiveProfileHeader = false;
         vm.isActiveCart = false;
       }
     }
 
     function toggleProfileModal(){
-      if(vm.toggleProfileHeader){
-        vm.toggleProfileHeader = false;
+      console.log('toggleProfileModal');
+      if(vm.isActiveProfileHeader){
+        console.log('desactivar');
+        vm.isActiveProfileHeader = false;
         vm.isActiveBackdrop = false;
       }else{
-        vm.toggleProfileHeader = true;
+        console.log('activar');
+        vm.isActiveProfileHeader = true;
         vm.isActiveBackdrop = true;
         vm.isActiveCart = false;
       }
+    }
+
+    function hideProfileModal(){
+      console.log('esconder');
+      vm.isActiveProfileHeader = false;
+      vm.isActiveBackdrop = false;      
     }
 
     function activateLoginModal(){
@@ -358,7 +390,7 @@
       }else{
         vm.isActiveCart = true;
         vm.isActiveBackdrop = true;
-        vm.toggleProfileHeader = false;
+        vm.isActiveProfileHeader = false;
       }
     }
 

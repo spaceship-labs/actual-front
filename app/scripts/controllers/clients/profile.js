@@ -116,14 +116,24 @@ function ClientProfileCtrl(
     if(!client.FiscalAddress){
       client.FiscalAddress = {};
     }
-    if(!client.FiscalAddress.E_Mail || client.FiscalAddress.E_Mail === ''){
+    if(!client.FiscalAddress.E_Mail){
       client.FiscalAddress.E_Mail = angular.copy(client.E_Mail);
     }
 
     client.Contacts = client.Contacts.map(function(contact){
-      if(!contact.E_Mail || contact.E_Mail === ''){
+      if(!contact.E_Mail){
         contact.E_Mail = angular.copy(client.E_Mail);
       }
+      if(!contact.FirstName){
+        contact.FirstName = angular.copy(client.CardName);
+      }
+      if(!contact.Tel1){
+        contact.Tel1 = angular.copy(client.Phone1);
+      }
+      if(!contact.Cellolar){
+        contact.Cellolar = angular.copy(client.Cellular);
+      }
+
       return contact;
     });    
     return client;
