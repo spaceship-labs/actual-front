@@ -41,15 +41,12 @@ function CheckoutPaymentsCtrl(
     areMethodsDisabled: areMethodsDisabled,
     calculateRemaining: calculateRemaining,
     createOrder: createOrder,
-    clearActiveMethod: clearActiveMethod,
     chooseMethod: chooseMethod,
     getExchangeRate:getExchangeRate,
     getPaidPercentage: getPaidPercentage,
     isActiveGroup: isActiveGroup,
     isActiveMethod: isActiveMethod,
     isMinimumPaid: isMinimumPaid,
-    setMethod: setMethod
-    ,
 
     customFullscreen: $mdMedia('xs') || $mdMedia('sm'),
     singlePayment: true,
@@ -243,18 +240,18 @@ function CheckoutPaymentsCtrl(
   }
 
   function setMethod(method, group){
-    vm.activeMethod = method;
     method.storeType = $rootScope.activeStore.group;
     var options = paymentService.getPaymentOptionsByMethod(method);
     method.options = options;
-    vm.activeMethod.group = angular.copy(group);
-    vm.quotation.total = angular.copy(vm.activeMethod.total);
-    vm.quotation.subtotal = angular.copy(vm.activeMethod.subtotal);
-    vm.quotation.discount = angular.copy(vm.activeMethod.discount);
+    method.group = angular.copy(group);
+    vm.quotation.total = angular.copy(method.total);
+    vm.quotation.subtotal = angular.copy(method.subtotal);
+    vm.quotation.discount = angular.copy(method.discount);
+    return method;
   }
 
   function chooseMethod(method, group){
-    vm.setMethod(method, group);
+    vm.activeMethod = setMethod(method, group);
     var remaining = vm.quotation.total - vm.quotation.ammountPaid;
     vm.activeMethod.remaining = remaining;
     vm.activeMethod.maxAmmount = remaining;
@@ -277,7 +274,7 @@ function CheckoutPaymentsCtrl(
     var firstMethod = false;
     var group = false;
 
-    if(!vm.quotation.Payments || vm.quotation.Payments.length == 0){
+    if(!vm.quotation.Payments || vm.quotation.Payments.length === 0){
       group = vm.paymentMethodsGroups[0];
       firstMethod = group.methods[0];
     }else{
@@ -285,7 +282,7 @@ function CheckoutPaymentsCtrl(
       group = vm.paymentMethodsGroups[groupIndex];
       firstMethod = group.methods[0];
     }
-    vm.setMethod(firstMethod, group);
+    setMethod(firstMethod, group);
   }
 
   function setQuotationTotalsByGroup(quotation){
@@ -331,7 +328,7 @@ function CheckoutPaymentsCtrl(
           return;
         })
         .then(function(){
-          if(payment.type == EWALLET_TYPE){
+          if(payment.type === EWALLET_TYPE){
             updateEwalletBalance();
           }
         })
@@ -375,7 +372,7 @@ function CheckoutPaymentsCtrl(
         addPayment(payment);
       }, function() {
         console.log('Pago no aplicado');
-        vm.clearActiveMethod();
+        clearActiveMethod();
       });
     }else{
       commonService.showDialog('Revisa los datos, e intenta de nuevo');
