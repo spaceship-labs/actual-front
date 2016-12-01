@@ -3130,7 +3130,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   max-width: 80%;
 }
 
-.records-view .new-record .input-element{}
+.records-view .new-record .input-element textarea{
+  line-height:1em;
+  font-size:12px;
+}
 
 .records-view .records-table{
   margin-top: 30px;
