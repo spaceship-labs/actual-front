@@ -73,6 +73,7 @@ function ClientProfileCtrl(
     createOrUpdateFiscalAddress: createOrUpdateFiscalAddress,
     createQuotation: createQuotation,
     changeTab: changeTab,
+    contactAction: contactAction,
     onPikadaySelect: onPikadaySelect,
     updatePersonalData: updatePersonalData,
     apiResourceLeads: quotationService.getByClient,
@@ -80,6 +81,7 @@ function ClientProfileCtrl(
     updateContact: updateContact,
     createContact: createContact,
     openMapDialog: openMapDialog,
+    isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
     showNewAddressForm: showNewAddressForm
   });
@@ -133,6 +135,7 @@ function ClientProfileCtrl(
       if(!contact.Cellolar){
         contact.Cellolar = angular.copy(client.Cellular);
       }
+      contact.editEnabled = false;
 
       return contact;
     });    
@@ -211,6 +214,13 @@ function ClientProfileCtrl(
     quotationService.newQuotation(params, goToSearch);
   }
 
+  function contactAction(form, contact){
+    if(contact.editEnabled){
+      updateContact(form, contact);
+    }else{
+      contact.editEnabled = true;
+    }
+  }
 
   function updateContact(form, contact){
     var isValidEmail = commonService.isValidEmail(
@@ -276,6 +286,14 @@ function ClientProfileCtrl(
       dialogService.showDialog('Campos incompletos');
     }
   }
+
+  function isContactEditModeActive(){
+    if(_.findWhere(vm.client.Contacts, {editEnabled:true})){
+      return true;
+    }
+    return false;
+  }
+
 
   function createOrUpdateFiscalAddress(form){
     vm.isLoading = true;
