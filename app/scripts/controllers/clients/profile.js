@@ -278,44 +278,40 @@ function ClientProfileCtrl(
   }
 
   function createOrUpdateFiscalAddress(form){
+    vm.isLoading = true;
     var isValidEmail = commonService.isValidEmail(
       vm.client.FiscalAddress.E_Mail,
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){
-      var promises = [];
+      var promise;
       var creating = false;
-      vm.isLoading = true;
-      if(vm.client.FiscalAddress && vm.client.FiscalAddress.id){
-        promises.push(
-          clientService.updateFiscalAddress(
-            vm.client.FiscalAddress.id, 
-            vm.client.CardCode,vm.client.FiscalAddress
-          )
+      var params = angular.copy(vm.client.FiscalAddress);
+      params.FederalTaxID = angular.copy(vm.client.LicTradNum);
+      params.U_Correos = angular.copy(params.E_Mail);
+
+      if(params && params.id){
+        promise = clientService.updateFiscalAddress(
+          params.id, 
+          vm.client.CardCode,
+          params
         );
       }else{
         creating = true;
-        promises.push(
-          clientService.createFiscalAddress(
-            vm.client.CardCode,
-            vm.client.FiscalAddress
-          )
+        promise = clientService.createFiscalAddress(
+          vm.client.CardCode,
+          params
         );
       }
 
-      promises.push(
-        clientService.update(
-          vm.client.CardCode, {LicTradNum: vm.client.LicTradNum}
-        )
-      );
-
-      $q.all(promises)
+      promise
         .then(function(results){
           vm.isLoading = false;        
           if(creating){
             var created = results[0].data;
             vm.client.FiscalAddress = created;
           }
+          dialogService.showDialog('Datos guardados');
         })
         .catch(function(err){
           vm.isLoading = false;
