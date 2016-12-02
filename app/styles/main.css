@@ -215,7 +215,22 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 .action-btn-disabled{
   background: gray;
 }
-
+.action-btn-print{
+  background: #33BA2C;
+  color: #fff!important;
+  text-transform: uppercase;
+  border: 0;
+  display: block;
+  margin: 0;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  box-sizing:border-box;
+}
 /*-------------/
   #FORM ELEMENTS
 /*------------*/
@@ -2796,6 +2811,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   #QUOTATION-VIEW
 /*--------------*/
 .quotation-view .hr{display: none;}
+.quotation-view .style1 {border-top: 2px solid #000000;}
 .quotation-view .quotation-data{
   margin: 10px 0;
   padding: 0 20px;
@@ -2814,6 +2830,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-weight: 700;
   font-size: 12px;
 }
+.quotation-view .print-btn{font-size: 12px;}
 .quotation-view .quotation-data p{
   font-size: 18px;
   margin: 4px 0;
@@ -3961,6 +3978,7 @@ padding-left: 16px;
   .order-view .client-signature{
     display: block;
   }
+  .quotation-view .style1 {display: none;}
   .quotation-view .hr{
     display: block!important;
     height: 1px;
