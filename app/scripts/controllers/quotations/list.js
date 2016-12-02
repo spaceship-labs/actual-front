@@ -130,7 +130,8 @@ function QuotationsListCtrl(
   function init(){
     var monthRange = commonService.getMonthDateRange();
     var fortnightRange = commonService.getFortnightRange();
-    vm.startDate = fortnightRange.start.toString();
+    //vm.startDate = fortnightRange.start.toString();
+    vm.startDate = moment().startOf('year').toString();
     vm.endDate = fortnightRange.end.toString();
     vm.filters = {
       User: $rootScope.user.id,
