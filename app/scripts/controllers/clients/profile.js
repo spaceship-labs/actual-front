@@ -73,6 +73,7 @@ function ClientProfileCtrl(
     createOrUpdateFiscalAddress: createOrUpdateFiscalAddress,
     createQuotation: createQuotation,
     changeTab: changeTab,
+    contactAction: contactAction,
     onPikadaySelect: onPikadaySelect,
     updatePersonalData: updatePersonalData,
     apiResourceLeads: quotationService.getByClient,
@@ -80,6 +81,7 @@ function ClientProfileCtrl(
     updateContact: updateContact,
     createContact: createContact,
     openMapDialog: openMapDialog,
+    isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
     showNewAddressForm: showNewAddressForm
   });
@@ -113,15 +115,28 @@ function ClientProfileCtrl(
   }
 
   function setClientDefaultData(client){
-    if(client.FiscalAddress){
-      if(!client.FiscalAddress.E_Mail || client.FiscalAddress.E_Mail === ''){
-        client.FiscalAddress.E_Mail = angular.copy(client.E_Mail);
-      }
+    if(!client.FiscalAddress){
+      client.FiscalAddress = {};
     }
+    if(!client.FiscalAddress.E_Mail){
+      client.FiscalAddress.E_Mail = angular.copy(client.E_Mail);
+    }
+
     client.Contacts = client.Contacts.map(function(contact){
-      if(!contact.E_Mail || contact.E_Mail === ''){
+      if(!contact.E_Mail){
         contact.E_Mail = angular.copy(client.E_Mail);
       }
+      if(!contact.FirstName){
+        contact.FirstName = angular.copy(client.CardName);
+      }
+      if(!contact.Tel1){
+        contact.Tel1 = angular.copy(client.Phone1);
+      }
+      if(!contact.Cellolar){
+        contact.Cellolar = angular.copy(client.Cellular);
+      }
+      contact.editEnabled = false;
+
       return contact;
     });    
     return client;
@@ -194,11 +209,18 @@ function ClientProfileCtrl(
       User: $rootScope.user.id,
       Client: vm.client.id,
     };
-    var goToSearch = true;
+    var goToSearch = false;
     vm.isLoading = true;
     quotationService.newQuotation(params, goToSearch);
   }
 
+  function contactAction(form, contact){
+    if(contact.editEnabled){
+      updateContact(form, contact);
+    }else{
+      contact.editEnabled = true;
+    }
+  }
 
   function updateContact(form, contact){
     var isValidEmail = commonService.isValidEmail(
@@ -234,12 +256,12 @@ function ClientProfileCtrl(
   }
 
   function createContact(form){
+    vm.isLoading = true;
     var isValidEmail = commonService.isValidEmail(
       vm.newContact.E_Mail,
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){
-      vm.isLoading = true;
       console.log(vm.newContact);
       clientService.createContact(vm.client.CardCode,vm.newContact)
         .then(function(res){
@@ -265,45 +287,49 @@ function ClientProfileCtrl(
     }
   }
 
+  function isContactEditModeActive(){
+    if(_.findWhere(vm.client.Contacts, {editEnabled:true})){
+      return true;
+    }
+    return false;
+  }
+
+
   function createOrUpdateFiscalAddress(form){
+    vm.isLoading = true;
     var isValidEmail = commonService.isValidEmail(
       vm.client.FiscalAddress.E_Mail,
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){
-      var promises = [];
+      var promise;
       var creating = false;
-      vm.isLoading = true;
-      if(vm.client.FiscalAddress && vm.client.FiscalAddress.id){
-        promises.push(
-          clientService.updateFiscalAddress(
-            vm.client.FiscalAddress.id, 
-            vm.client.CardCode,vm.client.FiscalAddress
-          )
+      var params = angular.copy(vm.client.FiscalAddress);
+      params.FederalTaxID = angular.copy(vm.client.LicTradNum);
+      params.U_Correos = angular.copy(params.E_Mail);
+
+      if(params && params.id){
+        promise = clientService.updateFiscalAddress(
+          params.id, 
+          vm.client.CardCode,
+          params
         );
       }else{
         creating = true;
-        promises.push(
-          clientService.createFiscalAddress(
-            vm.client.CardCode,
-            vm.client.FiscalAddress
-          )
+        promise = clientService.createFiscalAddress(
+          vm.client.CardCode,
+          params
         );
       }
 
-      promises.push(
-        clientService.update(
-          vm.client.CardCode, {LicTradNum: vm.client.LicTradNum}
-        )
-      );
-
-      $q.all(promises)
+      promise
         .then(function(results){
           vm.isLoading = false;        
           if(creating){
             var created = results[0].data;
             vm.client.FiscalAddress = created;
           }
+          dialogService.showDialog('Datos guardados');
         })
         .catch(function(err){
           vm.isLoading = false;

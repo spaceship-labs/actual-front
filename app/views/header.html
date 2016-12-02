@@ -60,17 +60,16 @@
       >
 
         <!--IF ACTIVE QUOTATION-->
-        <div
+        <a
           ng-if="main.user && main.activeQuotation"
-          ng-click="main.toggleCartModal()"
           flex
-          href="#"
+          ng-href="/quotations/edit/{{main.activeQuotation.id}}"
           class="header-top-bar-menu-item"
         >
           <span class="cart-n-items" ng-class="{'cart-active' : main.activeQuotation}">{{main.activeQuotation.totalProducts}}</span>
           <i class="icon-carro" ng-class="{'cart-active' : main.activeQuotation}"></i>
           <ng-include ng-if="main.user && main.isActiveCart" src="'views/partials/cart-header.html'"></ng-include>
-        </div>
+        </a>
 
         <!--IF NOT ACTIVE QUOTATION-->
         <a
@@ -87,6 +86,7 @@
         <div
           ng-if="!main.user"
           flex
+          id="login-header-trigger"
           class="header-top-bar-menu-item">
           <i class="icon-login" ng-click="main.toggleLoginModal()"></i>
           <ng-include ng-if="!main.user && main.isActiveLogin" src="'views/partials/login-header.html'"></ng-include>
@@ -97,6 +97,7 @@
           ng-if="main.user"
           flex
           href="#"
+          id="profile-header-trigger"
           ng-click="main.toggleProfileModal()"
           class="header-top-bar-menu-item header-top-bar-menu-item-name"
         >
@@ -104,7 +105,9 @@
             <i class="icon-login"></i>
             <span >Bienvenido <strong>{{main.user.firstName}}</strong></span>
           </a>
-          <ng-include ng-if="main.toggleProfileHeader" src="'views/partials/profile-header.html'"></ng-include>
+          <ng-include 
+            ng-if="main.isActiveProfileHeader" 
+            src="'views/partials/profile-header.html'"></ng-include>
         </div>
 
 

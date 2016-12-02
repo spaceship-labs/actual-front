@@ -338,6 +338,21 @@ angular
         controller: 'WarrantyPolicyCtrl',
         controllerAs: 'warrantyPolicy'
       })
+      .when('/manual-de-cuidados-y-recomendaciones/pieles', {
+        templateUrl: 'views/manual/pieles.html',
+        controller: 'ManualPielesCtrl',
+        controllerAs: 'manual/pieles'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/aceros', {
+        templateUrl: 'views/manual/aceros.html',
+        controller: 'ManualAcerosCtrl',
+        controllerAs: 'manual/aceros'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/aluminios', {
+        templateUrl: 'views/manual/aluminios.html',
+        controller: 'ManualAluminiosCtrl',
+        controllerAs: 'manual/aluminios'
+      })
       .otherwise({
         redirectTo: '/'
       });

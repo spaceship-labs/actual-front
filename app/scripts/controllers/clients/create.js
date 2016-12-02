@@ -136,6 +136,7 @@ function ClientCreateCtrl($location, $rootScope, dialogService, commonService, c
     var areValidEmails = validateClientEmails(vm.client);
     var filledForms = getFilledForms(formsRelations);
     if(areFormsValid(filledForms) && createPersonalForm.$valid && areValidEmails){
+      console.log('creating client', vm.client);
       clientService.create(vm.client)
         .then(function(res){
           console.log(res);

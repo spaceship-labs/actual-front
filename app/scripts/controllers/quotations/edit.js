@@ -169,6 +169,9 @@ function QuotationsEditCtrl(
   }
 
   function showAlerts(){
+    if($location.search().startQuotation){
+      dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización')
+    }    
     if($location.search().createdClient){
       dialogService.showDialog('Cliente registrado');
     }

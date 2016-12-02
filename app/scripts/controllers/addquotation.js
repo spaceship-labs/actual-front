@@ -47,7 +47,7 @@ function AddquotationCtrl(
       Client: clientId,
       User: $rootScope.user.id
     };
-    var goToSearch = true;
+    var goToSearch = false;
     vm.isLoading = true;
     quotationService.newQuotation(params, goToSearch);
   }
