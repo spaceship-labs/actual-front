@@ -2868,6 +2868,21 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 8px;
 }
 .quotation-view .seller-data p{margin: 0;}
+.quotation-view .quotation-block-info p{
+  color: #6B6B6B;
+  margin: 4px 0;
+  font-size: 13px;
+}
+.quotation-view .quotation-block-info ul{
+  padding-left: 20px;
+  font-size: 13px;
+  margin: 0;
+  color: #6B6B6B;
+}
+.quotation-view .quotation-block-info ul strong{color: #6B6B6B;}
+.quotation-view .quotation-block-info strong{color: #000;}
+
+
 /*--------------/
   #CART-VIEW
 /*--------------*/
@@ -3723,13 +3738,8 @@ padding-left: 16px;
   margin: 0;
   color: #6B6B6B;
 }
-.order-view .order-block-info ul strong{
-  color: #6B6B6B;
-}
-
-.order-view .order-block-info strong{
-  color: #000;
-}
+.order-view .order-block-info ul strong{color: #6B6B6B;}
+.order-view .order-block-info strong{color: #000;}
 .order-view .records-view{margin-top: 35px;}
 .order-view .refunds-link{
   color: #000;
