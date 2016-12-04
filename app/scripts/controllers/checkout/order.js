@@ -90,8 +90,8 @@ function CheckoutOrderCtrl(
   }
 
   function calculateBalance(paid, total){
-    var paidRounded = commonService.roundCurrency(paid);
-    var totalRounded = commonService.roundCurrency(total);
+    //var paidRounded = commonService.roundCurrency(paid);
+    //var totalRounded = commonService.roundCurrency(total);
     return (paid - total);
     //return (paidRounded - totalRounded);
   }

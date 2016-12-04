@@ -130,25 +130,20 @@ function QuotationsListCtrl(
   function init(){
     var monthRange = commonService.getMonthDateRange();
     var fortnightRange = commonService.getFortnightRange();
-    vm.startDate = fortnightRange.start.toString();
-    vm.endDate = fortnightRange.end.toString();
+    vm.startDate = false;
+    vm.endDate = moment().endOf('day').toString();
     vm.filters = {
       User: $rootScope.user.id,
       isClosed: {'!': true}
     };
     vm.dateRange = {
-      field: 'createdAt',
+      field: 'tracing',
       start: vm.startDate,
       end: vm.endDate
     };
     vm.user = $rootScope.user;
-    vm.getQuotationsData();
-    vm.getTotalByDateRange(vm.user.id, {
-      startDate: vm.startDate,
-      endDate: vm.endDate,
-    });
-
-    vm.getTotalByDateRange(vm.user.id, {
+    getQuotationsData();
+    getTotalByDateRange(vm.user.id, {
       startDate: vm.startDate,
       endDate: vm.endDate,
     });
@@ -166,6 +161,7 @@ function QuotationsListCtrl(
 
   function getTotalByDateRange(userId, dateRange){
     var params = angular.extend(dateRange, {all:false});
+    console.log('getTotalByDateRange', params);
     quotationService.getTotalsByUser($rootScope.user.id, params)
       .then(function(res){
         vm.totalDateRange = res.data.dateRange || 0;
@@ -178,7 +174,7 @@ function QuotationsListCtrl(
   function applyFilters(){
     if(vm.dateStart._d && vm.dateEnd._d){
       vm.dateRange = {
-        field: 'createdAt',
+        field: 'tracing',
         start: vm.dateStart._d,
         end: moment(vm.dateEnd._d).endOf('day')
       };

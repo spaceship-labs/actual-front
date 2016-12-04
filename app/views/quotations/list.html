@@ -4,7 +4,7 @@
 
   <div layout="row" layout-align="space-between end" class="form-view-filters">
 
-    <div flex="40" class="date-filters">
+    <div flex="50" class="date-filters">
       <p>
         <strong>
           <i id="trigger-start-date-quotes" class="icon-pedidos"></i> DEL:
@@ -42,7 +42,7 @@
         class="select-element">
       </select>
     </div>
-    <div flex="20" class="input-element select-element-wrapper">
+    <div flex="15" class="input-element select-element-wrapper">
       <select 
         ng-init="vm.filters.isClosed = vm.closedOptions[0].value"
         ng-model="vm.filters.isClosed" 
@@ -52,7 +52,7 @@
       </select>
     </div>
 
-    <div flex="20">
+    <div flex="15">
       <a ng-click="vm.applyFilters()" href="#" class="action-btn">Aplicar filtros</a>
     </div>
   </div>

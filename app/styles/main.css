@@ -215,7 +215,22 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 .action-btn-disabled{
   background: gray;
 }
-
+.action-btn-print{
+  background: #33BA2C;
+  color: #fff!important;
+  text-transform: uppercase;
+  border: 0;
+  display: block;
+  margin: 0;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  box-sizing:border-box;
+}
 /*-------------/
   #FORM ELEMENTS
 /*------------*/
@@ -2796,6 +2811,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   #QUOTATION-VIEW
 /*--------------*/
 .quotation-view .hr{display: none;}
+.quotation-view .style1 {border-top: 2px solid #000000;}
 .quotation-view .quotation-data{
   margin: 10px 0;
   padding: 0 20px;
@@ -2814,6 +2830,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-weight: 700;
   font-size: 12px;
 }
+.quotation-view .print-btn{font-size: 12px;}
 .quotation-view .quotation-data p{
   font-size: 18px;
   margin: 4px 0;
@@ -2851,6 +2868,21 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 8px;
 }
 .quotation-view .seller-data p{margin: 0;}
+.quotation-view .quotation-block-info p{
+  color: #6B6B6B;
+  margin: 4px 0;
+  font-size: 13px;
+}
+.quotation-view .quotation-block-info ul{
+  padding-left: 20px;
+  font-size: 13px;
+  margin: 0;
+  color: #6B6B6B;
+}
+.quotation-view .quotation-block-info ul strong{color: #6B6B6B;}
+.quotation-view .quotation-block-info strong{color: #000;}
+
+
 /*--------------/
   #CART-VIEW
 /*--------------*/
@@ -2954,6 +2986,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 
 .cart-view .cart-summary{
   background: #F8F8F8;
+  margin-bottom: 8px;
   padding: 16px;
 }
 
@@ -3706,13 +3739,8 @@ padding-left: 16px;
   margin: 0;
   color: #6B6B6B;
 }
-.order-view .order-block-info ul strong{
-  color: #6B6B6B;
-}
-
-.order-view .order-block-info strong{
-  color: #000;
-}
+.order-view .order-block-info ul strong{color: #6B6B6B;}
+.order-view .order-block-info strong{color: #000;}
 .order-view .records-view{margin-top: 35px;}
 .order-view .refunds-link{
   color: #000;
@@ -3961,6 +3989,7 @@ padding-left: 16px;
   .order-view .client-signature{
     display: block;
   }
+  .quotation-view .style1 {display: none;}
   .quotation-view .hr{
     display: block!important;
     height: 1px;

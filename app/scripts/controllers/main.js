@@ -306,7 +306,21 @@
         '/politicas-de-entrega',
         '/politicas-de-garantia',
         '/politicas-de-almacenaje',
-        '/politicas-de-instalacion-y-ensamble'
+        '/politicas-de-instalacion-y-ensamble',
+      ];
+      var manualsPaths = [
+        '/manual-de-cuidados-y-recomendaciones/pieles',
+        '/manual-de-cuidados-y-recomendaciones/aceros',
+        '/manual-de-cuidados-y-recomendaciones/aluminios',
+        '/manual-de-cuidados-y-recomendaciones/cristales',
+        '/manual-de-cuidados-y-recomendaciones/cromados',
+        '/manual-de-cuidados-y-recomendaciones',
+        '/manual-de-cuidados-y-recomendaciones/maderas',
+        '/manual-de-cuidados-y-recomendaciones/piezas-plasticas',
+        '/manual-de-cuidados-y-recomendaciones/textiles',
+        '/manual-de-cuidados-y-recomendaciones/viniles',
+        '/manual-de-cuidados-y-recomendaciones/vinilos',
+        '/manual-de-cuidados-y-recomendaciones/pintura-electrostatica'
       ];      
       if(path.indexOf('dashboard') >= 0){
         activeModule = 'dashboard';
@@ -331,6 +345,9 @@
       }
       else if(policiesPaths.indexOf(path) > -1){
         activeModule = 'policies';
+      }
+      else if(manualsPaths.indexOf(path) > -1){
+        activeModule = 'manuals';
       }
       console.log('activeModule', activeModule);
       return activeModule;

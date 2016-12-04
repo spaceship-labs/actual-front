@@ -105,6 +105,8 @@
         <div ng-if="vm.isLoadingDetails" layout="row" layout-align="center center" class="loading-circle">
           <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
         </div>
+        
+        <!--<hr class="style1">-->
 
         <div ng-if="!vm.isLoadingDetails" class="cart-items">
           <ng-include 
@@ -112,15 +114,14 @@
             ng-repeat="detailGroup in vm.quotation.DetailsGroups track by $index" 
             src="'views/partials/product-cart-item.html'"></ng-include>    
         </div>
-
+        <hr>
         <a
           href="#"
           ng-if="!vm.quotation.Order && !vm.quotation.isClosed"
           ng-click="vm.addNewProduct()"
-          class="action-btn print-btn">
+          class="action-btn-print print-btn">
           AGREGAR NUEVO ARTÍCULO
         </a>
-        
         <div class="client-signature" layout="row">
           <span flex="25">Firma cliente:</span>
           <span flex class="signature-line"></span>
@@ -183,23 +184,26 @@
           </p>
 
         </div>
-
-        <a
-          ng-if="vm.quotation.Client"
-          href="#"
-          ng-click="vm.print()"
-          class="action-btn print-btn">
-          IMPRIMIR
-        </a>
-
-        <a
-          ng-if="vm.quotation.Client"
-          ng-click="vm.sendByEmail()"
-          href="#"
-          class="action-btn print-btn">
-          ENVIAR POR EMAIL
-        </a>
-
+        <div layout="row" layout-xs="column">
+          <div flex >
+            <a style="width:80%"
+              ng-if="vm.quotation.Client"
+              href="#"
+              ng-click="vm.print()"
+              class="action-btn-print print-btn">
+              IMPRIMIR
+            </a>
+          </div>
+          <div flex style="width:80%">
+            <a
+              ng-if="vm.quotation.Client"
+              ng-click="vm.sendByEmail()"
+              href="#"
+              class="action-btn-print print-btn">
+              ENVIAR POR EMAIL
+            </a>
+          </div>
+        </div>
       </aside>
 
     </div>
@@ -221,6 +225,9 @@
     src="'views/quotations/transfers-table.html'"></ng-include>    
     
   <div class="hr"><hr /></div>
+
+  <ng-include src="'views/quotations/quotation-seller-info.html'"></ng-include>
+
   <ng-include src="'views/quotations/quotation-texts.html'"></ng-include>
 
 </section>

@@ -353,6 +353,51 @@ angular
         controller: 'ManualAluminiosCtrl',
         controllerAs: 'manual/aluminios'
       })
+      .when('/manual-de-cuidados-y-recomendaciones/cristales', {
+        templateUrl: 'views/manual/cristales.html',
+        controller: 'ManualCristalesCtrl',
+        controllerAs: 'manual/cristales'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/cromados', {
+        templateUrl: 'views/manual/cromados.html',
+        controller: 'ManualCromadosCtrl',
+        controllerAs: 'manual/cromados'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones', {
+        templateUrl: 'views/manual.html',
+        controller: 'ManualCtrl',
+        controllerAs: 'manual'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/maderas', {
+        templateUrl: 'views/manual/maderas.html',
+        controller: 'ManualMaderasCtrl',
+        controllerAs: 'manual/maderas'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/piezas-plasticas', {
+        templateUrl: 'views/manual/piezas-plasticas.html',
+        controller: 'ManualPiezasPlasticasCtrl',
+        controllerAs: 'manual/piezasPlasticas'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/textiles', {
+        templateUrl: 'views/manual/textiles.html',
+        controller: 'ManualTextilesCtrl',
+        controllerAs: 'manual/textiles'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/viniles', {
+        templateUrl: 'views/manual/viniles.html',
+        controller: 'ManualVinilesCtrl',
+        controllerAs: 'manual/viniles'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/vinilos', {
+        templateUrl: 'views/manual/vinilos.html',
+        controller: 'ManualVinilosCtrl',
+        controllerAs: 'manual/vinilos'
+      })
+      .when('/manual-de-cuidados-y-recomendaciones/pintura-electrostatica', {
+        templateUrl: 'views/manual/pintura-electrostatica.html',
+        controller: 'ManualPinturaElectrostaticaCtrl',
+        controllerAs: 'manual/pinturaElectrostatica'
+      })
       .otherwise({
         redirectTo: '/'
       });

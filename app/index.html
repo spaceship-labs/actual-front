@@ -53,7 +53,7 @@
 
           <div layout="column" flex>
             <ng-include
-                ng-if="main.activeModule != 'policies'"
+                ng-if="main.activeModule !== 'policies' && main.activeModule !== 'manuals' "
                 src="'views/header.html'"></ng-include>
             <md-content ng-view autoscroll>
             </md-content>
@@ -243,7 +243,19 @@
         <script src="scripts/controllers/manual/aceros.js"></script>
         <script src="scripts/controllers/manual/aliminios.js"></script>
         <script src="scripts/controllers/manual/aluminios.js"></script>
+<<<<<<< HEAD
 >>>>>>> e6568e7547581bf123c44d56702f6a41b65b4e44
+=======
+        <script src="scripts/controllers/manual/cristales.js"></script>
+        <script src="scripts/controllers/manual/cromados.js"></script>
+        <script src="scripts/controllers/manual.js"></script>
+        <script src="scripts/controllers/manual/maderas.js"></script>
+        <script src="scripts/controllers/manual/piezas-plasticas.js"></script>
+        <script src="scripts/controllers/manual/textiles.js"></script>
+        <script src="scripts/controllers/manual/viniles.js"></script>
+        <script src="scripts/controllers/manual/vinilos.js"></script>
+        <script src="scripts/controllers/manual/pintura-electrostatica.js"></script>
+>>>>>>> 52dc75ae550c7cd087b7814b07a70b8e69d7254c
         <!-- endbuild -->
 
 </body>
