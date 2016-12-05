@@ -59,7 +59,7 @@ function SidebarCategories(
         }
       });
 
-      $rootScope.$on('mainDataLoaded', function(e, mainData){
+      var mainDataListener = $rootScope.$on('mainDataLoaded', function(e, mainData){
         $scope.activeStore = mainData.activeStore;
         $scope.storeCode = $scope.activeStore.code;
       });
@@ -154,6 +154,7 @@ function SidebarCategories(
 
       $scope.$on('$destroy', function() {
         $scope.cleanUp();
+        mainDataListener();
       });
 
       $scope.init();

@@ -122,11 +122,16 @@
       function formatSingleProduct(product){
         var deferred = $q.defer();
         var activeStoreId = localStorageService.get('activeStore');
-        storeService.getPromosByStore(activeStoreId).then(function(res){
-          storePromotions = res.data;
-          var fProduct = formatProduct(product);
-          deferred.resolve(fProduct);
-        });
+        storeService.getPromosByStore(activeStoreId)
+          .then(function(res){
+            storePromotions = res.data;
+            var fProduct = formatProduct(product);
+            deferred.resolve(fProduct);
+          })
+          .catch(function(err){
+            deferred.reject(err);
+          });
+          
         return deferred.promise;
       }
 
@@ -182,11 +187,15 @@
       function formatProducts(products){
         var deferred = $q.defer();
         var activeStoreId = localStorageService.get('activeStore');
-        storeService.getPromosByStore(activeStoreId).then(function(res){
-          storePromotions = res.data;
-          var formatted = products.map(formatProduct);
-          deferred.resolve(formatted);
-        });
+        storeService.getPromosByStore(activeStoreId)
+          .then(function(res){
+            storePromotions = res.data;
+            var formatted = products.map(formatProduct);
+            deferred.resolve(formatted);
+          })
+          .catch(function(err){
+            deferred.reject(err);
+          });
         return deferred.promise;
         //return formatted;
       }
@@ -295,6 +304,7 @@
                   var values = _.where( product.FilterValues, { Filter: filter.id } );
                   values.forEach(function(val){
 
+                    /*
                     if($rootScope.activeQuotation){
                       product = substractProductStockByQuotationDetails(
                         product,
@@ -303,6 +313,7 @@
                     }else{
                       console.log('no $rootScope.activeQuotation');
                     }
+                    */
 
                     val.product = product.ItemCode;
                     val.stock   = product.Available;

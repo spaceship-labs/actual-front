@@ -61,6 +61,14 @@ function CheckoutPaymentsCtrl(
   var CASH_USD_TYPE = 'cash-usd';
   var EWALLET_GROUP_INDEX = 0;
 
+  if($rootScope.isMainDataLoaded){
+    init();
+  }else{
+    var mainDataListener = $rootScope.$on('mainDataLoaded',function(e,data){
+      init();
+    });
+  }
+
   function init(){
     animateProgress();
     vm.isLoading = true;
@@ -79,14 +87,7 @@ function CheckoutPaymentsCtrl(
           $location.path('/checkout/order/' + vm.quotation.Order.id);
         }
         vm.quotation.ammountPaid = vm.quotation.ammountPaid || 0;
-
-        if($rootScope.activeStore){
-          loadPaymentMethods();
-        }else{
-          $rootScope.$on('mainDataLoaded',function(e,data){
-            loadPaymentMethods();
-          });
-        }
+        loadPaymentMethods();
 
         pmPeriodService.getActive().then(function(res){
           vm.validMethods = res.data;
@@ -690,7 +691,8 @@ function CheckoutPaymentsCtrl(
     return false;
   }
 
-  init();
-
+  $scope.$on('$destroy', function(){
+    mainDataListener();
+  });
 
 }

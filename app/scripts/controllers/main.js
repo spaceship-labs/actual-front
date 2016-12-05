@@ -79,7 +79,6 @@
         vm.searchingItemCode = true;
       }
       buildPointersSidenav();
-      loadMainData();
       vm.isLoadingCategoriesTree = true;
       categoriesService.createCategoriesTree()
         .then(function(res){
@@ -91,11 +90,13 @@
           console.log(err);
         });
 
+      /*
       $scope.$watch(function() {
         return localStorageService.get('quotation');
       }, function(quotation) {
         vm.quotation = quotation;
       });
+      */
 
       moment.locale('es');
 
@@ -177,7 +178,7 @@
     });    
 
     function loadMainData(){
-      console.log('LOADING MAIN DATA');
+      $rootScope.isMainDataLoaded = false;
       $q.all([
         loadActiveQuotation(),
         loadActiveStore(),
@@ -191,7 +192,6 @@
           brokers: data[2],
           site: data[3]
         };
-        console.log('mainData', mainData);
         $rootScope.$emit('mainDataLoaded', mainData);
         $rootScope.isMainDataLoaded = true;
       })
@@ -221,15 +221,14 @@
       var deferred = $q.defer();
       quotationService.getActiveQuotation()
         .then(function(res){
-          $rootScope.activeQuotation = res.data;
-          vm.activeQuotation = res.data;
-          if(vm.activeQuotation && vm.activeQuotation.id){
-            quotationService.populateDetailsWithProducts(vm.activeQuotation)
+          var quotation = res.data;
+          if(quotation && quotation.id){
+            quotationService.populateDetailsWithProducts(quotation)
               .then(function(details){
-                vm.activeQuotation.Details = details;
-                vm.activeQuotation.DetailsGroups = deliveryService.groupDetails(vm.activeQuotation.Details);
-                $rootScope.activeQuotation.Details = details;
-                $rootScope.activeQuotation.Details = vm.activeQuotation.DetailsGroups;              
+                quotation.Details = details;
+                quotation.DetailsGroups = deliveryService.groupDetails(details);
+                vm.activeQuotation = quotation;
+                $rootScope.activeQuotation = quotation;
                 $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
                 deferred.resolve(vm.activeQuotation);
               })
@@ -283,10 +282,13 @@
       return categoriesService.getCategoryIcon(handle);
     }
 
-    $scope.$on('$routeChangeStart', function(next, current) {
+    //$scope.$on('$routeChangeStart', function(next, current) {
+    $rootScope.$on("$locationChangeStart",function(event, next, current){
+
       vm.menuCategoriesOn = false;
       authService.runPolicies();
       loadSiteInfo();
+      loadMainData();
       vm.menuCategories.forEach(function(category){
         category.isActive = false;
       });
@@ -349,7 +351,6 @@
       else if(manualsPaths.indexOf(path) > -1){
         activeModule = 'manuals';
       }
-      console.log('activeModule', activeModule);
       return activeModule;
     }
 
@@ -367,13 +368,10 @@
     }
 
     function toggleProfileModal(){
-      console.log('toggleProfileModal');
       if(vm.isActiveProfileHeader){
-        console.log('desactivar');
         vm.isActiveProfileHeader = false;
         vm.isActiveBackdrop = false;
       }else{
-        console.log('activar');
         vm.isActiveProfileHeader = true;
         vm.isActiveBackdrop = true;
         vm.isActiveCart = false;
@@ -381,7 +379,6 @@
     }
 
     function hideProfileModal(){
-      console.log('esconder');
       vm.isActiveProfileHeader = false;
       vm.isActiveBackdrop = false;      
     }

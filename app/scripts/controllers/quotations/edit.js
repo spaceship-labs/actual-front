@@ -39,6 +39,7 @@ function QuotationsEditCtrl(
     api: api,
     brokers: [],
     isLoadingRecords: false,
+    isLoading: true,
     recordTypes: ['Email', 'Llamada', 'WhatsApp', 'Visita'],
     closeTypes: [
       'Cliente compró en otra tienda de la empresa.',
@@ -89,9 +90,14 @@ function QuotationsEditCtrl(
   var EWALLET_GROUP_INDEX = 0;
 
 
-  $rootScope.$on('mainDataLoaded', function(e, mainData){
-    vm.activeStore = mainData.activeStore;
-  });
+  if($rootScope.isMainDataLoaded){
+    vm.activeStore = $rootScope.activeStore;
+    init();
+  }else{
+    var mainDataListener = $rootScope.$on('mainDataLoaded', function(e, mainData){
+      init();
+    });
+  }
 
   function init(){
     vm.isLoading = true;
@@ -613,7 +619,9 @@ function QuotationsEditCtrl(
     };
   }
 
-  init();
+  $scope.$on('$destroy', function(){
+    mainDataListener();
+  });
 
 }
 

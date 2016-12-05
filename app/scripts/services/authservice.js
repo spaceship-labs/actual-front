@@ -113,8 +113,8 @@
           return publicPaths.indexOf(path) > -1;
         };
 
-        console.log('location',$location.path());
-        console.log('user', _user);
+        //console.log('location',$location.path());
+        //console.log('user', _user);
 
         //Check if token is expired
         if(_token){

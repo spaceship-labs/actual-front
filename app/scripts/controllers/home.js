@@ -12,11 +12,13 @@ angular.module('dashexampleApp')
 
 function HomeCtrl(
   $location, 
+  $scope,
   $rootScope,
   api, 
   dialogService
 ){
   var vm = this;
+  var mainDataListener;
   angular.extend(vm,{
     areProductsLoaded: false,
     api: api,
@@ -27,7 +29,7 @@ function HomeCtrl(
     if($location.search().startQuotation){
       dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización')
     }
-    $rootScope.$on('mainDataLoaded', setCategoryStockProperty);
+    mainDataListener = $rootScope.$on('mainDataLoaded', setCategoryStockProperty);
   }
 
   function setCategoryStockProperty(event, mainData){
@@ -39,10 +41,15 @@ function HomeCtrl(
   }
 
   init();
+
+  $scope.$on('$destroy', function(){
+    mainDataListener();
+  });
 }
 
 HomeCtrl.$inject = [
   '$location',
+  '$scope',
   '$rootScope',
   'api',
   'dialogService'
