@@ -11,28 +11,31 @@ angular.module('dashexampleApp')
   .controller('CheckoutOrderCtrl', CheckoutOrderCtrl);
 
 function CheckoutOrderCtrl(
-  api, 
+  api,
   commonService ,
-  $routeParams, 
-  $rootScope, 
-  $location, 
-  quotationService, 
+  $routeParams,
+  $rootScope,
+  $location,
+  quotationService,
   orderService,
-  deliveryService
+  deliveryService,
+  invoiceService
 ){
   var vm = this;
   var EWALLET_POSITIVE = 'positive';
   var EWALLET_NEGATIVE = 'negative';
 
 
-  angular.extend(vm,{
+  angular.extend(vm, {
     calculateBalance: calculateBalance,
     print: print,
     getPaymentType: getPaymentType,
     formatAddress: formatAddress,
     toggleRecord: toggleRecord,
     isLoading: false,
-    api: api
+    api: api,
+    generateInvoice: generateInvoice,
+    sendInvoice: sendInvoice,
   });
 
   function init(){
@@ -43,7 +46,7 @@ function CheckoutOrderCtrl(
       vm.order = res.data;
       vm.order.Details = vm.order.Details || [];
       vm.order.Address = vm.formatAddress(vm.order.Address);
-      
+
       vm.ewallet = {
         positive: getEwalletAmmount(vm.order.EwalletRecords, EWALLET_POSITIVE),
         negative: getEwalletAmmount(vm.order.EwalletRecords,EWALLET_NEGATIVE),
@@ -80,11 +83,15 @@ function CheckoutOrderCtrl(
       vm.isLoading = false;
     });
 
+    invoiceService.find($routeParams.id).then(function(invoices){
+      vm.invoiceExists = invoices.length > 0;
+    });
+
   }
 
   function calculateBalance(paid, total){
-    var paidRounded = commonService.roundCurrency(paid);
-    var totalRounded = commonService.roundCurrency(total);
+    //var paidRounded = commonService.roundCurrency(paid);
+    //var totalRounded = commonService.roundCurrency(total);
     return (paid - total);
     //return (paidRounded - totalRounded);
   }
@@ -95,7 +102,7 @@ function CheckoutOrderCtrl(
       return record.type === type;
     });
     var amount = ewalletRecords.reduce(function(acum, record){
-      acum += record.amount; 
+      acum += record.amount;
       return acum;
     },0);
     return amount;
@@ -130,7 +137,7 @@ function CheckoutOrderCtrl(
       type = 'Deposito';
     }else if(payment.type === 'ewallet'){
       type = 'Monedero electrónico';
-    }    
+    }
     return type;
   }
 
@@ -138,6 +145,28 @@ function CheckoutOrderCtrl(
     window.print();
   }
 
-  init();
+  function generateInvoice() {
+    invoiceService
+      .create($routeParams.id)
+      .then(function(res) {
+        vm.invoiceExists = true;
+        alert(res);
+      })
+      .catch(function(err) {
+        console.log('error', err);
+      });
+  }
 
+  function sendInvoice() {
+    invoiceService
+      .send($routeParams.id)
+      .then(function(res) {
+        alert(res);
+      })
+      .catch(function(err) {
+        console.log('error', err);
+      });
+  }
+
+  init();
 }

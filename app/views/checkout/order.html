@@ -22,15 +22,21 @@
   <div class="checkout-view-inner">
 
     <div class="checkout-title order-title" layout="row" layout-align="space-between center">
-        <h1 flex="60">
+        <h1 flex="40">
           <strong>
             <span><i class="icon-checkmark"></i> NÚMERO DE ORDEN: <span class="order-folio">#{{vm.order.folio}}</span>
           </strong>
         </h1>
-        <div flex="30" class="order-title-extra">
+        <div flex="50" class="order-title-extra">
           <span class="order-date">{{vm.order.createdAt | date:'d/MMM/yyyy'}}</span>
           <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
             <strong>IMPRIMIR RECIBO</strong>
+          </a>
+          <a href="#" ng-if="!vm.invoiceExists" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
+            <strong>GENERAR FACTURA</strong>
+          </a>
+          <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
+            <strong>ENVIAR FACTURA</strong>
           </a>
         </div>
     </div>
@@ -40,8 +46,8 @@
       <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico <strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>.</p>
       <br/>
       <div class="sap-docs">
-        <p>Documentos de SAP generados: 
-          <span 
+        <p>Documentos de SAP generados:
+          <span
             ng-repeat="document in vm.order.documents track by $index"
             class="comma-separated">
             {{document}}
@@ -65,8 +71,8 @@
           <div flex="20"><strong>PRECIO</strong></div>
         </div>
 
-        <div 
-          class="order-item" 
+        <div
+          class="order-item"
           ng-repeat="detailGroup in vm.order.DetailsGroups track by $index"
         >
           <h3><strong>{{detailGroup.Product.Name}}</strong></h3>
@@ -95,14 +101,14 @@
                   <li ng-if="detailGroup.Product.DetailedColor">
                     <strong>Color</strong>
                     <span>{{detailGroup.Product.DetailedColor}}</span>
-                  </li>                  
+                  </li>
                 </ul>
               </div>
             </div>
             <div flex="20" class="order-item-data"><span>{{detailGroup.quantity}}</span></div>
             <div flex="20" class="order-item-data"><span>{{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span></div>
             <div flex="20" class="order-item-data">
-              <span>{{detailGroup.total | roundCurrency}} MXN</span>
+              <span>{{detailGroup.total | currency}} MXN</span>
             </div>
           </div>
         </div>
@@ -136,11 +142,11 @@
           </div>
           <div ng-if="payment.type == 'cash-usd'" flex class="order-payment-item-data">
             <span><i class="icon-cash"></i></span> <strong>Pago en efectivo (USD)</strong>
-            <p class="small-note">Tipo de cambio: {{payment.exchangeRate | roundCurrency}} MXN</p>
+            <p class="small-note">Tipo de cambio: {{payment.exchangeRate | currency}} MXN</p>
           </div>
           <div ng-if="payment.type !== 'cash' && payment.type !== 'cash-usd' " flex class="order-payment-item-data">
             <span><i class="icon-terminal"></i></span> <strong>{{payment.name}}</strong>
-          </div>          
+          </div>
 
           <div flex class="order-payment-item-data">
             <span>{{payment.createdAt | date:'d/MMM/yyyy'}}</span>
@@ -155,8 +161,8 @@
             <span>{{ main.mapTerminalCode(payment.terminal) }}</span>
           </div>
           <div flex class="order-payment-item-data">
-            <span ng-if="payment.type !='cash-usd'">{{payment.ammount | roundCurrency}} MXN</span>
-            <span ng-if="payment.type =='cash-usd'">{{payment.ammount | roundCurrency}} USD.</span>
+            <span ng-if="payment.type !='cash-usd'">{{payment.ammount | currency}} MXN</span>
+            <span ng-if="payment.type =='cash-usd'">{{payment.ammount | currency}} USD.</span>
           </div>
         </div>
       </div>
@@ -173,18 +179,11 @@
           <p><strong>SALDO:</strong></p>
         </div>
         <div class="price-reduction" flex="20">
-          <!--
-          <p><strong>{{vm.order.subtotal | roundCurrency}} MXN / {{vm.order.subtotal}}</strong></p>
-          <p><strong>-{{vm.order.discount | roundCurrency}} MXN / {{vm.order.discount}}</strong></p>
-          <p><strong>{{vm.order.total | roundCurrency:false}} MXN / {{vm.order.total}}</strong></p>
-          <p><strong>{{vm.order.ammountPaid | roundCurrency}} MXN / {{vm.order.ammountPaid}}</strong></p>
-          <p><strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | roundCurrency }} MXN / {{( vm.order.ammountPaid - vm.order.total )}}</strong></p>
-          -->
-          <p><strong>{{vm.order.subtotal | roundCurrency}} MXN</strong></p>
-          <p><strong>-{{vm.order.discount | roundCurrency}} MXN</strong></p>
-          <p><strong>{{vm.order.total | roundCurrency:false}} MXN</strong></p>
-          <p><strong>{{vm.order.ammountPaid | roundCurrency}} MXN</strong></p>
-          <p><strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | roundCurrency }} MXN</strong></p>          
+          <p><strong>{{vm.order.subtotal | currency}} MXN</strong></p>
+          <p><strong>-{{vm.order.discount | currency}} MXN</strong></p>
+          <p><strong>{{vm.order.total | currency}} MXN</strong></p>
+          <p><strong>{{vm.order.ammountPaid | roundCurrency:false}} MXN</strong></p>
+          <p><strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | currency }} MXN</strong></p>
         </div>
       </div>
 
@@ -203,10 +202,10 @@
           <p><strong>Saldo actual:</strong></p>
         </div>
         <div flex="20">
-          <p>{{vm.ewallet.before | roundCurrency}} MXN<p>
-          <p>{{vm.ewallet.positive | roundCurrency}} MXN<p>
-          <p>{{vm.ewallet.negative | roundCurrency}} MXN<p>
-          <p><strong>{{vm.ewallet.current | roundCurrency}} MXN</strong><p>
+          <p>{{vm.ewallet.before | currency}} MXN<p>
+          <p>{{vm.ewallet.positive | currency}} MXN<p>
+          <p>{{vm.ewallet.negative | currency}} MXN<p>
+          <p><strong>{{vm.ewallet.current | currency}} MXN</strong><p>
         </div>
       </div>
     </div>
@@ -232,7 +231,7 @@
             <p><strong>C.P.: </strong>{{vm.order.U_CP}}</p>
             <p><strong>Entre calle: </strong>{{vm.order.U_Entrecalle}}</p>
             <p><strong>Y calle: </strong>{{vm.order.U_Ycalle}}</p>
-            <p><strong>Referencias: </strong>{{vm.order.U_Notes1}}</p>        
+            <p><strong>Referencias: </strong>{{vm.order.U_Notes1}}</p>
             </div>
           </div>
             <br>
@@ -272,6 +271,12 @@
         <div flex="20">
           <a href="#"  ng-click="vm.print()" class="action-btn action-btn-save print-btn">
             <strong>IMPRIMIR RECIBO</strong>
+          </a>
+          <a href="#" ng-if="!vm.invoiceExists" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
+            <strong>GENERAR FACTURA</strong>
+          </a>
+          <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
+            <strong>ENVIAR FACTURA</strong>
           </a>
         </div>
       </div>

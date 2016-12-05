@@ -104,7 +104,6 @@ function ProductCtrl(
       })
       .then(function(deliveries){
         deliveries = $filter('orderBy')(deliveries, 'date');        
-        vm.available = deliveryService.getAvailableByDeliveries(deliveries);
         if($rootScope.activeQuotation){
           deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
             $rootScope.activeQuotation.Details, 
@@ -115,6 +114,7 @@ function ProductCtrl(
         vm.deliveries  = deliveries;
         vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
         vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
+        vm.available = deliveryService.getAvailableByDeliveries(deliveries);
         if(vm.deliveries && vm.deliveries.length > 0){
           vm.productCart.deliveryGroup = vm.deliveriesGroups[0];
         }else{
