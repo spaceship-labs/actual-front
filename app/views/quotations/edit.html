@@ -185,7 +185,7 @@
         <div layout="row" layout-xs="column">
           <div flex >
             <a style="width:80%"
-              ng-if="vm.quotation.Client"
+              ng-if="vm.quotation.Client && vm.quotation.DetailsGroups"
               href="#"
               ng-click="vm.print()"
               class="action-btn-print print-btn">
@@ -194,7 +194,7 @@
           </div>
           <div flex style="width:80%">
             <a
-              ng-if="vm.quotation.Client"
+              ng-if="vm.quotation.Client && vm.quotation.DetailsGroups"
               ng-click="vm.sendByEmail()"
               href="#"
               class="action-btn-print print-btn">
