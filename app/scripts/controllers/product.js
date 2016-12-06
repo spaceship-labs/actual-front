@@ -85,7 +85,8 @@ function ProductCtrl(
           quantity: 1
         };
         if(reload){
-          $location.path('/product/' + productId, false);
+          $location.path('/product/' + productId, false)
+            .search({variantReload:'true'});
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);
@@ -132,6 +133,9 @@ function ProductCtrl(
       .catch(function(err){
         $log.error(err);
       });
+
+    //Unsuscribing  mainDataListener
+    mainDataListener();
   }
 
   function loadVariants(product){

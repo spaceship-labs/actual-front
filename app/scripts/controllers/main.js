@@ -282,9 +282,8 @@
       return categoriesService.getCategoryIcon(handle);
     }
 
-    //$scope.$on('$routeChangeStart', function(next, current) {
-    $rootScope.$on("$locationChangeStart",function(event, next, current){
-
+    $scope.$on('$routeChangeStart', function(next, current) {
+    //$rootScope.$on("$locationChangeStart",function(event, next, current){
       vm.menuCategoriesOn = false;
       authService.runPolicies();
       loadSiteInfo();
