@@ -128,10 +128,8 @@ function QuotationsListCtrl(
 
 
   function init(){
-    var monthRange = commonService.getMonthDateRange();
-    var fortnightRange = commonService.getFortnightRange();
     vm.startDate = false;
-    vm.endDate = moment().endOf('day').toString();
+    vm.endDate   = false;
     vm.filters = {
       User: $rootScope.user.id,
       isClosed: {'!': true}
@@ -148,7 +146,7 @@ function QuotationsListCtrl(
       endDate: vm.endDate,
     });
 
-    if(vm.user.role.name == 'store manager' && vm.user.mainStore){
+    if(vm.user.role.name === 'store manager' && vm.user.mainStore){
       getSellersByStore(vm.user.mainStore.id);
     }
 
