@@ -57,19 +57,15 @@ function ProductCtrl(
     }  
   });
 
-  /*
   if($rootScope.isMainDataLoaded){
-    console.log('mainData previously loaded');
     init($routeParams.id);
   }else{
-    console.log('set mainDataLoaded on');
-    $rootScope.$on('mainDataLoaded', function(ev, mainData){
-      console.log('on mainData loaded');
+    var mainDataListener = $rootScope.$on('mainDataLoaded', function(ev, mainData){
       init($routeParams.id);
     });
   }
-  */
-  init($routeParams.id);
+  
+  //init($routeParams.id);
 
   function init(productId, reload){
     vm.filters               = [];
@@ -89,7 +85,8 @@ function ProductCtrl(
           quantity: 1
         };
         if(reload){
-          $location.path('/product/' + productId, false);
+          $location.path('/product/' + productId, false)
+            .search({variantReload:'true'});
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);
@@ -123,7 +120,7 @@ function ProductCtrl(
         return productService.addSeenTime(vm.product.ItemCode);
       })
       .then(function(seenTime){
-        console.log(seenTime);
+        //console.log(seenTime);
       })
       .catch(function(err){
         $log.error(err);
@@ -136,6 +133,9 @@ function ProductCtrl(
       .catch(function(err){
         $log.error(err);
       });
+
+    //Unsuscribing  mainDataListener
+    mainDataListener();
   }
 
   function loadVariants(product){
@@ -318,6 +318,11 @@ function ProductCtrl(
     date = moment(date).startOf('date');
     return (currentDate.format() === date.format());
   }
+
+
+  $scope.$on('$destroy', function(){
+    mainDataListener();
+  });
 
 }
 

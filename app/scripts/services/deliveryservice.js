@@ -17,7 +17,13 @@
 
     function substractDeliveriesStockByQuotationDetails(details, deliveries, productId){
     	details = details.filter(function(detail){
-    		return detail.Product === productId || detail.Product.id === productId;
+    		var detailProductId;
+    		if(angular.isObject(detail.Product)){
+    			detailProductId = detail.Product.id;
+    		}else{
+    			detailProductId = detail.Product;
+    		}
+    		return detailProductId === productId;
     	});
     	for(var i = 0; i<deliveries.length; i++){
     		for(var j=0; j<details.length; j++){
@@ -40,7 +46,6 @@
     	var groupedDetails = _.groupBy(details, function(detail){
     		var discountPercent = detail.discountPercent || 0;
     		var date = moment(detail.shipDate).startOf('day');
-    		//console.log('detail', detail);
     		return detail.Product.ItemCode + '#' + date + discountPercent;
     	});
     	for(var key in groupedDetails){

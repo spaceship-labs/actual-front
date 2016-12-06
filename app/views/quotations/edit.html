@@ -184,19 +184,23 @@
           </p>
 
         </div>
-        <div layout="row" layout-xs="column">
-          <div flex >
-            <a style="width:80%"
-              ng-if="vm.quotation.Client && vm.quotation.DetailsGroups"
+        <div 
+          layout="row" 
+          layout-align="space-between center" 
+          layout-xs="column"
+        >
+          <div flex="45">
+            <a
+              ng-if="vm.quotation.Client && vm.quotation.Details.length > 0"
               href="#"
               ng-click="vm.print()"
               class="action-btn-print print-btn">
               IMPRIMIR
             </a>
           </div>
-          <div flex style="width:80%">
+          <div flex="50">
             <a
-              ng-if="vm.quotation.Client && vm.quotation.DetailsGroups"
+              ng-if="vm.quotation.Client && vm.quotation.Details.length > 0"
               ng-click="vm.sendByEmail()"
               href="#"
               class="action-btn-print print-btn">

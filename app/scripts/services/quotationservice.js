@@ -203,16 +203,20 @@
             populate_fields: ['FilterValues','Promotions']
           };
           var page = 1;
-          productService.getList(page,params).then(function(res){
-            return productService.formatProducts(res.data.data);
-          })
-          .then(function(fProducts){
-            //Match detail - product
-            quotation.Details.forEach(function(detail){
-              detail.Product = _.findWhere( fProducts, {id : detail.Product } );
+          productService.getList(page,params)
+            .then(function(res){
+              return productService.formatProducts(res.data.data);
+            })
+            .then(function(fProducts){
+              //Match detail - product
+              quotation.Details.forEach(function(detail){
+                detail.Product = _.findWhere( fProducts, {id : detail.Product } );
+              });
+              deferred.resolve(quotation.Details);
+            })
+            .catch(function(err){
+              deferred.reject(err);
             });
-            deferred.resolve(quotation.Details);
-          });
         }else{
           deferred.resolve([]);
         }

@@ -48,8 +48,16 @@ function RefundsProductsCtrl(
   });
 
   $rootScope.$on('activeStoreAssigned', function(){
-    vm.activeStore = $rootScope.activeStore;
   });
+
+  if($rootScope.isMainDataLoaded){
+    vm.activeStore = $rootScope.activeStore;
+    init();
+  }else{
+    var mainDataListener = $rootScope.$on('mainDataLoaded', function(ev, mainData){
+      init();
+    });
+  }  
 
   function init(){
     vm.isLoading = true;
@@ -292,7 +300,9 @@ function RefundsProductsCtrl(
     return Math.abs(Math.floor((utc2 - utc1) / _MS_PER_DAY));
   }
 
-  init();
+  $scope.$on('$destroy', function(){
+    mainDataListener();
+  });
 
 }
 
