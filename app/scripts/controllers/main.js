@@ -236,6 +236,8 @@
                 console.log(err);
                 deferred.reject(err);
               });
+          }else{
+            deferred.resolve(false);
           }
         });
       return deferred.promise;
