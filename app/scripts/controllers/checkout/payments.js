@@ -51,6 +51,7 @@ function CheckoutPaymentsCtrl(
     customFullscreen: $mdMedia('xs') || $mdMedia('sm'),
     singlePayment: true,
     multiplePayment: false,
+    isLoading: true,
     loadingEstimate: 0,
     payments: [],
     paymentMethodsGroups: [],
@@ -625,12 +626,6 @@ function CheckoutPaymentsCtrl(
           animateProgress();
           return orderService.createFromQuotation(vm.quotation.id, params);
         })
-        .catch(function(err){
-          console.log(err);
-          vm.isLoadingProgress = false;
-          dialogService.showDialog('Hubo un error, revisa tus datos <br/>' + err.data);
-          return $q.reject('cancelled-by-user');
-        })
         .then(function(res){
           vm.isLoadingProgress = false;
           vm.order = res.data;
@@ -639,11 +634,13 @@ function CheckoutPaymentsCtrl(
             $location.path('/checkout/order/' + vm.order.id);
           }
         }).catch(function(err){
-          if(err !== 'cancelled-by-user'){
-            commonService.showDialog('Hubo un error, revisa los datos e intenta de nuevo <br/>' + err.data);
-            vm.isLoadingProgress = false;
-            console.log(err);
+          console.log('err', err);
+          var errMsg = '';
+          if(err){
+            errMsg = err.data || '';            
+            dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo <br/>' + errMsg);
           }
+          vm.isLoadingProgress = false;
         });
     }
   }
