@@ -294,13 +294,16 @@
           .then(function(result){
             var products = result.data || [];
             if(products.length > 0){
+              
               FILTERS_VARIANTS.forEach(function(filter){
                 variants[filter.key] = {};
                 angular.copy(filter, variants[filter.key]);
                 variants[filter.key].products = [];
               });
+
               products.forEach(function( product ){
                 FILTERS_VARIANTS.forEach(function (filter){
+                  
                   var values = _.where( product.FilterValues, { Filter: filter.id } );
                   values.forEach(function(val){
 
@@ -318,9 +321,11 @@
                     val.stock   = product.Available;
                     val.stock   = product[activeStore.code];
                   });
+
                   values = values.filter(function(val){
                     return val.stock > 0;
                   });
+                  
                   if(values.length > 0){
                     var aux = {id: product.ItemCode, filterValues : values};
                     variants[filter.key].products.push(aux);

@@ -149,7 +149,7 @@ function ProductCtrl(
   function checkIfHasVariants(variants){
     var hasVariants = false;
     for(var key in variants){
-      if(variants[key].products.length > 0){
+      if(variants[key].products.length > 1){
         hasVariants = true;
       }
     }

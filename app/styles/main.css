@@ -1779,7 +1779,8 @@ md-backdrop.md-sidenav-backdrop{
   font-weight: 400;
   position: relative;
 }
-.product-view-data-block:first-child{padding-top: 0;}
+.product-view-data-block:first-child{/*padding-top: 0;*/}
+.product-view-data-block.no-padding-top{padding-top: 0}
 .product-view-data-block{
   border-bottom: 1px solid rgba(0,0,0,0.87);
   font-size: 12px;
