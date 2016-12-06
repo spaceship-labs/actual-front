@@ -143,6 +143,9 @@ function ProductCtrl(
       .then(function(variants){
         vm.variants = variants;
         vm.hasVariants = checkIfHasVariants(vm.variants);
+      })
+      .catch(function(err){
+        console.log(err);
       });
   }
 

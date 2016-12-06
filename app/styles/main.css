@@ -3792,6 +3792,7 @@ padding-left: 16px;
   text-align: right;
 }
 .cash-report .total-group{/*font-size:18px;*/}
+.cash-report .cash-report-total{font-size: 30px;}
 
 /*---------------/
   #CLIENT ITEM INFO

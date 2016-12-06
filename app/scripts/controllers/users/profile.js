@@ -22,17 +22,18 @@ function UserProfileCtrl(
 ){
   var vm = this;
   vm.user = angular.copy($rootScope.user);
-  vm.cashRegister = {};
-  vm.update = update;
-  vm.onSelectStartDate = onSelectStartDate;
-  vm.onSelectEndDate = onSelectEndDate;
-  vm.init = init;
-  vm.getCashReport = getCashReport;
-  vm.getTotalByMethod = getTotalByMethod;
-  vm.getTotalByGroup = getTotalByGroup;
-  vm.print = print;
+  vm.cashRegister       = {};
+  vm.update             = update;
+  vm.onSelectStartDate  = onSelectStartDate;
+  vm.onSelectEndDate    = onSelectEndDate;
+  vm.init               = init;
+  vm.getCashReport      =  getCashReport;
+  vm.getTotalByMethod   = getTotalByMethod;
+  vm.getTotalByGroup    = getTotalByGroup;
+  vm.getGeneralTotal    = getGeneralTotal;
+  vm.print              = print;
 
-  if(vm.user.userType == 'broker'){
+  if(vm.user.userType === 'broker' || vm.user.role.name === 'broker'){
     $location.path('/users/brokerprofile');
   }
 
@@ -155,6 +156,15 @@ function UserProfileCtrl(
     },0);
     return total;
   }
+
+  function getGeneralTotal(){
+    var generalTotal = vm.paymentsGroups.reduce(function(acum, group){
+      acum += getTotalByGroup(group);
+      return acum;
+    },0);
+    return generalTotal;
+  }
+
 
   function showConfirm() {
     var confirm = $mdDialog.confirm()

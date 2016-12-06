@@ -43,7 +43,7 @@
       </div>
       <p class="pull-right total-method">
         <strong>Total </strong>
-        <strong ng-if="method.terminal">{{method.name}} | {{method.terminal}}:</strong>
+        <strong ng-if="method.terminal">{{method.name}} | {{ main.mapTerminalCode(method.terminal) }}:</strong>
         <strong ng-if="!method.terminal">{{method.name}}:</strong>         
         {{vm.getTotalByMethod(method) | currency}} MXN
       </p>
@@ -52,6 +52,11 @@
       <strong>Total grupo {{group.groupNumber}}: {{vm.getTotalByGroup(group) | currency}} MXN</strong>
     </h2>
   </section>
+
+  <hr/>
+  <h2 class="pull-right cash-report-total">
+    <strong>Total general: {{ vm.getGeneralTotal() | currency }} MXN</strong>
+  </h2>
 
   <div layout="row" layout-align="center center" class="form-view-btns no-margin">
     <button
