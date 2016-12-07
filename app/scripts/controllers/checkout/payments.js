@@ -31,11 +31,13 @@ function CheckoutPaymentsCtrl(
     clientService,
     paymentService,
     localStorageService,
-    $interval
+    $interval,
+    api
   ){
   var vm = this;
 
   angular.extend(vm,{
+    api: api,
     applyTransaction: applyTransaction,
     authorizeOrder: authorizeOrder,
     areMethodsDisabled: areMethodsDisabled,

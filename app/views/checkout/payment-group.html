@@ -32,7 +32,7 @@
       <div ng-if="method.cardsImages" flex="60" class="bank-icons">
         <img 
           ng-repeat="card in method.cardsImages"  
-          ng-src="{{card}}" 
+          ng-src="{{ vm.api.baseUrl + card}}" 
           alt=""
           ng-class=" method.discountKey != 'discountPg1' ? 'card' : ''"
         >
