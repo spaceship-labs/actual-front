@@ -3444,6 +3444,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .pay-method-wrap .method-block .bank-icons .card{
   max-width: 80px;
 }
+.pay-method-wrap .method-block .cards-tooltip{
+  
+}
 
 .pay-method-wrap .method-block .input-element label{
   font-weight: 700;

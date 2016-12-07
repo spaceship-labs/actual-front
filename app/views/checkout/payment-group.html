@@ -43,7 +43,8 @@
             alt="Más bancos"
             class="card"
           >
-          <md-tooltip>
+          <md-tooltip class="cards-tooltip">
+            Mas bancos:
             <ul>
               <li ng-repeat="card in method.cards | orderBy:'toString()' ">{{card}}</li>
             </ul>
