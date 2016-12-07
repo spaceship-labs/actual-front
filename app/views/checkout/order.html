@@ -45,18 +45,13 @@
       <p>Estimado <strong>{{vm.order.Client.CardName}}</strong></p>
       <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico <strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>.</p>
       <br/>
-      <div class="sap-docs">
-        <p>Documentos de SAP generados:
-          <span
-            ng-repeat="document in vm.order.documents track by $index"
-            class="comma-separated">
-            {{document}}
-          </span>
-        </p>
-      </div>
+      
+      <!--
       <p>
         <a class="refunds-link" ng-href="/refunds/payments/{{vm.order.id}}">Generar reembolsos</a>
       </p>
+      -->
+
     </div>
 
     <!--ORDER ITEMS-->
@@ -353,6 +348,24 @@
       </tbody>
     </table>
 
+  </section>
+
+  <hr/>
+
+  <section 
+    ng-show="vm.order.OrdersSap && vm.order.OrdersSap.length > 0" 
+    class="sap-docs only-hide-print"
+  >
+    <h3><strong>Documentos SAP</strong></h3>
+    <ul>
+      <li ng-repeat="orderSap in vm.order.OrdersSap">
+        <p><strong>Orden SAP</strong>: {{orderSap.document}}</p>
+        <p><strong>Pagos</strong>:</p>
+        <ul>
+          <li ng-repeat="paymentSap in orderSap.PaymentsSap">{{paymentSap.document}}</li>
+        </ul>
+      </li>
+    </ul>
   </section>
 
 

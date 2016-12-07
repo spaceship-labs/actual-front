@@ -3759,7 +3759,11 @@ padding-left: 16px;
   margin: 5px 0 0;
   text-align: center;
 }
-.order-view .sap-docs{display: block;}
+.order-view .sap-docs{
+  display: block;
+  margin-top: 35px;
+}
+.order-view .sap-docs p{margin: 4px 0}
 
 /*---------------/
   #CASH-REPORT
