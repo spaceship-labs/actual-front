@@ -23,6 +23,7 @@ function UserProfileCtrl(
   var vm = this;
   vm.user = angular.copy($rootScope.user);
   vm.cashRegister       = {};
+  vm.paymentsGroups     = [];
   vm.update             = update;
   vm.onSelectStartDate  = onSelectStartDate;
   vm.onSelectEndDate    = onSelectEndDate;
@@ -88,7 +89,7 @@ function UserProfileCtrl(
     userService.getCashReport(params).then(function(res){
       console.log(res);
       var payments = res.data;
-      vm.paymentsGroups = groupPayments(payments);
+      loadPaymentGroups(payments);
       vm.isLoadingReport = false;
     }).catch(function(err){
       console.log(err);
@@ -96,7 +97,7 @@ function UserProfileCtrl(
     });
   }
 
-  function groupPayments(payments){
+  function loadPaymentGroups(payments){
     var groups = [];
     var auxGroups = _.groupBy(payments, function(payment){
       return payment.type + '#' + payment.terminal;
@@ -114,21 +115,30 @@ function UserProfileCtrl(
     });
 
     var paymentsGroups = _.groupBy(methods, 'groupNumber');
-    for(var key in paymentsGroups){
-      var sortedMethods = sortMethodsByGroup(paymentsGroups[key], key);
-      groups.push({
-        groupNumber: key,
-        methods: sortedMethods
+    paymentService.getPaymentMethodsGroups()
+      .then(function(res){
+        var methodGroups = res.data;
+        for(var key in paymentsGroups){
+          var sortedMethods = sortMethodsByGroup(paymentsGroups[key], key, methodGroups);
+          groups.push({
+            groupNumber: key,
+            methods: sortedMethods
+          });
+        }
+
+      })
+      .catch(function(err){
+        console.log('err');
       });
-    }
-    return groups;
+    
+
+    vm.paymentsGroups = groups;
   }
 
-  function sortMethodsByGroup(methods, groupNumber){
+  function sortMethodsByGroup(methods, groupNumber, methodGroups){
     var sorted = [];
-    var groups = paymentService.getPaymentMethodsGroups();
     groupNumber = parseInt(groupNumber);
-    var group = _.findWhere(groups, {group: groupNumber});
+    var group = _.findWhere(methodGroups, {group: groupNumber});
     for(var i = 0; i< group.methods.length; i++){
       var matches = _.where(methods, {type: group.methods[i].type});
       if(matches && matches.length > 0){

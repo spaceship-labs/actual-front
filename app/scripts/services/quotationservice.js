@@ -6,7 +6,17 @@
         .factory('quotationService', quotationService);
 
     /** @ngInject */
-    function quotationService($http, $location, $q, $rootScope, api, Upload, productService, localStorageService){
+    function quotationService(
+      $http, 
+      $location, 
+      $q, 
+      $rootScope, 
+      api, 
+      Upload, 
+      productService, 
+      localStorageService,
+      dialogService
+    ){
 
       var service = {
         addDetail: addDetail,
@@ -32,6 +42,9 @@
         getRecords: getRecords,
         getTotalByPaymentMethod: getTotalByPaymentMethod,
         getTotalsByUser: getTotalsByUser,
+        getClosingReasons: getClosingReasons,
+        getPaymentOptions: getPaymentOptions,
+        getRecordTypes: getRecordTypes,
         loadProductFilters: loadProductFilters,
         newQuotation: newQuotation,
         mapDetailsStock: mapDetailsStock,
@@ -39,6 +52,7 @@
         removeDetailsGroup: removeDetailsGroup,
         setActiveQuotation: setActiveQuotation,
         sendByEmail: sendByEmail,
+        showStockAlert: showStockAlert,
         update: update,
         updateSource: updateSource,
         updateBroker: updateBroker,
@@ -238,8 +252,10 @@
       }
 
       function setActiveQuotation(quotationId){
-        localStorageService.set('quotation', quotationId);
-        $rootScope.$broadcast('newActiveQuotation', quotationId);
+        if(getActiveQuotationId() !== quotationId){
+          localStorageService.set('quotation', quotationId);
+          $rootScope.$broadcast('newActiveQuotation', quotationId);          
+        }
       }
 
 
@@ -398,6 +414,11 @@
         return api.$http.post(url);
       }
 
+      function getPaymentOptions(id){
+        var url = '/quotation/'+id+'/paymentoptions';
+        return api.$http.post(url);
+      }
+
       function mapDetailsStock(details, detailsStock){
         var details = details.map(function(detail){
           var detailStock = _.findWhere(detailsStock, {id:detail.id});
@@ -434,6 +455,40 @@
           });
         return deferred.promise;
       }
+
+      function getClosingReasons(){
+        var closingReasons = [
+          'Cliente compró en otra tienda de la empresa.',
+          'Cliente compró en otra mueblería.',
+          'Cliente se murió',
+          'Cliente solicita no ser contactado más',
+          'Cliente ya no está interesado',
+          'Cliente es incontactable',
+          'Cliente se mudó',
+          'Vendedor no dio seguimiento suficiente',
+          'Vendedor cotizó artículos equivocados',
+          'Los precios son altos',
+          'Las fechas de entrega son tardadas',
+          'No vendemos el articulo solicitado',
+          'Otra razón (especificar)',        
+        ];
+        return closingReasons;
+      }
+
+      function getRecordTypes(){
+        var recordTypes = [
+          'Email',
+          'Llamada', 
+          'WhatsApp', 
+          'Visita'
+        ];
+        return recordTypes;
+      }
+
+      function showStockAlert(){
+        var msg = 'Hay un cambio de disponibilidad en uno o más de tus articulos';
+        dialogService.showDialog(msg);        
+      }      
 
     }
 

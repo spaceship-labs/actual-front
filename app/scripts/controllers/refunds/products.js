@@ -137,13 +137,8 @@ function RefundsProductsCtrl(
       dialogService.showDialog('Cliente registrado');
     }
     if($location.search().stockAlert){
-      showStockAlert();
+      quotationService.showStockAlert();
     }
-  }
-
-  function showStockAlert(){
-    var msg = 'Hay un cambio de disponibilidad en uno o más de tus articulos';
-    dialogService.showDialog(msg);        
   }
 
   function loadWarehouses(){

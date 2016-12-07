@@ -98,12 +98,19 @@ function CheckoutPaymentsCtrl(
   }
 
   function loadPaymentMethods(){
-    getPaymentMethodsGroups(vm.quotation.id).then(function(groups){
-      vm.paymentMethodsGroups = groups;
-      if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
-        vm.quotation = setQuotationTotalsByGroup(vm.quotation);
-      }
-    });          
+    quotationService.getPaymentOptions(vm.quotation.id)
+      .then(function(response){
+        var groups = response.data || [];
+        vm.paymentMethodsGroups = groups;
+        updateEwalletBalance();
+        if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
+          vm.quotation = setQuotationTotalsByGroup(vm.quotation);
+        }        
+      })
+      .catch(function(err){
+        console.log('err', err);
+      });
+          
   }
 
   function updateEwalletBalance(){
@@ -144,58 +151,6 @@ function CheckoutPaymentsCtrl(
     return deferred.promise;
   }
 
-  function getPaymentMethodsGroups(quotationId){
-    var deferred = $q.defer();
-    var methodsGroups = paymentService.getPaymentMethodsGroups();
-    var discountKeys = ['discountPg1','discountPg2','discountPg3','discountPg4','discountPg5'];
-    var totalsPromises = [];
-    var exchangeRate = 18.76;
-
-    methodsGroups.forEach(function(mG){
-      totalsPromises.push(quotationService.getQuotationTotals(quotationId, {paymentGroup:mG.group}));
-    });
-
-    return vm.getExchangeRate()
-      .then(function(exr){
-        exchangeRate = exr;
-        return $q.all(totalsPromises)
-      })
-      .then(function(responsePromises){
-        var totalsByGroup = responsePromises || [];
-        totalsByGroup = totalsByGroup.map(function(tbg){
-          return tbg.data || {};
-        });
-        methodsGroups = methodsGroups.map(function(mG, index){
-          mG.total = totalsByGroup[index].total || 0;
-          mG.subtotal = totalsByGroup[index].subtotal || 0;
-          mG.discount = totalsByGroup[index].discount || 0;
-          mG.methods = mG.methods.map(function(m){
-            var discountKey = discountKeys[mG.group - 1]
-            m.discountKey = discountKey;
-            m.total = mG.total;
-            m.subtotal = mG.subtotal;
-            m.discount = mG.discount;
-            m.exchangeRate = exchangeRate;
-            if(m.type === CASH_USD_TYPE){
-              var exrStr = $filter('currency')(exchangeRate);
-              m.description = 'Tipo de cambio '+exrStr+' MXN';
-            }
-            else if(m.type === EWALLET_TYPE){
-              var balance = vm.quotation.Client.ewallet || 0;
-              m.description = getEwalletDescription(balance);
-            }
-            return m;
-          });
-          return mG;
-        });
-        return methodsGroups;
-      })
-      .catch(function(err){
-        console.log(err);
-        return err;
-      });
-  }
-
   function areMethodsDisabled(methods){
     var disabledCount = 0;
     for(var i=0;i<methods.length > 0;i++){
@@ -207,22 +162,24 @@ function CheckoutPaymentsCtrl(
   }
 
   function isActiveGroup(group){
-    var activeKeys = ['paymentGroup1','paymentGroup2','paymentGroup3','paymentGroup4','paymentGroup5'];
-    if(vm.validMethods){
-      var isGroupUsed = false;
-      var groupIndex = group.group - 1;
-      var groupNumber = group.group;
-      var currentGroup = getGroupByQuotation(vm.quotation);
-      var areGroupMethodsDisabled = areMethodsDisabled(group.methods);
-      if( currentGroup < 0 || currentGroup === 1){
-        isGroupUsed = true;
-      }else if(currentGroup > 0 && currentGroup === groupNumber){
-        isGroupUsed = true;
-      }
-      return vm.validMethods[activeKeys[groupIndex]] && isGroupUsed && !areGroupMethodsDisabled;
-    }else{
-      return false;
+    var activeKeys = [
+      'paymentGroup1',
+      'paymentGroup2',
+      'paymentGroup3',
+      'paymentGroup4',
+      'paymentGroup5'
+    ];
+    var isGroupUsed = false;
+    var groupIndex = group.group - 1;
+    var groupNumber = group.group;
+    var currentGroup = getGroupByQuotation(vm.quotation);
+    var areGroupMethodsDisabled = areMethodsDisabled(group.methods);
+    if( currentGroup < 0 || currentGroup === 1){
+      isGroupUsed = true;
+    }else if(currentGroup > 0 && currentGroup === groupNumber){
+      isGroupUsed = true;
     }
+    return isGroupUsed && !areGroupMethodsDisabled;
   }
 
   function isActiveMethod(method){

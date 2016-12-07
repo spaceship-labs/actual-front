@@ -40,22 +40,8 @@ function QuotationsEditCtrl(
     brokers: [],
     isLoadingRecords: false,
     isLoading: true,
-    recordTypes: ['Email', 'Llamada', 'WhatsApp', 'Visita'],
-    closeTypes: [
-      'Cliente compró en otra tienda de la empresa.',
-      'Cliente compró en otra mueblería.',
-      'Cliente se murió',
-      'Cliente solicita no ser contactado más',
-      'Cliente ya no está interesado',
-      'Cliente es incontactable',
-      'Cliente se mudó',
-      'Vendedor no dio seguimiento suficiente',
-      'Vendedor cotizó artículos equivocados',
-      'Los precios son altos',
-      'Las fechas de entrega son tardadas',
-      'No vendemos el articulo solicitado',
-      'Otra razón (especificar)',
-    ],
+    recordTypes: quotationService.getRecordTypes(),
+    closeTypes: quotationService.getClosingReasons(),
     timePickerOptions: {
         step: 20,
         timeFormat: 'g:ia',
@@ -81,14 +67,8 @@ function QuotationsEditCtrl(
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     print: print,
     daysDiff: daysDiff,
-    isActiveGroup: isActiveGroup,
     isUserAdmin: isUserAdmin
   });
-
-  var EWALLET_TYPE = 'ewallet';
-  var CASH_USD_TYPE = 'cash-usd';
-  var EWALLET_GROUP_INDEX = 0;
-
 
   if($rootScope.isMainDataLoaded){
     vm.activeStore = $rootScope.activeStore;
@@ -108,15 +88,13 @@ function QuotationsEditCtrl(
       .then(function(res){
         vm.isLoading = false;
         vm.quotation = res.data;
-        if(vm.quotation.id !== quotationService.getActiveQuotationId()){
-          quotationService.setActiveQuotation(vm.quotation.id);          
-        }
-        //console.log('setActiveQuotation')
+        quotationService.setActiveQuotation(vm.quotationId);
 
         vm.status = 'Abierta';
         if(vm.quotation.Order || vm.quotation.isClosed){
           vm.status = 'Cerrada';
         }
+
         loadPaymentMethods();
         return quotationService.populateDetailsWithProducts(vm.quotation);
       })
@@ -176,19 +154,14 @@ function QuotationsEditCtrl(
 
   function showAlerts(){
     if($location.search().startQuotation){
-      dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización')
+      dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
     }    
     if($location.search().createdClient){
       dialogService.showDialog('Cliente registrado');
     }
     if($location.search().stockAlert){
-      showStockAlert();
+      quotationService.showStockAlert();
     }
-  }
-
-  function showStockAlert(){
-    var msg = 'Hay un cambio de disponibilidad en uno o más de tus articulos';
-    dialogService.showDialog(msg);        
   }
 
   function loadWarehouses(){
@@ -201,73 +174,17 @@ function QuotationsEditCtrl(
   }
 
   function loadPaymentMethods(){
-    getPaymentMethodsGroups(vm.quotation.id).then(function(groups){
-      vm.paymentMethodsGroups = groups;
-    });          
-  }
-
-  function getPaymentMethodsGroups(quotationId){
-    var methodsGroups = paymentService.getPaymentMethodsGroups();
-    var discountKeys = ['discountPg1','discountPg2','discountPg3','discountPg4','discountPg5'];
-    var totalsPromises = [];
-    var exchangeRate = 18.76;
-    methodsGroups.forEach(function(mG){
-      totalsPromises.push(quotationService.getQuotationTotals(quotationId, {paymentGroup:mG.group}));
-    });
-
-    return getExchangeRate()
-      .then(function(exr){
-        exchangeRate = exr;
-        return $q.all(totalsPromises);
-      })
-      .then(function(responsePromises){
-        var totalsByGroup = responsePromises || [];
-        totalsByGroup = totalsByGroup.map(function(tbg){
-          return tbg.data || {};
-        });
-        methodsGroups = methodsGroups.map(function(mG, index){
-          mG.total = totalsByGroup[index].total || 0;
-          mG.subtotal = totalsByGroup[index].subtotal || 0;
-          mG.discount = totalsByGroup[index].discount || 0;
-          mG.methods = mG.methods.map(function(m){
-            var discountKey = discountKeys[mG.group - 1];
-            m.discountKey = discountKey;
-            m.total = mG.total;
-            m.subtotal = mG.subtotal;
-            m.discount = mG.discount;
-            m.exchangeRate = exchangeRate;
-            return m;
-          });
-          return mG;
-        });
-        return methodsGroups;
+    quotationService.getPaymentOptions(vm.quotation.id)
+      .then(function(response){
+        var groups = response.data || [];
+        vm.paymentMethodsGroups = groups;
+        console.log('vm.paymentMethodsGroups', vm.paymentMethodsGroups);
       })
       .catch(function(err){
-        console.log(err);
-        return err;
+        console.log('err', err);
       });
-  }  
-
-  function getExchangeRate(){
-    var deferred = $q.defer();
-    siteService.findByHandle('actual-group').then(function(res){
-      var site = res.data || {};
-      deferred.resolve(site.exchangeRate);
-    }).catch(function(err){
-      deferred.reject(err);
-    });
-    return deferred.promise;
-  }  
-
-  function isActiveGroup(index){
-    var activeKeys = ['paymentGroup1','paymentGroup2','paymentGroup3','paymentGroup4','paymentGroup5'];
-    if(vm.validMethods){
-      return vm.validMethods[activeKeys[index]];
-    }else{
-      return false;
-    }
   }
-
+ 
   function print(){
     window.print();
   }

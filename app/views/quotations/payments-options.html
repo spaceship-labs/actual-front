@@ -20,7 +20,6 @@
 
 	<div 
 		ng-repeat="paymentGroup in vm.paymentMethodsGroups | filter: {group: '!1'}"
-		ng-show="vm.isActiveGroup(paymentGroup.group - 1)"
 	>
 		<div layout="row" class="method-row" ng-repeat="method in paymentGroup.methods">
 			<div flex="25" class="data-cell"><p>{{method.name}}</p></div>
