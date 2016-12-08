@@ -556,9 +556,8 @@ function QuotationsEditCtrl(
     };
   }
 
-  function showBigTicketDialog(ev,detailGroup){
+  function showBigTicketDialog(ev){
     var controller = BigTicketController;
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));    
     $mdDialog.show({
       controller: [
         '$scope',
@@ -569,9 +568,7 @@ function QuotationsEditCtrl(
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
-      fullscreen: useFullScreen,
-      locals:{
-      }
+      fullscreen: false,
     })
     .then(function() {
       console.log('Big ticket aplicado');

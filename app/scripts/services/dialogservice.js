@@ -137,7 +137,7 @@
             return Object.keys(toastPosition)
               .filter(function(pos) { return toastPosition[pos]; })
               .join(' ');
-          }
+          };
 
           function sanitizePosition() {
             var current = toastPosition;
