@@ -189,6 +189,7 @@ function ClientProfileCtrl(
         console.log(res);
         vm.isLoading = false;
         dialogService.showDialog('Datos personales actualizados');
+        returnToCheckout();
       }).catch(function(err){
         console.log(err);
         dialogService.showDialog('Hubo un error, revisa los campos');
@@ -240,6 +241,7 @@ function ClientProfileCtrl(
         console.log(res);
         contact.isLoading = false;
         dialogService.showDialog('Dirección de entrega actualizada');
+        returnToCheckout();
       })
       .catch(function(err){
         console.log(err);
@@ -272,6 +274,7 @@ function ClientProfileCtrl(
           dialogService.showDialog('Dirección creada');
           var created = res.data;
           vm.client.Contacts.push(created);
+          returnToCheckout();
         })
         .catch(function(err){
           vm.isLoading = false;
@@ -288,8 +291,10 @@ function ClientProfileCtrl(
   }
 
   function isContactEditModeActive(){
-    if(_.findWhere(vm.client.Contacts, {editEnabled:true})){
-      return true;
+    if(vm.client && vm.client.Contacts){
+      if(_.findWhere(vm.client.Contacts, {editEnabled:true})){
+        return true;
+      }
     }
     return false;
   }
@@ -344,6 +349,13 @@ function ClientProfileCtrl(
       dialogService.showDialog('Campos incompletos');
     }
 
+  }
+
+  function returnToCheckout(){
+    if($location.search() && $location.search().checkoutProcess){
+      var quotationId = $location.search().checkoutProcess;
+      $location.path('/checkout/client/' + quotationId);
+    }
   }
 
 

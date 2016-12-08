@@ -30,6 +30,7 @@ function CheckoutClientCtrl(
   });
 
   function init(){
+    $location.search({});
     vm.isLoading = true;
     quotationService.getById($routeParams.id).then(function(res){
       vm.quotation = res.data;
@@ -108,7 +109,11 @@ function CheckoutClientCtrl(
     */
     else{
       dialogService.showDialog('Asigna una dirección de envío',function(){
-        console.log('test!!');
+        $location.path('/clients/profile/' + vm.quotation.Client.id)
+          .search({
+            activeTab:3,
+            checkoutProcess: vm.quotation.id
+          });
       });
     }
   }
