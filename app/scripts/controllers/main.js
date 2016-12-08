@@ -248,6 +248,7 @@
       userService.getBrokers()
         .then(function(brokers) {
           vm.brokers = brokers;
+          $rootScope.brokers = brokers;
           deferred.resolve(brokers);
         })
         .catch(function(err){

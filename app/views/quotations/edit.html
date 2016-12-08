@@ -174,8 +174,12 @@
             ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) }"
             class="cart-view-btn print-btn"
           >
+          
 
-          <div class="alert-btn-wrap" ng-if="vm.applyForBigticket()">
+          <div 
+            class="alert-btn-wrap" 
+            ng-if="vm.quotation.bigticketMaxPercentage > 0"
+          >
             <a href="#" ng-click="vm.showBigTicketDialog()">
               <i class="icon-alert"></i>
             </a>

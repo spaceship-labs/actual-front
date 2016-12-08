@@ -16,7 +16,7 @@
       <select 
         ng-model="bigticketPercentage" 
         class="select-element"
-        ng-options="percentage.value as percentage.label for percentage in percentages"
+        ng-options="percentage as percentage + '%' for percentage in getPercentages()"
       >
       </select>      
     </div>
@@ -28,13 +28,15 @@
 			<div flex class="btns-section-block">
 				<a 
 					href="#" 
+					ng-click="cancel()"
 					class="action-btn action-btn-inline action-btn-delete">
-						Eliminar
+						Cancelar
 				</a>
 			</div>
 			<div flex class="btns-section-block">
 				<a 
-					href="#" 
+					href="#"
+					ng-click="applyPercentage()" 
 					class="action-btn action-btn-save action-btn-inline">
 						Aplicar
 				</a>
