@@ -27,7 +27,7 @@ function HomeCtrl(
   function init(){
     setCategoryStockProperty();
     if($location.search().startQuotation){
-      dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización')
+      //dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
     }
     mainDataListener = $rootScope.$on('mainDataLoaded', setCategoryStockProperty);
   }

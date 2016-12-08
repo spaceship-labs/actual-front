@@ -44,9 +44,13 @@ function AddquotationCtrl(
 
   function createQuotation(clientId){
     var params = {
-      Client: clientId,
       User: $rootScope.user.id
     };
+    
+    if(clientId) {
+      params.Client = clientId;
+    }
+    
     var goToSearch = false;
     vm.isLoading = true;
     quotationService.newQuotation(params, goToSearch);

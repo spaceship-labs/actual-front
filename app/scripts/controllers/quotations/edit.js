@@ -50,6 +50,7 @@ function QuotationsEditCtrl(
     },
     promotionPackages: [],
     addNewProduct: addNewProduct,
+    applyForBigticket: applyForBigticket,
     appliesForPackageOrPromotionDiscount: appliesForPackageOrPromotionDiscount,
     addRecord: addRecord,
     alertRemoveDetail: alertRemoveDetail,
@@ -65,6 +66,7 @@ function QuotationsEditCtrl(
     toggleRecord: toggleRecord,
     sendByEmail: sendByEmail,
     showDetailGroupStockAlert: showDetailGroupStockAlert,
+    showBigTicketDialog: showBigTicketDialog,
     print: print,
     daysDiff: daysDiff,
     isUserAdmin: isUserAdmin
@@ -154,7 +156,7 @@ function QuotationsEditCtrl(
 
   function showAlerts(){
     if($location.search().startQuotation){
-      dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
+      //dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
     }    
     if($location.search().createdClient){
       dialogService.showDialog('Cliente registrado');
@@ -474,6 +476,24 @@ function QuotationsEditCtrl(
     }
   }
 
+  function applyForBigticket(){
+    var total = vm.quotation.total;
+    var applies = false;
+    var bigticketTable = [
+      {min:100000, max:199999.99, maxPercentage:2},
+      {min:200000, max:349999.99, maxPercentage:3},
+      {min:350000, max:499999.99, maxPercentage:4},
+      {min:500000, max:Infinity, maxPercentage:5},
+    ];
+    for(var i=0;i<bigticketTable.length;i++){
+      if(total >= min && total <= max){
+        applies = true;
+      }
+    }
+    return true;
+    //return applies;
+  }
+
   function getUnitPriceWithDiscount(unitPrice,discountPercent){
     var result = unitPrice - ( ( unitPrice / 100) * discountPercent );
     return result;
@@ -534,6 +554,49 @@ function QuotationsEditCtrl(
         $location.path('/product/' + itemCode);
       });
     };
+  }
+
+  function showBigTicketDialog(ev,detailGroup){
+    var controller = BigTicketController;
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));    
+    $mdDialog.show({
+      controller: [
+        '$scope',
+        '$mdDialog', 
+        controller
+      ],
+      templateUrl: 'views/quotations/bigticket-dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen,
+      locals:{
+      }
+    })
+    .then(function() {
+      console.log('Big ticket aplicado');
+    }, function() {
+      console.log('No autorizado');
+    });    
+  } 
+  
+  function BigTicketController($scope, $mdDialog){
+    $scope.init = function(){
+      $scope.bigticketPercentage = 1;
+    };
+
+    $scope.percentages = [
+      {label:'1%',value:1},
+      {label:'2%',value:2},
+      {label:'3%',value:3},
+      {label:'4%',value:4},
+      {label:'5%',value:5},
+    ];
+    $scope.cancel = function(){
+      $mdDialog.cancel();
+    };
+
+    $scope.init();    
   }
 
   $scope.$on('$destroy', function(){

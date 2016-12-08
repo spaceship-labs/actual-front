@@ -2177,6 +2177,44 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   width: 25px;
 }
 
+/*----------------/
+  #BIG-TICKET ALERT
+/*---------------*/
+.bigticket-alert-inner{
+  position: relative;
+  padding: 20px 20px;
+  max-width: 600px;
+}
+.bigticket-alert-dialog h2{margin-top: 0;}
+.bigticket-alert-dialog .btns-section{text-align: right;}
+.bigticket-alert-dialog .btns-section-block:first-child{
+  margin-right: 20px;
+  text-align: left;
+}
+.bigticket-alert-dialog .btns-section-block{text-align: right;}
+.bigticket-alert-dialog .btns-section-block p{
+  /*font-style: italic;*/
+  font-size: 13px;
+}
+.bigticket-alert-dialog .btns-section .action-btn-delete{background: #E2023F;}
+.bigticket-alert-dialog .btns-section .action-btn{margin: 0 0 4px;}
+.bigticket-alert-dialog .bigticket-alert-cancel{
+  border-radius: 50%;
+  border: 2px solid #BABABA;
+  color: #BABABA;
+  display: inline-block;
+  font-size: 19px;
+  height: 25px;
+  position: absolute;
+  right: 20px;
+  text-align: center;
+  top: 20px;
+  vertical-align: middle;
+  width: 25px;
+}
+.bigticket-alert-inner .discount-input{margin: 10px 0;}
+
+
 
 /*--------------/
   #FILTERS
@@ -3078,6 +3116,13 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   color: #828282;
   font-size: 14px;
 }
+.cart-view .alert-btn-wrap{
+  margin:4px 0;
+  padding: 2px 0;
+  text-align: center;
+}
+.cart-view .alert-btn-wrap a{color: #33BA2C;}
+
 .cart-view .cart-col{
   padding: 0 10px;
   color: #3A3A3A;
