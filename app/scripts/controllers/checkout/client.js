@@ -107,7 +107,9 @@ function CheckoutClientCtrl(
     }
     */
     else{
-      dialogService.showDialog('Asigna una dirección de envío');
+      dialogService.showDialog('Asigna una dirección de envío',function(){
+        console.log('test!!');
+      });
     }
   }
 

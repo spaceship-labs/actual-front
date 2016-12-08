@@ -7,8 +7,11 @@
         .factory('dialogService', dialogService);
 
     function dialogController($scope, $mdDialog){
-      $scope.closeDialog = function (){
+      $scope.closeDialog = function (callback){
           $mdDialog.hide();
+          if(callback){
+            callback();
+          }
       };
     }
 
@@ -25,7 +28,7 @@
 
         return service;
 
-        function showDialog(message, parent, ev){
+        function showDialog(message, callback, parent, ev){
           var parentCon = angular.element('body');
           if(parent){
             parentCon = angular.element(parent);
@@ -37,7 +40,7 @@
               template           : '<md-dialog>' +
               '  <md-dialog-content><h2 style="font-weight:400">' + message + '</h2></md-dialog-content>' +
               '  <md-dialog-actions>' +
-              '    <md-button ng-click="closeDialog()" class="md-primary">' +
+              '    <md-button ng-click="closeDialog(callback)" class="md-primary">' +
               '      Aceptar' +
               '    </md-button>' +
               '  </md-dialog-actions>' +

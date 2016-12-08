@@ -66,7 +66,7 @@ function QuotationsEditCtrl(
     toggleRecord: toggleRecord,
     sendByEmail: sendByEmail,
     showDetailGroupStockAlert: showDetailGroupStockAlert,
-    //showBigTicketDialog: showBigTicketDialog,
+    showBigTicketDialog: showBigTicketDialog,
     print: print,
     daysDiff: daysDiff,
     isUserAdmin: isUserAdmin
@@ -556,7 +556,6 @@ function QuotationsEditCtrl(
     };
   }
 
-  /*
   function showBigTicketDialog(ev){
     var controller = BigTicketController;
     $mdDialog.show({
@@ -596,7 +595,6 @@ function QuotationsEditCtrl(
 
     $scope.init();    
   }
-  */
 
   $scope.$on('$destroy', function(){
     mainDataListener();
