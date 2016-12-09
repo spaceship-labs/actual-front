@@ -16,6 +16,7 @@ function CommissionsListCtrl(
   $scope,
   $location,
   commissionService,
+  authService,
   storeService
 ) {
   var vm = this;
@@ -23,6 +24,8 @@ function CommissionsListCtrl(
   vm.filters = {};
   vm.user = Object.assign({}, $rootScope.user);
   vm.sellers = [];
+  vm.USER_ROLES = authService.USER_ROLES;
+  
   $scope.year = today.getFullYear();
   $scope.month = today.getMonth();
   $scope.period = today.getDate() < 16 ? 1: 2;
@@ -58,10 +61,10 @@ function CommissionsListCtrl(
   init();
 
   function init() {
-    if (vm.user.role.name == 'seller') {
+    if (vm.user.role.name === authService.USER_ROLES.SELLER) {
       vm.filters.user = vm.user.id;
       totalsSeller();
-    } else if (vm.user.role.name == 'store manager') {
+    } else if (vm.user.role.name === authService.USER_ROLES.STORE_MANAGER) {
       getSellersByStore(vm.user.mainStore.id)
         .then(function(sellers) {
           vm.sellers = sellers;

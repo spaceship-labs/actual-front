@@ -140,7 +140,7 @@
     IF SELLER
     -->
     <div
-      ng-if="vm.user.role.name == 'seller' || vm.user.role.name === 'admin' "
+      ng-if="vm.isUserSellerOrAdmin()"
       class="nested-item"
     >
       <div

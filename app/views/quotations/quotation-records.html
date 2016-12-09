@@ -144,8 +144,10 @@
 
               </div>
             </div>
+
+            <!--CLOSE QUOTATION-->
             <form 
-              ng-if="!vm.quotation.isClosed && vm.isUserAdmin()" 
+              ng-if="!vm.quotation.isClosed && vm.isUserAdminOrManager()" 
               name="closeQuotationForm" 
               ng-submit="vm.closeQuotation(closeQuotationForm, vm.closeReason, vm.closeNote)">
               <div class="record-item-block" layout="row" layout-align="space-between start">
@@ -164,6 +166,9 @@
                 </div>
               </div>
             </form>
+            <!--END CLOSE QUOTATION-->
+
+
           </div>
         </td>
       </tr>

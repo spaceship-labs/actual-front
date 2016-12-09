@@ -28,6 +28,7 @@ function QuotationsEditCtrl(
   packageService,
   paymentService,
   deliveryService,
+  authService,
   siteService,
   DTOptionsBuilder, 
   DTColumnDefBuilder
@@ -47,27 +48,27 @@ function QuotationsEditCtrl(
         appendTo: 'body',
         disableTextInput:true
     },
-    promotionPackages: [],
     addNewProduct: addNewProduct,
-    appliesForPackageOrPromotionDiscount: appliesForPackageOrPromotionDiscount,
     addRecord: addRecord,
     alertRemoveDetail: alertRemoveDetail,
+    appliesForPackageOrPromotionDiscount: appliesForPackageOrPromotionDiscount,
     attachImage: attachImage,
     closeQuotation: closeQuotation,
     continueBuying: continueBuying,
+    daysDiff: daysDiff,
     getPromotionPackageById: getPromotionPackageById,
     getUnitPriceWithDiscount: getUnitPriceWithDiscount,
     getWarehouseById: getWarehouseById,
+    isUserAdminOrManager: isUserAdminOrManager,
     isValidStock: isValidStock,
+    print: print,
+    promotionPackages: [],
     removeDetail: removeDetail,
     removeDetailsGroup: removeDetailsGroup,
-    toggleRecord: toggleRecord,
     sendByEmail: sendByEmail,
-    showDetailGroupStockAlert: showDetailGroupStockAlert,
     showBigTicketDialog: showBigTicketDialog,
-    print: print,
-    daysDiff: daysDiff,
-    isUserAdmin: isUserAdmin
+    showDetailGroupStockAlert: showDetailGroupStockAlert,
+    toggleRecord: toggleRecord,
   });
 
   if($rootScope.isMainDataLoaded){
@@ -284,11 +285,11 @@ function QuotationsEditCtrl(
     return tracingDate;
   }
 
-  function isUserAdmin(){
-    if($rootScope.user.role && $rootScope.user.role.name === 'admin'){
-      return true;
-    }
-    return false;
+  function isUserAdminOrManager(){
+    return $rootScope.user.role && 
+      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+        || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
+      );
   }
 
   function closeQuotation(form,closeReason, extraNotes){
@@ -645,6 +646,7 @@ QuotationsEditCtrl.$inject = [
   'packageService',
   'paymentService',
   'deliveryService',
+  'authService',
   'siteService',
   'DTOptionsBuilder', 
   'DTColumnDefBuilder'

@@ -51,7 +51,7 @@
     <!--
       IF MANAGER
     -->
-    <h2 ng-if="vm.user.role.name == 'store manager'">
+    <h2 ng-if="vm.user.role.name === vm.USER_ROLES.STORE_MANAGER">
       TIENDA: {{vm.user.mainStore.name}}
     </h2>
     <div
@@ -100,7 +100,7 @@
     IF SELLER
     -->
     <div
-      ng-if="vm.user.role.name == 'seller'"
+      ng-if="vm.user.role.name === vm.USER_ROLES.SELLER"
       class="nested-item"
     >
       <div

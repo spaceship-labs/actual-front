@@ -63,6 +63,8 @@ function RefundsProductsCtrl(
     vm.isLoading = true;
     loadWarehouses();
     showAlerts();
+    vm.activeStore = $rootScope.activeStore;
+    vm.brokers     = $rootScope.brokers;
 
     orderService.getById($routeParams.id)
       .then(function(res){
@@ -109,9 +111,6 @@ function RefundsProductsCtrl(
         $log.error(err);
       });
 
-    userService.getBrokers().then(function(brokers){
-      vm.brokers = brokers;
-    });
   }
 
   function alertRemoveDetail(ev, detailsGroup) {

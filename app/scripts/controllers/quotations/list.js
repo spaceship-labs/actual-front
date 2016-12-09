@@ -15,6 +15,7 @@ function QuotationsListCtrl(
     $rootScope,
     $filter,
     commonService,
+    authService,
     quotationService,
     storeService
   ){
@@ -24,7 +25,9 @@ function QuotationsListCtrl(
   vm.onDateStartSelect = onDateStartSelect;
   vm.onDateEndSelect = onDateEndSelect;
   vm.getQuotationsData = getQuotationsData;
-  vm.getTotalByDateRange = getTotalByDateRange;
+  vm.isUserAdminOrManager = isUserAdminOrManager;
+  vm.isUserSellerOrAdmin  = isUserSellerOrAdmin; 
+
   vm.filters = false;
   vm.dateEnd = false;
   vm.defaultSort = [6, 'asc'];
@@ -146,7 +149,7 @@ function QuotationsListCtrl(
       endDate: vm.endDate,
     });
 
-    if(vm.user.role.name === 'store manager' && vm.user.mainStore){
+    if(vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore){
       getSellersByStore(vm.user.mainStore.id);
     }
 
@@ -159,7 +162,6 @@ function QuotationsListCtrl(
 
   function getTotalByDateRange(userId, dateRange){
     var params = angular.extend(dateRange, {all:false});
-    console.log('getTotalByDateRange', params);
     quotationService.getTotalsByUser($rootScope.user.id, params)
       .then(function(res){
         vm.totalDateRange = res.data.dateRange || 0;
@@ -178,7 +180,7 @@ function QuotationsListCtrl(
       };
     }
 
-    vm.getTotalByDateRange(vm.user.id, {
+    getTotalByDateRange(vm.user.id, {
       startDate: vm.dateRange.start,
       endDate: vm.dateRange.end,
     });
@@ -198,56 +200,70 @@ function QuotationsListCtrl(
     if(vm.sellers){
       var promisesTotals = [];
       for(var i = 0; i< vm.sellers.length; i++){
-        var s = vm.sellers[i];
+        var seller = vm.sellers[i];
         var params = {
           startDate: vm.dateRange.start,
           endDate: vm.dateRange.end,
           all: false
         };
-        promisesTotals.push(quotationService.getTotalsByUser(s.id, params));
+        promisesTotals.push(quotationService.getTotalsByUser(seller.id, params));
       }
       $q.all(promisesTotals)
         .then(function(totals){
-          vm.sellers = vm.sellers.map(function(s, index){
-            s.total = totals[index].data.dateRange;
-            return s;
-          })
+          vm.sellers = vm.sellers.map(function(seller, index){
+            seller.total = totals[index].data.dateRange;
+            return seller;
+          });
         })
         .catch(function(err){
           console.log(err);
-        })
+        });
     }
   }
 
   function getSellersByStore(storeId){
     storeService.getSellersByStore(storeId)
       .then(function(res){
-        vm.sellers = res.data;
         var promisesTotals = [];
-        vm.sellers = vm.sellers.map(function(s){
-          s.filters = {
-            User: s.id
+        vm.sellers = res.data;
+        vm.sellers = vm.sellers.map(function(seller){
+          seller.filters = {
+            User: seller.id
           };
           var params = {
             startDate: vm.startDate,
             endDate: vm.endDate,
             all: false
           };
-          promisesTotals.push(quotationService.getTotalsByUser(s.id, params));
-          return s;
+          promisesTotals.push(quotationService.getTotalsByUser(seller.id, params));
+          return seller;
         });
         return $q.all(promisesTotals);
       })
       .then(function(totals){
-        vm.sellers = vm.sellers.map(function(s, i){
-          s.total = totals[i].data.dateRange;
-          return s;
+        vm.sellers = vm.sellers.map(function(seller, i){
+          seller.total = totals[i].data.dateRange;
+          return seller;
         });
       })
       .catch(function(err){
         console.log(err);
       });
   }
+
+  function isUserAdminOrManager(){
+    return $rootScope.user.role && 
+      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+        || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
+      );
+  }  
+
+  function isUserSellerOrAdmin(){
+    return $rootScope.user.role && 
+      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+        || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
+      );
+  }  
 
   init();
 }

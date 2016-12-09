@@ -121,7 +121,6 @@ angular
         resolve: {
           isMiActual: function($rootScope, authService){
             authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
             $rootScope.isMiActual = true;
             return true;
           }

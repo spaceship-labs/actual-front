@@ -16,6 +16,13 @@
       userService
     ){
 
+      var USER_ROLES = {
+        ADMIN         : 'admin',
+        BROKER        : 'broker',
+        SELLER        : 'seller',
+        STORE_MANAGER : 'store manager'
+      };
+
       var service = {
         authManager: authManager,
         signUp: signUp,
@@ -24,14 +31,17 @@
         dennyAccessBroker: dennyAccessBroker,
         dennyAccessStoreManager: dennyAccessStoreManager,
         isBroker: isBroker,
-        runPolicies: runPolicies
+        runPolicies: runPolicies,
+        USER_ROLES: USER_ROLES
       };
 
       return service;
 
 
       function signUp(data, success, error) {
-         $http.post(api.baseUrl + '/user/create', data).success(success).error(error);
+         $http.post(api.baseUrl + '/user/create', data)
+          .success(success)
+          .error(error);
       }
 
       function signIn(data, success, error) {
@@ -39,12 +49,13 @@
         localStorageService.remove('user');
         localStorageService.remove('quotation');
         localStorageService.remove('broker');
-        $http.post(api.baseUrl + '/auth/signin', data).success(success).error(error);
+        $http.post(api.baseUrl + '/auth/signin', data)
+          .success(success)
+          .error(error);
       }
 
       function authManager(params){
         var url = '/auth/manager';
-        console.log(url);
         return api.$http.post(url, params);
       }
 
@@ -79,11 +90,11 @@
       }
 
       function isBroker(user){
-        return !!(user && user.role && user.role.name == 'broker');
+        return !!(user && user.role && user.role.name === USER_ROLES.BROKER);
       }
 
       function isStoreManager(user){
-        return !!(user && user.role && user.role.name == 'store manager');
+        return !!(user && user.role && user.role.name === USER_ROLES.BROKER);
       }
 
       function runPolicies(){
@@ -112,9 +123,6 @@
         var isPublicPath = function(path){
           return publicPaths.indexOf(path) > -1;
         };
-
-        //console.log('location',$location.path());
-        //console.log('user', _user);
 
         //Check if token is expired
         if(_token){

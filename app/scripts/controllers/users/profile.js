@@ -16,7 +16,8 @@ function UserProfileCtrl(
   $location, 
   $mdDialog, 
   commonService, 
-  userService, 
+  userService,
+  authService, 
   localStorageService,
   paymentService
 ){
@@ -34,13 +35,13 @@ function UserProfileCtrl(
   vm.getGeneralTotal    = getGeneralTotal;
   vm.print              = print;
 
-  if(vm.user.userType === 'broker' || vm.user.role.name === 'broker'){
+  if(vm.user.role.name === authService.USER_ROLES.BROKER){
     $location.path('/users/brokerprofile');
   }
 
   function init(){
     var role = $rootScope.user.role.name;
-    if(role === 'broker'){
+    if(role === authService.USER_ROLES.BROKER){
       $location.path('/users/brokerprofile');
     }
     var monthRange = commonService.getMonthDateRange();
@@ -81,20 +82,25 @@ function UserProfileCtrl(
   function getCashReport(){
     vm.cashRegister.startDate = commonService.combineDateTime(vm.cashRegister.startDate,vm.cashRegister.startTime);
     vm.cashRegister.endDate = commonService.combineDateTime(vm.cashRegister.endDate,vm.cashRegister.endTime,59);
+    
     var params = {
       startDate: vm.cashRegister.startDate,
       endDate: vm.cashRegister.endDate
     };
+
     vm.isLoadingReport = true;
-    userService.getCashReport(params).then(function(res){
-      console.log(res);
-      var payments = res.data;
-      loadPaymentGroups(payments);
-      vm.isLoadingReport = false;
-    }).catch(function(err){
-      console.log(err);
-      vm.isLoadingReport = false;
-    });
+    
+    userService.getCashReport(params)
+      .then(function(res){
+        console.log(res);
+        var payments = res.data;
+        loadPaymentGroups(payments);
+        vm.isLoadingReport = false;
+      })
+      .catch(function(err){
+        console.log(err);
+        vm.isLoadingReport = false;
+      });
   }
 
   function loadPaymentGroups(payments){
@@ -150,7 +156,7 @@ function UserProfileCtrl(
 
   function getTotalByMethod(method){
     var total = method.payments.reduce(function(acum, current){
-      if(current.currency == 'usd'){
+      if(current.currency === 'usd'){
         acum += (current.ammount * current.exchangeRate);
       }else{
         acum += current.ammount;
@@ -189,6 +195,6 @@ function UserProfileCtrl(
     $window.print();
   }
 
-  vm.init();
+  init();
 
 }

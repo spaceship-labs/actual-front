@@ -28,6 +28,9 @@ function OrdersListCtrl(
 
   var vm = this;
   vm.applyFilters = applyFilters;
+  vm.isUserAdminOrManager = isUserAdminOrManager;
+  vm.isUserSellerOrAdmin  = isUserSellerOrAdmin; 
+
   vm.currentDate = new Date();
   vm.dateRange = false;
   vm.ordersData = {};
@@ -121,7 +124,8 @@ function OrdersListCtrl(
       startDate: vm.startDate,
       endDate: vm.endDate,
     });
-    if(vm.user.role.name === 'store manager' && vm.user.mainCompany){
+    
+    if(vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainCompany){
       getSellersByStore(vm.user.mainCompany.id);
     }
   }
@@ -235,6 +239,20 @@ function OrdersListCtrl(
     }
     return number;
   }
+
+  function isUserAdminOrManager(){
+    return $rootScope.user.role && 
+      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+        || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
+      );
+  }  
+
+  function isUserSellerOrAdmin(){
+    return $rootScope.user.role && 
+      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+        || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
+      );
+  }  
 
   init();
 
