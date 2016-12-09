@@ -89,6 +89,7 @@ function QuotationsListCtrl(
     var dateRange = {
       startDate: moment().startOf('day'),
       endDate: moment().endOf('day'),
+      dateField: 'tracing'
     };
     quotationService.getTotalsByUser($rootScope.user.id, dateRange)
       .then(function(res){
@@ -161,31 +162,52 @@ function QuotationsListCtrl(
   }
 
   function getTotalByDateRange(userId, dateRange){
-    var params = angular.extend(dateRange, {all:false});
+    var deferred = $q.defer();
+    var params = angular.extend(dateRange, {
+      all:false,
+      dateField: 'tracing'
+    });
     quotationService.getTotalsByUser($rootScope.user.id, params)
       .then(function(res){
         vm.totalDateRange = res.data.dateRange || 0;
+        deferred.resolve();
+      })
+      .catch(function(err){
+        console.log(err);
+        deferred.reject(err);
+      });
+
+    return deferred.promise;
+  }
+
+  function applyFilters(){
+    if(vm.dateStart._d || vm.dateEnd._d){
+      vm.dateRange = {
+        field: 'tracing',
+        start: !_.isUndefined(vm.dateStart._d) ? moment(vm.dateStart._d).startOf('day').toDate() : false,
+        end: !_.isUndefined(vm.dateEnd._d) ? moment(vm.dateEnd._d).endOf('day').toDate() : false,
+      };
+      console.log('vm.dateRange', vm.dateRange);
+    }
+
+    var promises = [
+      getTotalByDateRange(vm.user.id, {
+        startDate: vm.dateRange.start,
+        endDate: vm.dateRange.end,
+      }),
+      updateSellersTotals()
+    ];
+
+    vm.isLoading = true;
+    $q.all(promises)
+      .then(function(){
+        $rootScope.$broadcast('reloadTable', true);
+        vm.isLoading = false;
       })
       .catch(function(err){
         console.log(err);
       });
-  }
-
-  function applyFilters(){
-    if(vm.dateStart._d && vm.dateEnd._d){
-      vm.dateRange = {
-        field: 'tracing',
-        start: vm.dateStart._d,
-        end: moment(vm.dateEnd._d).endOf('day')
-      };
-    }
-
-    getTotalByDateRange(vm.user.id, {
-      startDate: vm.dateRange.start,
-      endDate: vm.dateRange.end,
-    });
-    updateSellersTotals();
-    $rootScope.$broadcast('reloadTable', true);
+      
   }
 
   function onDateStartSelect(pikaday){
@@ -196,7 +218,31 @@ function QuotationsListCtrl(
     console.log(pikaday);
   }
 
+  function setupStoreCharts(sellers){
+    vm.store = {};
+    vm.store.ammounts = {
+      total: sellers.reduce(function(acum,seller){return acum+=seller.total;},0),
+      labels: sellers.map(function(seller){return seller.firstName + ' ' + seller.lastName;}),
+      data: sellers.map(function(seller){return seller.total;}),
+      options:{
+        legend:{
+          display:true,
+          position: 'bottom'
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
+            }
+          }
+        }
+      },
+    };  
+  }
+
   function updateSellersTotals(){
+    var deferred = $q.defer();
+
     if(vm.sellers){
       var promisesTotals = [];
       for(var i = 0; i< vm.sellers.length; i++){
@@ -204,9 +250,13 @@ function QuotationsListCtrl(
         var params = {
           startDate: vm.dateRange.start,
           endDate: vm.dateRange.end,
-          all: false
+          all: false,
+          dateField: 'tracing'
         };
-        promisesTotals.push(quotationService.getTotalsByUser(seller.id, params));
+        console.log('params', params);
+        promisesTotals.push(
+          quotationService.getTotalsByUser(seller.id, params)
+        );
       }
       $q.all(promisesTotals)
         .then(function(totals){
@@ -214,14 +264,22 @@ function QuotationsListCtrl(
             seller.total = totals[index].data.dateRange;
             return seller;
           });
+          console.log('vm.sellers', vm.sellers);
+          setupStoreCharts(vm.sellers);
+          deferred.resolve();
         })
         .catch(function(err){
           console.log(err);
+          deferred.reject(err);
         });
+    }else{
+      deferred.resolve();
     }
+    return deferred.promise;
   }
 
   function getSellersByStore(storeId){
+    var deferred = $q.defer();
     storeService.getSellersByStore(storeId)
       .then(function(res){
         var promisesTotals = [];
@@ -233,9 +291,12 @@ function QuotationsListCtrl(
           var params = {
             startDate: vm.startDate,
             endDate: vm.endDate,
-            all: false
+            all: false,
+            dateField: 'tracing'
           };
-          promisesTotals.push(quotationService.getTotalsByUser(seller.id, params));
+          promisesTotals.push(
+            quotationService.getTotalsByUser(seller.id, params)
+          );
           return seller;
         });
         return $q.all(promisesTotals);
@@ -245,10 +306,15 @@ function QuotationsListCtrl(
           seller.total = totals[i].data.dateRange;
           return seller;
         });
+        setupStoreCharts(vm.sellers);
+        deferred.resolve();
       })
       .catch(function(err){
         console.log(err);
+        deferred.reject(err);
       });
+
+    return deferred.promise;
   }
 
   function isUserAdminOrManager(){
