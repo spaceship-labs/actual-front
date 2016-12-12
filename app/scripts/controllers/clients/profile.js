@@ -118,8 +118,8 @@ function ClientProfileCtrl(
     if(!client.FiscalAddress){
       client.FiscalAddress = {};
     }
-    if(!client.FiscalAddress.E_Mail){
-      client.FiscalAddress.E_Mail = angular.copy(client.E_Mail);
+    if(!client.FiscalAddress.U_Correos){
+      client.FiscalAddress.U_Correos = angular.copy(client.E_Mail);
     }
 
     client.Contacts = client.Contacts.map(function(contact){
@@ -145,7 +145,7 @@ function ClientProfileCtrl(
   function showNewFiscalForm(){
     vm.isNewFiscalFormActive = true;
     vm.newFiscalAddress = {
-      E_Mail:angular.copy(vm.client.E_Mail)
+      U_Correos:angular.copy(vm.client.E_Mail)
     };
   }
 
@@ -303,7 +303,7 @@ function ClientProfileCtrl(
   function createOrUpdateFiscalAddress(form){
     vm.isLoading = true;
     var isValidEmail = commonService.isValidEmail(
-      vm.client.FiscalAddress.E_Mail,
+      vm.client.FiscalAddress.U_Correos,
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){

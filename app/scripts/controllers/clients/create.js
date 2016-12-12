@@ -77,7 +77,7 @@ function ClientCreateCtrl($location, $rootScope, dialogService, commonService, c
     }
 
     if(client.fiscalAddress && !_.isEmpty(client.fiscalAddress) ){
-      if(!commonService.isValidEmail(client.fiscalAddress.E_Mail, {excludeActualDomains: true})){
+      if(!commonService.isValidEmail(client.fiscalAddress.U_Correos, {excludeActualDomains: true})){
         return false;
       }
     }
