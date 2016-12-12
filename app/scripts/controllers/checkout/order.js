@@ -16,6 +16,7 @@ function CheckoutOrderCtrl(
   $routeParams,
   $rootScope,
   $location,
+  dialogService,
   quotationService,
   orderService,
   deliveryService,
@@ -146,25 +147,35 @@ function CheckoutOrderCtrl(
   }
 
   function generateInvoice() {
+    vm.isLoading = true;
     invoiceService
       .create($routeParams.id)
       .then(function(res) {
+        vm.isLoading = false;
         vm.invoiceExists = true;
-        alert(res);
+        dialogService.showDialog('Factura creada exitosamente');
+        console.log('factura created response', res);
       })
       .catch(function(err) {
-        console.log('error', err);
+        vm.isLoading = false;
+        var error = err.data.message;
+        dialogService.showDialog(error);
       });
   }
 
   function sendInvoice() {
+    vm.isLoading = true;
     invoiceService
       .send($routeParams.id)
       .then(function(res) {
-        alert(res);
+        vm.isLoading = false;
+        dialogService.showDialog('Factura enviada exitosamente');
+        console.log('factura sent response', res);
       })
       .catch(function(err) {
-        console.log('error', err);
+        vm.isLoading = false;
+        var error = err.data.message;
+        dialogService.showDialog(error);
       });
   }
 
