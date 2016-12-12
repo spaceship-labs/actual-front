@@ -144,14 +144,16 @@ function QuotationsListCtrl(
       end: vm.endDate
     };
     vm.user = $rootScope.user;
-    getQuotationsData();
-    getTotalByDateRange(vm.user.id, {
-      startDate: vm.startDate,
-      endDate: vm.endDate,
-    });
 
     if(vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore){
       getSellersByStore(vm.user.mainStore.id);
+    }
+    else{
+      getQuotationsData();
+      getTotalByDateRange(vm.user.id, {
+        startDate: vm.startDate,
+        endDate: vm.endDate,
+      });
     }
 
     vm.listScopes = [

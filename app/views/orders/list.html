@@ -34,7 +34,7 @@
     </div>
 
     <div
-      ng-if="!vm.isBroker"
+      ng-if="!vm.isBroker && vm.seller.length === 0"
       flex="30"
       class="input-element select-element-wrapper"
     >
@@ -203,79 +203,21 @@
 
     <!--END IF BROKER-->
 
-    <!--
-    <div class="nested-item" ng-repeat="manager in vm.managers track by $index">
-      <div ng-click="manager.selected = !manager.selected" class="nested-bar nested-bar2" layout="row" layout-align="space-between center">
-        <span>TOTAL GERENTE 1</span><span>$209,000</span>
-      </div>
-      <div ng-show="manager.selected" class="nested-content">
-        <div class="nested-item" ng-repeat="sellers in manager.sellers track by $index">
-          <div class="nested-bar nested-bar3"  ng-click="seller.selected = !seller.selected" layout="row" layout-align="space-between center">
-            <span>TOTAL VENDEDOR 1</span><span>$209,000</span>
-          </div>
-          <div ng-show="seller.selected" class="nested-content">
-            <section class="table-list-wrap table-list-wrap-nomargin">
-              <div table-list class="table-list table-list-v2" columns="vm.columnsOrders" api-resource="vm.apiResourceOrders"></div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
   </div>
 
-  <section ng-if="!vm.isBroker" class="chart-section">
-    <h2><i class="icon-login"></i> <strong>GRÁFICA DETALLADA DE VENTAS</strong></h2>
-    <div class="chart-section-inner">
+  <!--STORE MANAGER-->
+  <ng-include 
+    ng-if="vm.sellers"
+    src="'views/orders/store-charts.html'">
+  </ng-include>
+  <!--END STORE MANAGER-->  
 
-      <div layout="row" class="container container-md">
-        <div class="chart-section-col" flex="70">
-          <p class="chart-section-col-txt">
-            Alcance de meta: 
-            <strong ng-if="vm.getFortnightNumber() === 1">Primera quincena {{vm.currentDate | date:'MMMM yyyy'}}</strong>
-            <strong ng-if="vm.getFortnightNumber() === 2">Segunda quincena {{vm.currentDate | date:'MMMM yyyy'}}</strong>
+  <!--SELLER-->
+  <ng-include 
+    ng-if="!vm.isBroker"
+    src="'views/orders/seller-charts.html'">
+  </ng-include>  
+  <!--END SELLER-->
 
-          </p>
-          <canvas id="pie"
-            class="chart chart-pie"
-            chart-data="vm.chartOptions.data"
-            chart-labels="vm.chartOptions.labels"
-            chart-colors="vm.chartOptions.colors"
-            chart-options="vm.chartOptions.options">
-          </canvas>
-          <div class="chart-legends">
-            <p>
-              <span class="legend-sqr"></span>
-              <span>Venta al {{vm.currentDate | date:'d/MMM/yyyy'}}</span>
-              <span class="legend-sqr legend-sqr2"></span> <span>Falta para objetivo</span>
-
-            </p>
-          </div>
-        </div>
-        <div class="chart-section-col" flex="30">
-          <ul>
-            <li>
-              <span><strong>Objetivo</strong></span>
-              <span>{{vm.goal | currency}}</span>
-            </li>
-            <li>
-              <span><strong>Real</strong></span>
-              <span>{{vm.current | currency}}</span>
-            </li>
-            <li>
-              <span><strong>Venta al {{vm.currentDate | date:'d/MMM/yyyy'}}</strong></span>
-              <span>{{vm.currentPercent | number:2}} %</span>
-            </li>
-            <li>
-              <span><strong>Falta para objetivo</strong>
-              </span><span>{{vm.remaining | currency}}</span>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
 
 </section>

@@ -2772,6 +2772,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-size: 16px;
   margin: 0 4px;
 }
+.table-list .highlight-row td{
+  background: #E2E2E2;  
+}
 
 /*--------------/
   #TABLE-LIST-V2
@@ -3206,8 +3209,8 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   background: #34BA2C;
   font-size: 12px;
   margin: 20px auto;
-  max-width: 80%;
 }
+.records-view .new-record .close-btn{background: #000}
 
 .records-view .new-record .input-element textarea{
   line-height:1em;
@@ -3248,33 +3251,33 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 
 .records-view .records-table tbody td.inner-content{padding: 0;}
 
-.records-view .records-table .record-item textarea{
+.records-view .record-item-block textarea{
   border: 1px solid #000;
   resize:none;
   padding: 10px;
   font-size: 14px;
   width: 100%;
 }
-.records-view .records-table .record-item-block{
+.records-view .record-item-block{
   border: 1px solid #000;
   padding: 20px;
 }
-.records-view .records-table .record-item-block + .record-item-block{
+.records-view .record-item-block + .record-item-block{
   background: #F8F8F8;
   border-top: 0;
 }
 
-.records-view .records-table .record-item-block .action-btn{
+.records-view .record-item-block .action-btn{
   color: #fff;
   font-size: 13px;
 }
-.records-view .records-table .record-item-block select{
+.records-view .record-item-block select{
   background: #fff;
   border: 1px solid #000;
   width: 100%;
   padding: 6px;
 }
-.records-view .records-table .record-item-block img{max-width: 80px;}
+.records-view .record-item-block img{max-width: 80px;}
 .records-view .note{font-size: 12px;}
 
 /*-------------/
