@@ -311,7 +311,6 @@ function ClientProfileCtrl(
       var creating = false;
       var params = angular.copy(vm.client.FiscalAddress);
       params.FederalTaxID = angular.copy(vm.client.LicTradNum);
-      params.U_Correos = angular.copy(params.E_Mail);
 
       if(params && params.id){
         promise = clientService.updateFiscalAddress(

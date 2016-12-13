@@ -40,7 +40,7 @@
       ng-if="!vm.sellers"
     >
       <div 
-        flex="40" 
+        flex="50" 
         class="input-element select-element-wrapper"
       >
         <label><strong>Buscar sobre:</strong></label>
@@ -51,7 +51,9 @@
           class="select-element">
         </select>
       </div>
-      <div flex="30" class="input-element select-element-wrapper">
+      <div 
+        flex="50" 
+        class="input-element select-element-wrapper">
         <select 
           ng-init="vm.filters.isClosed = vm.closedOptions[0].value"
           ng-model="vm.filters.isClosed" 

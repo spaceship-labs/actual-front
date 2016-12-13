@@ -24,7 +24,6 @@ function QuotationsListCtrl(
   vm.applyFilters = applyFilters;
   vm.onDateStartSelect = onDateStartSelect;
   vm.onDateEndSelect = onDateEndSelect;
-  vm.getQuotationsData = getQuotationsData;
   vm.isUserAdminOrManager = isUserAdminOrManager;
   vm.isUserSellerOrAdmin  = isUserSellerOrAdmin; 
 
@@ -85,51 +84,67 @@ function QuotationsListCtrl(
   };
 
 
-  function getQuotationsData(){
-    var dateRange = {
-      startDate: moment().startOf('day'),
-      endDate: moment().endOf('day'),
-      dateField: 'tracing'
-    };
-    quotationService.getTotalsByUser($rootScope.user.id, dateRange)
-      .then(function(res){
-        vm.quotationsData.todayAmmount = res.data.dateRange;
-        vm.quotationsData.fortnightAmount = res.data.fortnight;
-        vm.quotationsData.ammounts = {
-          labels: ["Hoy", "Resto de la quincena"],
-          data: [
-            vm.quotationsData.todayAmmount,
-            (vm.quotationsData.fortnightAmount - vm.quotationsData.todayAmmount)
-          ],
-          colors: ["#C92933", "#48C7DB", "#FFCE56"],
-          options:{
-            tooltips: {
-              callbacks: {
-                label: function(tooltipItem, data) {
-                  return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
-                }
-              }
+  function setupSellerChart(userTotals, userCounts){
+    vm.quotationsData.todayAmmount = userTotals.dateRange;
+    vm.quotationsData.fortnightAmount = userTotals.fortnight;
+    vm.quotationsData.ammounts = {
+      labels: ["Hoy", "Resto de la quincena"],
+      data: [
+        vm.quotationsData.todayAmmount,
+        (vm.quotationsData.fortnightAmount - vm.quotationsData.todayAmmount)
+      ],
+      colors: ["#C92933", "#48C7DB", "#FFCE56"],
+      options:{
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
             }
-          },
+          }
+        }
+      },
+    };
 
-        };
-      });
-
-    quotationService.getCountByUser($rootScope.user.id, dateRange)
-      .then(function(res){
-        vm.quotationsData.todayQty = res.data.dateRange;
-        vm.quotationsData.rangeQty = res.data.fortnight;
-        vm.quotationsData.quantities = {
-          labels: ["Hoy", "Resto del mes"],
-          data: [
-            vm.quotationsData.todayQty,
-            (vm.quotationsData.rangeQty - vm.quotationsData.todayQty)
-          ],
-          colors: ["#C92933", "#48C7DB", "#FFCE56"]
-        };
-      });
+    vm.quotationsData.todayQty = userCounts.dateRange;
+    vm.quotationsData.rangeQty = userCounts.fortnight;
+    vm.quotationsData.quantities = {
+      labels: ["Hoy", "Resto del mes"],
+      data: [
+        vm.quotationsData.todayQty,
+        (vm.quotationsData.rangeQty - vm.quotationsData.todayQty)
+      ],
+      colors: ["#C92933", "#48C7DB", "#FFCE56"]
+    };    
   }
 
+  function getQuotationDataByUser(userId, dateRange){
+    var deferred = $q.defer();
+    var defaultDateRange = {
+      startDate : moment().startOf('day'),
+      endDate   : moment().endOf('day'),
+      dateField : 'tracing',
+      isClosed  : {'!': true}
+    };
+    dateRange = dateRange || defaultDateRange;
+    $q.all([
+      quotationService.getTotalsByUser(userId, dateRange),
+      quotationService.getCountByUser(userId, dateRange)
+    ])
+      .then(function(result){
+        console.log('result', result);
+        var values = [
+          result[0].data,
+          result[1].data
+        ];
+        deferred.resolve(values);
+      })
+      .catch(function(err){
+        console.log(err);
+        deferred.reject(err);
+      });
+
+    return deferred.promise;
+  }
 
   function init(){
     vm.startDate = false;
@@ -149,7 +164,15 @@ function QuotationsListCtrl(
       getSellersByStore(vm.user.mainStore.id);
     }
     else{
-      getQuotationsData();
+      getQuotationDataByUser(vm.user.id)
+        .then(function(values){
+          var userTotals = values[0];
+          var userCounts = values[1];
+          setupSellerChart(userTotals, userCounts);
+        })
+        .catch(function(err){
+          console.log('err', err);
+        });
       getTotalByDateRange(vm.user.id, {
         startDate: vm.startDate,
         endDate: vm.endDate,
@@ -255,7 +278,6 @@ function QuotationsListCtrl(
           all: false,
           dateField: 'tracing'
         };
-        console.log('params', params);
         promisesTotals.push(
           quotationService.getTotalsByUser(seller.id, params)
         );
@@ -266,7 +288,6 @@ function QuotationsListCtrl(
             seller.total = totals[index].data.dateRange;
             return seller;
           });
-          console.log('vm.sellers', vm.sellers);
           setupStoreCharts(vm.sellers);
           deferred.resolve();
         })

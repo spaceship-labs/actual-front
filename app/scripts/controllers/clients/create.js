@@ -127,6 +127,7 @@ function ClientCreateCtrl($location, $rootScope, dialogService, commonService, c
   }
 
   function create(createPersonalForm, createFiscalForm, createDeliveryForm){
+    vm.isLoading = true;
     vm.client.contacts = vm.contacts.filter(filterContacts);
     vm.client.fiscalAddress = vm.fiscalAddress || false;
     var formsRelations = [
