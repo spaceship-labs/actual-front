@@ -70,7 +70,7 @@ function ClientProfileCtrl(
         ]
       },
     ],
-    createOrUpdateFiscalAddress: createOrUpdateFiscalAddress,
+    updateFiscalAddress: updateFiscalAddress,
     createQuotation: createQuotation,
     changeTab: changeTab,
     contactAction: contactAction,
@@ -300,7 +300,7 @@ function ClientProfileCtrl(
   }
 
 
-  function createOrUpdateFiscalAddress(form){
+  function updateFiscalAddress(form){
     vm.isLoading = true;
     var isValidEmail = commonService.isValidEmail(
       vm.client.FiscalAddress.U_Correos,
@@ -310,36 +310,22 @@ function ClientProfileCtrl(
       var promise;
       var creating = false;
       var params = angular.copy(vm.client.FiscalAddress);
-      params.FederalTaxID = angular.copy(vm.client.LicTradNum);
+      params.LicTradNum = angular.copy(vm.client.LicTradNum);
 
-      if(params && params.id){
-        promise = clientService.updateFiscalAddress(
-          params.id, 
-          vm.client.CardCode,
-          params
-        );
-      }else{
-        creating = true;
-        promise = clientService.createFiscalAddress(
-          vm.client.CardCode,
-          params
-        );
-      }
-
-      promise
-        .then(function(results){
-          vm.isLoading = false;        
-          if(creating){
-            var created = results[0].data;
-            vm.client.FiscalAddress = created;
-          }
-          dialogService.showDialog('Datos guardados');
-        })
-        .catch(function(err){
-          vm.isLoading = false;
-          console.log(err);
-          dialogService.showDialog('Hubo un error al guardar datos de facturación');
-        });
+      clientService.updateFiscalAddress(
+        params.id, 
+        vm.client.CardCode,
+        params
+      )
+      .then(function(results){
+        vm.isLoading = false;        
+        dialogService.showDialog('Datos guardados');
+      })
+      .catch(function(err){
+        vm.isLoading = false;
+        console.log(err);
+        dialogService.showDialog('Hubo un error al guardar datos de facturación');
+      });
     }else if(!isValidEmail){
       vm.isLoading = false;
       dialogService.showDialog('Email no valido');

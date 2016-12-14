@@ -424,12 +424,13 @@ function QuotationsEditCtrl(
       var detail = details[i];
       var match = _.findWhere(newDetails, { id: detail.id } );
       if(match){
-        detail.unitPrice        = match.unitPrice;
-        detail.discountPercent  = match.discountPercent;
-        detail.discount         = match.discount;
-        detail.subtotal         = match.subtotal;
-        detail.total            = match.total;
-        detail.Promotion        = match.Promotion;
+        detail.unitPrice              = match.unitPrice;
+        detail.discountPercentPromos  = match.discountPercentPromos;
+        detail.discountPercent        = match.discountPercent;
+        detail.discount               = match.discount;
+        detail.subtotal               = match.subtotal;
+        detail.total                  = match.total;
+        detail.Promotion              = match.Promotion;
         detail.PromotionPackageApplied = match.PromotionPackageApplied;
       }
     }
