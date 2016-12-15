@@ -172,6 +172,10 @@
           angular.element('.md-scroll-mask')[0].remove();
       }
 
+      if(angular.element('md-dialog')){
+        angular.element('md-dialog').remove();
+      }
+
       if($rootScope.user){
         //loadMainData();
       }      
