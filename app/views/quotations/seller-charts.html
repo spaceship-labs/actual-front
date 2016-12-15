@@ -13,7 +13,7 @@
         chart-labels="vm.quotationsData.quantities.labels"
         chart-colors="vm.quotationsData.quantities.colors"></canvas>
       <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{ vm.quotationsData.todayQty }} | {{vm.quotationsData.rangeQty}}</p>
+      <p>{{ vm.quotationsData.rangeQty }} | {{vm.quotationsData.fortnightQty}}</p>
     </div>
 
     <div class="chart-section-col chart-section-legends" flex="20">
@@ -31,7 +31,7 @@
         chart-labels="vm.quotationsData.ammounts.labels"
         chart-colors="vm.quotationsData.ammounts.colors"></canvas>
       <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
+      <p>{{vm.quotationsData.dateRangeAmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
     </div>
   </div>
 

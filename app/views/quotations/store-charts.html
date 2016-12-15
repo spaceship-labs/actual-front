@@ -2,23 +2,23 @@
   <h2><i class="icon-login"></i> <strong>OPORTUNIDADES</strong></h2>
   <div class="chart-section-inner">
 
-  <div layout="row" layout-align="center center">
+  <div layout="row">
+    <div class="chart-section-col" flex="40">
+      <h3>Cantidad</h3>
+      <canvas
+        id="pie"
+        class="chart chart-pie"
+        chart-options="vm.store.quantities.options"
+        chart-data="vm.store.quantities.data"
+        chart-labels="vm.store.quantities.labels"
+        chart-colors="vm.store.quantities.colors"></canvas>
+      <p><strong>Hoy</strong> | <strong>Total</strong></p>
+      <p>{{ vm.store.rangeQty }} | {{vm.store.fortnightQty}}</p>
+    </div>
 
-    <div class="table-list" flex="40">
-      <table class="dataTable row-border hover">
-        <thead>
-          <tr>
-            <th>Vendedor</th>
-            <th>Cantidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="seller in vm.sellers">
-            <td>{{seller.firstName + ' ' + seller.lastName}}</td>
-            <td>{{seller.total | currency}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="chart-section-col chart-section-legends" flex="20">
+      <p><span class="chart-section-sqr"></span> Hoy</p>
+      <p><span class="chart-section-sqr chart-section-sqr2"></span> Resto de la quincena</p>
     </div>
 
     <div class="chart-section-col" flex="40">
@@ -30,6 +30,8 @@
         chart-data="vm.store.ammounts.data"
         chart-labels="vm.store.ammounts.labels"
         chart-colors="vm.store.ammounts.colors"></canvas>
+      <p><strong>Hoy</strong> | <strong>Total</strong></p>
+      <p>{{vm.store.dateRangeAmount | currency}} | {{vm.store.fortnightAmount | currency}}</p>
     </div>
   </div>
 

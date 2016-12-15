@@ -29,6 +29,9 @@ function QuotationsListCtrl(
 
   vm.filters = false;
   vm.dateEnd = false;
+  vm.store   = {
+    ammounts: {}
+  };
   vm.defaultSort = [6, 'asc'];
   vm.columnsLeads = [
     {key: 'folio', label:'Folio'},
@@ -83,35 +86,36 @@ function QuotationsListCtrl(
     }
   };
 
+  function getCurrencyTooltip(tooltipItem, data){
+    return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
+  }  
 
   function setupSellerChart(userTotals, userCounts){
-    vm.quotationsData.todayAmmount = userTotals.dateRange;
+    vm.quotationsData.dateRangeAmount = userTotals.dateRange;
     vm.quotationsData.fortnightAmount = userTotals.fortnight;
     vm.quotationsData.ammounts = {
       labels: ["Hoy", "Resto de la quincena"],
       data: [
-        vm.quotationsData.todayAmmount,
-        (vm.quotationsData.fortnightAmount - vm.quotationsData.todayAmmount)
+        vm.quotationsData.dateRangeAmount,
+        (vm.quotationsData.fortnightAmount - vm.quotationsData.dateRangeAmount)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"],
       options:{
         tooltips: {
           callbacks: {
-            label: function(tooltipItem, data) {
-              return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
-            }
+            label: getCurrencyTooltip
           }
         }
       },
     };
 
-    vm.quotationsData.todayQty = userCounts.dateRange;
-    vm.quotationsData.rangeQty = userCounts.fortnight;
+    vm.quotationsData.rangeQty = userCounts.dateRange;
+    vm.quotationsData.fortnightQty = userCounts.fortnight;
     vm.quotationsData.quantities = {
       labels: ["Hoy", "Resto del mes"],
       data: [
-        vm.quotationsData.todayQty,
-        (vm.quotationsData.rangeQty - vm.quotationsData.todayQty)
+        vm.quotationsData.rangeQty,
+        (vm.quotationsData.fortnightQty - vm.quotationsData.rangeQty)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"]
     };    
@@ -120,7 +124,7 @@ function QuotationsListCtrl(
   function getQuotationDataByUser(userId, dateRange){
     var deferred = $q.defer();
     var defaultDateRange = {
-      startDate : moment().startOf('day'),
+      startDate : false,
       endDate   : moment().endOf('day'),
       dateField : 'tracing',
       isClosed  : {'!': true}
@@ -173,6 +177,7 @@ function QuotationsListCtrl(
         .catch(function(err){
           console.log('err', err);
         });
+      console.log('getting total by dateRange');
       getTotalByDateRange(vm.user.id, {
         startDate: vm.startDate,
         endDate: vm.endDate,
@@ -212,7 +217,6 @@ function QuotationsListCtrl(
         start: !_.isUndefined(vm.dateStart._d) ? moment(vm.dateStart._d).startOf('day').toDate() : false,
         end: !_.isUndefined(vm.dateEnd._d) ? moment(vm.dateEnd._d).endOf('day').toDate() : false,
       };
-      console.log('vm.dateRange', vm.dateRange);
     }
 
     var promises = [
@@ -243,8 +247,7 @@ function QuotationsListCtrl(
     console.log(pikaday);
   }
 
-  function setupStoreCharts(sellers){
-    vm.store = {};
+  function setupStoreCharts2(sellers){
     vm.store.ammounts = {
       total: sellers.reduce(function(acum,seller){return acum+=seller.total;},0),
       labels: sellers.map(function(seller){return seller.firstName + ' ' + seller.lastName;}),
@@ -256,14 +259,59 @@ function QuotationsListCtrl(
         },
         tooltips: {
           callbacks: {
-            label: function(tooltipItem, data) {
-              return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
-            }
+            label: getCurrencyTooltip
           }
         }
       },
     };  
   }
+
+  //@param sellers Array of seller object with dateRange and fortnight amounts and quantities
+  function setupStoreCharts(sellersAmounts, sellersQuantities){
+    vm.store.dateRangeAmount = sellersAmounts.reduce(function(acum, seller){
+      acum += seller.dateRange;
+      return acum;
+    }, 0);
+     vm.store.fortnightAmount = sellersAmounts.reduce(function(acum, seller){
+      acum += seller.fortnight;
+      return acum;
+    }, 0);
+    vm.store.ammounts = {
+      labels: ["Hoy", "Resto de la quincena"],
+      data: [
+        vm.store.dateRangeAmount,
+        (vm.store.fortnightAmount - vm.store.dateRangeAmount)
+      ],
+      colors: ["#C92933", "#48C7DB", "#FFCE56"],
+      options:{
+        tooltips: {
+          callbacks: {
+            label: getCurrencyTooltip
+          }
+        }
+      },
+    };
+
+    vm.store.rangeQty = sellersQuantities.reduce(function(acum, seller){
+      acum += seller.dateRange;
+      return acum;
+    }, 0);
+     vm.store.fortnightQty = sellersQuantities.reduce(function(acum, seller){
+      acum += seller.fortnight;
+      return acum;
+    }, 0);
+
+    vm.store.quantities = {
+      labels: ["Hoy", "Resto del mes"],
+      data: [
+        vm.store.rangeQty,
+        (vm.store.fortnightQty - vm.store.rangeQty)
+      ],
+      colors: ["#C92933", "#48C7DB", "#FFCE56"]
+    };    
+  }
+
+
 
   function updateSellersTotals(){
     var deferred = $q.defer();
@@ -273,8 +321,8 @@ function QuotationsListCtrl(
       for(var i = 0; i< vm.sellers.length; i++){
         var seller = vm.sellers[i];
         var params = {
-          startDate: vm.dateRange.start,
-          endDate: vm.dateRange.end,
+          startDate: vm.startDate,
+          endDate: vm.endDate,
           all: false,
           dateField: 'tracing'
         };
@@ -288,8 +336,25 @@ function QuotationsListCtrl(
             seller.total = totals[index].data.dateRange;
             return seller;
           });
-          setupStoreCharts(vm.sellers);
-          deferred.resolve();
+          vm.store.ammounts.total = vm.sellers.reduce(function(acum,seller){
+            return acum+=seller.total;
+          },0);
+          var promises = vm.sellers.map(function(seller){
+            return getQuotationDataByUser(seller.id);
+          });
+          return $q.all(promises);
+        })
+        .then(function(sellersData){
+
+          var sellersAmounts = sellersData.map(function(data){
+            return data[0];
+          });
+          var sellersQuantities = sellersData.map(function(data){
+            return data[1];
+          });
+          setupStoreCharts(sellersAmounts, sellersQuantities);
+          deferred.resolve();          
+        
         })
         .catch(function(err){
           console.log(err);
@@ -311,25 +376,11 @@ function QuotationsListCtrl(
           seller.filters = {
             User: seller.id
           };
-          var params = {
-            startDate: vm.startDate,
-            endDate: vm.endDate,
-            all: false,
-            dateField: 'tracing'
-          };
-          promisesTotals.push(
-            quotationService.getTotalsByUser(seller.id, params)
-          );
           return seller;
         });
-        return $q.all(promisesTotals);
+        return updateSellersTotals();
       })
-      .then(function(totals){
-        vm.sellers = vm.sellers.map(function(seller, i){
-          seller.total = totals[i].data.dateRange;
-          return seller;
-        });
-        setupStoreCharts(vm.sellers);
+      .then(function(){
         deferred.resolve();
       })
       .catch(function(err){
