@@ -11,7 +11,7 @@
   >
     <span>TOTAL VENDEDOR: {{vm.user.firstName + ' ' + vm.user.lastName}} </span>
     <span>
-      {{vm.totalDateRange | currency}} <i class="icon-arrow dropdown-icon" ng-class="{'dropdown-icon-closed':!seller.selected}"></i>
+      {{vm.currentUserTotal | currency}} <i class="icon-arrow dropdown-icon" ng-class="{'dropdown-icon-closed':!seller.selected}"></i>
     </span>
   </div>
 
@@ -21,7 +21,7 @@
         table-list
         class="table-list table-list-v2"
         columns="vm.columnsLeads"
-        api-resource="vm.apiResourceLeads"
+        api-resource="vm.apiResourceQuotations"
         default-sort="vm.defaultSort"
         date-range="vm.dateRange"
         created-row-cb="vm.createdRowCb"
