@@ -176,6 +176,10 @@
         angular.element('md-dialog').remove();
       }
 
+      if(angular.element('.md-dialog-container')[0]){
+        angular.element('.md-dialog-container')[0].remove();
+      }
+
       if($rootScope.user){
         //loadMainData();
       }      
