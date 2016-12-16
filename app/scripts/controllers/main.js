@@ -55,6 +55,7 @@
       getCategoryBackground: getCategoryBackground,
       getCategoryIcon: getCategoryIcon,
       logOut: logOut,
+      removeCurrentQuotation: removeCurrentQuotation,
       signIn: signIn,
       toggleCartModal: toggleCartModal,
       toggleLoginModal: toggleLoginModal,
@@ -245,6 +246,8 @@
                 deferred.reject(err);
               });
           }else{
+            vm.activeQuotation = false;
+            $rootScope.activeQuotation = false;
             deferred.resolve(false);
           }
         });
@@ -284,6 +287,10 @@
     $rootScope.$on('newActiveQuotation', function(ev, newQuotationId){
       loadActiveQuotation();
     });
+
+    function removeCurrentQuotation(){
+      quotationService.removeCurrentQuotation();
+    } 
 
     function togglePointerSidenav(){
       $mdSidenav('right').toggle();

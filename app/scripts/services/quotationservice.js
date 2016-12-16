@@ -50,6 +50,7 @@
         mapDetailsStock: mapDetailsStock,
         removeDetail: removeDetail,
         removeDetailsGroup: removeDetailsGroup,
+        removeCurrentQuotation: removeCurrentQuotation,
         setActiveQuotation: setActiveQuotation,
         sendByEmail: sendByEmail,
         showStockAlert: showStockAlert,
@@ -252,12 +253,16 @@
       }
 
       function setActiveQuotation(quotationId){
-        if(getActiveQuotationId() !== quotationId){
+        if(getActiveQuotationId() !== quotationId || !quotationId){
           localStorageService.set('quotation', quotationId);
           $rootScope.$broadcast('newActiveQuotation', quotationId);          
         }
       }
 
+      function removeCurrentQuotation(){
+        localStorageService.remove('quotation');
+        $rootScope.$broadcast('newActiveQuotation', false); 
+      }
 
       function newQuotation(params, goToSearch){
         create(params).then(function(res){

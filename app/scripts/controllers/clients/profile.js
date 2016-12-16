@@ -188,8 +188,7 @@ function ClientProfileCtrl(
       clientService.update(vm.client.CardCode, params).then(function (res){
         console.log(res);
         vm.isLoading = false;
-        dialogService.showDialog('Datos personales actualizados');
-        returnToCheckout();
+        dialogService.showDialog('Datos personales actualizados',returnToCheckout);
       }).catch(function(err){
         console.log(err);
         dialogService.showDialog('Hubo un error, revisa los campos');
@@ -240,8 +239,7 @@ function ClientProfileCtrl(
       ).then(function(res){
         console.log(res);
         contact.isLoading = false;
-        dialogService.showDialog('Dirección de entrega actualizada');
-        returnToCheckout();
+        dialogService.showDialog('Dirección de entrega actualizada', returnToCheckout);
       })
       .catch(function(err){
         console.log(err);
@@ -271,10 +269,10 @@ function ClientProfileCtrl(
           vm.isLoading = false;
           vm.showNewContact = false;
           vm.newContact = {};
-          dialogService.showDialog('Dirección creada');
+          dialogService.showDialog('Dirección creada', returnToCheckout);
           var created = res.data;
           vm.client.Contacts.push(created);
-          returnToCheckout();
+          
         })
         .catch(function(err){
           vm.isLoading = false;

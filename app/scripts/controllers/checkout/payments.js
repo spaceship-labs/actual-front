@@ -589,7 +589,7 @@ function CheckoutPaymentsCtrl(
           vm.isLoadingProgress = false;
           vm.order = res.data;
           if(vm.order.id){
-            quotationService.setActiveQuotation(false);
+            quotationService.removeCurrentQuotation();
             $location.path('/checkout/order/' + vm.order.id);
           }
         }).catch(function(err){
