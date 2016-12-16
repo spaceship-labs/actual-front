@@ -12,13 +12,13 @@
         chart-data="vm.quotationsData.quantities.data"
         chart-labels="vm.quotationsData.quantities.labels"
         chart-colors="vm.quotationsData.quantities.colors"></canvas>
-      <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{ vm.quotationsData.rangeQty }} | {{vm.quotationsData.fortnightQty}}</p>
+      <p><strong>Hoy</strong> | <strong>FTD</strong></p>
+      <p>{{ vm.quotationsData.untilTodayQty }} | {{vm.quotationsData.allByDateRangeQty}}</p>
     </div>
 
     <div class="chart-section-col chart-section-legends" flex="20">
       <p><span class="chart-section-sqr"></span> Hoy</p>
-      <p><span class="chart-section-sqr chart-section-sqr2"></span> Resto de la quincena</p>
+      <p><span class="chart-section-sqr chart-section-sqr2"></span> FTD</p>
     </div>
 
     <div class="chart-section-col" flex="40">
@@ -30,8 +30,8 @@
         chart-data="vm.quotationsData.ammounts.data"
         chart-labels="vm.quotationsData.ammounts.labels"
         chart-colors="vm.quotationsData.ammounts.colors"></canvas>
-      <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{vm.quotationsData.dateRangeAmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
+      <p><strong>Hoy</strong> | <strong>FTD</strong></p>
+      <p>{{vm.quotationsData.untilTodayAmount | currency}} | {{vm.quotationsData.allByDateRangeAmount | currency}}</p>
     </div>
   </div>
 

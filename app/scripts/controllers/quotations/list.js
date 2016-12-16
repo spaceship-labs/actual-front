@@ -106,7 +106,7 @@ function QuotationsListCtrl(
   }
 
   function init(){
-    if(vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore){
+    if(isUserManager()){
       getSellersByStore(vm.user.mainStore.id);
     }
     else{
@@ -155,25 +155,26 @@ function QuotationsListCtrl(
     var deferred = $q.defer();
 
     if(vm.sellers){
-      var params = {
-        startDate: vm.startDate,
-        endDate: vm.endDate,
-        all: false,
-        dateField: 'tracing'
-      };
-      var promisesTotals = vm.selers.map(function(seller){
+      var promisesTotals = vm.sellers.map(function(seller){
+        var params = {
+          startDate: vm.startDate,
+          endDate: vm.endDate,
+          all: false,
+          dateField: 'tracing',
+          isClosed: vm.closedOptions[0].value
+        };
+        params.isClosed = seller.filters.isClosed || params.isClosed;
         return quotationService.getTotalsByUser(seller.id, params);
       });
 
       $q.all(promisesTotals)
         .then(function(totals){
           vm.sellers = vm.sellers.map(function(seller, index){
-            seller.total = totals[index].data.dateRange;
+            seller.total = totals[index].data.byDateRange;
             return seller;
           });
           
           vm.store.ammounts.total = getStoreTotal(vm.sellers);
-
           var promises = vm.sellers.map(function(seller){
             return getQuotationDataByUser(seller.id);
           });
@@ -202,23 +203,23 @@ function QuotationsListCtrl(
 
   function getStoreTotal(sellers){
     var total = sellers.reduce(function(acum,seller){
-      return acum+=seller.total;
+      return acum += seller.total;
     },0);    
     return total;
   }
 
-  function getQuotationDataByUser(userId, dateRange){
+  function getQuotationDataByUser(userId, params){
     var deferred = $q.defer();
-    var defaultDateRange = {
-      startDate : false,
-      endDate   : moment().endOf('day'),
+    var defaultParams = {
+      startDate : vm.startDate,
+      endDate   : vm.endDate,
       dateField : 'tracing',
       isClosed  : {'!': true}
     };
-    dateRange = dateRange || defaultDateRange;
+    params = params || defaultParams;
     $q.all([
-      quotationService.getTotalsByUser(userId, dateRange),
-      quotationService.getCountByUser(userId, dateRange)
+      quotationService.getTotalsByUser(userId, params),
+      quotationService.getCountByUser(userId, params)
     ])
       .then(function(result){
         console.log('result', result);
@@ -241,13 +242,13 @@ function QuotationsListCtrl(
   }  
 
   function setupSellerChart(userTotals, userCounts){
-    vm.quotationsData.dateRangeAmount = userTotals.dateRange;
-    vm.quotationsData.fortnightAmount = userTotals.fortnight;
+    vm.quotationsData.untilTodayAmount  = userTotals.untilToday;
+    vm.quotationsData.allByDateRangeAmount = userTotals.allByDateRange;
     vm.quotationsData.ammounts = {
-      labels: ["Hoy", "Resto de la quincena"],
+      labels: ["Hoy", "FTD"],
       data: [
-        vm.quotationsData.dateRangeAmount,
-        (vm.quotationsData.fortnightAmount - vm.quotationsData.dateRangeAmount)
+        vm.quotationsData.untilTodayAmount,
+        (vm.quotationsData.allByDateRangeAmount - vm.quotationsData.untilTodayAmount)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"],
       options:{
@@ -259,13 +260,13 @@ function QuotationsListCtrl(
       },
     };
 
-    vm.quotationsData.rangeQty = userCounts.dateRange;
-    vm.quotationsData.fortnightQty = userCounts.fortnight;
+    vm.quotationsData.untilTodayQty = userCounts.untilToday;
+    vm.quotationsData.allByDateRangeQty = userCounts.allByDateRange;
     vm.quotationsData.quantities = {
       labels: ["Hoy", "Resto del mes"],
       data: [
-        vm.quotationsData.rangeQty,
-        (vm.quotationsData.fortnightQty - vm.quotationsData.rangeQty)
+        vm.quotationsData.untilTodayQty,
+        (vm.quotationsData.allByDateRangeQty - vm.quotationsData.untilTodayQty)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"]
     };    
@@ -279,7 +280,8 @@ function QuotationsListCtrl(
     });
     quotationService.getTotalsByUser($rootScope.user.id, params)
       .then(function(res){
-        var total = res.data.dateRange || 0;
+        var values = res.data;
+        var total = values.byDateRange || 0;
         vm.currentUserTotal = total;
         deferred.resolve();
       })
@@ -292,26 +294,35 @@ function QuotationsListCtrl(
   }
 
   function applyFilters(){
-    if(vm.startDatePikaday._d || vm.endDatePikaday._d){
-      vm.globalDateRange = {
-        field: 'tracing',
-        start: !_.isUndefined(vm.startDatePikaday._d) ? moment(vm.startDatePikaday._d).startOf('day').toDate() : false,
-        end: !_.isUndefined(vm.endDatePikaday._d) ? moment(vm.endDatePikaday._d).endOf('day').toDate() : false,
-      };
-    }
+    vm.globalDateRange = {
+      field: 'tracing',
+      start: vm.startDate,
+      end: vm.endDate
+    }; 
 
     var promises = [
       getCurrentUserTotal(vm.user.id, {
-        startDate: vm.globalDateRange.start,
-        endDate: vm.globalDateRange.end,
+        startDate: vm.startDate,
+        endDate: vm.endDate,
       }),
       updateSellersTotals()
     ];
 
+    if(!isUserManager()){
+      promises.push(getQuotationDataByUser(vm.user.id));
+    }
+
     vm.isLoading = true;
     $q.all(promises)
-      .then(function(){
+      .then(function(results){
         $rootScope.$broadcast('reloadTable', true);
+
+        if(!isUserManager()){
+          var userTotals = results[2][0];
+          var userCounts = results[2][1];
+          setupSellerChart(userTotals, userCounts);
+        }
+
         vm.isLoading = false;
       })
       .catch(function(err){
@@ -325,24 +336,24 @@ function QuotationsListCtrl(
   }
 
   function onDateEndSelect(pikaday){
-    vm.startDate = pikaday._d;
+    vm.endDate = pikaday._d;
   }
 
-  //@param sellers Array of seller object with dateRange and fortnight amounts and quantities
+  //@param sellers Array of seller object with untiltoday and bydaterange amounts and quantities
   function setupStoreCharts(sellersAmounts, sellersQuantities){
-    vm.store.dateRangeAmount = sellersAmounts.reduce(function(acum, seller){
-      acum += seller.dateRange;
+    vm.store.untilTodayAmount = sellersAmounts.reduce(function(acum, seller){
+      acum += seller.untilToday;
       return acum;
     }, 0);
-     vm.store.fortnightAmount = sellersAmounts.reduce(function(acum, seller){
-      acum += seller.fortnight;
+     vm.store.allByDateRangeAmount = sellersAmounts.reduce(function(acum, seller){
+      acum += seller.allByDateRange;
       return acum;
     }, 0);
     vm.store.ammounts = {
       labels: ["Hoy", "Resto de la quincena"],
       data: [
-        vm.store.dateRangeAmount,
-        (vm.store.fortnightAmount - vm.store.dateRangeAmount)
+        vm.store.untilTodayAmount,
+        (vm.store.allByDateRangeAmount - vm.store.untilTodayAmount)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"],
       options:{
@@ -354,20 +365,20 @@ function QuotationsListCtrl(
       },
     };
 
-    vm.store.rangeQty = sellersQuantities.reduce(function(acum, seller){
-      acum += seller.dateRange;
+    vm.store.untilTodayQty = sellersQuantities.reduce(function(acum, seller){
+      acum += seller.untilToday;
       return acum;
     }, 0);
-     vm.store.fortnightQty = sellersQuantities.reduce(function(acum, seller){
-      acum += seller.fortnight;
+     vm.store.allByDateRangeQty = sellersQuantities.reduce(function(acum, seller){
+      acum += seller.allByDateRange;
       return acum;
     }, 0);
 
     vm.store.quantities = {
       labels: ["Hoy", "Resto del mes"],
       data: [
-        vm.store.rangeQty,
-        (vm.store.fortnightQty - vm.store.rangeQty)
+        vm.store.untilTodayQty,
+        (vm.store.allByDateRangeQty - vm.store.untilTodayQty)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"]
     };    
@@ -387,6 +398,10 @@ function QuotationsListCtrl(
         || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
       );
   }  
+
+  function isUserManager(){
+    return vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore;
+  }
 
   init();
 }
