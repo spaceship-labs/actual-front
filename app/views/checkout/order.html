@@ -101,7 +101,9 @@
               </div>
             </div>
             <div flex="20" class="order-item-data"><span>{{detailGroup.quantity}}</span></div>
-            <div flex="20" class="order-item-data"><span>{{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span></div>
+            <div flex="20" class="order-item-data">
+              <span>{{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span>  <span class="immediate-delivery-tag" ng-if="detailGroup.immediateDelivery">Entrega inmediata</span>
+            </div>
             <div flex="20" class="order-item-data">
               <span>{{detailGroup.total | currency}} MXN</span>
             </div>

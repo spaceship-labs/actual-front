@@ -80,6 +80,8 @@ function QuotationsEditCtrl(
   }
 
   function init(quotationId, options){
+    console.log('llego a carrito de compras');
+
     vm.activeStore       = $rootScope.activeStore;
     vm.brokers           = $rootScope.brokers;
     vm.promotionPackages = [];
@@ -472,6 +474,7 @@ function QuotationsEditCtrl(
           }else{
             console.log('No hay cliente');
             quotationService.setActiveQuotation(vm.quotation.id);
+            localStorageService.set('inCheckoutProcess', true);
             $location.path('/continuequotation').search({goToCheckout:true});
           }
         })

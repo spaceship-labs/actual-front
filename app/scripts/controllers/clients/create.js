@@ -10,7 +10,14 @@
 angular.module('dashexampleApp')
   .controller('ClientCreateCtrl', ClientCreateCtrl);
 
-function ClientCreateCtrl($location, $rootScope, dialogService, commonService, clientService){
+function ClientCreateCtrl(
+    $location, 
+    $rootScope, 
+    dialogService, 
+    commonService, 
+    clientService,
+    quotationService,
+    localStorageService){
   var vm = this;
 
   angular.extend(vm, {
@@ -137,17 +144,15 @@ function ClientCreateCtrl($location, $rootScope, dialogService, commonService, c
     var areValidEmails = validateClientEmails(vm.client);
     var filledForms = getFilledForms(formsRelations);
     if(areFormsValid(filledForms) && createPersonalForm.$valid && areValidEmails){
-      console.log('creating client', vm.client);
       clientService.create(vm.client)
         .then(function(res){
           console.log(res);
           var created = res.data;
           vm.isLoading = false;
           if(created.CardCode){
-            if($location.search().continueQuotation){
-              $location
-                .path('/quotation/edit/' + $rootScope.activeQuotation.id)
-                .search({createdClient:true});
+            var isInCheckoutProcess = localStorageService.get('inCheckoutProcess');
+            if($location.search().continueQuotation || isInCheckoutProcess){
+              assignClientToQuotation(created.id);
             }else{
               $location
                 .path('/clients/profile/'+created.id)
@@ -169,6 +174,27 @@ function ClientCreateCtrl($location, $rootScope, dialogService, commonService, c
       dialogService.showDialog('Datos incompletos');
     }
 
+  }
+
+  function assignClientToQuotation(clientId){
+    var params = {Client: clientId};
+    var activeQuotation = $rootScope.activeQuotation;
+    if(activeQuotation.id){
+      quotationService.update(activeQuotation.id, params)
+      .then(function(res){
+        var quotation = res.data;
+        if(quotation && quotation.id){
+          quotationService.setActiveQuotation(activeQuotation.id);
+          localStorageService.remove('inCheckoutProcess');
+          $location
+            .path('/quotation/edit/' + activeQuotation.id)
+            .search({createdClient:true});        
+        }
+      })
+      .catch(function(err){
+        console.log('err', err);
+      });
+    }
   }
 
   init();
