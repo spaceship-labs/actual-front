@@ -91,13 +91,11 @@
           console.log(err);
         });
 
-      /*
       $scope.$watch(function() {
         return localStorageService.get('quotation');
       }, function(quotation) {
         vm.quotation = quotation;
       });
-      */
 
       moment.locale('es');
 
@@ -109,13 +107,13 @@
         var loginHeaderTrigger = $('#login-header-trigger');
 
         if(
-          !$target.is(profileHeader) && !$target.is(profileHeaderTrigger) && 
+          !$target.is(profileHeader) && !$target.is(profileHeaderTrigger) &&
           !profileHeaderTrigger.find($target).length && vm.isActiveProfileHeader
         ){
           toggleProfileModal();
         }
         else if(
-          !$target.is(loginHeader) && !$target.is(loginHeaderTrigger) && 
+          !$target.is(loginHeader) && !$target.is(loginHeaderTrigger) &&
           !loginHeaderTrigger.find($target).length && vm.isActiveLogin
         ){
           toggleLoginModal();
@@ -128,7 +126,7 @@
     function buildPointersSidenav(){
       for (var i = 0; i < 9; i++) {
         vm.pointersSidenav.push({selected:false});
-      }      
+      }
     }
 
     function buildMenuCategories(categoryTree){
@@ -183,8 +181,8 @@
 
       if($rootScope.user){
         //loadMainData();
-      }      
-    });    
+      }
+    });
 
     function loadMainData(){
       $rootScope.isMainDataLoaded = false;
@@ -267,7 +265,7 @@
           deferred.reject(err);
         });
       return deferred.promise;
-    }    
+    }
 
     function loadSiteInfo(){
       var deferred = $q.defer();
@@ -290,7 +288,7 @@
 
     function removeCurrentQuotation(){
       quotationService.removeCurrentQuotation();
-    } 
+    }
 
     function togglePointerSidenav(){
       $mdSidenav('right').toggle();
@@ -340,7 +338,7 @@
         '/manual-de-cuidados-y-recomendaciones/viniles',
         '/manual-de-cuidados-y-recomendaciones/vinilos',
         '/manual-de-cuidados-y-recomendaciones/pintura-electrostatica'
-      ];      
+      ];
       if(path.indexOf('dashboard') >= 0){
         activeModule = 'dashboard';
       }
@@ -397,7 +395,7 @@
 
     function hideProfileModal(){
       vm.isActiveProfileHeader = false;
-      vm.isActiveBackdrop = false;      
+      vm.isActiveBackdrop = false;
     }
 
     function activateLoginModal(){
