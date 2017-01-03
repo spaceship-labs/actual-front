@@ -9,7 +9,6 @@
     var service = {
     	getAvailableByDeliveries: getAvailableByDeliveries,
     	groupDeliveryDates: groupDeliveryDates,
-    	groupDeliveryDates2: groupDeliveryDates2,
     	groupDetails: groupDetails,
     	sortDeliveriesByHierarchy: sortDeliveriesByHierarchy,
     	substractDeliveriesStockByQuotationDetails: substractDeliveriesStockByQuotationDetails,
@@ -124,35 +123,6 @@
 		  }
 		  return farthestDelivery;
     }
-
-	  function groupDeliveryDates2(deliveries){
-	    var groups = [];
-	    for(var i=0;i<deliveries.length;i++){
-	      var items = _.where(deliveries, {
-	        date: deliveries[i].date,
-	        available: deliveries[i].available
-	      });
-	      var group = {
-	        days: deliveries[i].days,
-	        date: deliveries[i].date,
-	        hash: deliveries[i].date + '#' + deliveries[i].available,
-	        deliveries: items,
-	      };
-	      groups.push(group);
-	    }
-	    groups = _.uniq(groups, false, function(g){
-	      return g.hash;
-	    });
-	    groups = groups.map(function(g){
-	      g.available = g.deliveries.reduce(function(acum, delivery){
-	        acum+= delivery.available;
-	        return acum;
-	      }, 0);
-	      return g;
-	    });
-	    return groups;
-	    //return deliveries;
-	  }
 
     function getAvailableByDeliveries(deliveries){
     	var warehousesIds = getWarehousesIdsByDeliveries(deliveries);
