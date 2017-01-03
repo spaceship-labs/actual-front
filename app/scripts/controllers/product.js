@@ -236,6 +236,7 @@ function ProductCtrl(
 
 
   function addToCart($event){
+    vm.isLoading = true;
     var productCartItems = cartService.getProductCartItems(
       vm.productCart.deliveryGroup,
       vm.productCart.quantity,
@@ -245,12 +246,12 @@ function ProductCtrl(
 
     if(productCartItems.length === 1){
       var cartItem = productCartItems[0];
-      var params = quotationService.buildAddProductParams(vm.product.id, cartItem);
+      var params = cartService.buildAddProductToCartParams(vm.product.id, cartItem);
       quotationService.addProduct(vm.product.id, params);      
     }
     else if(productCartItems.length > 1){
       var multiParams = productCartItems.map(function(cartItem){
-        return quotationService.buildAddProductParams(vm.product.id, cartItem);
+        return cartService.buildAddProductToCartParams(vm.product.id, cartItem);
       });
       quotationService.addMultipleProducts(multiParams);
     }

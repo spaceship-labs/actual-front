@@ -13,9 +13,23 @@
   	deliveryService
   ){
     var service = {    
+      buildAddProductToCartParams: buildAddProductToCartParams,
     	getProductCartItems: getProductCartItems,
 			resetProductCartQuantity: resetProductCartQuantity    	
     };
+
+    function buildAddProductToCartParams(productId, cartItem){
+      var params = {
+        id: productId,
+        quantity: cartItem.quantity,
+        shipDate: cartItem.date,
+        originalShipDate: cartItem.originalDate,
+        productDate: cartItem.productDate,
+        shipCompany: cartItem.company,
+        shipCompanyFrom: cartItem.companyFrom
+      };
+      return params;
+    }    
 
 	  function resetProductCartQuantity(productCart){
 	    var available = productCart.deliveryGroup.available;
@@ -41,6 +55,8 @@
 	        activeStoreWarehouse
 	      );
 	      
+	      var farthestShipDate = deliveries[0].date;
+
 	      productCartItems = deliveries.map(function(delivery){
 	        if(quantity > delivery.available){
 	          delivery.quantity = delivery.available;
@@ -56,9 +72,24 @@
 	        return item.quantity > 0;
 	      });
 
+	      //Setting farthest delivery date in every productCartItem
+	      productCartItems = formatProductCartItems(productCartItems, {date: farthestShipDate});
+
 	    } 
 	    return productCartItems;
-	  }	  
+	  }
+
+	  function formatProductCartItems(productCartItems, defaults){
+	  	defaults = defaults || {};
+	  	productCartItems = productCartItems.map(function(item){
+	  		item.originalDate = angular.copy(item.date);
+	  		if(defaults.date){
+	  			item.date = defaults.date;
+	  		}
+	  		return item;
+	  	});
+	  	return productCartItems;
+	  }
 
     return service;
 

@@ -26,10 +26,7 @@
     	});
     	for(var i = 0; i<deliveries.length; i++){
     		for(var j=0; j<details.length; j++){
-    			var detailShipDate = moment(details[j].shipDate).startOf('day').format('DD-MM-YYYY');
-    			var deliveryDate = moment(deliveries[i].date).startOf('day').format('DD-MM-YYYY');
     			if(
-    				//detailShipDate === deliveryDate &&
   					details[j].shipCompany === deliveries[i].company && 
   					details[j].shipCompanyFrom === deliveries[i].companyFrom  					
     			){
