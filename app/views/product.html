@@ -80,7 +80,7 @@
                   <select
                     class="select-element"
                     ng-model="vm.productCart.deliveryGroup"
-                    ng-change="vm.resetCartQuantity(deliveryGrop.available)"
+                    ng-change="vm.resetProductCartQuantity(deliveryGrop.available)"
                     ng-options="deliveryGroup.date | date: 'd/MMM/yyyy' for deliveryGroup in vm.deliveriesGroups"
                   >
                   </select>

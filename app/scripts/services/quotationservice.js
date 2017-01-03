@@ -23,6 +23,7 @@
         addProduct: addProduct,
         addRecord: addRecord,
         addMultipleProducts: addMultipleProducts,
+        buildAddProductParams: buildAddProductParams,
         calculateItemsNumber: calculateItemsNumber,
         calculateSubTotal: calculateSubTotal,
         calculateTotal: calculateTotal,
@@ -493,7 +494,20 @@
       function showStockAlert(){
         var msg = 'Hay un cambio de disponibilidad en uno o más de tus articulos';
         dialogService.showDialog(msg);        
-      }      
+      }
+
+
+      function buildAddProductParams(productId, cartItem){
+        var params = {
+          id: productId,
+          quantity: cartItem.quantity,
+          shipDate: cartItem.date,
+          productDate: cartItem.productDate,
+          shipCompany: cartItem.company,
+          shipCompanyFrom: cartItem.companyFrom
+        };
+        return params;
+      }                
 
     }
 

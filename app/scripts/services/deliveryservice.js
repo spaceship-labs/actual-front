@@ -59,9 +59,9 @@
     	 		var detail = groupedDetails[key][i];
     	 		group.quantity += detail.quantity;
     	 		group.subtotal += detail.subtotal;
-    	 		group.total += detail.total;
+    	 		group.total 	 += detail.total;
     	 		group.discount += detail.discount;
-    	 		group.ewallet += detail.ewallet;
+    	 		group.ewallet  += detail.ewallet;
     	 	}
     		group.details = groupedDetails[key];
     	 	var invalidStock = _.findWhere(group.details, {validStock: false});
@@ -201,6 +201,9 @@
 	      var delivery = _.findWhere(deliveries, {companyFrom: warehouses[i].id});
 	      sortedDeliveries.push( delivery );
 	    }
+
+	    sortedDeliveries = sortDeliveriesByDate(sortedDeliveries);
+
 	    return sortedDeliveries;    
 	  }
 
@@ -219,6 +222,15 @@
 	      }
 	    }
 	    return sorted;
+	  }
+
+	  function sortDeliveriesByDate(deliveries){
+	  	var sortedByDate = deliveries.sort(function(a,b){
+		    var dateA = new Date(a.date).getTime();
+		    var dateB = new Date(b.date).getTime();
+		    return dateA < dateB ? 1 : -1;  	  	
+	  	});
+	  	return sortedByDate;
 	  }
 
 	  function getWarehouseHash(warehouse){
@@ -256,7 +268,7 @@
 	    rulesHashes.push('#'+region);
 	    rulesHashes = rulesHashes.concat(otherRegionsRules);
 	    return rulesHashes;
-	  }    
+	  }
 
     return service;
 
