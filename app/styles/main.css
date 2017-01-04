@@ -3517,22 +3517,27 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   margin: 0;
 }
 
-.pay-method-wrap .method-block .saved-icon-wrap{
-  text-align: center;
-}
-.pay-method-wrap .method-block .saved-icon{
+.pay-method-wrap .method-block .payment-icon-wrap{text-align: center;}
+.pay-method-wrap .method-block .payment-icon{
   color: #33BA2C;
   font-size: 30px;
   vertical-align: middle;
 }
 
-.pay-method-wrap .method-block .method-icon i{
-  font-size: 40px
+.pay-method-wrap .method-block .payment-icon-wrap .payment-img-icon{
+  width: 28px;
+  vertical-align: middle;
 }
 
-.pay-method-wrap .method-block .applied-payment{
-  padding: 12px 0;
+.pay-method-wrap .method-block .method-icon i{font-size: 40px}
+.pay-method-wrap .method-block .applied-payment{padding: 12px 0;}
+.pay-method-wrap .method-block .cancelled-label{
+  font-size: 12px;
+  font-weight: 700;
+  color: #C82828;
+  text-align: center;
 }
+
 .refunds-link a{
   color: #000;
   text-decoration: underline;

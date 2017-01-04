@@ -247,6 +247,7 @@ function ProductCtrl(
     if(productCartItems.length === 1){
       var cartItem = productCartItems[0];
       var params = cartService.buildAddProductToCartParams(vm.product.id, cartItem);
+      console.log('params', params);
       quotationService.addProduct(vm.product.id, params);      
     }
     else if(productCartItems.length > 1){

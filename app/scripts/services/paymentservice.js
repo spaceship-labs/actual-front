@@ -8,6 +8,7 @@
   function paymentService(api, $filter, $http, quotationService){
     var service = {
       addPayment: addPayment,
+      cancelPayment: cancelPayment,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getRefundsOptions: getRefundsOptions
@@ -257,6 +258,12 @@
       var url = '/payment/add/' + quotationId;
       return api.$http.post(url,params);
     }
+
+    function cancelPayment(quotationId, paymentId){
+      var url = '/payment/cancel/' + quotationId + '/' + paymentId;
+      return api.$http.post(url);
+    }
+
   
     return service;
   }
