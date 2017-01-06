@@ -43,7 +43,7 @@ function OrdersListCtrl(
     {key:'createdAt', label:'Venta', date:true},
     {
       key:'Acciones',
-      label:'Acciones',
+      label:'Acceder',
       actions:[
         {url:'/checkout/order/',type:'edit'},
       ]
