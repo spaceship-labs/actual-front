@@ -69,7 +69,7 @@
             | 
             <strong>RFC:</strong> {{vm.client.LicTradNum}}
           </p>
-          <p><a ng-href="/clients/profile/{{vm.client.id}}?activeTab=1" class="small-link no-margin">Editar datos de fiscales</a></p>
+          <p><a ng-href="/clients/profile/{{vm.client.id}}?activeTab=1&checkoutProcess={{vm.quotation.id}}" class="small-link no-margin">Editar datos de fiscales</a></p>
         </section>
         <!--END FISCAL SECTION-->
 
@@ -79,6 +79,10 @@
           <h3>
             <strong>Dirección de entrega</strong>
           </h3>
+
+          <p ng-if="vm.contacts.length === 0">
+            <a ng-href="/clients/profile/{{vm.client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}" class="small-link no-margin">Agregar una dirección de entrega</a>
+          </p>
 
           <section class="delivery-options">
             <md-radio-group ng-model="vm.quotation.Address">
@@ -116,7 +120,7 @@
                     <a
                       class="small-link"
                       href="#"
-                      ng-href="/clients/profile/{{vm.quotation.Client.id}}?activeTab=3">
+                      ng-href="/clients/profile/{{vm.quotation.Client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}">
                       Editar datos de dirección
                     </a>
                   </p>

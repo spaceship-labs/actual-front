@@ -89,7 +89,6 @@ function CheckoutClientCtrl(
   }
 
   function continueProcess(){
-    //if(vm.quotation.Address && isClientFiscalDataValid(vm.client)){
     if(vm.quotation.Address){
       vm.isLoading = true;
       var params = angular.copy(vm.quotation);
@@ -102,11 +101,6 @@ function CheckoutClientCtrl(
         dialogService.showDialog('Hubo un error: <br/>' + err);
       });
     }
-    /*
-    else if(!isClientFiscalDataValid(vm.client) ){
-      dialogService.showDialog('Datos fiscales incompletos');
-    }
-    */
     else{
       dialogService.showDialog('Asigna una dirección de envío',function(){
         $location.path('/clients/profile/' + vm.quotation.Client.id)

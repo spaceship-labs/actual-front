@@ -150,8 +150,8 @@ function ClientCreateCtrl(
           var created = res.data;
           vm.isLoading = false;
           if(created.CardCode){
-            var isInCheckoutProcess = localStorageService.get('inCheckoutProcess');
-            if($location.search().continueQuotation || isInCheckoutProcess){
+            //var isInCheckoutProcess = localStorageService.get('inCheckoutProcess');
+            if($location.search().continueQuotation){
               assignClientToQuotation(created.id);
             }else{
               $location

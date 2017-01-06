@@ -268,11 +268,11 @@ function ClientProfileCtrl(
           console.log(res);
           vm.isLoading = false;
           vm.showNewContact = false;
+          vm.isNewAddressFormActive = false;
           vm.newContact = {};
-          dialogService.showDialog('Dirección creada', returnToCheckout);
           var created = res.data;
           vm.client.Contacts.push(created);
-          
+          dialogService.showDialog('Dirección creada', returnToCheckout);
         })
         .catch(function(err){
           vm.isLoading = false;
@@ -317,7 +317,7 @@ function ClientProfileCtrl(
       )
       .then(function(results){
         vm.isLoading = false;        
-        dialogService.showDialog('Datos guardados');
+        dialogService.showDialog('Datos guardados', returnToCheckout);
       })
       .catch(function(err){
         vm.isLoading = false;
