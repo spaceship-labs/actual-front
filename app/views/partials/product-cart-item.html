@@ -92,7 +92,7 @@
       </p>
 
       <p ng-if="detailGroup.immediateDelivery" class="bottom-text">
-        <span class="immediate-delivery-label">Entrega inmediata</span>
+        <span class="immediate-delivery-label">Entrega en tienda</span>
       </p>
 
       <p class="bottom-text" ng-repeat="detail in detailGroup.details">
@@ -103,7 +103,7 @@
           ng-if="detail.immediateDelivery"
           class="immediate-delivery-label"
         >
-          Entrega inmediata
+          Entrega en tienda
         </span>
         | {{ vm.getWarehouseById(detail.shipCompanyFrom).WhsName }}  | Cantidad: {{detail.quantity}} | Valido: {{detail.validStock}}
       </p>
