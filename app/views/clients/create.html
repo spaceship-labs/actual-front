@@ -2,10 +2,25 @@
   <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
 </div>
 
+<div 
+  ng-show="vm.isLoadingProgress" 
+  class="container container-xxlg loading-circle"
+  layout="row"
+  layout-align="center center">
+  <div class="progress-bar">
+    <p><strong>Registrando cliente</strong></p>
+    <md-progress-linear 
+      class="md-accent"
+      md-mode="determinate" 
+      value="{{vm.loadingEstimate}}">
+    </md-progress-linear>
+  </div>
+</div>
+
 <section
   name="createForm"
   novalidate
-  ng-if="!vm.isLoading"
+  ng-if="!vm.isLoading && !vm.isLoadingProgress"
   class="form-view container container-xlg">
   <h1><i class="icon-login"></i> <strong>NUEVO CLIENTE</strong></h1>
   <section class="form-view-content">

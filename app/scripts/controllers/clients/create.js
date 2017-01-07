@@ -11,13 +11,16 @@ angular.module('dashexampleApp')
   .controller('ClientCreateCtrl', ClientCreateCtrl);
 
 function ClientCreateCtrl(
+    $scope,
     $location, 
     $rootScope, 
     dialogService, 
     commonService, 
     clientService,
     quotationService,
-    localStorageService){
+    localStorageService,
+    $interval
+  ){
   var vm = this;
 
   angular.extend(vm, {
@@ -25,6 +28,9 @@ function ClientCreateCtrl(
     client          :{},
     contacts        :[{}],
     fiscalAddress   :{},
+    loadingEstimate :0,
+    isLoadingProgress: false,
+    intervalProgress: false,
     titles: [
       {label:'Sr.', value:'Sr'},
       {label:'Sra.', value: 'Sra'},
@@ -134,7 +140,10 @@ function ClientCreateCtrl(
   }
 
   function create(createPersonalForm, createFiscalForm, createDeliveryForm){
-    vm.isLoading = true;
+    vm.isLoadingProgress = true;
+    vm.loadingEstimate = 0;    
+    animateProgress();
+
     vm.client.contacts = vm.contacts.filter(filterContacts);
     vm.client.fiscalAddress = vm.fiscalAddress || false;
     var formsRelations = [
@@ -148,7 +157,8 @@ function ClientCreateCtrl(
         .then(function(res){
           console.log(res);
           var created = res.data;
-          vm.isLoading = false;
+          vm.isLoadingProgress = false;
+          cancelProgressInterval();
           if(created.CardCode){
             //var isInCheckoutProcess = localStorageService.get('inCheckoutProcess');
             if($location.search().continueQuotation){
@@ -162,18 +172,37 @@ function ClientCreateCtrl(
         })
         .catch(function(err){
           console.log(err);
-          vm.isLoading = false;
+          vm.isLoadingProgress = false;
+          cancelProgressInterval();
           dialogService.showDialog('Hubo un error: ' + (err.data || err) );
         });
     }
     else if(!areValidEmails){
-      vm.isLoading = false;
+      vm.isLoadingProgress = false;
+      cancelProgressInterval();
       dialogService.showDialog('Emails no validos');
     }else{
-      vm.isLoading = false;
+      vm.isLoadingProgress = false;
+      cancelProgressInterval();
       dialogService.showDialog('Datos incompletos');
     }
 
+  }
+
+  function cancelProgressInterval(){
+    if(vm.intervalProgress){
+      $interval.cancel(vm.intervalProgress);
+    }    
+  }
+
+  function animateProgress(){
+    vm.loadingEstimate = 0;
+    vm.intervalProgress = $interval(function(){
+      vm.loadingEstimate += 5;
+      if(vm.loadingEstimate >= 100){
+        vm.loadingEstimate = 0;
+      }
+    },1000);
   }
 
   function assignClientToQuotation(clientId){
@@ -196,6 +225,11 @@ function ClientCreateCtrl(
       });
     }
   }
+
+
+  $scope.$on('$destroy', function(){
+    cancelProgressInterval();
+  });  
 
   init();
 

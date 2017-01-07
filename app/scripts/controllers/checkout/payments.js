@@ -50,7 +50,7 @@ function CheckoutPaymentsCtrl(
     isActiveGroup: isActiveGroup,
     isActiveMethod: isActiveMethod,
     isMinimumPaid: isMinimumPaid,
-
+    intervalProgress: false,
     customFullscreen: $mdMedia('xs') || $mdMedia('sm'),
     singlePayment: true,
     multiplePayment: false,
@@ -644,7 +644,7 @@ function CheckoutPaymentsCtrl(
   }
 
   function animateProgress(){
-    $interval(function(){
+    vm.intervalProgress = $interval(function(){
       vm.loadingEstimate += 5;
       if(vm.loadingEstimate >= 100){
         vm.loadingEstimate = 0;
@@ -707,6 +707,9 @@ function CheckoutPaymentsCtrl(
 
   $scope.$on('$destroy', function(){
     mainDataListener();
+    if(vm.intervalProgress){
+      $interval.cancel(vm.intervalProgress);
+    }
   });
 
 }
