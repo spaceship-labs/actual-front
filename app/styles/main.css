@@ -2776,6 +2776,18 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   background: #E2E2E2;  
 }
 
+.table-list .populate-search-checkbox input{
+  width: auto;
+  height: auto;
+  margin: 0 4px 0 0;
+  vertical-align: middle;
+}
+.table-list .populate-search-checkbox{
+  font-size: 12px;
+  vertical-align: middle; 
+  float: none;
+}
+
 /*--------------/
   #TABLE-LIST-V2
 /*--------------*/
