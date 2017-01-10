@@ -433,6 +433,13 @@
       vm.isActiveBackdrop = false;
     }
 
+    function handleSignInError(err){
+      vm.isLoadingLogin = false;
+      if(err){
+        vm.loginErr = 'Datos incorrectos';
+        console.log('vm.loginErr', vm.loginErr);
+      }
+    }
 
     function signIn(){
       vm.isLoadingLogin = true;
@@ -441,10 +448,11 @@
         password: vm.logInForm.password,
         activeStore: vm.logInForm.activeStoreId
       };
-      authService.signIn(formData, $rootScope.successAuth, function(){
-        console.log('Invalid');
-        vm.isLoadingLogin = false;
-      });
+      authService.signIn(
+        formData, 
+        $rootScope.successAuth, 
+        handleSignInError
+      );
     }
 
     function logOut(){

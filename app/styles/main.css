@@ -714,6 +714,16 @@ select{
   background: #C82828!important;
 }
 
+/*--------------/
+  #LOGIN-MODAL
+/*--------------*/
+.login-modal-header .error-msg{
+  color: #C82828;
+  font-weight: 700;
+  text-align: center;  
+}
+
+
 /*-------------/
   #MENU
 /*------------*/
