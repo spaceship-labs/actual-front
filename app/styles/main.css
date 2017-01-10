@@ -3388,6 +3388,8 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   color: #000;
 }
 
+.checkout-view .small-link-main{color: #33BA2C;}
+
 .checkout-view .second-step-payment{
   margin-top: 40px;
 }

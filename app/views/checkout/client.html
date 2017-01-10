@@ -24,7 +24,7 @@
     <section flex="75">
       <h3>
         <strong>Datos personales</strong>
-        <a class="small-link" ng-href="/clients/profile/{{vm.quotation.Client.id}}">Cambiar mis datos personales</a>
+        <a class="small-link small-link-main" ng-href="/clients/profile/{{vm.quotation.Client.id}}">Editar</a>
       </h3>
       <form ng-submit="vm.continueProcess()" class="client-checkout" action="#">
 
@@ -69,7 +69,7 @@
             | 
             <strong>RFC:</strong> {{vm.client.LicTradNum}}
           </p>
-          <p><a ng-href="/clients/profile/{{vm.client.id}}?activeTab=1&checkoutProcess={{vm.quotation.id}}" class="small-link no-margin">Editar datos de fiscales</a></p>
+          <p><a ng-href="/clients/profile/{{vm.client.id}}?activeTab=1&checkoutProcess={{vm.quotation.id}}" class="small-link small-link-main no-margin">Editar</a></p>
         </section>
         <!--END FISCAL SECTION-->
 
@@ -81,7 +81,7 @@
           </h3>
 
           <p ng-if="vm.contacts.length === 0">
-            <a ng-href="/clients/profile/{{vm.client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}" class="small-link no-margin">Agregar una dirección de entrega</a>
+            <a ng-href="/clients/profile/{{vm.client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}" class="small-link small-link-main no-margin">Agregar una dirección de entrega</a>
           </p>
 
           <section class="delivery-options">
@@ -118,10 +118,10 @@
                   </ul>
                   <p>
                     <a
-                      class="small-link"
+                      class="small-link small-link-main"
                       href="#"
                       ng-href="/clients/profile/{{vm.quotation.Client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}">
-                      Editar datos de dirección
+                      Editar
                     </a>
                   </p>
                 </div>
