@@ -105,7 +105,7 @@ function CheckoutPaymentsCtrl(
       .then(function(response){
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
-        updateEwalletBalance();
+        //updateEwalletBalance();
         if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
           vm.quotation = setQuotationTotalsByGroup(vm.quotation);
         }        
