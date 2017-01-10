@@ -102,9 +102,9 @@ function QuotationsEditCtrl(
           vm.status = 'Cerrada';
         }
 
-        if(options.relaod){
-          loadPaymentMethods();
-        }
+        //if(options.relaod){
+        loadPaymentMethods();
+        //}
 
         return quotationService.populateDetailsWithProducts(vm.quotation);
       })
@@ -143,11 +143,12 @@ function QuotationsEditCtrl(
           return r.data;
         });
 
+        /*
         if(options.reload){
           var deferred = $q.defer();
           deferred.resolve(false);
           return deferred.promise;
-        }
+        }*/
 
         return quotationService.getRecords(vm.quotation.id);
       })
