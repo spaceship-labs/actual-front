@@ -89,7 +89,7 @@ function CheckoutClientCtrl(
   }
 
   function continueProcess(){
-    if(vm.quotation.Address){
+    if(vm.quotation.Address || vm.quotation.immediateDelivery){
       vm.isLoading = true;
       var params = angular.copy(vm.quotation);
       quotationService.update(vm.quotation.id, params).then(function(res){
