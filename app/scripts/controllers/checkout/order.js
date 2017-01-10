@@ -46,6 +46,7 @@ function CheckoutOrderCtrl(
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
       vm.order.Details = vm.order.Details || [];
+      console.log('vm.order', vm.order);
       vm.order.Address = vm.formatAddress(vm.order.Address);
 
       vm.ewallet = {
@@ -119,6 +120,10 @@ function CheckoutOrderCtrl(
   }
 
   function formatAddress(address){
+    //TODO: check why address is empty in some orders
+    if(!address){
+      return {};
+    }
     address.name = (address.FirstName&&address.LastName) ? address.FirstName+' '+address.LastName : address.Name;
     address.address = address.Address;
     address.phone = address.phone || address.Tel1;
