@@ -28,6 +28,7 @@ function ClientProfileCtrl(
 
   angular.extend(vm, {
     activeTab: 0,
+    personalEditEnabled: false,    
     genders: [
       {label:'Masculino', value: 'M'},
       {label: 'Femenino', value: 'F'}
@@ -81,6 +82,7 @@ function ClientProfileCtrl(
     updateContact: updateContact,
     createContact: createContact,
     openMapDialog: openMapDialog,
+    personalDataAction: personalDataAction,
     isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
     showNewAddressForm: showNewAddressForm
@@ -172,6 +174,14 @@ function ClientProfileCtrl(
 
   function onPikadaySelect(pikaday){
     vm.client.Birthdate = pikaday._d;
+  }
+
+  function personalDataAction(form){
+    if(vm.personalEditEnabled){
+      updatePersonalData(form);
+    }else{
+      vm.personalEditEnabled = true;
+    }
   }
 
   function updatePersonalData(form){

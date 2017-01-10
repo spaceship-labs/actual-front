@@ -1,10 +1,13 @@
 <section  class="form-section-content">
 
-  <form name="profileForm" ng-submit="vm.updatePersonalData(profileForm)">
+  <form 
+    name="profileForm" 
+    ng-submit="vm.personalDataAction(profileForm)">
 
     <div class="checkbox-client-type">
       <md-checkbox
         ng-model="vm.client.isMoral"
+        ng-disabled="!vm.personalEditEnabled"
         aria-label="Persona moral">
         <strong>Persona moral</strong>
       </md-checkbox>    
@@ -14,7 +17,10 @@
 
       <div flex="20" class="input-element select-element-wrapper">
         <label><strong>Titulo</strong></label>
-        <md-select ng-model="vm.client.Title" class="select-element">
+        <md-select 
+          ng-model="vm.client.Title" 
+          class="select-element"
+          ng-disabled="!vm.personalEditEnabled">
           <md-option ng-repeat="title in vm.titles" ng-value="title.value">
             {{title.label}}
           </md-option>
@@ -23,7 +29,10 @@
 
       <div flex="20" class="input-element select-element-wrapper">
         <label><strong>Genero</strong></label>
-        <md-select ng-model="vm.client.Gender" class="select-element">
+        <md-select 
+          ng-model="vm.client.Gender" 
+          class="select-element"
+          ng-disabled="!vm.personalEditEnabled">
           <md-option  ng-repeat="gender in vm.genders" ng-value="gender.value">
             {{gender.label}}
           </md-option>
@@ -43,6 +52,7 @@
             readonly
             show-month-after-year="true"
             on-select="vm.onPikadaySelect(pikaday)"
+            ng-disabled="!vm.personalEditEnabled"
           >
         </div>
       </div>
@@ -63,14 +73,22 @@
           </strong>
         </label>    
         <div class="input-element-inner">
-          <input type="text" ng-model="vm.client.FirstName" required>
+          <input 
+            type="text" 
+            ng-model="vm.client.FirstName" 
+            required
+            ng-disabled="!vm.personalEditEnabled">
         </div>
       </div>
 
       <div ng-if="!vm.client.isMoral" flex class="input-element">
         <label><strong>Apellidos <span class="hl-label">*</span></strong></label>
         <div class="input-element-inner">
-          <input type="text" ng-model="vm.client.LastName" required>
+          <input 
+            type="text" 
+            ng-model="vm.client.LastName" 
+            required
+            ng-disabled="!vm.personalEditEnabled">
         </div>
       </div>
 
@@ -91,6 +109,7 @@
               ng-model="vm.client.Phone1"
               placeholder="Lada + Número"
               required
+              ng-disabled="!vm.personalEditEnabled"
             >
           </div>
       </div>
@@ -109,6 +128,7 @@
             ng-model="vm.client.Cellular"
             placeholder="Lada + Número"
             required
+            ng-disabled="!vm.personalEditEnabled"
           >
         </div>
 
@@ -123,6 +143,7 @@
             ng-if="!vm.client.E_Mail" 
             ng-model="vm.client.E_Mail" 
             required
+            ng-disabled="!vm.personalEditEnabled"
           >
           <input 
             type="email" 
@@ -130,6 +151,7 @@
             ng-model="vm.client.E_Mail" 
             readonly 
             required
+            ng-disabled="!vm.personalEditEnabled"
           >
 
         </div>
@@ -139,10 +161,17 @@
 
     <div layout="row" class="form-view-btns" layout-align="center center">
       <input
+        ng-if="!vm.personalEditEnabled"
         class="form-view-btn form-view-btn-primary"
         type="submit"
-        value="Guardar información"
+        value="Editar"
       >
+      <input
+        ng-if="vm.personalEditEnabled"
+        class="form-view-btn form-view-btn-primary"
+        type="submit"
+        value="Guardar"
+      >      
     </div>
 
 </section>

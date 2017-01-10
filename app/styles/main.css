@@ -2523,12 +2523,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   text-decoration: underline;
 }
 
-.form-view .action-links a{
-  color: #000;
-}
-.form-view .action-links h4{
-  margin: 10px 0;
-}
+.form-view .action-links a{color: #000;}
+.form-view .action-links a.primary-link{color: #33BA2C}
+
+.form-view .action-links h4{margin: 10px 0;}
 .form-view .action-links i{
   font-size: 40px;
   vertical-align: middle;
