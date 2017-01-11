@@ -6,7 +6,7 @@
   <ul flex="75">
     <li
       ng-repeat="method in paymentGroup.methods"
-      ng-show="vm.isActiveMethod(method)"
+      ng-show="vm.isActiveMethod(method, vm.quotation)"
       layout="row"
       layout-align="space-between center"
     >
@@ -59,7 +59,7 @@
   <div 
     flex="20" 
     class="method-block-prices"
-    ng-show="!vm.areMethodsDisabled(paymentGroup.methods)"
+    ng-show="!vm.areMethodsDisabled(paymentGroup.methods, vm.quotation)"
   >
     <h2 class="price-now" ng-class="{'price-hl' : $index == 0 }">
       {{ vm.calculateRemaining(paymentGroup.total) | roundCurrency }}

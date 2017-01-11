@@ -9,11 +9,10 @@
     <li ng-repeat="payment in vm.quotation.Payments"  class="applied-payment">
 
       <div
-        ng-if="payment.group === 1 && !payment.terminal"
         layout="row"
         layout-align="space-between center"
       >
-        <div flex="30">
+        <div ng-if="!payment.msi" flex="30">
           <strong>{{payment.name}}</strong>
           <p class="pull-left">
             {{payment.description}}
@@ -21,12 +20,30 @@
             <span ng-if="payment.isCancellation">| Cancelación</span>-->
           </p>
         </div>
+
+        <div ng-if="payment.msi" flex="30">
+          <strong>{{payment.msi}} Meses</strong>
+          <div class="hl-label">
+            <strong>Sin intereses</strong>
+          </div>
+        </div>
+
         <div class="method-data" flex="60" layout="row">
+          
+          <div flex="33" ng-show="payment.terminal">
+            <p><strong>TERMINAL</strong></p>
+            <p>{{payment.terminal}}</p>
+          </div>
+          <div flex="33" ng-show="payment.verificationCode">
+            <p><strong># AUTORIZACIÓN</strong></p>
+            <p>{{payment.verificationCode}}</p>
+          </div>
           <div flex="33">
             <p><strong>CANTIDAD</strong></p>
             <p ng-if="payment.type !=='cash-usd'">{{payment.ammount | roundCurrency}}</p>
             <p ng-if="payment.type ==='cash-usd'">{{payment.ammount | roundCurrency}} USD.</p>
           </div>
+
         </div>
 
         <div 
@@ -63,84 +80,6 @@
 
       </div>
 
-      <div
-        ng-if="payment.group === 1 && payment.terminal"
-        layout="row"
-        layout-align="space-between center"
-      >
-        <div flex="30">
-          <strong>{{payment.name}}</strong>
-          <p class="pull-left">{{payment.description}}</p>
-        </div>
-        <div class="method-data" flex="60" layout="row">
-          <div flex="33">
-            <p><strong>TERMINAL</strong></p>
-            <p>{{payment.terminal}}</p>
-          </div>
-          <div flex="33">
-            <p><strong># AUTORIZACIÓN</strong></p>
-            <p>{{payment.verificationCode}}</p>
-          </div>
-          <div flex="33">
-            <p><strong>CANTIDAD</strong></p>
-            <p>{{payment.ammount | roundCurrency}}</p>
-          </div>
-        </div>
-        <div flex="10" class="saved-icon-wrap">
-          <i class="icon-checkmark saved-icon"></i>
-        </div>
-      </div>
-
-      <div
-        ng-if="payment.type == 'ewallet'"
-        layout="row"
-        layout-align="space-between center"
-      >
-        <div flex="30">
-          <strong>Monedero</strong>
-          <p class="pull-left">{{payment.description}}</p>
-        </div>
-        <div class="method-data" flex="60" layout="row">
-          <div flex="33">
-            <p><strong>CANTIDAD</strong></p>
-            <p>{{payment.ammount | roundCurrency}}</p>
-          </div>
-        </div>
-        <div flex="10" class="saved-icon-wrap">
-          <i class="icon-checkmark saved-icon"></i>
-        </div>
-      </div>
-
-
-      <div
-        ng-if="payment.msi"
-        layout="row"
-        layout-align="space-between center"
-      >
-        <div flex="30">
-          <strong>{{payment.msi}} Meses</strong>
-          <div class="hl-label">
-            <strong>Sin intereses</strong>
-          </div>
-        </div>
-        <div class="method-data" flex="60" layout="row">
-          <div flex="33">
-            <p><strong>TERMINAL</strong></p>
-            <p>{{payment.terminal}}</p>
-          </div>
-          <div flex="33">
-            <p><strong># AUTORIZACIÓN</strong></p>
-            <p>{{payment.verificationCode}}</p>
-          </div>
-          <div flex="33">
-            <p><strong>CANTIDAD</strong></p>
-            <p>{{payment.ammount | roundCurrency}}</p>
-          </div>
-        </div>
-        <div flex="10" class="saved-icon-wrap">
-          <i class="icon-checkmark saved-icon"></i>
-        </div>
-      </div>
 
     </li>
 

@@ -11,6 +11,7 @@
       cancelPayment: cancelPayment,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
+      getPaymentTypeString: getPaymentTypeString,
       getRefundsOptions: getRefundsOptions
     };
 
@@ -263,6 +264,22 @@
       var url = '/payment/cancel/' + quotationId + '/' + paymentId;
       return api.$http.post(url);
     }
+
+    function getPaymentTypeString(payment){
+      var type = '1 sola exhibición';
+      if(payment.type === 'cash' || payment.type === 'cash-usd'){
+        type = 'Pago de contado';
+      }else if(payment.msi){
+        type = payment.msi + ' meses sin intereses';
+      }else if(payment.type === 'transfer'){
+        type = 'Transferencia';
+      }else if(payment.type === 'deposit'){
+        type = 'Deposito';
+      }else if(payment.type === 'ewallet'){
+        type = 'Monedero electrónico';
+      }
+      return type;
+    }    
 
   
     return service;

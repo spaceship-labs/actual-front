@@ -26,7 +26,7 @@ function CheckoutClientCtrl(
   var vm = this;
   angular.extend(vm,{
     continueProcess: continueProcess,
-    isClientFiscalDataValid: isClientFiscalDataValid
+    isClientFiscalDataValid: clientService.isClientFiscalDataValid
   });
 
   function init(){
@@ -52,7 +52,7 @@ function CheckoutClientCtrl(
           .then(function(res){
             vm.client = res.data;
             vm.contacts = vm.client.Contacts.map(function(contact){
-              contact.completeAdrress = buildAddress(contact);
+              contact.completeAdrress = clientService.buildAddressStringByContact(contact);
               return contact;
             });
             if(!vm.quotation.Address && vm.contacts.length > 0){
@@ -64,29 +64,6 @@ function CheckoutClientCtrl(
     });
   }
 
-  function buildAddress(contact){
-    var address = '';
-    address += 'Calle: ' + contact.address;
-    address += contact.U_Noexterior ? ', no. exterior: '+ contact.U_Noexterior : null;
-    address += contact.U_Nointerior ? ', no. interior: '+ contact.U_Nointerior : null;
-    address += contact.U_Colonia ? ', colonia: '+ contact.U_Colonia : null;
-    address += contact.U_Mpio ? ', municipio: '+ contact.U_Mpio : null;
-    address += contact.U_Ciudad ? ', ciudad: '+ contact.U_Ciudad : null;
-    address += contact.U_Estado ? ', estado: '+ contact.U_Estado : null;
-    address += contact.U_CP ? ', código postal: '+ contact.U_CP : null;
-    address += contact.U_Estado ? ', estado: '+ contact.U_Estado : null;
-    address += contact.U_Entrecalle ? ', entre calle: '+ contact.U_Entrecalle : null;
-    address += contact.U_Ycalle ? ' y calle: '+ contact.U_Ycalle : null;
-    address += contact.U_Notes1 ? ', referencias: '+ contact.U_Notes1 : null;
-    return address;
-  }
-
-  function isClientFiscalDataValid(client){
-    if(client && client.FiscalAddress){
-      return client.LicTradNum && client.FiscalAddress.companyName && client.FiscalAddress.companyName != '';
-    }
-    return false;
-  }
 
   function continueProcess(){
     if(vm.quotation.Address || vm.quotation.immediateDelivery){
