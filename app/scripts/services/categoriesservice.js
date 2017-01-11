@@ -49,10 +49,10 @@
 
     }
 
-    function getLowestCategory(){
+    function getLowestCategory(categories){
       var lowestCategoryLevel = 0;
       var lowestCategory = false;
-      vm.product.Categories.forEach(function(category){
+      categories.forEach(function(category){
         if(category.CategoryLevel > lowestCategoryLevel){
           lowestCategory = category;
           lowestCategoryLevel = category.CategoryLevel;

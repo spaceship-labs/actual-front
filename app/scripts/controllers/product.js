@@ -77,7 +77,7 @@ function ProductCtrl(
       .then(function(fProduct){
         vm.product = fProduct;
         vm.mainPromo = vm.product.mainPromo;
-        vm.lowestCategory = categoriesService.getLowestCategory();
+        vm.lowestCategory = categoriesService.getLowestCategory(vm.product.Categories);
         vm.productCart = {
           quantity: 1
         };
