@@ -439,11 +439,22 @@
       return valid;
     }
 
+    function getSasHash(){
+      var sas = {
+        '001': 'Studio',
+        '002': 'Home',
+        '003': 'Ambas',
+        '004': 'Kids'
+      };
+      return sas;        
+    }
+
 
     var service = {
       combineDateTime: combineDateTime,
       getCountries: getCountries,
       getStates: getStates,
+      getSasHash: getSasHash,
       getStatesSap: getStatesSap,
       getMonthDateRange: getMonthDateRange,
       getFortnightRange: getFortnightRange,

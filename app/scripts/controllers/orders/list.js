@@ -28,8 +28,8 @@ function OrdersListCtrl(
 
   var vm = this;
   vm.applyFilters = applyFilters;
-  vm.isUserAdminOrManager = isUserAdminOrManager;
-  vm.isUserSellerOrAdmin  = isUserSellerOrAdmin; 
+  vm.isUserAdminOrManager = authService.isUserAdminOrManager;
+  vm.isUserSellerOrAdmin  = authService.isUserSellerOrAdmin; 
 
   vm.currentDate = new Date();
   vm.dateRange = false;
@@ -292,20 +292,6 @@ function OrdersListCtrl(
       number = 2;
     }
     return number;
-  }
-
-  function isUserAdminOrManager(){
-    return $rootScope.user.role && 
-      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
-        || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
-      );
-  }  
-
-  function isUserSellerOrAdmin(){
-    return $rootScope.user.role && 
-      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
-        || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
-      );
   }
 
   function getStoreTotal(sellers){

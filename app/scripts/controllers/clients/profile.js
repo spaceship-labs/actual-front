@@ -29,15 +29,8 @@ function ClientProfileCtrl(
   angular.extend(vm, {
     activeTab: 0,
     personalEditEnabled: false,    
-    genders: [
-      {label:'Masculino', value: 'M'},
-      {label: 'Femenino', value: 'F'}
-    ],
-    titles: [
-      {label:'Sr.', value:'Sr'},
-      {label:'Sra.', value: 'Sra'},
-      {label: 'Srita.', value: 'Srita'}
-    ],
+    titles  : clientService.getTitles(),
+    genders : clientService.getGenders(),
     states: [],
     countries: commonService.getCountries(),
     columnsLeads: [
@@ -104,7 +97,7 @@ function ClientProfileCtrl(
         vm.activeTab = $location.search().activeTab;
       }
 
-      vm.client = setClientDefaultData(vm.client);
+      vm.client = clientService.setClientDefaultData(vm.client);
 
       commonService.getStatesSap().then(function(res){
         console.log(res);
@@ -114,34 +107,6 @@ function ClientProfileCtrl(
       });
 
     });
-  }
-
-  function setClientDefaultData(client){
-    if(!client.FiscalAddress){
-      client.FiscalAddress = {};
-    }
-    if(!client.FiscalAddress.U_Correos){
-      client.FiscalAddress.U_Correos = angular.copy(client.E_Mail);
-    }
-
-    client.Contacts = client.Contacts.map(function(contact){
-      if(!contact.E_Mail){
-        contact.E_Mail = angular.copy(client.E_Mail);
-      }
-      if(!contact.FirstName){
-        contact.FirstName = angular.copy(client.CardName);
-      }
-      if(!contact.Tel1){
-        contact.Tel1 = angular.copy(client.Phone1);
-      }
-      if(!contact.Cellolar){
-        contact.Cellolar = angular.copy(client.Cellular);
-      }
-      contact.editEnabled = false;
-
-      return contact;
-    });    
-    return client;
   }
 
   function showNewFiscalForm(){
@@ -315,8 +280,6 @@ function ClientProfileCtrl(
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){
-      var promise;
-      var creating = false;
       var params = angular.copy(vm.client.FiscalAddress);
       params.LicTradNum = angular.copy(vm.client.LicTradNum);
 

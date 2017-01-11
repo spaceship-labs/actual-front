@@ -31,6 +31,8 @@
         dennyAccessBroker: dennyAccessBroker,
         dennyAccessStoreManager: dennyAccessStoreManager,
         isBroker: isBroker,
+        isUserAdminOrManager:isUserAdminOrManager,
+        isUserSellerOrAdmin:isUserSellerOrAdmin,
         runPolicies: runPolicies,
         USER_ROLES: USER_ROLES
       };
@@ -96,6 +98,20 @@
       function isStoreManager(user){
         return !!(user && user.role && user.role.name === USER_ROLES.BROKER);
       }
+
+      function isUserAdminOrManager(){
+        return $rootScope.user.role && 
+          ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+            || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
+          );
+      }  
+
+      function isUserSellerOrAdmin(){
+        return $rootScope.user.role && 
+          ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
+            || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
+          );
+      }      
 
       function runPolicies(){
         var _token = localStorageService.get('token') || false;

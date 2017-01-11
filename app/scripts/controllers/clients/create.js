@@ -31,15 +31,8 @@ function ClientCreateCtrl(
     loadingEstimate :0,
     isLoadingProgress: false,
     intervalProgress: false,
-    titles: [
-      {label:'Sr.', value:'Sr'},
-      {label:'Sra.', value: 'Sra'},
-      {label: 'Srita.', value: 'Srita'}
-    ],
-    genders: [
-      {label:'Masculino', value: 'M'},
-      {label: 'Femenino', value: 'F'}
-    ],
+    titles          : clientService.getTitles(),
+    genders         : clientService.getGenders(),
     states          : [],
     countries       : commonService.getCountries(),
     addContactForm  : addContactForm,

@@ -17,7 +17,10 @@
         getClients: getClients,
         getContacts: getContacts,
         getEwalletById: getEwalletById,
+        getTitles: getTitles, 
+        getGenders:getGenders,
         isClientFiscalDataValid: isClientFiscalDataValid,
+        setClientDefaultData: setClientDefaultData,
         update: update,
         updateFiscalAddress: updateFiscalAddress,
         updateContact: updateContact
@@ -98,7 +101,53 @@
           return client.LicTradNum && client.FiscalAddress.companyName && client.FiscalAddress.companyName != '';
         }
         return false;
-      }      
+      }
+
+      function setClientDefaultData(client){
+        if(!client.FiscalAddress){
+          client.FiscalAddress = {};
+        }
+        if(!client.FiscalAddress.U_Correos){
+          client.FiscalAddress.U_Correos = angular.copy(client.E_Mail);
+        }
+
+        client.Contacts = client.Contacts.map(function(contact){
+          if(!contact.E_Mail){
+            contact.E_Mail = angular.copy(client.E_Mail);
+          }
+          if(!contact.FirstName){
+            contact.FirstName = angular.copy(client.CardName);
+          }
+          if(!contact.Tel1){
+            contact.Tel1 = angular.copy(client.Phone1);
+          }
+          if(!contact.Cellolar){
+            contact.Cellolar = angular.copy(client.Cellular);
+          }
+          contact.editEnabled = false;
+
+          return contact;
+        });    
+        return client;
+      }
+
+      function getTitles(){
+        var titles = [
+          {label:'Sr.', value:'Sr'},
+          {label:'Sra.', value: 'Sra'},
+          {label: 'Srita.', value: 'Srita'}
+        ];
+        return titles;
+      }
+
+      function getGenders(){
+        var genders = [
+          {label:'Masculino', value: 'M'},
+          {label: 'Femenino', value: 'F'}
+        ];
+        return genders;      
+      }
+
 
     }
 

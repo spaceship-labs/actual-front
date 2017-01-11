@@ -25,8 +25,8 @@ function QuotationsListCtrl(
     apiResourceQuotations: quotationService.getList,
     applyFilters: applyFilters,
     createdRowCb: createdRowCb,
-    isUserAdminOrManager: isUserAdminOrManager,
-    isUserSellerOrAdmin:isUserSellerOrAdmin,
+    isUserAdminOrManager:  authService.isUserAdminOrManager,
+    isUserSellerOrAdmin: authService.isUserSellerOrAdmin,
     onDateEndSelect: onDateEndSelect,
     onDateStartSelect: onDateStartSelect,
     dateEnd: false,
@@ -383,21 +383,7 @@ function QuotationsListCtrl(
       colors: ["#C92933", "#48C7DB", "#FFCE56"]
     };    
   }
-
-
-  function isUserAdminOrManager(){
-    return $rootScope.user.role && 
-      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
-        || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
-      );
-  }  
-
-  function isUserSellerOrAdmin(){
-    return $rootScope.user.role && 
-      ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
-        || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
-      );
-  }  
+  
 
   function isUserManager(){
     return vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore;
