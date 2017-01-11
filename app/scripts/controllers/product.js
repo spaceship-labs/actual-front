@@ -287,6 +287,7 @@ ProductCtrl.$inject = [
   'localStorageService',
   'deliveryService',
   'cartService',
+  'commonService',
   'categoriesService'
 ];
 /*
