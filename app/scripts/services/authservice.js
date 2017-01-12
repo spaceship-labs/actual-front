@@ -101,15 +101,15 @@
 
       function isUserAdminOrManager(){
         return $rootScope.user.role && 
-          ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
-            || $rootScope.user.role.name === authService.USER_ROLES.STORE_MANAGER 
+          ( $rootScope.user.role.name === USER_ROLES.ADMIN 
+            || $rootScope.user.role.name === USER_ROLES.STORE_MANAGER 
           );
       }  
 
       function isUserSellerOrAdmin(){
         return $rootScope.user.role && 
-          ( $rootScope.user.role.name === authService.USER_ROLES.ADMIN 
-            || $rootScope.user.role.name === authService.USER_ROLES.SELLER 
+          ( $rootScope.user.role.name === USER_ROLES.ADMIN 
+            || $rootScope.user.role.name === USER_ROLES.SELLER 
           );
       }      
 

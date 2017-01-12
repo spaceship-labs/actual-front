@@ -186,7 +186,7 @@ angular
         }
       })
       .when('/dashboard', {
-        templateUrl: 'views/dashboard.html',
+        templateUrl: 'views/dashboard/dashboard.html',
         controller: 'DashboardCtrl',
         controllerAs: 'vm',
         resolve: {
