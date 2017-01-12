@@ -13,7 +13,7 @@
         chart-colors="vm.quotationsData.quantities.colors">
       </canvas>
       <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{vm.quotationsData.todayQty}} | {{vm.quotationsData.fortnightQty}}</p>
+      <p>{{vm.quotationsData.untilTodayQty}} | {{vm.quotationsData.byDateRangeQty}}</p>
     </div>
 
     <div class="chart-section-col" flex="45">
@@ -26,7 +26,7 @@
         chart-colors="vm.quotationsData.ammounts.colors">
       </canvas>
       <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{vm.quotationsData.todayAmmount | currency}} | {{vm.quotationsData.fortnightAmount | currency}}</p>
+      <p>{{vm.quotationsData.untilTodayAmount | currency}} | {{vm.quotationsData.byDateRangeAmount | currency}}</p>
     </div>
   </div>
 

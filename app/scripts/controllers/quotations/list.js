@@ -106,7 +106,7 @@ function QuotationsListCtrl(
   }
 
   function init(){
-    if(isUserManager()){
+    if(authService.isUserManager()){
       getSellersByStore(vm.user.mainStore.id);
     }
     else{
@@ -237,9 +237,6 @@ function QuotationsListCtrl(
     return deferred.promise;
   }      
 
-  function getCurrencyTooltip(tooltipItem, data){
-    return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
-  }  
 
   function setupSellerChart(userTotals, userCounts){
     vm.quotationsData.untilTodayAmount  = userTotals.untilToday;
@@ -254,7 +251,7 @@ function QuotationsListCtrl(
       options:{
         tooltips: {
           callbacks: {
-            label: getCurrencyTooltip
+            label: commonService.getCurrencyTooltip
           }
         }
       },
@@ -308,7 +305,7 @@ function QuotationsListCtrl(
       updateSellersTotals()
     ];
 
-    if(!isUserManager()){
+    if(!authService.isUserManager()){
       promises.push(getQuotationDataByUser(vm.user.id));
     }
 
@@ -317,7 +314,7 @@ function QuotationsListCtrl(
       .then(function(results){
         $rootScope.$broadcast('reloadTable', true);
 
-        if(!isUserManager()){
+        if(!authService.isUserManager()){
           var userTotals = results[2][0];
           var userCounts = results[2][1];
           setupSellerChart(userTotals, userCounts);
@@ -359,7 +356,7 @@ function QuotationsListCtrl(
       options:{
         tooltips: {
           callbacks: {
-            label: getCurrencyTooltip
+            label: commonService.getCurrencyTooltip
           }
         }
       },
@@ -384,10 +381,6 @@ function QuotationsListCtrl(
     };    
   }
   
-
-  function isUserManager(){
-    return vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore;
-  }
 
   init();
 }

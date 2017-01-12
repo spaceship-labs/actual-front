@@ -54,9 +54,6 @@ function OrdersListCtrl(
   vm.getStoreTotal      = getStoreTotal;
   vm.goal = 600000; 
 
-  function getCurrencyTooltip(tooltipItem, data){
-    return data.labels[tooltipItem.index] + ': ' + $filter('currency')(data.datasets[0].data[tooltipItem.index]);
-  }
 
   function getOrdersData(options){
     options = options || {};
@@ -103,7 +100,7 @@ function OrdersListCtrl(
           options:{
             tooltips: {
               callbacks: {
-                label: getCurrencyTooltip
+                label: commonService.getCurrencyTooltip
               }
             }
           },
@@ -270,7 +267,7 @@ function OrdersListCtrl(
         },
         tooltips: {
           callbacks: {
-            label: getCurrencyTooltip
+            label: commonService.getCurrencyTooltip
           }
         }
       },

@@ -449,10 +449,16 @@
       return sas;        
     }
 
+    function getCurrencyTooltip(tooltipItem, data){
+      var tooltip = data.labels[tooltipItem.index] + ': ';
+      tooltip     += $filter('currency')(data.datasets[0].data[tooltipItem.index]);
+      return tooltip;
+    }  
 
     var service = {
       combineDateTime: combineDateTime,
       getCountries: getCountries,
+      getCurrencyTooltip: getCurrencyTooltip,
       getStates: getStates,
       getSasHash: getSasHash,
       getStatesSap: getStatesSap,

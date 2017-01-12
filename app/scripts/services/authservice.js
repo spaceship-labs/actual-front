@@ -33,6 +33,7 @@
         isBroker: isBroker,
         isUserAdminOrManager:isUserAdminOrManager,
         isUserSellerOrAdmin:isUserSellerOrAdmin,
+        isUserManager: isUserManager,
         runPolicies: runPolicies,
         USER_ROLES: USER_ROLES
       };
@@ -111,7 +112,12 @@
           ( $rootScope.user.role.name === USER_ROLES.ADMIN 
             || $rootScope.user.role.name === USER_ROLES.SELLER 
           );
-      }      
+      }     
+
+      function isUserManager(){
+        return $rootScope.user.role.name === USER_ROLES.STORE_MANAGER 
+          && $rootScope.user.mainStore;
+      }       
 
       function runPolicies(){
         var _token = localStorageService.get('token') || false;
