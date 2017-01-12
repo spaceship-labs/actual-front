@@ -486,8 +486,10 @@ function QuotationsEditCtrl(
       controller: [
         '$scope', 
         '$mdDialog',
-        '$location', 
-        'detailGroup', 
+        '$location',
+        'quotationService', 
+        'vm', 
+        'detailGroup',
         controller
       ],
       templateUrl: 'views/quotations/stock-dialog.html',
@@ -496,6 +498,7 @@ function QuotationsEditCtrl(
       clickOutsideToClose: true,
       fullscreen: useFullScreen,
       locals:{
+        vm: vm,
         detailGroup: detailGroup
       }
     })

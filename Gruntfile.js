@@ -559,7 +559,7 @@ function getEnvironmentTask(envOption){
       task = 'ngconstant:production';
       break;
     default:
-      task = 'ngconstant:sandbox';
+      task = 'ngconstant:production';
       break;
   }
   return task;
