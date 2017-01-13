@@ -34,6 +34,7 @@ function CheckoutOrderCtrl(
     api: api,
     generateInvoice: generateInvoice,
     getPaymentTypeString: paymentService.getPaymentTypeString,
+    getSerieByDetailId: getSerieByDetailId,
     sendInvoice: sendInvoice,
   });
 
@@ -46,6 +47,7 @@ function CheckoutOrderCtrl(
       vm.order.Details = vm.order.Details || [];
       console.log('vm.order', vm.order);
       vm.order.Address = orderService.formatAddress(vm.order.Address);
+      vm.series = groupSeries(vm.order.OrdersSap);
 
       vm.ewallet = {
         positive: orderService.getEwalletAmmount(vm.order.EwalletRecords, EWALLET_POSITIVE),
@@ -59,6 +61,7 @@ function CheckoutOrderCtrl(
         .then(function(details){
           vm.order.Details = details;
           vm.order.DetailsGroups = deliveryService.groupDetails(details);
+          vm.order.DetailsGroups = assignSeriesToDeliveryGroups(vm.order.DetailsGroups);
           return quotationService.loadProductFilters(vm.order.Details);
         })
         .then(function(details2){
@@ -87,6 +90,39 @@ function CheckoutOrderCtrl(
       vm.invoiceExists = invoices.length > 0;
     });
 
+  }
+
+  function assignSeriesToDeliveryGroups(deliveryGroups){
+    var mappedDeliveryGroups = deliveryGroups.map(function(group){
+      var hasSeries = false;
+      group.details = group.details.map(function(detail){
+        var productSerie = getSerieByDetailId(detail.OrderDetail);
+        if(productSerie){
+          detail.productSerie = productSerie;
+          hasSeries = true;
+        }
+        return detail;
+      });
+      group.hasSeries = hasSeries;
+      return group;
+    });
+    return mappedDeliveryGroups;
+  }
+
+  function groupSeries(ordersSap){
+    var series = ordersSap.reduce(function(acum,orderSap){
+      if(orderSap.ProductSeries){
+        acum = acum.concat(orderSap.ProductSeries);
+      }
+      return acum;
+    },[]);
+
+    return series;
+  }
+
+  function getSerieByDetailId(detailId){
+    var series = vm.series || [];
+    return _.findWhere(series, {OrderDetail: detailId});
   }
 
   function toggleRecord(record){
