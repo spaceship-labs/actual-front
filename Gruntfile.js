@@ -480,7 +480,19 @@ module.exports = function (grunt) {
             apiEndpoint: 'http://actual-api.herokuapp.com'
           }
         }
+      },
+      dev: {
+        options: {
+          dest: '<%= yeoman.app %>/scripts/envconfig.js'
+        },
+        constants: {
+          ENV: {
+            name: 'dev',
+            apiEndpoint: 'http://localhost:1337'
+          }
+        }
       }
+
     },
 
   });
@@ -546,7 +558,7 @@ module.exports = function (grunt) {
 
 function getEnvironmentTask(envOption){
   console.log('envOption', envOption);
-  envOption = envOption || 'sandbox';
+  envOption = envOption;
   var task;
   switch (envOption){
     case 'sandbox':
@@ -559,7 +571,7 @@ function getEnvironmentTask(envOption){
       task = 'ngconstant:production';
       break;
     default:
-      task = 'ngconstant:production';
+      task = 'ngconstant:dev';
       break;
   }
   return task;
