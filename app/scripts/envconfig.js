@@ -2,6 +2,6 @@
 
  angular.module('envconfig', [])
 
-.constant('ENV', {name:'sandbox',apiEndpoint:'http://sandbox-actual-api.herokuapp.com'})
+.constant('ENV', {name:'production',apiEndpoint:'http://actual-api.herokuapp.com'})
 
 ;

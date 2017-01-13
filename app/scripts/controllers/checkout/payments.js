@@ -98,7 +98,7 @@ function CheckoutPaymentsCtrl(
       })
       .catch(function(err){
         console.log('err', err);
-        dialogService.showDialog('Error: <br/>' + err.data);
+        dialogService.showDialog('Error: \n' + err.data);
       });
 
   }
@@ -220,7 +220,7 @@ function CheckoutPaymentsCtrl(
         vm.isLoadingPayments = false;
         vm.isLoading = false;
         if(err && err.data){
-          dialogService.showDialog('Error: <br/>' + err.data);
+          dialogService.showDialog('Error: \n' + err.data);
         }
       });      
   }
@@ -270,7 +270,7 @@ function CheckoutPaymentsCtrl(
           console.log(err);
           vm.isLoadingPayments = false;
           vm.isLoading = false;
-          dialogService.showDialog('Error: <br/>' + err.data);
+          dialogService.showDialog('Error: \n' + err.data);
         });
     }else{
       createOrder();
@@ -395,7 +395,7 @@ function CheckoutPaymentsCtrl(
           var errMsg = '';
           if(err){
             errMsg = err.data || '';            
-            dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo <br/>' + errMsg);
+            dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo \n' + errMsg);
           }
           vm.isLoadingProgress = false;
         });
