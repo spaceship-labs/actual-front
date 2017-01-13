@@ -5,14 +5,19 @@
     .module('dashexampleApp')
     .factory('paymentService', paymentService);
 
-  function paymentService(api, $filter, $http, quotationService){
+  function paymentService(api, $filter, $http, commonService, clientService){
+    var CLIENT_BALANCE_GROUP_INDEX = 0;
+    var CLIENT_BALANCE_TYPE = 'client-balance';
+
     var service = {
       addPayment: addPayment,
       cancelPayment: cancelPayment,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getPaymentTypeString: getPaymentTypeString,
-      getRefundsOptions: getRefundsOptions
+      getRefundsOptions: getRefundsOptions,
+      updateQuotationClientBalance: updateQuotationClientBalance,
+      clientBalanceType: CLIENT_BALANCE_TYPE
     };
 
     var refundsOptions = [
@@ -279,7 +284,35 @@
         type = 'Monedero electrónico';
       }
       return type;
-    }    
+    }
+
+    //@param quotation - Object quotation populated with Payments and Client
+    function updateQuotationClientBalance(quotation,paymentMethodsGroups){
+      var group = paymentMethodsGroups[CLIENT_BALANCE_GROUP_INDEX];
+      var balancePaymentMethod = _.findWhere(group.methods, {type:CLIENT_BALANCE_TYPE});
+      var balancePayments = _.where(quotation.Payments, {type:CLIENT_BALANCE_TYPE});
+      clientService.getBalanceById(quotation.Client.id)
+        .then(function(res){
+          var balance = res.data || 0;
+          var description = getClientBalanceDescription(balance);;
+          balancePaymentMethod.description = description;
+          balancePayments = balancePayments.map(function(payment){
+            payment.description = description;
+            return payment;
+          });
+        })
+        .catch(function(err){
+          console.log(err);
+        });
+    }
+
+    function getClientBalanceDescription(balance){
+      var description = '';
+      var balanceRounded = commonService.roundCurrency( balance, {up:false} );
+      var balanceStr = $filter('currency')(balanceRounded);
+      description = 'Saldo disponible: ' + balanceStr +' MXN';    
+      return description;
+    }        
 
   
     return service;

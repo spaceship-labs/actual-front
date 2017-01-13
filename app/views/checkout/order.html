@@ -363,7 +363,12 @@
     <h3><strong>Documentos SAP</strong></h3>
     <ul>
       <li ng-repeat="orderSap in vm.order.OrdersSap">
-        <p><strong>Orden SAP</strong>: {{orderSap.document}}</p>
+        <p ng-show="orderSap.document">
+          <strong>Orden SAP</strong>: {{orderSap.document}}
+        </p>
+        <p ng-show="orderSap.invoiceSap">
+          <strong>Factura de deudores SAP</strong>: {{orderSap.invoiceSap}}
+        </p>
         <p><strong>Pagos</strong>:</p>
         <ul>
           <li ng-repeat="paymentSap in orderSap.PaymentsSap">{{paymentSap.document}}</li>

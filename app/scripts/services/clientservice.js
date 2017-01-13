@@ -17,6 +17,7 @@
         getClients: getClients,
         getContacts: getContacts,
         getEwalletById: getEwalletById,
+        getBalanceById: getBalanceById,
         getTitles: getTitles, 
         getGenders:getGenders,
         isClientFiscalDataValid: isClientFiscalDataValid,
@@ -77,6 +78,11 @@
       function getEwalletById(clientId){
         var url = '/client/'+clientId+'/ewallet';
         return api.$http.get(url);
+      }
+
+      function getBalanceById(clientId){
+        var url = '/client/'+clientId+'/balance';
+        return api.$http.get(url);        
       }
 
       function buildAddressStringByContact(contact){

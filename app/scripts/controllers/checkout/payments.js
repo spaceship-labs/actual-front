@@ -23,7 +23,6 @@ function CheckoutPaymentsCtrl(
     dialogService,
     formatService,
     orderService,
-    pmPeriodService,
     productService,
     quotationService,
     siteService,
@@ -63,6 +62,7 @@ function CheckoutPaymentsCtrl(
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
+  var CLIENT_BALANCE_TYPE = clientService.clientBalanceType;
 
   if($rootScope.isMainDataLoaded){
     init();
@@ -90,29 +90,39 @@ function CheckoutPaymentsCtrl(
           $location.path('/checkout/order/' + vm.quotation.Order.id);
         }
         vm.quotation.ammountPaid = vm.quotation.ammountPaid || 0;
-        loadPaymentMethods();
 
-        pmPeriodService.getActive().then(function(res){
-          vm.validMethods = res.data;
-        });
+        return loadPaymentMethods();
+      })
+      .then(function(){
         vm.isLoading = false;
-    });
+      })
+      .catch(function(err){
+        console.log('err', err);
+        dialogService.showDialog('Error: <br/>' + err.data);
+      });
+
   }
 
   function loadPaymentMethods(){
+    var deferred = $q.defer();
     quotationService.getPaymentOptions(vm.quotation.id)
       .then(function(response){
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
         //ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
+        //paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
+      
         if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
           vm.quotation = setQuotationTotalsByGroup(vm.quotation);
-        }        
+        }
+        deferred.resolve();        
       })
       .catch(function(err){
         console.log('err', err);
+        deferred.reject(err);
       });
-          
+
+    return deferred.promise;    
   }
 
 
@@ -246,6 +256,11 @@ function CheckoutPaymentsCtrl(
           if(payment.type === EWALLET_TYPE){
             ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
           }
+
+          if(payment.type === CLIENT_BALANCE_TYPE){
+            clientService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
+          }
+
         })
         .catch(function(err){
           console.log(err);
