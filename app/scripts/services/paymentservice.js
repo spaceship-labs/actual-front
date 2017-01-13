@@ -5,7 +5,7 @@
     .module('dashexampleApp')
     .factory('paymentService', paymentService);
 
-  function paymentService(api, $filter, $http, commonService, clientService){
+  function paymentService(api, $filter, $http, commonService, clientService, ewalletService){
     var CLIENT_BALANCE_GROUP_INDEX = 0;
     var CLIENT_BALANCE_TYPE = 'client-balance';
 
@@ -13,6 +13,7 @@
       addPayment: addPayment,
       cancelPayment: cancelPayment,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
+      getMethodAvailableBalance: getMethodAvailableBalance,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getPaymentTypeString: getPaymentTypeString,
       getRefundsOptions: getRefundsOptions,
@@ -293,6 +294,7 @@
       var balancePayments = _.where(quotation.Payments, {type:CLIENT_BALANCE_TYPE});
       clientService.getBalanceById(quotation.Client.id)
         .then(function(res){
+          console.log('res', res);
           var balance = res.data || 0;
           var description = getClientBalanceDescription(balance);;
           balancePaymentMethod.description = description;
@@ -304,6 +306,21 @@
         .catch(function(err){
           console.log(err);
         });
+    }
+
+    function getMethodAvailableBalance(method, quotation){
+      var EWALLET_TYPE = ewalletService.ewalletType;
+      var balance = 0;
+
+      if(method.type === EWALLET_TYPE || method.type === CLIENT_BALANCE_TYPE){
+        if(method.type === EWALLET_TYPE){
+          balance = quotation.Client.ewallet;
+        }
+        else if(method.type === CLIENT_BALANCE_TYPE){
+          balance = quotation.Client.Balance * -1;
+        }
+      }
+      return balance;
     }
 
     function getClientBalanceDescription(balance){

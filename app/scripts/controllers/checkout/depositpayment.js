@@ -4,6 +4,7 @@ function DepositController($scope, $mdDialog, formatService, commonService, ewal
     $scope.payment = payment;
     $scope.needsVerification = payment.needsVerification;
     $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
+    console.log('payment', $scope.payment);
 
     if($scope.payment.currency === 'usd'){
       $scope.payment.ammount = $scope.payment.ammount / $scope.payment.exchangeRate;

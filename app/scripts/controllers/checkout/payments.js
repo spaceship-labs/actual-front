@@ -62,7 +62,7 @@ function CheckoutPaymentsCtrl(
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
-  var CLIENT_BALANCE_TYPE = clientService.clientBalanceType;
+  var CLIENT_BALANCE_TYPE = paymentService.clientBalanceType;
 
   if($rootScope.isMainDataLoaded){
     init();
@@ -110,7 +110,7 @@ function CheckoutPaymentsCtrl(
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
         //ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
-        //paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
+        paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
       
         if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
           vm.quotation = setQuotationTotalsByGroup(vm.quotation);
@@ -142,13 +142,16 @@ function CheckoutPaymentsCtrl(
     var remaining = vm.quotation.total - vm.quotation.ammountPaid;
     vm.activeMethod.remaining = remaining;
     vm.activeMethod.maxAmmount = remaining;
-    if(method.type === EWALLET_TYPE){
-      var balance = vm.quotation.Client.ewallet || 0;
+    
+    if(method.type === EWALLET_TYPE || method.type === CLIENT_BALANCE_TYPE){
+      var balance = paymentService.getMethodAvailableBalance(method, vm.quotation);
+      console.log('balance', balance);
       vm.activeMethod.maxAmmount = balance;
       if(balance <= remaining){
         remaining = balance;
       }
     }
+    
     if(vm.activeMethod.maxAmmount <= 0){
       dialogService.showDialog('Fondos insuficientes');
       return false;
@@ -186,7 +189,8 @@ function CheckoutPaymentsCtrl(
   function updateVMQuoatation(newQuotation){
     vm.quotation.ammountPaid = newQuotation.ammountPaid;
     vm.quotation.paymentGroup = newQuotation.paymentGroup;
-    vm.quotation = setQuotationTotalsByGroup(vm.quotation);            
+    vm.quotation = setQuotationTotalsByGroup(vm.quotation);
+    vm.quotation = newQuotation.Client || vm.quotation.Client;            
     delete vm.activeMethod;
   }
 
@@ -234,7 +238,7 @@ function CheckoutPaymentsCtrl(
             var quotation = res.data;
             vm.quotation.Payments.push(payment);
 
-            updateVMQuoatation(quotation)
+            updateVMQuoatation(quotation);
 
             vm.isLoadingPayments = false;
             vm.isLoading = false;
