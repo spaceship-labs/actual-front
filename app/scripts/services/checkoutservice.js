@@ -13,7 +13,8 @@
       $filter,
       api,
       clientService,
-      commonService
+      commonService,
+      quotationService
     ){
 
      
@@ -23,7 +24,8 @@
         isActiveMethod: isActiveMethod,
         getPaidPercentage: getPaidPercentage,
         getGroupByQuotation: getGroupByQuotation,
-        isMinimumPaid: isMinimumPaid
+        isMinimumPaid: isMinimumPaid,
+        returnToCheckout: returnToCheckout
       };
 
       function getPaidPercentage(quotation){
@@ -101,7 +103,17 @@
           group = quotation.Payments[paymentsCount - 1].group;
         }
         return group;
-      }      
+      }
+
+      function returnToCheckout(){
+        if($location.search() && $location.search().checkoutProcess){
+          //var quotationId = $location.search().checkoutProcess;
+          var quotationId = quotationService.getActiveQuotationId();
+          if(quotationId){
+            $location.path('/checkout/client/' + quotationId);
+          }
+        }
+      }            
 
       return service;
 

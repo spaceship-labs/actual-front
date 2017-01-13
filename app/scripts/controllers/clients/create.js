@@ -18,6 +18,7 @@ function ClientCreateCtrl(
     commonService, 
     clientService,
     quotationService,
+    checkoutService,
     localStorageService,
     $interval
   ){
@@ -154,9 +155,10 @@ function ClientCreateCtrl(
           cancelProgressInterval();
           if(created.CardCode){
             //var isInCheckoutProcess = localStorageService.get('inCheckoutProcess');
-            if($location.search().continueQuotation){
+            if($location.search().continueQuotation || $location.search().checkoutProcess){
               assignClientToQuotation(created.id);
-            }else{
+            }
+            else{
               $location
                 .path('/clients/profile/'+created.id)
                 .search({createdClient:true});
@@ -208,9 +210,21 @@ function ClientCreateCtrl(
         if(quotation && quotation.id){
           quotationService.setActiveQuotation(activeQuotation.id);
           localStorageService.remove('inCheckoutProcess');
-          $location
+          
+          if($location.search().checkoutProcess){
+            $location
+              .path('/clients/profile/'+clientId)
+              .search({
+                createdClient:true,
+                checkoutProcess: $location.search().checkoutProcess
+              });            
+          }
+
+          else{
+            $location
             .path('/quotation/edit/' + activeQuotation.id)
             .search({createdClient:true});        
+          }
         }
       })
       .catch(function(err){

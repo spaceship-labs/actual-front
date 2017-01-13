@@ -21,6 +21,7 @@ function ClientProfileCtrl(
     commonService,
     clientService,
     quotationService,
+    checkoutService,
     orderService,
     dialogService
   ){
@@ -85,7 +86,7 @@ function ClientProfileCtrl(
     vm.isLoading = true;
 
     if($location.search().createdClient){
-      dialogService.showDialog('Cliente registrado');
+      dialogService.showDialog('Cliente registrado', checkoutService.returnToCheckout);
     }
 
     clientService.getById($routeParams.id).then(function(res){
@@ -163,7 +164,7 @@ function ClientProfileCtrl(
       clientService.update(vm.client.CardCode, params).then(function (res){
         console.log(res);
         vm.isLoading = false;
-        dialogService.showDialog('Datos personales actualizados',returnToCheckout);
+        dialogService.showDialog('Datos personales actualizados',checkoutService.returnToCheckout);
       }).catch(function(err){
         console.log(err);
         dialogService.showDialog('Hubo un error, revisa los campos');
@@ -214,7 +215,7 @@ function ClientProfileCtrl(
       ).then(function(res){
         console.log(res);
         contact.isLoading = false;
-        dialogService.showDialog('Dirección de entrega actualizada', returnToCheckout);
+        dialogService.showDialog('Dirección de entrega actualizada', checkoutService.returnToCheckout);
       })
       .catch(function(err){
         console.log(err);
@@ -247,7 +248,7 @@ function ClientProfileCtrl(
           vm.newContact = {};
           var created = res.data;
           vm.client.Contacts.push(created);
-          dialogService.showDialog('Dirección creada', returnToCheckout);
+          dialogService.showDialog('Dirección creada', checkoutService.returnToCheckout);
         })
         .catch(function(err){
           vm.isLoading = false;
@@ -290,7 +291,7 @@ function ClientProfileCtrl(
       )
       .then(function(results){
         vm.isLoading = false;        
-        dialogService.showDialog('Datos guardados', returnToCheckout);
+        dialogService.showDialog('Datos guardados', checkoutService.returnToCheckout);
       })
       .catch(function(err){
         vm.isLoading = false;
@@ -307,12 +308,6 @@ function ClientProfileCtrl(
 
   }
 
-  function returnToCheckout(){
-    if($location.search() && $location.search().checkoutProcess){
-      var quotationId = $location.search().checkoutProcess;
-      $location.path('/checkout/client/' + quotationId);
-    }
-  }
 
 
   function openMapDialog(){

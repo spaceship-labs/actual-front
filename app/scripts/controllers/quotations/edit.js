@@ -453,8 +453,12 @@ function QuotationsEditCtrl(
           }else{
             console.log('No hay cliente');
             quotationService.setActiveQuotation(vm.quotation.id);
-            localStorageService.set('inCheckoutProcess', true);
-            $location.path('/continuequotation').search({goToCheckout:true});
+            //localStorageService.set('inCheckoutProcess', true);
+            $location.path('/continuequotation')
+              .search({
+                checkoutProcess: vm.quotation.id,
+                goToCheckout:true
+              });
           }
         })
         .catch(function(err){
