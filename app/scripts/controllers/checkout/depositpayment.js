@@ -9,6 +9,10 @@ function DepositController($scope, $mdDialog, formatService, commonService, ewal
     if($scope.payment.currency === 'usd'){
       $scope.payment.ammount = $scope.payment.ammount / $scope.payment.exchangeRate;
       $scope.payment.ammountMXN = $scope.getAmmountMXN($scope.payment.ammount);
+    
+      if($scope.maxAmmount){
+        $scope.payment.maxAmmount = $scope.maxAmmount / $scope.payment.exchangeRate;
+      }
     }
 
     //ROUNDING
