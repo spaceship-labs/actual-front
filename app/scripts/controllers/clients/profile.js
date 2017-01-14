@@ -296,7 +296,7 @@ function ClientProfileCtrl(
       .catch(function(err){
         vm.isLoading = false;
         console.log(err);
-        dialogService.showDialog('Hubo un error al guardar datos de facturación');
+        dialogService.showDialog('Hubo un error al guardar datos de facturación: ' + (err.data || err));
       });
     }else if(!isValidEmail){
       vm.isLoading = false;
