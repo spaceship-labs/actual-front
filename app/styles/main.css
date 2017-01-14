@@ -3898,6 +3898,16 @@ padding-left: 16px;
   border: 1px solid #000;
   padding: 20px;
   display: block;
+  position: relative;
+}
+.client-item-info .close-form-icon{
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 30px;
+}
+.client-item-info .close-form-icon img{
+  max-width: 100%;
 }
 
 /*--------------/

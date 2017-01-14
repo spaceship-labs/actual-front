@@ -7,6 +7,10 @@
     ng-repeat="contact in vm.contacts track by $index"
   >
 
+    <a href="#" ng-click="vm.removeContactForm($index)" class="close-form-icon">
+      <img src="images/cancel.png" alt="">
+    </a>
+
     <div layout="row">
       <div flex="45" class="input-element">
         <label><strong>Nombre(s) del destinatario <span class="hl-label">*</span></strong></label>
@@ -178,7 +182,7 @@
     <a
       href="#"
       flex="30"
-      class="action-btn"
+      class="action-btn action-btn-save"
       ng-if="!vm.showNewContact"
       ng-click="vm.addContactForm()">
       Agregar nueva dirección 

@@ -23,6 +23,9 @@ function ClientCreateCtrl(
     $interval
   ){
   var vm = this;
+  var PERSONAL_DATA_TAB = 0;
+  var FISCAL_DATA_TAB = 1;
+  var DELIVERY_DATA_TAB = 3;
 
   angular.extend(vm, {
     activeTab       : 0,
@@ -38,15 +41,53 @@ function ClientCreateCtrl(
     countries       : commonService.getCountries(),
     addContactForm  : addContactForm,
     create          : create,
-    onPikadaySelect : onPikadaySelect
+    onPikadaySelect : onPikadaySelect,
+    removeContactForm: removeContactForm,
+    clearTabFields  : clearTabFields,
+    PERSONAL_DATA_TAB: 0,
+    FISCAL_DATA_TAB: 1,
+    DELIVERY_DATA_TAB: 3
   });
 
   function onPikadaySelect(pikaday){
     vm.client.Birthdate = pikaday._d;
   }
 
+  function clearPersonalDataTab(){
+    vm.client = {};
+    vm.pikadayDate.setDate(null);
+  }
+
+  function clearFiscalAddressTab(){
+    vm.fiscalAddress = {};
+    vm.client.LicTradNum = null;
+  }
+
+  function clearContactsTab(){
+    vm.contacts = [{}];
+  }
+
+  function clearTabFields(){
+    switch(vm.activeTab){
+      case vm.PERSONAL_DATA_TAB:
+        clearPersonalDataTab();
+        break;
+      case vm.FISCAL_DATA_TAB:
+        clearFiscalAddressTab();
+        break;
+      case DELIVERY_DATA_TAB:
+        clearContactsTab();
+    }
+  }
+
   function addContactForm(){
     vm.contacts.push({});
+  }
+
+  function removeContactForm(contactFormIndex){
+    if(vm.contacts){
+      vm.contacts.splice(contactFormIndex, 1);
+    }
   }
 
   function addContact(form){
