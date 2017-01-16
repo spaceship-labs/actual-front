@@ -212,7 +212,9 @@ function ClientCreateCtrl(
           console.log(err);
           vm.isLoadingProgress = false;
           cancelProgressInterval();
-          dialogService.showDialog('Hubo un error: ' + (err.data || err) );
+          dialogService.showDialog('Hubo un error: ' + (err.data || err), function(){
+            dialogService.showDialog('Confirma tu correo de nuevo en la seccion de datos personales');
+          } );
         });
     }
     else if(!areValidEmails){
