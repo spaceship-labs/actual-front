@@ -61,7 +61,7 @@
         <!--FISCAL SECTION-->
         <hr/>
         <section class="fiscal-section">
-          <h3><strong>Datos fiscales</strong></h3>
+          <h3><strong>Datos fiscales</strong> <a ng-href="/clients/profile/{{vm.client.id}}?activeTab=1&checkoutProcess={{vm.quotation.id}}" class="small-link small-link-main no-margin">Editar</a></h3>
           <p>
             <strong>Estatus:</strong> 
             <span ng-show="vm.isClientFiscalDataValid(vm.client)">Completos</span>
@@ -69,7 +69,6 @@
             | 
             <strong>RFC:</strong> {{vm.client.LicTradNum}}
           </p>
-          <p><a ng-href="/clients/profile/{{vm.client.id}}?activeTab=1&checkoutProcess={{vm.quotation.id}}" class="small-link small-link-main no-margin">Editar</a></p>
         </section>
         <!--END FISCAL SECTION-->
 
@@ -78,6 +77,13 @@
         <section class="delivery-section">
           <h3>
             <strong>Dirección de entrega</strong>
+            <a
+              class="small-link small-link-main"
+              href="#"
+              ng-href="/clients/profile/{{vm.quotation.Client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}">
+              Editar
+            </a>
+            
           </h3>
 
           <p ng-if="vm.contacts.length === 0">
@@ -116,14 +122,6 @@
                     <li><strong>Referencias: </strong>{{contact.U_Notes1}}</li>
 
                   </ul>
-                  <p>
-                    <a
-                      class="small-link small-link-main"
-                      href="#"
-                      ng-href="/clients/profile/{{vm.quotation.Client.id}}?activeTab=3&checkoutProcess={{vm.quotation.id}}">
-                      Editar
-                    </a>
-                  </p>
                 </div>
               </div>
 

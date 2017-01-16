@@ -31,7 +31,8 @@
     $mdDialog,
     dialogService,
     deliveryService,
-    commonService
+    commonService,
+    ENV
   ){
     var vm = this;
     angular.extend(vm, {
@@ -64,7 +65,8 @@
       toggleProfileModal: toggleProfileModal,
       getStores: getStores,
       saveBroker: saveBroker,
-      saveSource: saveSource
+      saveSource: saveSource,
+      adminUrl: ENV.adminUrl
     });
     $rootScope.loadActiveQuotation = loadActiveQuotation;
 
@@ -562,7 +564,8 @@
     '$mdDialog',
     'dialogService',
     'deliveryService',
-    'commonService'
+    'commonService',
+    'ENV'
   ];
 
 })();

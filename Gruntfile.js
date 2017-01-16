@@ -455,7 +455,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'sandbox',
-            apiEndpoint: 'http://sandbox-actual-api.herokuapp.com'
+            apiEndpoint: 'http://sandbox-actual-api.herokuapp.com',
+            adminUrl: 'http://sandboxadmin.miactual.com'
           }
         }
       },
@@ -466,7 +467,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'demo',
-            apiEndpoint: 'http://demo-actual-api.herokuapp.com'
+            apiEndpoint: 'http://demo-actual-api.herokuapp.com',
+            adminUrl: 'http://sandboxadmin.miactual.com'
           }
         }
       },      
@@ -477,7 +479,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            apiEndpoint: 'http://actual-api.herokuapp.com'
+            apiEndpoint: 'http://actual-api.herokuapp.com',
+            adminUrl: 'http://sandboxadmin.miactual.com'
           }
         }
       },
@@ -488,7 +491,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'dev',
-            apiEndpoint: 'http://localhost:1337'
+            apiEndpoint: 'http://localhost:1337',
+            adminUrl: 'http://localhost:3000'
           }
         }
       }
