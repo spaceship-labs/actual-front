@@ -1,4 +1,13 @@
-function DepositController($scope, $mdDialog, formatService, commonService, ewalletService, payment) {
+function DepositController(
+  $scope, 
+  $mdDialog, 
+  $filter,
+  formatService, 
+  commonService, 
+  ewalletService,
+  dialogService,
+  payment
+) {
 
   $scope.init = function(){
     $scope.payment = payment;

@@ -188,7 +188,10 @@
         </div>
         <div class="price-reduction" flex="20">
           <p><strong>{{vm.order.subtotal | currency}} MXN</strong></p>
-          <p><strong>-{{vm.order.discount | currency}} MXN</strong></p>
+
+          <p ng-if="vm.order.discount > 0"><strong>-{{vm.order.discount | currency}} MXN</strong></p>
+          <p ng-if="vm.order.discount <= 0"><strong>{{vm.order.discount | currency}} MXN</strong></p>
+
           <p><strong>{{vm.order.total | currency}} MXN</strong></p>
           <p><strong>{{vm.order.ammountPaid | roundCurrency}} MXN</strong></p>
           <p><strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | currency }} MXN</strong></p>

@@ -110,7 +110,7 @@ function CheckoutPaymentsCtrl(
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
         //ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
-        paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
+        //paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
       
         if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
           vm.quotation = setQuotationTotalsByGroup(vm.quotation);
@@ -293,10 +293,12 @@ function CheckoutPaymentsCtrl(
       $mdDialog.show({
         controller: [
           '$scope', 
-          '$mdDialog', 
+          '$mdDialog',
+          '$filter', 
           'formatService',
           'commonService', 
           'ewalletService',
+          'dialogService',
           'payment', 
           controller
         ],

@@ -1,4 +1,14 @@
-function TerminalController($scope, $mdDialog, formatService, commonService, ewalletService,payment) {
+function TerminalController(
+  $scope, 
+  $mdDialog, 
+  $filter,
+  formatService, 
+  commonService, 
+  ewalletService,
+  dialogService,  
+  payment
+) {
+
   $scope.payment = payment;
   $scope.needsVerification = payment.needsVerification;
   $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
@@ -12,6 +22,8 @@ function TerminalController($scope, $mdDialog, formatService, commonService, ewa
   if($scope.payment.min){
     $scope.payment.min = commonService.roundCurrency($scope.payment.min);      
   }
+
+  console.log('$scope.payment.min', $scope.payment.min);
 
   $scope.numToLetters = function(num){
     return formatService.numberToLetters(num);
@@ -107,6 +119,7 @@ function TerminalController($scope, $mdDialog, formatService, commonService, ewa
         $scope.payment.terminal = $scope.terminal.value;
       }        
       //alert('cumple');
+      console.log('$scope.payment save', $scope.payment);
       $mdDialog.hide($scope.payment);
     }else{
       console.log('no cumple');

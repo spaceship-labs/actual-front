@@ -506,9 +506,10 @@ function QuotationsEditCtrl(
         detailGroup: detailGroup
       }
     })
-    .then(function(manager) {
-    }, function() {
-      console.log('No autorizado');
+    .then(function() {
+    })
+    .catch(function() {
+      console.log('cancelled');
     });    
   }
 

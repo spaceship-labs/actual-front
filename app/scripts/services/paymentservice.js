@@ -238,16 +238,20 @@
    		var options = _.filter(paymentsOptions, function(option){
    			var hasPaymentType = false;
    			var hasStore = false;
- 			 	if(option.paymentTypes.indexOf(method.type) > -1){
+ 			 	
+        if(option.paymentTypes.indexOf(method.type) > -1){
  			 		hasPaymentType = true;
  			 	}
+
  			 	if(option.storesTypes.indexOf(method.storeType) > -1 ){
  			 		hasStore = true;
  			 	}
+
  			 	if(hasStore && hasPaymentType){
  			 		return true;
  			 	}
- 			 	return false;
+ 			 	
+        return false;
    		});
    		return options;
    	}

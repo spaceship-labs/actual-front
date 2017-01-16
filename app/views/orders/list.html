@@ -6,8 +6,8 @@
 
     <div flex="50" class="date-filters">
       <p>
-        <strong>
-          <i id="trigger-start-date-orders" class="icon-pedidos"></i> DEL:
+        <strong id="trigger-start-date-orders" class="date-filter-trigger">
+          <i  class="icon-pedidos"></i> DEL:
           <input
             pikaday="vm.dateStart"
             format="DD/MM/YYYY"
@@ -18,8 +18,8 @@
             default-date="{{vm.startDate}}"
             on-select="vm.onDateStartSelect(pikaday)">
         </strong>
-        <strong>
-          <i id="trigger-end-date-orders" class="icon-pedidos"></i> AL:
+        <strong id="trigger-end-date-orders" class="date-filter-trigger">
+          <i  class="icon-pedidos"></i> AL:
           <input
             pikaday="vm.dateEnd"
             format="DD/MM/YYYY"

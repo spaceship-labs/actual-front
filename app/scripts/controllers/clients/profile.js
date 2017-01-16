@@ -248,6 +248,7 @@ function ClientProfileCtrl(
           vm.newContact = {};
           var created = res.data;
           vm.client.Contacts.push(created);
+          //dialogService.showDialog('Dirección creada');
           dialogService.showDialog('Dirección creada', checkoutService.returnToCheckout);
         })
         .catch(function(err){

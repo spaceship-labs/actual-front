@@ -2561,6 +2561,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 
+.form-view .date-filters .date-filter-trigger,
+.form-view .date-filters .date-filter-trigger input{cursor: pointer;}
+
 .form-view .date-filters i{
   font-size: 40px;
   vertical-align: middle;
