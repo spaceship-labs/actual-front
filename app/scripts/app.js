@@ -419,17 +419,22 @@ angular
     });
 
     //JWT TOKENS CONFIG
-    $httpProvider.interceptors.push(['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
-      return {
-        request: function (config) {
-          config.headers = config.headers || {};
-          if ( localStorageService.get('token') ) {
-            config.headers.Authorization = 'JWT ' + localStorageService.get('token');
-          }
-          return config;
-        },
-      };
-    }]);
+    $httpProvider.interceptors.push([
+      '$q', 
+      '$location', 
+      'localStorageService',
+       function ($q, $location, localStorageService) {
+        return {
+          request: function (config) {
+            config.headers = config.headers || {};
+            if ( localStorageService.get('token') ) {
+              config.headers.Authorization = 'JWT ' + localStorageService.get('token');
+            }
+            return config;
+          },
+        };
+      }
+    ]);
 
   })
 
