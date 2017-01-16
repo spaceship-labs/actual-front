@@ -97,7 +97,7 @@ function CheckoutOrderCtrl(
     var mappedDeliveryGroups = deliveryGroups.map(function(group){
       var hasSeries = false;
       group.details = group.details.map(function(detail){
-        var productSerie = getSerieByDetailId(detail.OrderDetail);
+        var productSerie = getSerieByDetailId(detail.id);
         if(productSerie){
           detail.productSerie = productSerie;
           hasSeries = true;
