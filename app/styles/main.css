@@ -3246,6 +3246,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .records-view .new-record .input-element textarea{
   line-height:1em;
   font-size:12px;
+  padding: 10px;
 }
 
 .records-view .records-table{
@@ -3276,7 +3277,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   color: #000;
 }
 .records-view .records-table tbody td a img{
-  max-width: 15px;
+  max-width: 100px;
   vertical-align: middle;
 }
 
