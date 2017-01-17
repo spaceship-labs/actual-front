@@ -479,8 +479,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            apiEndpoint: 'http://actual-api.herokuapp.com',
-            adminUrl: 'http://sandboxadmin.miactual.com'
+            apiEndpoint: 'http://166.78.47.146',
+            adminUrl: 'http://admin.miactual.com'
           }
         }
       },
