@@ -470,7 +470,7 @@
       localStorageService.remove('currentQuotation');
       localStorageService.set('token', res.token);
       localStorageService.set('user' , res.user);
-      localStorageService.set('activeStore', res.user.activeStore);
+      localStorageService.set('activeStore', res.user.activeStore.id);
       $window.location.reload();
     };
 
