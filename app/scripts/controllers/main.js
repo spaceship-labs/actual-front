@@ -76,7 +76,6 @@
       vm.token = localStorageService.get('token');
       vm.user = localStorageService.get('user');
       vm.activeStoreId = localStorageService.get('activeStore');
-      vm.activeStoreName = localStorageService.get('activeStoreName');
       $rootScope.user = vm.user;
       if ($location.search().itemcode) {
         vm.searchingItemCode = true;
@@ -467,10 +466,11 @@
     $rootScope.successAuth = function(res){
       vm.token = res.token;
       vm.user  = res.user;
+      console.log('res.user', res.user);
       localStorageService.remove('currentQuotation');
       localStorageService.set('token', res.token);
       localStorageService.set('user' , res.user);
-      localStorageService.set('activeStore', res.user.activeStore.id);
+      localStorageService.set('activeStore', res.user.activeStore);
       $window.location.reload();
     };
 
