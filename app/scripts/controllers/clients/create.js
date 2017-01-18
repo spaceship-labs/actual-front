@@ -246,9 +246,11 @@ function ClientCreateCtrl(
       {form: createDeliveryForm, data: vm.client.contacts,  tab: 'contactos'}      
     ];
 
-    if($location.search().checkoutProcess){
+    if($location.search().checkoutProcess && $rootScope.activeQuotation){
       //Require validation for contact forms
-      formsRelations[1].isRequired = true;
+      if($rootScope.activeQuotation.immediateDelivery){
+        formsRelations[1].isRequired = true;
+      }
     }
 
     var areValidEmails = validateClientEmails(vm.client);
