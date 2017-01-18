@@ -36,11 +36,15 @@
           .then(function(res){
             var balance = res.data || 0;
             var description = getEwalletDescription(balance);;
-            ewalletPaymentMethod.description = description;
-            ewalletPayments = ewalletPayments.map(function(payment){
-              payment.description = description;
-              return payment;
-            });
+            if(ewalletPaymentMethod){
+              ewalletPaymentMethod.description = description;
+            }
+            if(ewalletPayments){
+              ewalletPayments = ewalletPayments.map(function(payment){
+                payment.description = description;
+                return payment;
+              });            
+            }
           })
           .catch(function(err){
             console.log(err);

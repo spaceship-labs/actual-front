@@ -301,11 +301,15 @@
           console.log('res', res);
           var balance = res.data || 0;
           var description = getClientBalanceDescription(balance);;
-          balancePaymentMethod.description = description;
-          balancePayments = balancePayments.map(function(payment){
-            payment.description = description;
-            return payment;
-          });
+          if(balancePaymentMethod){
+            balancePaymentMethod.description = description;
+          }
+          if(balancePayments){
+            balancePayments = balancePayments.map(function(payment){
+              payment.description = description;
+              return payment;
+            });
+          }
         })
         .catch(function(err){
           console.log(err);

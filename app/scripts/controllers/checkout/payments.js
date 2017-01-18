@@ -109,8 +109,9 @@ function CheckoutPaymentsCtrl(
       .then(function(response){
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
-        //ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
-        //paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
+        
+        ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
+        paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
       
         if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
           vm.quotation = setQuotationTotalsByGroup(vm.quotation);
@@ -152,7 +153,7 @@ function CheckoutPaymentsCtrl(
       }
     }
     
-    if(vm.activeMethod.maxAmmount <= 0){
+    if(vm.activeMethod.maxAmmount < 0.01){
       dialogService.showDialog('Fondos insuficientes');
       return false;
     }
@@ -262,7 +263,7 @@ function CheckoutPaymentsCtrl(
           }
 
           if(payment.type === CLIENT_BALANCE_TYPE){
-            clientService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
+            paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
           }
 
         })
