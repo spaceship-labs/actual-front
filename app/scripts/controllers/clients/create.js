@@ -142,38 +142,74 @@ function ClientCreateCtrl(
 
   function getFilledForms(formsRelations){
     var filledForms = formsRelations.reduce(function(acum, formRelation){
+
       if( angular.isArray(formRelation.data) ){
-        var areFilled = false;
+        var requiresValidation = false;
+
+        //Validation for contact forms(multiple)
         for(var i = 0; i<formRelation.data.length; i++){
-          if( !_.isEmpty(formRelation.data[i]) ){
-            areFilled = true;
+          if( !_.isEmpty(formRelation.data[i]) || formRelation.isRequired){
+            requiresValidation = true;
           }
         }
-        if(areFilled){
-          console.log('pushing array form');
+
+        if(requiresValidation){
+          console.log('requiresValidation', formRelation.form);
+          formRelation.form.tab = formRelation.tab;
           acum.push(formRelation.form);
         }
       }
-      else if( !_.isEmpty(formRelation.data) ){
-        console.log('pushing normal form');
+
+      //Validation for fiscal form
+      else if( !_.isEmpty(formRelation.data)  || formRelation.isRequired){
+        formRelation.form.tab = formRelation.tab;
         acum.push(formRelation.form);
       }
       return acum;
     },[]);
+
     return filledForms;
   }
 
-  function areFormsValid(forms){
+  function validateForms(forms){
     if(forms.length > 0){
       var validFlag = true;
+      var errorTabs = [];
+
       for(var i=0;i<forms.length;i++){
         if(!forms[i].$valid){
           validFlag = false;
+          errorTabs = errorTabs.concat(forms[i].tab);
         }
       }
-      return validFlag;
+      return {
+        valid: validFlag,
+        errorTabs: errorTabs
+      };
     }
-    return true;
+    return {
+      valid: true
+    };
+  }
+
+  function validateAddedContactsIfNeeded(contacts){
+    if( !$location.search().checkoutProcess ){
+      return true;
+    }
+
+    if( $rootScope.activeQuotation ){
+      if(!$rootScope.activeQuotation.immediateDelivery){
+        return true;
+      } 
+    }
+
+    if(contacts.length > 0){
+      var areNotEmpty  = contacts.every(function(c){
+        return !_.isEmpty(c);
+      });
+      return areNotEmpty;
+    }
+    return false;
   }
 
   function create(createPersonalForm, createFiscalForm, createDeliveryForm){
@@ -183,18 +219,34 @@ function ClientCreateCtrl(
 
     vm.client.contacts = vm.contacts.filter(filterContacts);
     vm.client.fiscalAddress = vm.fiscalAddress || false;
+    
     var formsRelations = [
-      {form: createFiscalForm, data: vm.client.fiscalAddress},
-      {form: createDeliveryForm, data: vm.client.contacts}      
+      {form: createFiscalForm, data: vm.client.fiscalAddress, tab:'dirección fiscal'},
+      {form: createDeliveryForm, data: vm.client.contacts,  tab: 'contactos'}      
     ];
+
+    if($location.search().checkoutProcess){
+      //Require validation for contact forms
+      formsRelations[1].isRequired = true;
+    }
+
     var areValidEmails = validateClientEmails(vm.client);
     var filledForms = getFilledForms(formsRelations);
-    if(areFormsValid(filledForms) && createPersonalForm.$valid && areValidEmails){
+    var validateFormsResult = validateForms(filledForms);
+    var areFormsValid = validateFormsResult.valid;
+    var formsValidationErrors = validateFormsResult.errorTabs;
+
+    if( 
+        areFormsValid && 
+        createPersonalForm.$valid && 
+        areValidEmails && 
+        validateAddedContactsIfNeeded(vm.contacts)
+      ){
       clientService.create(vm.client)
         .then(function(res){
           console.log(res);
           var created = res.data;
-          vm.isLoadingProgress = false;
+          //vm.isLoadingProgress = false;
           cancelProgressInterval();
           if(created.CardCode){
             //var isInCheckoutProcess = localStorageService.get('inCheckoutProcess');
@@ -221,10 +273,32 @@ function ClientCreateCtrl(
       vm.isLoadingProgress = false;
       cancelProgressInterval();
       dialogService.showDialog('Emails no validos');
-    }else{
+    }
+    else{
       vm.isLoadingProgress = false;
       cancelProgressInterval();
       dialogService.showDialog('Datos incompletos');
+
+      if( (formsValidationErrors && formsValidationErrors.length > 0) || !createPersonalForm.$valid){
+        var errorTabs = [];
+        var errorString = 'Datos incompletos, revisa las siguientes pestañas: ';
+        if(!createPersonalForm.$valid){
+          errorTabs = errorTabs.concat(['datos personales']);
+        }
+
+        if( (formsValidationErrors && formsValidationErrors.length > 0) ){
+          errorTabs = errorTabs.concat(formsValidationErrors);
+        }
+
+        errorString += errorTabs.join(',');
+
+        dialogService.showDialog(errorString);
+      }
+
+      if( !validateAddedContactsIfNeeded(vm.contacts) ){
+        dialogService.showDialog('Agrega al menos una dirección de envio');
+      }
+
     }
 
   }
@@ -256,7 +330,7 @@ function ClientCreateCtrl(
           quotationService.setActiveQuotation(activeQuotation.id);
           localStorageService.remove('inCheckoutProcess');
           
-          if($location.search().checkoutProcess){
+          if($location.search().checkoutProcess && $rootScope.activeQuotation.total){
             $location
               .path('/clients/profile/'+clientId)
               .search({

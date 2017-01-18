@@ -264,14 +264,21 @@
         $rootScope.$broadcast('newActiveQuotation', false); 
       }
 
-      function newQuotation(params, goToSearch){
+      function newQuotation(params, options){
+        options = options || {};
         create(params).then(function(res){
           var quotation = res.data;
           if(quotation){
             setActiveQuotation(quotation.id);
-            if(goToSearch){
+            /*
+            if(options.goToSearch){
               $location.path('/').search({startQuotation:true});
-            }else{
+            }*/
+            if(options.createClient){
+              $location.path('/clients/create')
+                .search({checkoutProcess: quotation.id});
+            }
+            else{
               $location.path('/quotations/edit/'+quotation.id)
                 .search({startQuotation:true});
             }
