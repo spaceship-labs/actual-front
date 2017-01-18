@@ -199,7 +199,7 @@ function ClientCreateCtrl(
     }
 
     if( $rootScope.activeQuotation ){
-      if(!$rootScope.activeQuotation.immediateDelivery){
+      if($rootScope.activeQuotation.immediateDelivery){
         return true;
       } 
     }
