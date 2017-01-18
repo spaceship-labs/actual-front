@@ -69,6 +69,7 @@ function ClientProfileCtrl(
     createQuotation: createQuotation,
     changeTab: changeTab,
     contactAction: contactAction,
+    copyPersonalDataToContact: copyPersonalDataToContact,
     onPikadaySelect: onPikadaySelect,
     updatePersonalData: updatePersonalData,
     apiResourceLeads: quotationService.getByClient,
@@ -109,6 +110,26 @@ function ClientProfileCtrl(
 
     });
   }
+
+  function copyPersonalDataToContact(client,contact){
+    console.log('copyingPersonalData', contact);
+    if(!contact.copyingPersonalData){
+      contact.FirstName = _.clone(client.FirstName);
+      contact.LastName = _.clone(client.LastName);
+      contact.Tel1 = _.clone(client.Phone1);
+      contact.Cellolar = _.clone(client.Cellular);
+      contact.E_Mail = _.clone(client.E_Mail);
+      contact._email = _.clone(client.E_Mail);
+    }
+    else{
+      delete contact.FirstName;
+      delete contact.LastName;
+      delete contact.Tel1;
+      delete contact.Cellolar;
+      delete contact.E_Mail;
+      delete contact._email;
+    }
+  }  
 
   function showNewFiscalForm(){
     vm.isNewFiscalFormActive = true;

@@ -44,6 +44,7 @@ function ClientCreateCtrl(
     onPikadaySelect : onPikadaySelect,
     removeContactForm: removeContactForm,
     clearTabFields  : clearTabFields,
+    copyPersonalDataToContact: copyPersonalDataToContact,
     PERSONAL_DATA_TAB: 0,
     FISCAL_DATA_TAB: 1,
     DELIVERY_DATA_TAB: 3
@@ -210,6 +211,26 @@ function ClientCreateCtrl(
       return areNotEmpty;
     }
     return false;
+  }
+
+  function copyPersonalDataToContact(client,contact){
+    console.log('contact', contact);
+    if(!contact.copyingPersonalData){
+      contact.FirstName = _.clone(client.FirstName);
+      contact.LastName = _.clone(client.LastName);
+      contact.Tel1 = _.clone(client.Phone1);
+      contact.Cellolar = _.clone(client.Cellular);
+      contact.E_Mail = _.clone(client.E_Mail);
+      contact._email = _.clone(client._email);
+    }
+    else{
+      delete contact.FirstName;
+      delete contact.LastName;
+      delete contact.Tel1;
+      delete contact.Cellolar;
+      delete contact.E_Mail;
+      delete contact._email;
+    }
   }
 
   function create(createPersonalForm, createFiscalForm, createDeliveryForm){

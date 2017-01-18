@@ -14,6 +14,16 @@
     <h2>Registrar nueva dirección de contacto</h2>
 
     <section>
+
+      <div class="checkbox-client-type">
+        <md-checkbox
+          ng-click="vm.copyPersonalDataToContact(vm.client, vm.newContact)"
+          ng-model="vm.newContact.copyingPersonalData"
+          aria-label="Copiar datos personales">
+          <strong>Los mismos que mis datos personales</strong>
+        </md-checkbox>    
+      </div>
+
       <div layout="row">
         <div flex="45" class="input-element">
           <label><strong>Nombre(s) del destinatario <span class="hl-label">*</span></strong></label>
