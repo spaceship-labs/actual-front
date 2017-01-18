@@ -436,20 +436,30 @@ function QuotationsEditCtrl(
     if(!vm.quotation.Order){
       vm.isLoading = true;
 
-      var params = angular.copy(vm.quotation);
+      /*
       if(params.Details){
         params.Details = params.Details.map(function(detail){
           detail.Product = detail.Product.id;
           return detail;
         });
-      }
+      }*/
+      //Not updating Details, not necessary
+      var params = angular.copy(vm.quotation);
+      delete params.Details;
 
       quotationService.update(vm.quotation.id, params)
         .then(function(res){
+          var quotationUpdated = res.data;
           vm.isLoading = false;
           if(vm.quotation.Client){
             quotationService.setActiveQuotation(vm.quotation.id);
+            
+            if(quotationUpdated.immediateDelivery){
+              return $location.path('/checkout/paymentmethod/' + quotationUpdated.id);
+            }
+
             $location.path('/checkout/client/' + vm.quotation.id);
+          
           }else{
             console.log('No hay cliente');
             quotationService.setActiveQuotation(vm.quotation.id);
@@ -464,6 +474,7 @@ function QuotationsEditCtrl(
         .catch(function(err){
           $log.error(err);
         });
+
     }else{
       dialogService.showDialog('Esta cotización ya tiene un pedido asignado');
     }

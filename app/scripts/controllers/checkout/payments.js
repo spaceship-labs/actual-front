@@ -86,6 +86,10 @@ function CheckoutPaymentsCtrl(
             .search({stockAlert:true});
         }
 
+        if(!validateQuotationAddress(vm.quotation)){
+          $location.path('/quotation/edit/' + vm.quotation.id);
+        }
+
         if(vm.quotation.Order){
           $location.path('/checkout/order/' + vm.quotation.Order.id);
         }
@@ -101,6 +105,17 @@ function CheckoutPaymentsCtrl(
         dialogService.showDialog('Error: \n' + err.data);
       });
 
+  }
+
+  function validateQuotationAddress(quotation){
+    if(quotation.immediateDelivery){
+      return true;
+    }
+
+    if(quotation.Address){
+      return true;
+    }
+    return false;
   }
 
   function loadPaymentMethods(){
