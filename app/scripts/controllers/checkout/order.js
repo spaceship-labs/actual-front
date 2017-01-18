@@ -46,7 +46,6 @@ function CheckoutOrderCtrl(
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
       vm.order.Details = vm.order.Details || [];
-      console.log('vm.order', vm.order);
       vm.order.Address = orderService.formatAddress(vm.order.Address);
       vm.series = groupSeries(vm.order.OrdersSap);
 

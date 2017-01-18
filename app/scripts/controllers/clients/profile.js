@@ -38,7 +38,7 @@ function ClientProfileCtrl(
       {key: 'folio', label:'Folio'},
       {key:'Client.CardName', label:'Cliente'},
       {key:'Client.E_Mail', label:'Email'},
-      {key:'createdAt', label:'Cotización'},
+      {key:'createdAt', label:'Fecha', date:true},
       {key:'total', label: 'Total', currency:true},
       {key:'ammountPaid', label: 'Cobrado', currency:true},
       {
@@ -53,8 +53,9 @@ function ClientProfileCtrl(
     columnsOrders: [
       {key: 'folio', label:'Folio'},
       {key:'Client.CardName', label:'Cliente'},
-      {key:'total', label: 'Total', currency:true},
+      {key:'createdAt', label:'Fecha' ,date:true},
       {key:'discount', label:'Descuento', currency:true},
+      {key:'total', label: 'Total', currency:true},      
       {key:'ammountPaid', label:'Cobrado', currency:true},
       {
         key:'Acciones',
@@ -87,7 +88,13 @@ function ClientProfileCtrl(
     vm.isLoading = true;
 
     if($location.search().createdClient){
-      dialogService.showDialog('Cliente registrado', checkoutService.returnToCheckout);
+
+      dialogService.showDialog('Cliente registrado', function(){
+        if($rootScope.activeQuotation){
+          return $location.path('/quotations/edit/' + $rootScope.activeQuotation.id);
+        }
+        checkoutService.returnToCheckout();
+      });
     }
 
     clientService.getById($routeParams.id).then(function(res){

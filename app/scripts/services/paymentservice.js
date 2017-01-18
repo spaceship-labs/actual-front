@@ -287,6 +287,8 @@
         type = 'Deposito';
       }else if(payment.type === 'ewallet'){
         type = 'Monedero electrónico';
+      }else if(payment.type === 'balance'){
+        type = 'Saldo a favor cliente';
       }
       return type;
     }

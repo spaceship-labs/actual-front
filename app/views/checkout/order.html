@@ -185,6 +185,11 @@
           <p><strong>TOTAL COMPRA:</strong></p>
           <p><strong>TOTAL PAGADO:</strong></p>
           <p><strong>SALDO:</strong></p>
+
+          <!--
+          <br/>
+          <p><strong>SALDO CLIENTE:</strong></p>
+          -->
         </div>
         <div class="price-reduction" flex="20">
           <p><strong>{{vm.order.subtotal | currency}} MXN</strong></p>
@@ -195,6 +200,12 @@
           <p><strong>{{vm.order.total | currency}} MXN</strong></p>
           <p><strong>{{vm.order.ammountPaid | roundCurrency}} MXN</strong></p>
           <p><strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | currency }} MXN</strong></p>
+
+          <!--
+          <br/>
+          <p><strong>{{(vm.order.Client.Balance * - 1) | currency}}</strong></p>
+          -->
+
         </div>
       </div>
 
