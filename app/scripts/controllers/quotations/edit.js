@@ -155,6 +155,7 @@ function QuotationsEditCtrl(
         vm.isLoadingRecords = false;
       })
       .catch(function(err){
+        dialogService.showDialog('Hubo un error: ' + (err.data || err) );
         $log.error(err);
       });
 

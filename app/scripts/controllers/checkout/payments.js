@@ -406,7 +406,8 @@ function CheckoutPaymentsCtrl(
           vm.order = res.data;
           if(vm.order.id){
             quotationService.removeCurrentQuotation();
-            $location.path('/checkout/order/' + vm.order.id);
+            $location.path('/checkout/order/' + vm.order.id)
+              .search({orderCreated:true});
           }
         }).catch(function(err){
           console.log('err', err);

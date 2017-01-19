@@ -44,6 +44,11 @@ function CheckoutOrderCtrl(
     //vm.isLoading = false;
     vm.isLoading = true;
     vm.isLoadingRecords = true;
+
+    if($location.search().orderCreated){
+      dialogService.showDialog('Pedido y factura creados');
+    }
+
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
       vm.order.Details = vm.order.Details || [];

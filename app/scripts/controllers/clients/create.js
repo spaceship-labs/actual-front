@@ -287,9 +287,7 @@ function ClientCreateCtrl(
           console.log(err);
           vm.isLoadingProgress = false;
           cancelProgressInterval();
-          dialogService.showDialog('Hubo un error: ' + (err.data || err), function(){
-            dialogService.showDialog('Confirma tu correo de nuevo en la seccion de datos personales');
-          } );
+          dialogService.showDialog('Hubo un error: ' + (err.data || err));
         });
     }
     else if(!areValidEmails){
@@ -349,6 +347,7 @@ function ClientCreateCtrl(
       quotationService.update(activeQuotation.id, params)
       .then(function(res){
         var quotation = res.data;
+        
         if(quotation && quotation.id){
           quotationService.setActiveQuotation(activeQuotation.id);
           localStorageService.remove('inCheckoutProcess');
@@ -364,8 +363,8 @@ function ClientCreateCtrl(
 
           else{
             $location
-            .path('/quotation/edit/' + activeQuotation.id)
-            .search({createdClient:true});        
+              .path('/quotations/edit/' + quotation.id)
+              .search({createdClient:true});        
           }
         }
       })
