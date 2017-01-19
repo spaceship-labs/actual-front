@@ -57,6 +57,7 @@ function CheckoutPaymentsCtrl(
     isLoading: true,
     loadingEstimate: 0,
     payments: [],
+    sapLogs: [],
     paymentMethodsGroups: [],
     roundCurrency: commonService.roundCurrency
   });
@@ -78,6 +79,8 @@ function CheckoutPaymentsCtrl(
 
     quotationService.getById($routeParams.id).then(function(res){
         vm.quotation = res.data;
+        loadSapLogs(vm.quotation.id);
+
         return quotationService.validateQuotationStockById(vm.quotation.id); 
       })
       .then(function(isValidStock){
@@ -105,6 +108,20 @@ function CheckoutPaymentsCtrl(
         dialogService.showDialog('Error: \n' + err.data);
       });
 
+  }
+
+  function loadSapLogs(quotationId){
+    vm.isLoadingSapLogs = true;
+    quotationService.getSapOrderConnectionLogs(quotationId)
+      .then(function(res){
+        vm.sapLogs = res.data;
+        console.log('sapLogs', vm.sapLogs);
+        vm.isLoadingSapLogs = false;
+      })
+      .catch(function(err){
+        console.log('err', err);
+        vm.isLoadingSapLogs = false;        
+      });
   }
 
   function validateQuotationAddress(quotation){
@@ -416,6 +433,7 @@ function CheckoutPaymentsCtrl(
             errMsg = err.data || '';            
             dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo \n' + errMsg);
           }
+          loadSapLogs(vm.quotation.id);
           vm.isLoadingProgress = false;
         });
     }

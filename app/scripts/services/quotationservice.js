@@ -45,6 +45,7 @@
         getClosingReasons: getClosingReasons,
         getPaymentOptions: getPaymentOptions,
         getRecordTypes: getRecordTypes,
+        getSapOrderConnectionLogs: getSapOrderConnectionLogs,
         loadProductFilters: loadProductFilters,
         newQuotation: newQuotation,
         mapDetailsStock: mapDetailsStock,
@@ -136,6 +137,11 @@
         var url = '/quotation/' + id  + '/close';
         return api.$http.post(url,params);
       }      
+
+      function getSapOrderConnectionLogs(id){
+        var url = '/quotation/' + id  + '/saporderconnectionlogs';
+        return api.$http.post(url);
+      }           
 
       function calculateSubTotal(quotation){
         var subTotal = 0;

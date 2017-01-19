@@ -3862,6 +3862,16 @@ padding-left: 16px;
 }
 .order-view .sap-docs p{margin: 4px 0}
 
+/*-----------------/
+  #SAP-CONNECTION-LOGS
+/*----------------*/
+.sap-connection-logs{border-top: 1px solid #000}
+.sap-connection-logs a{
+  color: #000;
+  text-decoration: underline;
+}
+
+
 /*---------------/
   #CASH-REPORT
 /*--------------*/

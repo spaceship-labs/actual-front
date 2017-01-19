@@ -51,6 +51,13 @@ function CheckoutOrderCtrl(
 
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
+
+      vm.sapLogs = [];
+      if(vm.order.SapOrderConnectionLog){
+        vm.sapLogs.push(vm.order.SapOrderConnectionLog);
+      }
+
+
       vm.order.Details = vm.order.Details || [];
       vm.order.Address = orderService.formatAddress(vm.order.Address);
       vm.series = groupSeries(vm.order.OrdersSap);
@@ -97,6 +104,7 @@ function CheckoutOrderCtrl(
     });
 
   }
+  
 
   function assignSeriesToDeliveryGroups(deliveryGroups){
     var mappedDeliveryGroups = deliveryGroups.map(function(group){
