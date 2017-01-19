@@ -42,7 +42,8 @@ angular
     $locationProvider,
     $mdThemingProvider,
     localStorageServiceProvider,
-    pikadayConfigProvider
+    pikadayConfigProvider,
+    ENV
   ) {
 
 
@@ -402,7 +403,7 @@ angular
         redirectTo: '/'
       });
 
-    localStorageServiceProvider.setPrefix('actualFront');
+    localStorageServiceProvider.setPrefix(ENV.tokenPrefix + 'actualFront');
 
     moment.locale('es');
     var locales = {
