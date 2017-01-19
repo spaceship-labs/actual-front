@@ -36,6 +36,7 @@ function CheckoutOrderCtrl(
     getPaymentTypeString: paymentService.getPaymentTypeString,
     getSerieByDetailId: getSerieByDetailId,
     sendInvoice: sendInvoice,
+    print: print,
     calculateBalance: orderService.calculateBalance
   });
 
