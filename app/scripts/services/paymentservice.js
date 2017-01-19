@@ -287,7 +287,7 @@
         type = 'Deposito';
       }else if(payment.type === 'ewallet'){
         type = 'Monedero electrónico';
-      }else if(payment.type === 'balance'){
+      }else if(payment.type === 'client-balance'){
         type = 'Saldo a favor cliente';
       }
       return type;
@@ -327,7 +327,7 @@
           balance = quotation.Client.ewallet;
         }
         else if(method.type === CLIENT_BALANCE_TYPE){
-          balance = quotation.Client.Balance * -1;
+          balance = quotation.Client.Balance;
         }
       }
       return balance;
