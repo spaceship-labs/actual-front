@@ -106,7 +106,9 @@
             {url: '', size:'default'}
           ];
         }
+        
         product.mainPromo = getMainPromo(product);
+        
         if(product.mainPromo){
           var maxDiscount = product.mainPromo.discountPg1;
           product.maxDiscount = maxDiscount;
@@ -136,6 +138,10 @@
       }
 
       function getMainPromo(product){
+        if(product.mainPromo){
+          return product.mainPromo;
+        }
+
         if(product.Promotions && product.Promotions.length > 0){
           var indexMaxPromo = 0;
           var maxPromo = 0;
@@ -186,7 +192,10 @@
 
       function formatProducts(products){
         var deferred = $q.defer();
-        var activeStoreId = localStorageService.get('activeStore');
+        //var activeStoreId = localStorageService.get('activeStore');
+        var formatted = products.map(formatProduct);
+        deferred.resolve(formatted);
+        /*
         storeService.getPromosByStore(activeStoreId)
           .then(function(res){
             storePromotions = res.data;
@@ -196,6 +205,7 @@
           .catch(function(err){
             deferred.reject(err);
           });
+        */
         return deferred.promise;
         //return formatted;
       }
