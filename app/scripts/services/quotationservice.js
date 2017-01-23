@@ -282,7 +282,10 @@
             }*/
             if(options.createClient){
               $location.path('/clients/create')
-                .search({checkoutProcess: quotation.id});
+                .search({
+                  checkoutProcess: quotation.id,
+                  startQuotation: true
+                });
             }
             else{
               $location.path('/quotations/edit/'+quotation.id)

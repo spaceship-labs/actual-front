@@ -114,7 +114,15 @@
           product.maxDiscount = maxDiscount;
           product.priceBefore = product.Price;
           product.Price = product.Price - ( ( product.Price / 100) * maxDiscount );
-        }else{
+        }
+        else if($rootScope.activeStore.code){
+          var storeDiscountKey = 'discount-' + $rootScope.activeStore.code;
+          var maxDiscount = product[storeDiscountKey] || 0;
+          product.maxDiscount = maxDiscount;
+          product.priceBefore = product.Price;
+          product.Price = product.Price - ( ( product.Price / 100) * maxDiscount );
+        }
+        else{
           product.maxDiscount = 0;
           product.pricebefore = product.Price;
         }
@@ -145,10 +153,14 @@
         if(product.Promotions && product.Promotions.length > 0){
           var indexMaxPromo = 0;
           var maxPromo = 0;
-          //Intersection product promotions and storePromotions
-          product.Promotions = product.Promotions.filter(function(promotion){
-            return _.findWhere(storePromotions, {id:promotion.id});
-          });
+          
+          if(storePromotions){
+            //Intersection product promotions and storePromotions
+            product.Promotions = product.Promotions.filter(function(promotion){
+              return _.findWhere(storePromotions, {id:promotion.id});
+            });
+          }
+
           product.Promotions.forEach(function(promo, index){
             if(promo.discountPg1 >= maxPromo){
               maxPromo = promo.discountPg1;

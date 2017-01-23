@@ -352,7 +352,10 @@ function ClientCreateCtrl(
           quotationService.setActiveQuotation(activeQuotation.id);
           localStorageService.remove('inCheckoutProcess');
           
-          if($location.search().checkoutProcess && $rootScope.activeQuotation.total){
+          if($location.search().checkoutProcess && 
+            $rootScope.activeQuotation.total && 
+            !$location.search().startQuotation
+          ){
             $location
               .path('/clients/profile/'+clientId)
               .search({
