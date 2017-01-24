@@ -116,15 +116,15 @@
           product.Price = product.Price - ( ( product.Price / 100) * maxDiscount );
         }
         else if($rootScope.activeStore.code){
-          var storeDiscountKey = 'discount-' + $rootScope.activeStore.code;
-          var maxDiscount = product[storeDiscountKey] || 0;
-          product.maxDiscount = maxDiscount;
-          product.priceBefore = product.Price;
-          product.Price = product.Price - ( ( product.Price / 100) * maxDiscount );
+          var storeDiscountPriceKey = 'discountPrice_' + $rootScope.activeStore.code;
+          if(product.Price !== product[storeDiscountPriceKey] ){
+            product.priceBefore = product.Price;
+          }
+          product.Price = product[storeDiscountPriceKey] || product.Price;
         }
         else{
           product.maxDiscount = 0;
-          product.pricebefore = product.Price;
+          //product.pricebefore = product.Price;
         }
         return product;
       }
@@ -204,22 +204,9 @@
 
       function formatProducts(products){
         var deferred = $q.defer();
-        //var activeStoreId = localStorageService.get('activeStore');
         var formatted = products.map(formatProduct);
         deferred.resolve(formatted);
-        /*
-        storeService.getPromosByStore(activeStoreId)
-          .then(function(res){
-            storePromotions = res.data;
-            var formatted = products.map(formatProduct);
-            deferred.resolve(formatted);
-          })
-          .catch(function(err){
-            deferred.reject(err);
-          });
-        */
         return deferred.promise;
-        //return formatted;
       }
 
       //CATEGORIES
