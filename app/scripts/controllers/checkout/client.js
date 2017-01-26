@@ -43,6 +43,10 @@ function CheckoutClientCtrl(
           .search({stockAlert:true});
       }
 
+      if(!vm.quotation.Details || vm.quotation.Details.length === 0){
+        $location.path('/quotations/edit/' + vm.quotation.id);
+      }
+
       if(vm.quotation.Order){
         $location.path('/checkout/order/' + vm.quotation.Order.id);
       }
@@ -66,6 +70,11 @@ function CheckoutClientCtrl(
 
 
   function continueProcess(){
+    if(!vm.quotation.Details || vm.quotation.Details.length === 0){
+      dialogService.showDialog('No hay aritculos en esta cotización');
+      return;
+    }
+    
     if(vm.quotation.Address || vm.quotation.immediateDelivery){
       vm.isLoading = true;
       var params = angular.copy(vm.quotation);

@@ -434,16 +434,15 @@ function QuotationsEditCtrl(
       quotationService.showStockAlert();
       return;
     }
+
+    if(!vm.quotation.Details || vm.quotation.Details.length === 0){
+      dialogService.showDialog('No hay aritculos en esta cotización');
+      return;
+    }
+
     if(!vm.quotation.Order){
       vm.isLoading = true;
 
-      /*
-      if(params.Details){
-        params.Details = params.Details.map(function(detail){
-          detail.Product = detail.Product.id;
-          return detail;
-        });
-      }*/
       //Not updating Details, not necessary
       var params = angular.copy(vm.quotation);
       delete params.Details;
