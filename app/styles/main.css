@@ -3457,6 +3457,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-size: 18px;
   margin-right: 10px;
 }
+.pay-method-wrap .method-block ul li .remark{
+  color: #33BA2C;
+}
 .pay-method-wrap .method-block ul li span{font-size: 14px;}
 
 .pay-method-wrap .method-block .method-text{

@@ -18,7 +18,9 @@
           ng-value="method"
           class="md-primary">
 
-          <strong>{{method.label}}</strong>
+          <strong ng-class="{'remark': method.type === vm.CLIENT_BALANCE_TYPE}">
+            {{method.label}}
+          </strong>
         </md-radio-button>
         <span
           ng-if="!method.msi && method.type != 'single-payment-terminal' "

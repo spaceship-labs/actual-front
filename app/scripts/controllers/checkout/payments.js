@@ -59,6 +59,7 @@ function CheckoutPaymentsCtrl(
     payments: [],
     sapLogs: [],
     paymentMethodsGroups: [],
+    CLIENT_BALANCE_TYPE: paymentService.clientBalanceType,
     roundCurrency: commonService.roundCurrency
   });
 
