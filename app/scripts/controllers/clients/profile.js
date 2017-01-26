@@ -242,6 +242,7 @@ function ClientProfileCtrl(
       ).then(function(res){
         console.log(res);
         contact.isLoading = false;
+        contact.editEnabled = false;
         dialogService.showDialog('Dirección de entrega actualizada', checkoutService.returnToCheckout);
       })
       .catch(function(err){
