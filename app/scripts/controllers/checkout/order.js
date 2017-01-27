@@ -64,7 +64,7 @@ function CheckoutOrderCtrl(
       vm.series = groupSeries(vm.order.OrdersSap);
 
       vm.isLoading = false;
-      
+
       quotationService.populateDetailsWithProducts(vm.order)
         .then(function(details){
           vm.order.Details = details;
@@ -88,9 +88,6 @@ function CheckoutOrderCtrl(
     invoiceService.find($routeParams.id).then(function(invoices){
       vm.invoiceExists = invoices.length > 0;
     });
-
-    generateInvoice();
-
   }
 
   function calculateEwalletAmounts(order){
@@ -111,7 +108,7 @@ function CheckoutOrderCtrl(
       })
       .catch(function(err){
         console.log(err);
-      });    
+      });
   }
 
 
@@ -171,9 +168,6 @@ function CheckoutOrderCtrl(
         vm.invoiceExists = true;
         dialogService.showDialog('Factura creada exitosamente');
         console.log('factura created response', res);
-      })
-      .then(function() {
-        sendInvoice();
       })
       .catch(function(err) {
         vm.isLoading = false;
