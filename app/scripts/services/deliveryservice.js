@@ -24,6 +24,7 @@
     		}
     		return detailProductId === productId;
     	});
+
     	for(var i = 0; i<deliveries.length; i++){
     		for(var j=0; j<details.length; j++){
     			if(
@@ -34,6 +35,7 @@
     			}
     		}
     	}
+    	
     	return deliveries;
     }
 

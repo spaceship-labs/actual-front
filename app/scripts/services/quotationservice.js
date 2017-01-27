@@ -394,11 +394,15 @@
           details.forEach(function(detail){
             filters = filters.map(function(filter){
               filter.Values = [];
-              detail.Product.FilterValues.forEach(function(value){
-                if(value.Filter === filter.id){
-                  filter.Values.push(value);
-                }
-              });
+              
+              if(detail.Product && detail.Product.FilterValues){
+                detail.Product.FilterValues.forEach(function(value){
+                  if(value.Filter === filter.id){
+                    filter.Values.push(value);
+                  }
+                });
+              }
+              
               return filter;
             });
 

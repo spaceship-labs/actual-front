@@ -98,9 +98,7 @@ function QuotationsEditCtrl(
           vm.status = 'Cerrada';
         }
 
-        //if(options.relaod){
         loadPaymentMethods();
-        //}
 
         return quotationService.populateDetailsWithProducts(vm.quotation);
       })
@@ -138,14 +136,6 @@ function QuotationsEditCtrl(
         vm.promotionPackages = results.map(function(r){
           return r.data;
         });
-
-        /*
-        if(options.reload){
-          var deferred = $q.defer();
-          deferred.resolve(false);
-          return deferred.promise;
-        }*/
-
         return quotationService.getRecords(vm.quotation.id);
       })
       .then(function(result){
