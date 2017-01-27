@@ -79,12 +79,12 @@ function QuotationsEditCtrl(
 
   function init(quotationId, options){
     vm.activeStore       = $rootScope.activeStore;
-    vm.brokers           = $rootScope.brokers;
     vm.promotionPackages = [];
     options              = options || {};
 
     vm.isLoading = true;
     loadWarehouses();
+    loadBrokers();
     showAlerts();
 
     quotationService.getById(quotationId)
@@ -153,6 +153,16 @@ function QuotationsEditCtrl(
         $log.error(err);
       });
 
+  }
+
+  function loadBrokers(){
+    userService.getBrokers()
+      .then(function(brokers) {
+        vm.brokers = brokers;
+      })
+      .catch(function(err){
+        console.log(err);
+      });    
   }
 
   function showAlerts(){

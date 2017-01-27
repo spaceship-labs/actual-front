@@ -192,15 +192,13 @@
       $q.all([
         loadActiveQuotation(),
         loadActiveStore(),
-        loadBrokers(),
         loadSiteInfo()
       ])
       .then(function(data){
         var mainData = {
           activeQuotation: data[0],
           activeStore: data[1],
-          brokers: data[2],
-          site: data[3]
+          site: data[2]
         };
         $rootScope.$emit('mainDataLoaded', mainData);
         $rootScope.isMainDataLoaded = true;
@@ -295,6 +293,9 @@
 
     function togglePointerSidenav(){
       $mdSidenav('right').toggle();
+      if($mdSidenav('right').isOpen() && !vm.brokers){
+        loadBrokers();
+      }
     }
 
     function getCategoryIcon(handle){
