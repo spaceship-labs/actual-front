@@ -23,6 +23,7 @@ body{font-family: 'Helvetica Neue', sans-serif;}
 */
 body{
   font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+  min-height: 560px;
   /*overflow-x:hidden;*/
 }
 body,

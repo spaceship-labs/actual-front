@@ -309,8 +309,8 @@
         authService.runPolicies();
       }
 
-      vm.menuCategoriesOn = false;
       loadMainData();
+      vm.menuCategoriesOn = false;
       vm.menuCategories.forEach(function(category){
         category.isActive = false;
       });
