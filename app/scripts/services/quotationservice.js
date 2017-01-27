@@ -83,9 +83,9 @@
         return api.$http.post(url, params);
       }
 
-      function getById(id){
+      function getById(id, params){
         var url = '/quotation/findbyid/' + id;
-        return api.$http.post(url);
+        return api.$http.post(url, params);
       }
 
 
@@ -212,7 +212,8 @@
         return items;
       }
 
-      function populateDetailsWithProducts(quotation){
+      function populateDetailsWithProducts(quotation, options){
+        options = options || {};
         var deferred = $q.defer();
         var productsIds = [];
         if(quotation){
@@ -221,7 +222,7 @@
           });
           var params = {
             filters: {id: productsIds},
-            populate_fields: ['FilterValues','Promotions']
+            populate_fields: options.populate || []
           };
           var page = 1;
           productService.getList(page,params)

@@ -51,25 +51,20 @@ function CheckoutOrderCtrl(
 
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
+      loadOrderQuotationRecords(vm.order);
+      calculateEwalletAmounts(vm.order);
 
       vm.sapLogs = [];
       if(vm.order.SapOrderConnectionLog){
         vm.sapLogs.push(vm.order.SapOrderConnectionLog);
       }
 
-
       vm.order.Details = vm.order.Details || [];
       vm.order.Address = orderService.formatAddress(vm.order.Address);
       vm.series = groupSeries(vm.order.OrdersSap);
 
-      vm.ewallet = {
-        positive: orderService.getEwalletAmmount(vm.order.EwalletRecords, EWALLET_POSITIVE),
-        negative: orderService.getEwalletAmmount(vm.order.EwalletRecords,EWALLET_NEGATIVE),
-      };
-      vm.ewallet.before = vm.order.Client.ewallet + vm.ewallet.negative - vm.ewallet.positive;
-      vm.ewallet.current = vm.order.Client.ewallet;
-
       vm.isLoading = false;
+      
       quotationService.populateDetailsWithProducts(vm.order)
         .then(function(details){
           vm.order.Details = details;
@@ -84,15 +79,6 @@ function CheckoutOrderCtrl(
           console.log(err);
         });
 
-      quotationService.getRecords(vm.order.Quotation)
-        .then(function(result){
-          console.log(result);
-          vm.records = result.data;
-          vm.isLoadingRecords = false;
-        })
-        .catch(function(err){
-          console.log(err);
-        });
     })
     .catch(function(err){
       console.log(err);
@@ -105,6 +91,27 @@ function CheckoutOrderCtrl(
 
     generateInvoice();
 
+  }
+
+  function calculateEwalletAmounts(order){
+    vm.ewallet = {
+      positive: orderService.getEwalletAmmount(order.EwalletRecords, EWALLET_POSITIVE),
+      negative: orderService.getEwalletAmmount(order.EwalletRecords,EWALLET_NEGATIVE),
+    };
+    vm.ewallet.before = order.Client.ewallet + vm.ewallet.negative - vm.ewallet.positive;
+    vm.ewallet.current = order.Client.ewallet;
+  }
+
+  function loadOrderQuotationRecords(order){
+    quotationService.getRecords(order.Quotation)
+      .then(function(result){
+        console.log(result);
+        vm.records = result.data;
+        vm.isLoadingRecords = false;
+      })
+      .catch(function(err){
+        console.log(err);
+      });    
   }
 
 

@@ -87,7 +87,7 @@ function CheckoutClientCtrl(
     
     if(vm.quotation.Address || vm.quotation.immediateDelivery){
       vm.isLoading = true;
-      var params = angular.copy(vm.quotation);
+      var params = {Address: vm.quotation.Address};
       quotationService.update(vm.quotation.id, params).then(function(res){
         vm.isLoading = false;
         $location.path('/checkout/paymentmethod/' + vm.quotation.id);

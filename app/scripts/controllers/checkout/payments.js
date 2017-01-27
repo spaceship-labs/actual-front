@@ -78,13 +78,18 @@ function CheckoutPaymentsCtrl(
     animateProgress();
     vm.isLoading = true;
 
-    quotationService.getById($routeParams.id).then(function(res){
+    quotationService.getById($routeParams.id, {payments:true}).then(function(res){
         vm.quotation = res.data;
         loadSapLogs(vm.quotation.id);
 
-        return quotationService.validateQuotationStockById(vm.quotation.id); 
+        return $q.all([
+          quotationService.validateQuotationStockById(vm.quotation.id),
+          loadPaymentMethods()
+        ]);
       })
-      .then(function(isValidStock){
+      .then(function(result){
+        var isValidStock = result[0]; 
+
         if( !isValidStock){
           $location.path('/quotations/edit/' + vm.quotation.id)
             .search({stockAlert:true});
@@ -103,9 +108,6 @@ function CheckoutPaymentsCtrl(
         }
         vm.quotation.ammountPaid = vm.quotation.ammountPaid || 0;
 
-        return loadPaymentMethods();
-      })
-      .then(function(){
         vm.isLoading = false;
       })
       .catch(function(err){

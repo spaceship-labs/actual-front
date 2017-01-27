@@ -100,7 +100,11 @@ function QuotationsEditCtrl(
 
         loadPaymentMethods();
 
-        return quotationService.populateDetailsWithProducts(vm.quotation);
+        return quotationService.populateDetailsWithProducts(
+          vm.quotation,{
+            populate: ['FilterValues','Promotions']
+          }
+        );
       })
       .then(function(details){
         vm.quotation.Details = details;
@@ -108,7 +112,6 @@ function QuotationsEditCtrl(
       })
       .then(function(detailsWithFilters){
         vm.quotation.Details = detailsWithFilters;
-        vm.isLoadingRecords = true;
         return quotationService.getCurrentStock(vm.quotation.id);       
       })
       .then(function(response){
@@ -136,6 +139,7 @@ function QuotationsEditCtrl(
         vm.promotionPackages = results.map(function(r){
           return r.data;
         });
+        vm.isLoadingRecords = true;
         return quotationService.getRecords(vm.quotation.id);
       })
       .then(function(result){
