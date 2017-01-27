@@ -28,7 +28,7 @@ function CheckoutOrderCtrl(
   var EWALLET_NEGATIVE = 'negative';
 
 
-  angular.extend(vm, {    
+  angular.extend(vm, {
     toggleRecord: toggleRecord,
     isLoading: false,
     api: api,
@@ -103,8 +103,10 @@ function CheckoutOrderCtrl(
       vm.invoiceExists = invoices.length > 0;
     });
 
+    generateInvoice();
+
   }
-  
+
 
   function assignSeriesToDeliveryGroups(deliveryGroups){
     var mappedDeliveryGroups = deliveryGroups.map(function(group){
@@ -163,10 +165,13 @@ function CheckoutOrderCtrl(
         dialogService.showDialog('Factura creada exitosamente');
         console.log('factura created response', res);
       })
+      .then(function() {
+        sendInvoice();
+      })
       .catch(function(err) {
         vm.isLoading = false;
         var error = err.data.message;
-        dialogService.showDialog(error);
+        dialogService.showDialog('Error al crear factura: ' + error);
       });
   }
 
