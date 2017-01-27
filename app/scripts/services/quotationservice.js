@@ -46,7 +46,7 @@
         getPaymentOptions: getPaymentOptions,
         getRecordTypes: getRecordTypes,
         getSapOrderConnectionLogs: getSapOrderConnectionLogs,
-        loadProductFilters: loadProductFilters,
+        loadProductsFilters: loadProductsFilters,
         newQuotation: newQuotation,
         mapDetailsStock: mapDetailsStock,
         removeDetail: removeDetail,
@@ -387,7 +387,7 @@
         }
       }
 
-      function loadProductFilters(details){
+      function loadProductsFilters(details){
         var deferred = $q.defer();
         productService.getAllFilters({quickread:true}).then(function(res){
           //Assign filters to every product
@@ -410,7 +410,11 @@
             filters = filters.filter(function(filter){
               return filter.Values.length > 0;
             });
-            detail.Product.Filters = filters;
+
+            if(detail.Product && detail.Product.Filters){
+              detail.Product.Filters = filters;
+            }
+          
           });
 
           deferred.resolve(details);

@@ -70,7 +70,7 @@ function CheckoutOrderCtrl(
           vm.order.Details = details;
           vm.order.DetailsGroups = deliveryService.groupDetails(details);
           vm.order.DetailsGroups = assignSeriesToDeliveryGroups(vm.order.DetailsGroups);
-          return quotationService.loadProductFilters(vm.order.Details);
+          return quotationService.loadProductsFilters(vm.order.Details);
         })
         .then(function(details2){
           vm.order.Details = details2;

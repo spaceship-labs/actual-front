@@ -302,11 +302,14 @@
       return categoriesService.getCategoryIcon(handle);
     }
 
-    $scope.$on('$routeChangeStart', function(next, current) {
     //$rootScope.$on("$locationChangeStart",function(event, next, current){
+    $scope.$on('$routeChangeStart', function(event, next, current) {
+      
+      if(current){
+        authService.runPolicies();
+      }
+
       vm.menuCategoriesOn = false;
-      authService.runPolicies();
-      loadSiteInfo();
       loadMainData();
       vm.menuCategories.forEach(function(category){
         category.isActive = false;

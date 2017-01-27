@@ -108,7 +108,7 @@ function QuotationsEditCtrl(
       })
       .then(function(details){
         vm.quotation.Details = details;
-        return quotationService.loadProductFilters(vm.quotation.Details);
+        return quotationService.loadProductsFilters(vm.quotation.Details);
       })
       .then(function(detailsWithFilters){
         vm.quotation.Details = detailsWithFilters;
