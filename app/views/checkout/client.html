@@ -104,7 +104,7 @@
                 </div>
                 <div  flex="80" class="delivery-option-data">
                   <h4>Nombre:
-                    <strong>{{contact.FirstName + ' ' + contact.LastName}}</strong>
+                    <strong>{{ vm.getContactName(contact) }}</strong>
                   </h4>
                   <ul>
                     <li><strong>Email: </strong>{{contact.E_Mail}}</li>
@@ -117,6 +117,7 @@
                     <li><strong>Ciudad: </strong>{{contact.U_Ciudad}}</li>
                     <li><strong>Estado: </strong>{{contact.U_Estado}}</li>
                     <li><strong>C.P.: </strong>{{contact.U_CP}}</li>
+                    <li><strong>Calle: </strong>{{contact.Address}}</li>
                     <li><strong>Entre calle: </strong>{{contact.U_Entrecalle}}</li>
                     <li><strong>Y calle: </strong>{{contact.U_Ycalle}}</li>
                     <li><strong>Referencias: </strong>{{contact.U_Notes1}}</li>

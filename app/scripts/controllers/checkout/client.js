@@ -26,6 +26,7 @@ function CheckoutClientCtrl(
   var vm = this;
   angular.extend(vm,{
     continueProcess: continueProcess,
+    getContactName: getContactName,
     isClientFiscalDataValid: clientService.isClientFiscalDataValid
   });
 
@@ -68,6 +69,15 @@ function CheckoutClientCtrl(
     });
   }
 
+  function getContactName(contact){
+    var name = '';
+    if(contact.FirstName || contact.LastName){
+      name = contact.FirstName + ' ' + contact.LastName;
+    }else{
+      name = contact.Name
+    }
+    return name;
+  }
 
   function continueProcess(){
     if(!vm.quotation.Details || vm.quotation.Details.length === 0){

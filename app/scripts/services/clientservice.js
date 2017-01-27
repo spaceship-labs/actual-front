@@ -87,7 +87,7 @@
 
       function buildAddressStringByContact(contact){
         var address = '';
-        address += 'Calle: ' + contact.address;
+        address += 'Calle: ' + contact.Address;
         address += contact.U_Noexterior ? ', no. exterior: '+ contact.U_Noexterior : null;
         address += contact.U_Nointerior ? ', no. interior: '+ contact.U_Nointerior : null;
         address += contact.U_Colonia ? ', colonia: '+ contact.U_Colonia : null;

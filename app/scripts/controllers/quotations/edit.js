@@ -440,6 +440,10 @@ function QuotationsEditCtrl(
       return;
     }
 
+    if(  quotationHasImmediateDeliveryProducts(vm.quotation) ){
+      dialogService.showDialog('Esta cotización contiene articulos de entrega inmediata');
+    }
+
     if(!vm.quotation.Order){
       vm.isLoading = true;
 
@@ -478,6 +482,12 @@ function QuotationsEditCtrl(
     }else{
       dialogService.showDialog('Esta cotización ya tiene un pedido asignado');
     }
+  }
+
+  function quotationHasImmediateDeliveryProducts(quotation){
+    return _.some(quotation.Details, function(detail){
+      return detail.immediateDelivery;
+    });
   }
 
   function getUnitPriceWithDiscount(unitPrice,discountPercent){
