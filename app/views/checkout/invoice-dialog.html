@@ -1,0 +1,36 @@
+<md-dialog class="options-alert-dialog" aria-label="Invoice dialog"  ng-cloak>
+  <div class="options-alert-inner">
+		
+		<a 
+			href="#" 
+			ng-click="cancel()"
+			class="options-alert-cancel">
+			x
+		</a>
+
+		<h2>Continuar al pago</h2>
+		
+		<div 
+			class="btns-section" 
+			layout="row"
+			layout-align="space-between start">
+			<div flex class="btns-section-block">
+				<a 
+					href="#" 
+					ng-click="continue()"
+					class="action-btn action-btn-wide action-btn-inline action-btn-save ">
+						Continuar al pago
+				</a>
+			</div>
+			<div flex class="btns-section-block">
+				<a 
+					href="#" 
+					ng-click="modify()"
+					class="action-btn action-btn-wide action-btn-delete action-btn-inline">
+						Modificar datos de facturación
+				</a>
+			</div>
+		</div>
+
+	</div>
+</md-dialog>

@@ -57,6 +57,8 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   background: #000!important;
 }
 
+#main{min-height: 600px;}
+
 .loading-circle{min-height: 250px;}
 .loading-circle .progress-bar{
   text-align: center;
@@ -2153,27 +2155,27 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .cart-view .cart-item .stock-alert-content a i{font-size: 50px}
 
 /*---------------
-  #STOCK-ALERT-DIALOG
+  #OPTIONS-ALERT-DIALOG
 /*--------------*/
-.stock-alert-inner{
+.options-alert-inner{
   position: relative;
   padding: 20px 20px;
   max-width: 600px;
 }
-.stock-alert-dialog h2{margin-top: 0;}
-.stock-alert-dialog .btns-section{text-align: right;}
-.stock-alert-dialog .btns-section-block:first-child{
+.options-alert-dialog h2{margin-top: 0;}
+.options-alert-dialog .btns-section{text-align: right;}
+.options-alert-dialog .btns-section-block:first-child{
   margin-right: 20px;
   text-align: left;
 }
-.stock-alert-dialog .btns-section-block{text-align: right;}
-.stock-alert-dialog .btns-section-block p{
+.options-alert-dialog .btns-section-block{text-align: right;}
+.options-alert-dialog .btns-section-block p{
   /*font-style: italic;*/
   font-size: 13px;
 }
-.stock-alert-dialog .btns-section .action-btn-delete{background: #E2023F;}
-.stock-alert-dialog .btns-section .action-btn{margin: 0 0 4px;}
-.stock-alert-dialog .stock-alert-cancel{
+.options-alert-dialog .btns-section .action-btn-delete{background: #E2023F;}
+.options-alert-dialog .btns-section .action-btn{margin: 0 0 4px;}
+.options-alert-dialog .options-alert-cancel{
   border-radius: 50%;
   border: 2px solid #BABABA;
   color: #BABABA;
@@ -2186,6 +2188,11 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   top: 20px;
   vertical-align: middle;
   width: 25px;
+}
+
+.options-alert-dialog .btns-section .action-btn-wide{
+  min-width: 290px;
+  display: inline-block;
 }
 
 /*----------------/

@@ -14,9 +14,12 @@ function CheckoutClientCtrl(
   commonService, 
   clientService ,
   $timeout,
+  $q,
   $routeParams, 
   $rootScope, 
   $location,
+  $mdDialog,
+  $mdMedia,
   categoriesService, 
   productService, 
   quotationService, 
@@ -79,6 +82,30 @@ function CheckoutClientCtrl(
     return name;
   }
 
+  function showInvoiceDataAlert(ev){
+    var controller = InvoiceDialogController;
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));    
+    return $mdDialog.show({
+      controller: [
+        '$scope', 
+        '$mdDialog',
+        '$location',
+        'quotation',
+        'client',
+        controller
+      ],
+      templateUrl: 'views/checkout/invoice-dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen,
+      locals:{
+        quotation: vm.quotation,
+        client: vm.client
+      }
+    });
+  }  
+
   function continueProcess(){
     if(!vm.quotation.Details || vm.quotation.Details.length === 0){
       dialogService.showDialog('No hay aritculos en esta cotización');
@@ -86,16 +113,27 @@ function CheckoutClientCtrl(
     }
     
     if(vm.quotation.Address || vm.quotation.immediateDelivery){
-      vm.isLoading = true;
-      var params = {Address: vm.quotation.Address};
-      quotationService.update(vm.quotation.id, params).then(function(res){
-        vm.isLoading = false;
-        $location.path('/checkout/paymentmethod/' + vm.quotation.id);
-      })
-      .catch(function(err){
-        console.log(err);
-        dialogService.showDialog('Hubo un error: <br/>' + err);
-      });
+  
+      showInvoiceDataAlert()
+        .then(function(goToPayments){
+          if(!goToPayments){
+            return $q.reject();
+          }
+          vm.isLoading = true;
+          var params = {Address: vm.quotation.Address};
+          return quotationService.update(vm.quotation.id, params);
+        })
+        .then(function(res){
+          vm.isLoading = false;
+          $location.path('/checkout/paymentmethod/' + vm.quotation.id);
+        })
+        .catch(function(err){
+          console.log(err);
+          if(err && err.data){
+            dialogService.showDialog('Hubo un error: <br/>' + err);
+          }
+        });
+  
     }
     else{
       dialogService.showDialog('Asigna una dirección de envío',function(){

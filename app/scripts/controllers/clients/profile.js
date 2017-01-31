@@ -90,7 +90,7 @@ function ClientProfileCtrl(
     if($location.search().createdClient){
 
       dialogService.showDialog('Cliente registrado', function(){
-        if($rootScope.activeQuotation){
+        if($rootScope.activeQuotation && $location.search().checkoutProcess){
           return $location.path('/quotations/edit/' + $rootScope.activeQuotation.id);
         }
         checkoutService.returnToCheckout();
