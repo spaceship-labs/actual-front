@@ -170,7 +170,7 @@ function QuotationsEditCtrl(
       //dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
     }    
     if($location.search().createdClient){
-      dialogService.showDialog('Cliente registrado');
+      //dialogService.showDialog('Cliente registrado');
     }
     if($location.search().stockAlert){
       quotationService.showStockAlert();
