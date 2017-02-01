@@ -13,6 +13,7 @@
 
         // Base Url
         api.baseUrl = ENV.apiEndpoint;
+        //api.baseUrl = 'http://166.78.47.146';
         //api.baseUrl = 'http://localhost:1337';
 
         api.sample = $resource(api.baseUrl + 'sample/sample.json');

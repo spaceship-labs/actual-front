@@ -23,7 +23,7 @@ body{font-family: 'Helvetica Neue', sans-serif;}
 */
 body{
   font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
-  min-height: 560px;
+  min-height: 680px;
   /*overflow-x:hidden;*/
 }
 body,
@@ -57,7 +57,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   background: #000!important;
 }
 
-#main{min-height: 600px;}
+#main{min-height: 680px;}
 
 .loading-circle{min-height: 250px;}
 .loading-circle .progress-bar{
