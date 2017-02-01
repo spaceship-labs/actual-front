@@ -87,12 +87,14 @@
               ng-if="maxAmmount && maxAmmount >=0"
               type="text"
               max="{{maxAmmount}}"
+              pattern="[\d\.]*"
               ng-model="payment.ammount"
               class="with-maxammount"
               ng-currency
               >
             <input
               ng-if="!maxAmmount"
+              pattern="[\d\.]*"
               type="text"
               ng-currency
               ng-model="payment.ammount"
