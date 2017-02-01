@@ -36,6 +36,8 @@ function CheckoutClientCtrl(
   function init(){
     $location.search({});
     vm.isLoading = true;
+    vm.isLoadingClient = true;
+
     quotationService.getById($routeParams.id).then(function(res){
       vm.quotation = res.data;
       vm.isLoading = false;
@@ -59,6 +61,8 @@ function CheckoutClientCtrl(
         clientService.getById(vm.quotation.Client.id)
           .then(function(res){
             vm.client = res.data;
+            vm.isLoadingClient = false;
+
             vm.contacts = vm.client.Contacts.map(function(contact){
               contact.completeAdrress = clientService.buildAddressStringByContact(contact);
               return contact;
@@ -66,6 +70,10 @@ function CheckoutClientCtrl(
             if(!vm.quotation.Address && vm.contacts.length > 0){
               vm.quotation.Address = vm.contacts[0].id;
             }            
+          })
+          .catch(function(err){
+            vm.isLoadingClient = false;
+            dialogService.showDialog('Hubo un error: '+ (err.data || err) );
           });
       }
       

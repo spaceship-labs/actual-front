@@ -175,6 +175,8 @@
         <input 
           type="submit" 
           value="CONTINUAR" 
+          ng-disabled="vm.isLoadingClient"
+          ng-class="{'cart-view-btn-disabled' : vm.isLoadingClient }"
           ng-click="vm.continueProcess()" 
           class="cart-view-btn"
           >
