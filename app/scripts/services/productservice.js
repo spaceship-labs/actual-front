@@ -83,7 +83,8 @@
 
 
       function formatProduct(product){
-        product.Name = product.Name || capitalizeFirstLetter(product.ItemName);
+        product.Name = capitalizeFirstLetter(product.ItemName);
+        //product.Name = product.Name || capitalizeFirstLetter(product.ItemName);
         /*
         if( product.Name && isUpperCase(product.Name) ) {
           product.Name = capitalizeFirstLetter(product.ItemName);
