@@ -40,6 +40,17 @@ function CheckoutOrderCtrl(
     calculateBalance: orderService.calculateBalance
   });
 
+  function showImmediateDeliveryDialog(order){
+    if(order.Details){
+      var hasImmediateDelivery = order.Details.some(function(detail){
+        return detail.immediateDelivery;
+      });
+      if(hasImmediateDelivery){
+        dialogService.showDialog('Favor de entregarle al cliente los artículos que se llevara de la tienda por sus medios');
+      }
+    }
+  }
+
   function init(){
     //vm.isLoading = false;
     vm.isLoading = true;
@@ -51,6 +62,9 @@ function CheckoutOrderCtrl(
 
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
+
+      showImmediateDeliveryDialog(vm.order);
+
       loadOrderQuotationRecords(vm.order);
       calculateEwalletAmounts(vm.order);
 
