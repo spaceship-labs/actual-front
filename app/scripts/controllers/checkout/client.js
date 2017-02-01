@@ -90,6 +90,10 @@ function CheckoutClientCtrl(
     return name;
   }
 
+  function findContactById(id){
+    return _.findWhere(vm.contacts, {id: id});
+  }
+
   function showInvoiceDataAlert(ev){
     var controller = InvoiceDialogController;
     var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));    
@@ -119,8 +123,23 @@ function CheckoutClientCtrl(
       dialogService.showDialog('No hay aritculos en esta cotización');
       return;
     }
+
+    if(vm.quotation.Address && !vm.quotation.immediateDelivery){
+      var selectedContact = findContactById(vm.quotation.Address);
+      console.log('vm.quotation.Address', selectedContact)
+      if(!selectedContact.Address){
+        dialogService.showDialog('Agrega los datos de envio',function(){
+          $location.path('/clients/profile/' + vm.quotation.Client.id)
+            .search({
+              activeTab:3,
+              checkoutProcess: vm.quotation.id
+            });
+        });
+        return;
+      }
+    }
     
-    if(vm.quotation.Address || vm.quotation.immediateDelivery){
+    if( vm.quotation.Address || vm.quotation.immediateDelivery){
   
       showInvoiceDataAlert()
         .then(function(goToPayments){
@@ -143,6 +162,7 @@ function CheckoutClientCtrl(
         });
   
     }
+
     else{
       dialogService.showDialog('Asigna una dirección de envío',function(){
         $location.path('/clients/profile/' + vm.quotation.Client.id)

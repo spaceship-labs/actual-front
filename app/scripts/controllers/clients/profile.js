@@ -156,6 +156,17 @@ function ClientProfileCtrl(
   function formatClient(client){
     client.Birthdate = client.Birthdate  ? client.Birthdate : new Date();
     client.FirstName = client.FirstName || angular.copy(client.CardName);
+
+    if(client.Contacts){
+      client.Contacts = client.Contacts.map(function(contact){
+        if(!contact.FirstName){
+          contact.FirstName = contact.Name;
+        }
+        return contact;
+      });
+    }
+
+
     vm.filtersQuotations = {Client: client.id};
     vm.filtersOrders = {Client: client.id};
     return client;
