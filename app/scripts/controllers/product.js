@@ -30,7 +30,8 @@ function ProductCtrl(
   deliveryService,
   cartService,
   commonService,
-  categoriesService
+  categoriesService,
+  dialogService
 ) {
   var vm = this;
   var activeStoreId = localStorageService.get('activeStore'); 
@@ -73,7 +74,12 @@ function ProductCtrl(
 
     productService.getById(productId)
       .then(function(res){
-        return productService.formatSingleProduct(res.data.data);
+        var productFound = res.data.data;
+        if(!productFound || !productFound.ItemCode){
+          dialogService.showDialog('No se encontro el articulo');
+        }
+
+        return productService.formatSingleProduct(productFound);
       })
       .then(function(fProduct){
         vm.product = fProduct;
@@ -292,7 +298,8 @@ ProductCtrl.$inject = [
   'deliveryService',
   'cartService',
   'commonService',
-  'categoriesService'
+  'categoriesService',
+  'dialogService'
 ];
 /*
 angular.element(document).ready(function() {
