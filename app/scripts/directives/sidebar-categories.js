@@ -59,7 +59,8 @@ function SidebarCategories(
         }
       });
 
-      var mainDataListener = $rootScope.$on('mainDataLoaded', function(e, mainData){
+      var mainDataListener = function(){};
+      mainDataListener = $rootScope.$on('mainDataLoaded', function(e, mainData){
         $scope.activeStore = mainData.activeStore;
         $scope.storeCode = $scope.activeStore.code;
       });
