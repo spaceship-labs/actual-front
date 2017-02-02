@@ -2409,6 +2409,11 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .add-quotation .searcher-wrapper input[type="search"]{
   padding-left: 36px;
 }
+.add-quotation md-autocomplete{min-width: 420px;}
+.md-autocomplete-suggestions .client-found{
+  font-size: 12px;
+  line-height: 1.2;
+}
 
 /*----------------/
   #FORM-VIEW
@@ -2432,6 +2437,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .form-view-btns .form-view-btn + .form-view-btn{
   margin-left: 16px;
 }
+.form-view-btns .form-view-btn{min-width: 160px;}
 .form-view hr{
   border: 0;
   background: #000;

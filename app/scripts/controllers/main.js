@@ -182,6 +182,7 @@
           activeStore: data[1],
           site: data[2]
         };
+        console.log('$scope.mainData', $scope.mainData);
         $rootScope.$emit('mainDataLoaded', $scope.mainData);
         $rootScope.isMainDataLoaded = true;
         console.log('termino main data', new Date());
@@ -298,6 +299,7 @@
         console.log('loadActiveQuotation change page', new Date());
         loadActiveQuotation()
           .then(function(){
+            console.log('scope.mainData', $scope.mainData);
             $scope.mainData.activeQuotation = $rootScope.activeQuotation;
             $rootScope.$emit('mainDataLoaded', $scope.mainData);
             $rootScope.isMainDataLoaded = true;

@@ -42,7 +42,7 @@
               md-min-length="0"
               placeholder="Buscar cliente">
             <md-item-template>
-              <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.CardName}} | {{item.CardCode}}</span>
+              <span class="client-found" md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.CardName}} | {{item.CardCode}} | {{item.E_Mail}}</span>
             </md-item-template>
             <md-not-found>
               No se encontro "{{vm.searchText}}".
