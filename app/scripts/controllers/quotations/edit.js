@@ -445,7 +445,7 @@ function QuotationsEditCtrl(
     }
 
     if(  quotationHasImmediateDeliveryProducts(vm.quotation) ){
-      dialogService.showDialog('Esta cotización contiene articulos de entrega inmediata');
+      dialogService.showDialog('Has elegido un artículo de "entrega en tienda", recuerda que el cliente se lo llevara por sus medios de la tienda al finalizar la orden de compra');
     }
 
     if(!vm.quotation.Order){
