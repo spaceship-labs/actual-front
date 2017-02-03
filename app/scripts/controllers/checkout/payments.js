@@ -229,7 +229,7 @@ function CheckoutPaymentsCtrl(
   function updateVMQuoatation(newQuotation){
     vm.quotation.ammountPaid = newQuotation.ammountPaid;
     vm.quotation.paymentGroup = newQuotation.paymentGroup;
-    vm.quotation.Client = newQuotation.Client || vm.quotation.Client;            
+    //vm.quotation.Client = newQuotation.Client || vm.quotation.Client;            
     vm.quotation = setQuotationTotalsByGroup(vm.quotation);
     delete vm.activeMethod;
   }
