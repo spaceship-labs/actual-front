@@ -1289,6 +1289,7 @@ md-backdrop.md-sidenav-backdrop{
 }
 .listing-product .listing-product-gallery{
   min-height: 230px;
+  text-align: center;
 }
 .listing-product .listing-product-gallery .slick-slider{
   min-height: 200px;

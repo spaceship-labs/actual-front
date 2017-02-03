@@ -23,24 +23,26 @@ angular.module('dashexampleApp')
           scope.imageSizeIndexIcon = 10;
           scope.imageSize = api.imageSizes.gallery[scope.imageSizeIndexGallery];
 
+          //Adding icon as gallery first image
+          if(scope.product.icons[scope.imageSizeIndexIcon]){
+            scope.images.push(scope.product.icons[0]);
+          }else{
+            scope.images.push(scope.product.icons[0]);
+          }
+
+          if(scope.product.files){
+            scope.imageSize = '';
+            scope.product.files.forEach(function(img){
+              scope.images.push({
+                url: api.baseUrl + '/uploads/products/gallery/' + scope.imageSize + img.filename
+              });
+            });
+          }
+
+
           $timeout(function(){
             scope.areImagesLoaded = true;
 
-            //Adding icon as gallery first image
-            if(scope.product.icons[scope.imageSizeIndexIcon]){
-              scope.images.push(scope.product.icons[0]);
-            }else{
-              scope.images.push(scope.product.icons[0]);
-            }
-
-            if(scope.product.files){
-              scope.imageSize = '';
-              scope.product.files.forEach(function(img){
-                scope.images.push({
-                  url: api.baseUrl + '/uploads/products/gallery/' + scope.imageSize + img.filename
-                });
-              });
-            }
           },500);
         };
 
