@@ -310,7 +310,7 @@ function CheckoutPaymentsCtrl(
           console.log(err);
           vm.isLoadingPayments = false;
           vm.isLoading = false;
-          dialogService.showDialog('Error: \n' + err.data);
+          dialogService.showDialog('Error: \n' + (err.data || err) );
         });
     }else{
       createOrder();
