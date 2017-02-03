@@ -2524,6 +2524,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 0 0 30px;
   border: 0;
 }
+.form-section-content-v3{
+  background: #F8F8F8;
+  border: none;
+}
 
 .form-section-content .checkbox-client-type{
   margin: 10px 0;

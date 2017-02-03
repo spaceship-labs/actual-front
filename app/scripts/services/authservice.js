@@ -124,6 +124,8 @@
         var currentPath = $location.path();
         var publicPaths = [
           '/',
+          '/forgot-password',
+          '/reset-password',
           '/politicas-de-entrega',
           '/politicas-de-garantia',
           '/politicas-de-almacenaje',

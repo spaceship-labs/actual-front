@@ -399,6 +399,16 @@ angular
         controller: 'ManualPinturaElectrostaticaCtrl',
         controllerAs: 'manual/pinturaElectrostatica'
       })
+      .when('/forgot-password', {
+        templateUrl: 'views/forgot-password.html',
+        controller: 'ForgotPasswordCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/reset-password', {
+        templateUrl: 'views/reset-password.html',
+        controller: 'ResetPasswordCtrl',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });
