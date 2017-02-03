@@ -58,17 +58,17 @@
       </div>
 
       <!--DATOS PERSONALES-->
-      <ng-include ng-show="vm.activeTab==0" src="'views/clients/create-personal.html'"></ng-include>
+      <ng-include ng-show="vm.activeTab === vm.PERSONAL_DATA_TAB" src="'views/clients/create-personal.html'"></ng-include>
       <!--END DATOS PERSONALES-->
 
 
       <!--DATOS DE FACTURACION-->
-      <ng-include ng-show="vm.activeTab==1" src="'views/clients/create-fiscal.html'"></ng-include>
+      <ng-include ng-show="vm.activeTab === vm.FISCAL_DATA_TAB" src="'views/clients/create-fiscal.html'"></ng-include>
       <!--END DATOS FACTURACION-->
 
 
       <!--DATOS DEL ENVIO-->
-      <ng-include ng-show="vm.activeTab==3" src="'views/clients/create-delivery.html'"></ng-include>
+      <ng-include ng-show="vm.activeTab === vm.DELIVERY_DATA_TAB" src="'views/clients/create-delivery.html'"></ng-include>
       <!--END DATOS DEL ENVIO-->
 
     </section>
@@ -78,13 +78,28 @@
       <button flex class="form-view-btn" ng-click="vm.clearTabFields()">
         Borrar todos los campos
       </button>
+
+
       <button
+        ng-if="vm.activeTab === vm.DELIVERY_DATA_TAB && !vm.showNewContact"
+        ng-click="vm.addContactForm()"        
+        class="form-view-btn form-view-btn-primary"
+        flex
+      >
+        Agregar nueva dirección
+        <i class="icon-cotizar add-icon"></i>
+      </button>
+
+      <button
+        ng-if="vm.activeTab !== vm.DELIVERY_DATA_TAB"
         ng-click="vm.create(vm.createPersonalForm, vm.createFiscalForm, vm.createDeliveryForm)"
         class="form-view-btn form-view-btn-primary"
         flex
       >
         Guardar información
       </button>
+    
+
     </div>
 
   </section>

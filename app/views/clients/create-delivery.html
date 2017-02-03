@@ -192,10 +192,9 @@
       href="#"
       flex="30"
       class="action-btn action-btn-save"
-      ng-if="!vm.showNewContact"
-      ng-click="vm.addContactForm()">
-      Agregar nueva dirección 
-      <i class="icon-cotizar add-icon"></i>
+      ng-click="vm.create(vm.createPersonalForm, vm.createFiscalForm, vm.createDeliveryForm)"      
+      >
+      Guardar información
     </a>
   </div>
 

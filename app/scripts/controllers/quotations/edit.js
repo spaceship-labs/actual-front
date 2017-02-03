@@ -456,7 +456,8 @@ function QuotationsEditCtrl(
     }
 
     if(  quotationHasImmediateDeliveryProducts(vm.quotation) ){
-      dialogService.showDialog('Has elegido un artículo de "entrega en tienda", recuerda que el cliente se lo llevara por sus medios de la tienda al finalizar la orden de compra');
+      var immediateDeliveryMsg = 'Has elegido un artículo de "entrega en tienda", recuerda que el cliente se lo llevara por sus medios de la tienda al finalizar la orden de compra';
+      dialogService.showDialog(immediateDeliveryMsg);
     }
 
     if(!vm.quotation.Order){

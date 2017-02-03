@@ -300,7 +300,7 @@ function ClientCreateCtrl(
       cancelProgressInterval();
 
       if( !validateAddedContactsIfNeeded(vm.contacts) ){
-        dialogService.showDialog('Agrega al menos una dirección de envio', function(){
+        dialogService.showDialog('Agregar direccion de envio', function(){
           vm.activeTab = 3;
         });
         return;
