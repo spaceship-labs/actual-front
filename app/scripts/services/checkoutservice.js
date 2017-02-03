@@ -87,6 +87,7 @@
         }
 
         var remaining = method.total - quotation.ammountPaid;
+        remaining = commonService.roundCurrency(remaining);
         var min = method.min || 0;
         return remaining >= min;
       }

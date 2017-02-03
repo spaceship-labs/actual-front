@@ -300,6 +300,7 @@
         loadActiveQuotation()
           .then(function(){
             console.log('scope.mainData', $scope.mainData);
+            $scope.mainData = $scope.mainData || {};
             $scope.mainData.activeQuotation = $rootScope.activeQuotation;
             $rootScope.$emit('mainDataLoaded', $scope.mainData);
             $rootScope.isMainDataLoaded = true;
