@@ -200,7 +200,7 @@
           vm.activeStore = activeStore;
           $rootScope.activeStore = activeStore;
           console.log('loadActiveStore end', new Date());
-          //$rootScope.$emit('activeStoreAssigned', activeStore);
+          $rootScope.$emit('activeStoreAssigned', activeStore);
           deferred.resolve(activeStore);
 
         })

@@ -10,8 +10,19 @@
 angular.module('dashexampleApp')
   .controller('SearchCtrl', SearchCtrl);
 
-function SearchCtrl($location, $timeout,$routeParams, $q ,productService, dialogService){
+function SearchCtrl(
+  $scope,
+  $rootScope,
+  $location, 
+  $timeout,
+  $routeParams, 
+  $q ,
+  productService, 
+  dialogService
+){
   var vm = this;
+  var mainDataListener = function(){};
+
   vm.loadMore = loadMore;
   vm.searchByFilters = searchByFilters;
   vm.toggleColorFilter = toggleColorFilter;
@@ -23,7 +34,15 @@ function SearchCtrl($location, $timeout,$routeParams, $q ,productService, dialog
   vm.searchValues = [];
   vm.removeSearchValue = removeSearchValue;
 
-  init();
+  vm.isLoading = true;
+
+  if($rootScope.activeStore){
+    init();
+  }else{
+    mainDataListener = $rootScope.$on('activeStoreAssigned', function(ev){
+      init();
+    });
+  }  
 
   function init(){
     var keywords = [''];
@@ -68,9 +87,11 @@ function SearchCtrl($location, $timeout,$routeParams, $q ,productService, dialog
       })
       .then(function(fProducts){
         vm.products = fProducts;
+        mainDataListener();
       })
       .catch(function(err){
         console.log(err);
+        mainDataListener();
       });
 
     }
@@ -160,9 +181,15 @@ function SearchCtrl($location, $timeout,$routeParams, $q ,productService, dialog
     );
   }
 
+  $scope.$on('$destroy', function(){
+    mainDataListener();
+  });
+
 }
 
 SearchCtrl.$inject = [
+  '$scope',
+  '$rootScope',
   '$location',
   '$timeout',
   '$routeParams',

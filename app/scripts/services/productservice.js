@@ -116,7 +116,7 @@
           product.priceBefore = product.Price;
           product.Price = product.Price - ( ( product.Price / 100) * maxDiscount );
         }
-        else if($rootScope.activeStore.code){
+        else if($rootScope.activeStore && $rootScope.activeStore.code){
           var storeDiscountPriceKey = 'discountPrice_' + $rootScope.activeStore.code;
           if(product.Price !== product[storeDiscountPriceKey] ){
             product.priceBefore = product.Price;
