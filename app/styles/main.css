@@ -2165,6 +2165,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   max-width: 600px;
 }
 .options-alert-dialog h2{margin-top: 0;}
+.options-alert-dialog h3{margin: 0 0 20px;}
 .options-alert-dialog .btns-section{text-align: right;}
 .options-alert-dialog .btns-section-block:first-child{
   margin-right: 20px;
