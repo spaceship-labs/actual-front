@@ -68,6 +68,7 @@ function QuotationsEditCtrl(
     showBigTicketDialog: showBigTicketDialog,
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     toggleRecord: toggleRecord,
+    deattachImage: deattachImage
   });
 
   if($rootScope.isMainDataLoaded){
@@ -335,6 +336,12 @@ function QuotationsEditCtrl(
 
   function attachImage(file){
     vm.newRecord.file = file;
+  }
+
+  function deattachImage(){
+    if(vm.newRecord){
+      delete vm.newRecord.file;
+    }
   }
 
   function addNewProduct(){

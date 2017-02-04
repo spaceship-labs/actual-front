@@ -73,7 +73,7 @@
           </div>
         </div>
         <p ng-show="vm.newRecord.file" class="note">
-          1 imagen a subir
+          1 imagen a subir <span>({{ (vm.newRecord.file.size / 1000) }} kb)</span>  | <a href="#" ng-click="vm.deattachImage()">Remover imagen</a>
         </p>
         <p class="note">Limite de tamaño para imagenes: 2mb</p>
 
