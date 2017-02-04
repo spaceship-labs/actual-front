@@ -19,7 +19,7 @@ angular.module('dashexampleApp')
         scope.images = [];
 
         scope.setUpImages = function(){
-          scope.imageSizeIndexGallery = 4;
+          scope.imageSizeIndexGallery = 2;
           scope.imageSizeIndexIcon = 10;
           scope.imageSize = api.imageSizes.gallery[scope.imageSizeIndexGallery];
 

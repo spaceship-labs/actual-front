@@ -20,7 +20,10 @@
 
           <div flex="30" class="input-element select-element-wrapper">
             <label><strong>Tipo de evento</strong></label>
-            <select class="select-element" ng-model="vm.newRecord.eventType">
+            <select 
+              required 
+              class="select-element" 
+              ng-model="vm.newRecord.eventType">
               <option ng-repeat="recordType in vm.recordTypes" ng-value="recordType">
                 {{recordType}}
               </option>
@@ -34,6 +37,7 @@
                 ng-if="!vm.isLoadingRecords" 
                 pikaday="vm.newRecord.date" 
                 readonly 
+                required 
                 type="text" 
                 on-select="onPikadaySelect(pikaday)"
               >
@@ -46,6 +50,7 @@
               <input
                 ng-if="!vm.isLoadingRecords" 
                 type="text" 
+                required
                 ui-timepicker 
                 ui-timepicker="vm.timePickerOptions"  
                 ng-model="vm.newRecord.time"
@@ -72,7 +77,7 @@
         </p>
         <p class="note">Limite de tamaño para imagenes: 2mb</p>
 
-        <div layout="row" layout-align="space-between center">
+        <div  ng-show="!vm.isLoadingRecords" layout="row" layout-align="space-between center">
           <div flex="60">
             <input
               type="submit"

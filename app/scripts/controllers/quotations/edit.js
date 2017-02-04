@@ -282,11 +282,16 @@ function QuotationsEditCtrl(
           }
           vm.newRecord = {};
           vm.isLoadingRecords = false;
+          dialogService.showDialog('Evento guardado');
         })
         .catch(function(err){
+          dialogService.showDialog('Hubo un error ' + (err.data || err) );
           $log.error(err);
           vm.isLoadingRecords = false;
         });
+
+    }else{
+      dialogService.showDialog('Datos incompletos, revisa los campos');
     }
   }
 

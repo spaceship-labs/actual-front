@@ -65,11 +65,12 @@ function CheckoutPaymentsCtrl(
 
   var EWALLET_TYPE = ewalletService.ewalletType;
   var CLIENT_BALANCE_TYPE = paymentService.clientBalanceType;
+  var mainDataListener = function(){};
 
   if($rootScope.isMainDataLoaded){
     init();
   }else{
-    var mainDataListener = $rootScope.$on('mainDataLoaded',function(e,data){
+    mainDataListener = $rootScope.$on('mainDataLoaded',function(e,data){
       init();
     });
   }

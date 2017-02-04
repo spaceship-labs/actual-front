@@ -94,7 +94,10 @@
         */
         if (product.icon_filename && product.icon_filename !== 'null') {
           product.icons = [
-            {url: api.baseUrl + '/uploads/products/' +  product.icon_filename, size:'default'}
+            {
+              url: api.baseUrl + '/uploads/products/' +  product.icon_filename, 
+              size:'default'
+            }
           ];
           api.imageSizes.avatar.forEach(function(size){
             product.icons.push({
