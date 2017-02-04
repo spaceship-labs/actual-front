@@ -57,7 +57,7 @@ function CheckoutOrderCtrl(
     vm.isLoadingRecords = true;
 
     if($location.search().orderCreated){
-      dialogService.showDialog('Pedido y factura creados');
+      dialogService.showDialog('Pedido creado');
     }
 
     orderService.getById($routeParams.id).then(function(res){

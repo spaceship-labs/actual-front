@@ -449,6 +449,37 @@ function QuotationsEditCtrl(
     return quotationService.isValidStock(details);    
   }
 
+  function showInvoiceDataAlertIfNeeded(ev){
+    var controller = InvoiceDialogController;
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')); 
+
+    if(!vm.quotation.immediateDelivery || !vm.quotation.Client){
+      var deferred = $q.defer();
+      deferred.resolve(true);
+      return  deferred.promise;
+    }
+
+    return $mdDialog.show({
+      controller: [
+        '$scope', 
+        '$mdDialog',
+        '$location',
+        'quotation',
+        'client',
+        controller
+      ],
+      templateUrl: 'views/checkout/invoice-dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen,
+      locals:{
+        quotation: vm.quotation,
+        client: vm.quotation.Client
+      }
+    });
+  }  
+
   function continueBuying(){
     if( !isValidStock(vm.quotation.Details) ){
       quotationService.showStockAlert();
@@ -460,34 +491,42 @@ function QuotationsEditCtrl(
       return;
     }
 
-    if(  quotationHasImmediateDeliveryProducts(vm.quotation) ){
-      var immediateDeliveryMsg = 'Has elegido un artículo de "entrega en tienda", recuerda que el cliente se lo llevara por sus medios de la tienda al finalizar la orden de compra';
-      dialogService.showDialog(immediateDeliveryMsg);
-    }
-
     if(!vm.quotation.Order){
-      vm.isLoading = true;
 
       //Not updating Details, not necessary
       var params = angular.copy(vm.quotation);
       delete params.Details;
 
-      quotationService.update(vm.quotation.id, params)
+
+      showInvoiceDataAlertIfNeeded()
+        .then(function(continueProcess){
+          if(!continueProcess){
+            return $q.reject();
+          }
+          vm.isLoading = true;
+          return quotationService.update(vm.quotation.id, params);
+        })
         .then(function(res){
           var quotationUpdated = res.data;
-          vm.isLoading = false;
+
+          if(  quotationHasImmediateDeliveryProducts(vm.quotation) ){
+            var immediateDeliveryMsg = 'Has elegido un artículo de "entrega en tienda", recuerda que el cliente se lo llevara por sus medios al finalizar la orden de compra';
+            dialogService.showDialog(immediateDeliveryMsg);
+          }
+
+
           if(vm.quotation.Client){
-            quotationService.setActiveQuotation(vm.quotation.id);
+            //quotationService.setActiveQuotation(vm.quotation.id);
             
             if(quotationUpdated.immediateDelivery){
               return $location.path('/checkout/paymentmethod/' + quotationUpdated.id);
             }
 
             $location.path('/checkout/client/' + vm.quotation.id);
-          
-          }else{
+          }
+          else{
             console.log('No hay cliente');
-            quotationService.setActiveQuotation(vm.quotation.id);
+            //quotationService.setActiveQuotation(vm.quotation.id);
             //localStorageService.set('inCheckoutProcess', true);
             $location.path('/continuequotation')
               .search({
@@ -495,6 +534,7 @@ function QuotationsEditCtrl(
                 goToCheckout:true
               });
           }
+          vm.isLoading = false;        
         })
         .catch(function(err){
           $log.error(err);
