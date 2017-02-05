@@ -311,7 +311,11 @@ function CheckoutPaymentsCtrl(
           console.log(err);
           vm.isLoadingPayments = false;
           vm.isLoading = false;
-          dialogService.showDialog('Error: \n' + (err.data || err) );
+          var error = err.data || err;
+          error = error ? err.toString() : '';
+          dialogService.showDialog('Hubo un error: ' + error );          
+          //
+          //dialogService.showDialog('Error: \n' + (err.data || err) );
         });
     }else{
       createOrder();
@@ -443,7 +447,8 @@ function CheckoutPaymentsCtrl(
           console.log('err', err);
           var errMsg = '';
           if(err){
-            errMsg = err.data || '';            
+            errMsg = err.data || err;
+            errMsg = errMsg ? err.toString() : '';
             dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo \n' + errMsg);
           }
           loadSapLogs(vm.quotation.id);

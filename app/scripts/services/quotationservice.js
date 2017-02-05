@@ -112,6 +112,11 @@
         return api.$http.post(url, params);
       }
 
+      function addMultipleDetails(quotationId, params){
+        var url = '/quotation/addmultipledetails/' + quotationId;
+        return api.$http.post(url, params);
+      }
+
       function removeDetail(id, quotationId){
         var url = '/quotation/removedetail/' + id  + '/' + quotationId;
         return api.$http.post(url);
@@ -325,7 +330,7 @@
           //Agregar al carrito
           addDetail(quotationId, detail)
             .then(function(res){
-              setActiveQuotation(quotationId);
+              //setActiveQuotation(quotationId);
               $location.path('/quotations/edit/' + quotationId);
             })
             .catch(function(err){
@@ -355,14 +360,13 @@
       function addMultipleProducts(products){
         var quotationId = localStorageService.get('quotation');
         if( quotationId ){
-          var detailsPromises = [];
-          products.forEach(function(product){
-            var detail = createDetailFromParams(product.id, product, quotationId);
-            detailsPromises.push(addDetail(quotationId, detail));
+          var detailsParams = products.map(function(product){
+            return createDetailFromParams(product.id, product, quotationId);
           });
-          $q.all(detailsPromises)
+
+          addMultipleDetails(quotationId, {Details: detailsParams})
             .then(function(details){
-              setActiveQuotation(quotationId);
+              //setActiveQuotation(quotationId);
               $location.path('/quotations/edit/' + quotationId);
             })
             .catch(function(err){

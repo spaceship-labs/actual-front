@@ -161,8 +161,10 @@ function QuotationsEditCtrl(
         vm.isLoadingRecords = false;
       })
       .catch(function(err){
-        dialogService.showDialog('Hubo un error: ' + (err.data || err) );
-        $log.error(err);
+        var error = err.data || err;
+        error = error ? err.toString() : '';
+        dialogService.showDialog('Hubo un error: ' + (error) );
+        $log.error(error);
       });
 
   }
