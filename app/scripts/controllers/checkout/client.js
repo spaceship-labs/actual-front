@@ -37,47 +37,48 @@ function CheckoutClientCtrl(
     $location.search({});
     vm.isLoading = true;
     vm.isLoadingClient = true;
+    
+    quotationService.getById($routeParams.id)
+      .then(function(res){
+        vm.quotation = res.data;
+        vm.isLoading = false;
+        return quotationService.validateQuotationStockById(vm.quotation.id); 
+      })
+      .then(function(isValidStock){
+        if( !isValidStock){
+          $location.path('/quotations/edit/' + vm.quotation.id)
+            .search({stockAlert:true});
+        }
 
-    quotationService.getById($routeParams.id).then(function(res){
-      vm.quotation = res.data;
-      vm.isLoading = false;
-      return quotationService.validateQuotationStockById(vm.quotation.id); 
-    })
-    .then(function(isValidStock){
-      if( !isValidStock){
-        $location.path('/quotations/edit/' + vm.quotation.id)
-          .search({stockAlert:true});
-      }
+        if(!vm.quotation.Details || vm.quotation.Details.length === 0){
+          $location.path('/quotations/edit/' + vm.quotation.id);
+        }
 
-      if(!vm.quotation.Details || vm.quotation.Details.length === 0){
-        $location.path('/quotations/edit/' + vm.quotation.id);
-      }
+        if(vm.quotation.Order){
+          $location.path('/checkout/order/' + vm.quotation.Order.id);
+        }
 
-      if(vm.quotation.Order){
-        $location.path('/checkout/order/' + vm.quotation.Order.id);
-      }
+        if(vm.quotation.Client){
+          clientService.getById(vm.quotation.Client.id)
+            .then(function(res){
+              vm.client = res.data;
+              vm.isLoadingClient = false;
 
-      if(vm.quotation.Client){
-        clientService.getById(vm.quotation.Client.id)
-          .then(function(res){
-            vm.client = res.data;
-            vm.isLoadingClient = false;
-
-            vm.contacts = vm.client.Contacts.map(function(contact){
-              contact.completeAdrress = clientService.buildAddressStringByContact(contact);
-              return contact;
+              vm.contacts = vm.client.Contacts.map(function(contact){
+                contact.completeAdrress = clientService.buildAddressStringByContact(contact);
+                return contact;
+              });
+              if(!vm.quotation.Address && vm.contacts.length > 0){
+                vm.quotation.Address = vm.contacts[0].id;
+              }            
+            })
+            .catch(function(err){
+              vm.isLoadingClient = false;
+              dialogService.showDialog('Hubo un error: '+ (err.data || err) );
             });
-            if(!vm.quotation.Address && vm.contacts.length > 0){
-              vm.quotation.Address = vm.contacts[0].id;
-            }            
-          })
-          .catch(function(err){
-            vm.isLoadingClient = false;
-            dialogService.showDialog('Hubo un error: '+ (err.data || err) );
-          });
-      }
-      
-    });
+        }
+        
+      });
   }
 
   function getContactName(contact){

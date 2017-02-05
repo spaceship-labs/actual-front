@@ -113,13 +113,13 @@
         "
         class="bottom-text"
       >
-        Paquete: {{ vm.getPromotionPackageById(detailGroup.PromotionPackageApplied).Name }}
+        Paquete: {{detailGroup.discountName}}
       </p>
       <div 
         ng-if="vm.appliesForPackageOrPromotionDiscount(detailGroup) == 'promoDiscount'"
       >
         <p class="bottom-text">
-          Promoción: {{detailGroup.Product.mainPromo.publicName}}
+          Promoción: {{detailGroup.discountName}}
         </p>
         <p class="bottom-text" ng-if="detailGroup.ewallet > 0">
           Beneficio monedero eléctronico: {{detailGroup.ewallet | currency}}

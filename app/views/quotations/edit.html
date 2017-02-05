@@ -185,11 +185,15 @@
             </a>
           </div>
 
-          <p class="cart-summary-note" ng-if="!vm.quotation.Client">
+          <p class="cart-summary-note" ng-show="vm.isValidatingStock && vm.quotation.Details">
+            Validando disponibilidad...
+          </p>          
+
+          <p class="cart-summary-note" ng-show="!vm.quotation.Client">
             A continuación puedes elegir un cliente o asignar un nuevo cliente
           </p>
 
-          <p class="cart-summary-note" ng-if="vm.quotation.Client">
+          <p class="cart-summary-note" ng-show="vm.quotation.Client">
             *Precios en Pesos Mexicanos con impuestos incluidos.
           </p>
 

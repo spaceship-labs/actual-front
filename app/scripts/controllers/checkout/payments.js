@@ -79,7 +79,20 @@ function CheckoutPaymentsCtrl(
     animateProgress();
     vm.isLoading = true;
 
-    quotationService.getById($routeParams.id, {payments:true}).then(function(res){
+    var forceLatestData = true;
+    if($rootScope.activeQuotation){
+      if($routeParams.id === $rootScope.activeQuotation.id){
+        forceLatestData = false;
+      }
+    }
+
+    var getParams = {
+      payments:true,
+      forceLatestData: forceLatestData
+    };
+
+    quotationService.getById($routeParams.id, getParams)
+      .then(function(res){
         vm.quotation = res.data;
         loadSapLogs(vm.quotation.id);
 
@@ -312,7 +325,7 @@ function CheckoutPaymentsCtrl(
           vm.isLoadingPayments = false;
           vm.isLoading = false;
           var error = err.data || err;
-          error = error ? err.toString() : '';
+          error = error ? error.toString() : '';
           dialogService.showDialog('Hubo un error: ' + error );          
           //
           //dialogService.showDialog('Error: \n' + (err.data || err) );
@@ -448,7 +461,7 @@ function CheckoutPaymentsCtrl(
           var errMsg = '';
           if(err){
             errMsg = err.data || err;
-            errMsg = errMsg ? err.toString() : '';
+            errMsg = errMsg ? errMsg.toString() : '';
             dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo \n' + errMsg);
           }
           loadSapLogs(vm.quotation.id);

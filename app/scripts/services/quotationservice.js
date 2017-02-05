@@ -220,17 +220,18 @@
       function populateDetailsWithProducts(quotation, options){
         options = options || {};
         var deferred = $q.defer();
-        var productsIds = [];
-        if(quotation){
-          quotation.Details.forEach(function(detail){
-            productsIds.push(detail.Product);
+        if(quotation && quotation.Details){
+          var productsIds = quotation.Details.map(function(detail){
+            return detail.Product; //product id
           });
+
           var params = {
             items: 100,
             filters: {id: productsIds},
             populate_fields: options.populate || []
           };
           var page = 1;
+
           productService.getList(page,params)
             .then(function(res){
               return productService.formatProducts(res.data.data);
@@ -238,8 +239,9 @@
             .then(function(formattedProducts){
               
               //Match detail - product
-              quotation.Details.forEach(function(detail){
+              quotation.Details = quotation.Details.map(function(detail){
                 detail.Product = _.findWhere( formattedProducts, {id : detail.Product } );
+                return detail;
               });
               deferred.resolve(quotation.Details);
             

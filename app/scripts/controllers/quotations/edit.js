@@ -85,7 +85,6 @@ function QuotationsEditCtrl(
     vm.activeStore       = $rootScope.activeStore;
     vm.promotionPackages = [];
     options              = options || {};
-
     vm.isLoading = true;
     vm.isLoadingDetails = true;
 
@@ -93,7 +92,15 @@ function QuotationsEditCtrl(
     loadBrokers();
     showAlerts();
 
-    quotationService.getById(quotationId)
+    console.log('start loading quotation', new Date());
+    var forceLatestData = true;
+    if($rootScope.activeQuotation){
+      if(quotationId === $rootScope.activeQuotation.id){
+        forceLatestData = false;
+      }
+    }
+
+    quotationService.getById(quotationId, {forceLatestData: forceLatestData})
       .then(function(res){
         vm.isLoading = false;
         vm.quotation = res.data;
@@ -106,51 +113,33 @@ function QuotationsEditCtrl(
 
         loadPaymentMethods();
 
-        console.log('details not populated', _.clone(vm.quotation.Details) );
+        console.log('details not populated '+ new Date(), _.clone(vm.quotation.Details) );
         return quotationService.populateDetailsWithProducts(
           vm.quotation,{
-            populate: ['FilterValues','Promotions']
+            populate: ['FilterValues']
           }
         );
       })
       .then(function(details){
-        console.log('details post populateDetailsWithProducts', _.clone(details) );
+        console.log('details post populateDetailsWithProducts' + new Date(), _.clone(details) );
         vm.quotation.Details = details;
         return quotationService.loadProductsFilters(vm.quotation.Details);
       })
       .then(function(detailsWithFilters){
         vm.quotation.Details = detailsWithFilters;
+        vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
+        vm.isLoadingDetails = false;
+        vm.isValidatingStock = true;
         return quotationService.getCurrentStock(vm.quotation.id);       
       })
       .then(function(response){
-        var promisesArray = [];
         var detailsStock = response.data;
-        console.log('details', _.clone(vm.quotation.Details) );
+        console.log('details' + new Date(), _.clone(vm.quotation.Details) );
         vm.quotation.Details = quotationService.mapDetailsStock(vm.quotation.Details, detailsStock);
         vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
 
-        vm.isLoadingDetails = false;
-
-        var packagesIds = vm.quotation.Details.reduce(function(acum, d){
-          if(d.PromotionPackageApplied){
-            acum.push(d.PromotionPackageApplied);
-          }
-          return acum;
-        },[]);
-        packagesIds = _.uniq(packagesIds);
-        packagesIds.forEach(function(pId){
-          promisesArray.push(packageService.getDetailedPackage(pId));
-        });
-        if(promisesArray.length > 0){
-          return $q.all(promisesArray);
-        }
-        return [];
-      })
-      .then(function(results){
-        //Mapping HTTP response
-        vm.promotionPackages = results.map(function(r){
-          return r.data;
-        });
+        console.log('end loading quotation', new Date());
+        vm.isValidatingStock = false;
         vm.isLoadingRecords = true;
         return quotationService.getRecords(vm.quotation.id);
       })
@@ -162,7 +151,7 @@ function QuotationsEditCtrl(
       })
       .catch(function(err){
         var error = err.data || err;
-        error = error ? err.toString() : '';
+        error = error ? error.toString() : '';
         dialogService.showDialog('Hubo un error: ' + (error) );
         $log.error(error);
       });
@@ -251,7 +240,7 @@ function QuotationsEditCtrl(
     var appliesFor = false;
     if(detail.PromotionPackageApplied){
       appliesFor = 'packageDiscount';
-    }else if(detail.Product.mainPromo){
+    }else if(detail.discount){
       appliesFor = 'promoDiscount';
     }
     return appliesFor;
