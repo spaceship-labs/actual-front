@@ -83,6 +83,7 @@
       }
 
       loadMainData();
+      loadSiteInfo();
 
       buildPointersSidenav();
       vm.isLoadingCategoriesTree = true;
@@ -173,14 +174,12 @@
       $rootScope.isMainDataLoaded = false;
       $q.all([
         loadActiveQuotation(),
-        loadActiveStore(),
-        loadSiteInfo()
+        loadActiveStore()
       ])
       .then(function(data){
         $scope.mainData = {
           activeQuotation: data[0],
           activeStore: data[1],
-          site: data[2]
         };
         console.log('$scope.mainData', $scope.mainData);
         $rootScope.$emit('mainDataLoaded', $scope.mainData);
