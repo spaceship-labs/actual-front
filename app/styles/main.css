@@ -108,7 +108,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 .container-xxlg{
   margin: 0 auto;
   /*max-width: 1200px;*/
-  max-width: 1240px;
+  max-width: 1140px;
 }
 
 .container-xlg{
