@@ -38,6 +38,9 @@ a{text-decoration: none}
 .md-dialog-container{
   /*z-index: 99999999;*/
 }
+
+md-tooltip,
+.banks-tooltip,
 md-tooltip .md-content {
     height: auto;
 }
