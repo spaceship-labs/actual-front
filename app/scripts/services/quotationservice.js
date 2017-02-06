@@ -232,15 +232,14 @@
           });
 
           var params = {
-            items: 100,
-            filters: {id: productsIds},
+            ids: productsIds,
             populate_fields: options.populate || []
           };
-          var page = 1;
 
-          productService.getList(page,params)
+          productService.multipleGetByIds(params)
             .then(function(res){
-              return productService.formatProducts(res.data.data);
+              console.log('res', res);
+              return productService.formatProducts(res.data);
             })
             .then(function(formattedProducts){
               
@@ -253,6 +252,7 @@
             
             })
             .catch(function(err){
+              console.log('err', err);
               deferred.reject(err);
             });
 

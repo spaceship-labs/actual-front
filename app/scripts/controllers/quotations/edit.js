@@ -71,17 +71,17 @@ function QuotationsEditCtrl(
     deattachImage: deattachImage
   });
 
-  if($rootScope.isMainDataLoaded){
-    console.log('init if');
+  if($rootScope.activeStore){
     init($routeParams.id);
   }else{
-    mainDataListener = $rootScope.$on('mainDataLoaded', function(e, mainData){
-      console.log('init else');
+    mainDataListener = $rootScope.$on('activeStoreAssigned', function(e){
       init($routeParams.id);
     });
   }
 
   function init(quotationId, options){
+    console.log('entered init.js', new Date());
+
     vm.activeStore       = $rootScope.activeStore;
     vm.promotionPackages = [];
     options              = options || {};
@@ -93,14 +93,15 @@ function QuotationsEditCtrl(
     showAlerts();
 
     console.log('start loading quotation', new Date());
-    var forceLatestData = true;
+    /*var forceLatestData = true;
     if($rootScope.activeQuotation){
       if(quotationId === $rootScope.activeQuotation.id){
         forceLatestData = false;
       }
     }
+    */
 
-    quotationService.getById(quotationId, {forceLatestData: forceLatestData})
+    quotationService.getById(quotationId)
       .then(function(res){
         vm.isLoading = false;
         vm.quotation = res.data;

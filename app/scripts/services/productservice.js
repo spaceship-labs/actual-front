@@ -39,6 +39,7 @@
         getMainCategories: getMainCategories,
         getMainPromo: getMainPromo,
         loadVariants: loadVariants,
+        multipleGetByIds: multipleGetByIds,
         search: search,
         searchByFilters: searchByFilters,
         sortProductImages: sortProductImages,
@@ -65,6 +66,11 @@
       function getById(id){
         var url = '/product/findbyid/' + id;
         return api.$http.post(url);
+      }
+
+      function multipleGetByIds(params){
+        var url = '/product/multiplefindbyids/';
+        return api.$http.post(url, params);
       }
 
       function search(params){

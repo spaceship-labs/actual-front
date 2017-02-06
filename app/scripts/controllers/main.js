@@ -173,13 +173,13 @@
       console.log('cargando main data', new Date());
       $rootScope.isMainDataLoaded = false;
       $q.all([
-        loadActiveQuotation(),
-        loadActiveStore()
+        loadActiveStore(),
+        loadActiveQuotation(),        
       ])
       .then(function(data){
         $scope.mainData = {
-          activeQuotation: data[0],
-          activeStore: data[1],
+          activeStore: data[0],
+          activeQuotation: data[1]
         };
         console.log('$scope.mainData', $scope.mainData);
         $rootScope.$emit('mainDataLoaded', $scope.mainData);
