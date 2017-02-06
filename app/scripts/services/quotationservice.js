@@ -34,6 +34,7 @@
         getActiveQuotationId: getActiveQuotationId,
         getByClient: getByClient,
         getById: getById,
+        getByIdQuickRead: getByIdQuickRead,
         getCountByUser: getCountByUser,
         getList: getList,
         populateDetailsWithProducts: populateDetailsWithProducts,
@@ -85,6 +86,11 @@
 
       function getById(id, params){
         var url = '/quotation/findbyid/' + id;
+        return api.$http.post(url, params);
+      }
+
+      function getByIdQuickRead(id, params){
+        var url = '/quotation/findbyidquickread/' + id;
         return api.$http.post(url, params);
       }
 
@@ -263,7 +269,7 @@
           deferred.resolve(false);
           return deferred.promise;
         }
-        return getById(quotationId);
+        return getByIdQuickRead(quotationId);
       }
 
       function getActiveQuotationId(){

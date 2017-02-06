@@ -230,6 +230,10 @@ function ProductCtrl(
 
 
   function addToCart($event){
+    if(vm.isLoadingDeliveries){
+      return;
+    }
+
     vm.isLoading = true;
     var productCartItems = cartService.getProductCartItems(
       vm.productCart.deliveryGroup,

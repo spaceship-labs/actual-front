@@ -98,7 +98,7 @@
               class="add-cart-btn"
               ng-class="
               {
-                'add-cart-btn-disabled': vm.productCart.quantity > vm.productCart.deliveryGroup.available || !vm.productCart.quantity
+                'add-cart-btn-disabled': vm.productCart.quantity > vm.productCart.deliveryGroup.available || !vm.productCart.quantity || vm.isLoadingDeliveries
               }
               "
             >
