@@ -63,7 +63,9 @@ function CheckoutOrderCtrl(
     orderService.getById($routeParams.id).then(function(res){
       vm.order = res.data;
 
-      showImmediateDeliveryDialog(vm.order);
+      if($location.search().orderCreated){
+        showImmediateDeliveryDialog(vm.order);
+      }
 
       loadOrderQuotationRecords(vm.order);
       calculateEwalletAmounts(vm.order);
@@ -96,6 +98,9 @@ function CheckoutOrderCtrl(
     })
     .catch(function(err){
       console.log(err);
+      var error = err.data || err;
+      error = error ? error.toString() : '';
+      dialogService.showDialog('Hubo un error: ' + error );          
       vm.isLoading = false;
     });
 
