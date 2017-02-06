@@ -74,7 +74,11 @@ function CheckoutClientCtrl(
             })
             .catch(function(err){
               vm.isLoadingClient = false;
-              dialogService.showDialog('Hubo un error: '+ (err.data || err) );
+              var error = err.data || err;
+              console.log('err', err);
+              error = error ? error.toString() : '';
+              dialogService.showDialog('Hubo un error: ' + error );          
+
             });
         }
         
@@ -157,9 +161,9 @@ function CheckoutClientCtrl(
         })
         .catch(function(err){
           console.log(err);
-          if(err && err.data){
-            dialogService.showDialog('Hubo un error: <br/>' + err);
-          }
+          var error = err.data || err;
+          error = error ? error.toString() : '';
+          dialogService.showDialog('Hubo un error: ' + error );          
         });
   
     }

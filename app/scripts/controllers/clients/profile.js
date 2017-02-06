@@ -200,15 +200,17 @@ function ClientProfileCtrl(
       delete params.FiscalAddress;
       delete params.Contacts;
       console.log('params', params);
-      clientService.update(vm.client.CardCode, params).then(function (res){
-        console.log(res);
-        vm.isLoading = false;
-        dialogService.showDialog('Datos personales actualizados',checkoutService.returnToCheckout);
-      }).catch(function(err){
-        console.log(err);
-        dialogService.showDialog('Hubo un error, revisa los campos');
-        vm.isLoading = false;
-      });
+      clientService.update(vm.client.CardCode, params)
+        .then(function (res){
+          console.log(res);
+          vm.isLoading = false;
+          dialogService.showDialog('Datos personales actualizados',checkoutService.returnToCheckout);
+        }).catch(function(err){
+          var error = err.data || err;
+          error = error ? error.toString() : '';
+          dialogService.showDialog('Hubo un error: ' + error );          
+          vm.isLoading = false;
+        });
     }else if(!isValidEmail){
       vm.isLoading = false;
       dialogService.showDialog('Email no valido');
@@ -258,7 +260,9 @@ function ClientProfileCtrl(
       })
       .catch(function(err){
         console.log(err);
-        dialogService.showDialog('Hubo un error');
+        var error = err.data || err;
+        error = error ? error.toString() : '';
+        dialogService.showDialog('Hubo un error: ' + error );          
         contact.isLoading = false;
       });
     }else if(!isValidEmail){
@@ -293,7 +297,9 @@ function ClientProfileCtrl(
         .catch(function(err){
           vm.isLoading = false;
           console.log(err);
-          dialogService.showDialog('Hubo un error');
+          var error = err.data || err;
+          error = error ? error.toString() : '';
+          dialogService.showDialog('Hubo un error: ' + error );          
         });
     }else if(!isValidEmail){
       vm.isLoading = false;
