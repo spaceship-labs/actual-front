@@ -218,18 +218,17 @@
       quotationService.getActiveQuotation()
         .then(function(res){
           var quotation = res.data;
+          $rootScope.isActiveQuotationLoaded = true;
           if(quotation && quotation.id){
-
             vm.activeQuotation = quotation;
             $rootScope.activeQuotation = quotation;
             $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
             deferred.resolve(vm.activeQuotation);            
-
             console.log('finish loadActiveQuotation', new Date());
-
           }else{
             vm.activeQuotation = false;
             $rootScope.activeQuotation = false;
+            $rootScope.$emit('activeQuotationAssigned', false);
             deferred.resolve(false);
           }
         });
@@ -296,6 +295,7 @@
   
         //Only updating active quotation on every page change
         console.log('loadActiveQuotation change page', new Date());
+        $rootScope.isActiveQuotationLoaded = false;
         loadActiveQuotation()
           .then(function(){
             console.log('scope.mainData', $scope.mainData);

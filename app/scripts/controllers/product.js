@@ -107,8 +107,7 @@ function ProductCtrl(
         return productService.delivery(productId, activeStoreId);
       })
       .then(function(deliveries){
-
-        if($rootScope.activeQuotation){
+        if($rootScope.activeQuotation || $rootScope.isActiveQuotationLoaded){
           setUpDeliveries(deliveries);
         }else{
           activeQuotationListener = $rootScope.$on('activeQuotationAssigned', function(e){
