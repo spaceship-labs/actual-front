@@ -44,6 +44,7 @@
         searchByFilters: searchByFilters,
         sortProductImages: sortProductImages,
         searchCategoryByFilters: searchCategoryByFilters,
+        syncProductByItemcode: syncProductByItemcode,
         substractProductStockByQuotationDetails: substractProductStockByQuotationDetails,
         delivery: delivery
       };
@@ -67,6 +68,11 @@
         var url = '/product/findbyid/' + id;
         return api.$http.post(url);
       }
+
+      function syncProductByItemcode(itemCode){
+        var url = '/product/syncproductbyitemcode/' + itemCode;
+        return api.$http.post(url);
+      }      
 
       function multipleGetByIds(params){
         var url = '/product/multiplefindbyids/';

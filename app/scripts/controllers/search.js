@@ -35,6 +35,7 @@ function SearchCtrl(
   vm.removeSearchValue = removeSearchValue;
 
   vm.isLoading = true;
+  vm.syncProcessActive = false;
 
   if($rootScope.activeStore){
     init();
@@ -55,18 +56,27 @@ function SearchCtrl(
           var foundProduct = res.data.data;
           if(!foundProduct){
             vm.isLoading = false;
-            return $q.reject();
+            vm.syncProcessActive = true;
+            return $q.reject('Producto no encontrado');
+            //return $q.reject('Este producto no existe, verificando en SAP...');
           }
           return productService.formatSingleProduct(res.data.data);
         })
         .then(function(fProduct){
-            vm.isLoading = false;
-            vm.totalResults = 1;
-            vm.products = [fProduct];
+          vm.isLoading = false;
+          vm.totalResults = 1;
+          vm.products = [fProduct];
         })
         .catch(function(err){
-          //dialogService.showDialog('Hubo un error: \n ' + err);
+          console.log(err);
+          dialogService.showDialog(err);
           vm.isLoading = false;
+
+          /*
+          if(vm.syncProcessActive){
+            syncProduct(vm.searc.itemcode);
+          }*/
+
         });
 
     }
@@ -100,6 +110,25 @@ function SearchCtrl(
     productService.getAllFilters().then(function(res){
       vm.filters = res.data;
     });
+  }
+
+  function syncProduct(){
+    vm.isLoading = true;
+    productService.syncProductByItemcode(vm.search.itemcode)
+      .then(function(newProduct){
+        return productService.formatSingleProduct(newProduct);
+      })
+      .then(function(fProduct){
+        vm.isLoading = false;
+        vm.totalResults = 1;
+        vm.products = [fProduct];
+      })
+      .catch(function(err){
+        console.log('err', err);
+        var error = err.data || err;
+        error = error ? error.toString() : '';
+        dialogService.showDialog('Hubo un error: ' + error );          
+      });
   }
 
   function removeSearchValue(removeValue){

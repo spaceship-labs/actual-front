@@ -210,6 +210,14 @@ function CheckoutPaymentsCtrl(
       dialogService.showDialog('Fondos insuficientes');
       return false;
     }
+
+    if(vm.quotation.Client){
+      if(vm.activeMethod.currency === 'usd' && vm.quotation.Client.Currency === 'MXP'){
+        dialogService.showDialog('Pagos en dolares no disponibles para este cliente por configuración en SAP');
+        return false;      
+      }
+    }
+
     return vm.applyTransaction(null, vm.activeMethod, remaining);
   }
 
