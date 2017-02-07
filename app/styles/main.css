@@ -4096,7 +4096,7 @@ padding-left: 16px;
 }
 #footer .footer-bottom span{font-size: 11px;}
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1240px){
   .container-xxlg{max-width: 1100px}
 
 }
