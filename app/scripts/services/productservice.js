@@ -70,7 +70,7 @@
       }
 
       function syncProductByItemcode(itemCode){
-        var url = '/product/syncproductbyitemcode/' + itemCode;
+        var url = '/sync/syncproductbyitemcode/' + itemCode;
         return api.$http.post(url);
       }      
 
