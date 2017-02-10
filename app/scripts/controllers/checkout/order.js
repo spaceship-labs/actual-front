@@ -108,8 +108,10 @@ function CheckoutOrderCtrl(
       vm.isLoading = false;
     });
 
+    loadInvoices();
+
     vm.invoicesInterval = $interval(function(){
-      loadInvoices();      
+      //loadInvoices();      
     }, 3000);
 
   }
