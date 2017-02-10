@@ -94,7 +94,8 @@
       }
 
 
-      function formatProduct(product){
+      function formatProduct(product, options){
+        options = options || {};
         product.Name = capitalizeFirstLetter(product.ItemName);
         //product.Name = product.Name || capitalizeFirstLetter(product.ItemName);
         /*
@@ -131,7 +132,7 @@
           product.priceBefore = product.Price;
           product.Price = product.Price - ( ( product.Price / 100) * maxDiscount );
         }
-        else if($rootScope.activeStore && $rootScope.activeStore.code){
+        else if($rootScope.activeStore && $rootScope.activeStore.code && !options.singleProduct){
           var storeDiscountPriceKey = 'discountPrice_' + $rootScope.activeStore.code;
           if(product.Price !== product[storeDiscountPriceKey] ){
             product.priceBefore = product.Price;
@@ -151,7 +152,7 @@
         storeService.getPromosByStore(activeStoreId)
           .then(function(res){
             storePromotions = res.data;
-            var fProduct = formatProduct(product);
+            var fProduct = formatProduct(product,{singleProduct:true});
             deferred.resolve(fProduct);
           })
           .catch(function(err){
