@@ -114,11 +114,15 @@
       }
 
       function returnToCheckout(){
-        if($location.search() && $location.search().checkoutProcess){
+        var queryParams = $location.search();
+        if(queryParams && queryParams.checkoutProcess){
           //var quotationId = $location.search().checkoutProcess;
           var quotationId = quotationService.getActiveQuotationId();
-          if(quotationId){
+          if(quotationId && !queryParams.continueToPayment){
             $location.path('/checkout/client/' + quotationId);
+          }
+          else if(quotationId && queryParams.continueToPayment){
+            $location.path('/checkout/paymentmethod/' + quotationId);
           }
         }
       }            

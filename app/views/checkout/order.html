@@ -32,9 +32,11 @@
           <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
             <strong>IMPRIMIR RECIBO</strong>
           </a>
-          <a href="#" ng-if="!vm.invoiceExists" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
-            <strong>GENERAR FACTURA</strong>
-          </a>
+          
+          <p ng-if="!vm.invoiceExists">
+            <strong>Generación de factura en proceso</strong>
+          </p>
+
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
             <strong>ENVIAR FACTURA</strong>
           </a>

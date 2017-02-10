@@ -3346,8 +3346,14 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .checkout-title{
   background: #F8F8F8;
   padding: 10px 14px;
+}
+.checkout-title h1{
   font-size: 26px!important;
-  font-weight: 700!important;
+  font-weight: 700!important;  
+}
+
+.checkout-title p{
+  font-size: 12px;
 }
 
 .steps-bar{

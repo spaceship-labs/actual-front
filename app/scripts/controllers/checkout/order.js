@@ -190,6 +190,7 @@ function CheckoutOrderCtrl(
       })
       .catch(function(err) {
         vm.isLoading = false;
+        console.log('err', err);
         var error = err.data.message;
         dialogService.showDialog('Error al crear factura: ' + error);
       });

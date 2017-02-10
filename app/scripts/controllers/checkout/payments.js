@@ -484,7 +484,7 @@ function CheckoutPaymentsCtrl(
           if(err){
             errMsg = err.data || err;
             errMsg = errMsg ? errMsg.toString() : '';
-            dialogService.showDialog('Hubo un error, revisa los datos e intenta de nuevo \n' + errMsg);
+            dialogService.showDialog('Hubo un error, recarga la página \n' + errMsg);
           }
           loadSapLogs(vm.quotation.id);
           vm.isLoadingProgress = false;

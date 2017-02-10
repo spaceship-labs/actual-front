@@ -6,14 +6,15 @@ function InvoiceDialogController($scope, $mdDialog, $location, quotation, client
 
   $scope.cancel = function(){
     $mdDialog.cancel();
-  }
+  };
 
   $scope.modify = function(){
     console.log('modify');
     $location.path('/clients/profile/' + client.id)
       .search({
         activeTab: 1,
-        checkoutProcess: quotation.id
+        checkoutProcess: quotation.id,
+        continueToPayment: true
       });
     $mdDialog.hide(false);
   };
