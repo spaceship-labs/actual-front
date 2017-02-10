@@ -146,18 +146,19 @@ function CheckoutClientCtrl(
     
     if( vm.quotation.Address || vm.quotation.immediateDelivery){
   
-      showInvoiceDataAlert()
+      vm.isLoading = true;
+      var params = {Address: vm.quotation.Address};
+      quotationService.update(vm.quotation.id, params)
+        .then(function(res){
+          vm.isLoading = false;
+          return showInvoiceDataAlert();
+        })
         .then(function(goToPayments){
           if(!goToPayments){
             return $q.reject();
           }
-          vm.isLoading = true;
-          var params = {Address: vm.quotation.Address};
-          return quotationService.update(vm.quotation.id, params);
-        })
-        .then(function(res){
-          vm.isLoading = false;
-          $location.path('/checkout/paymentmethod/' + vm.quotation.id);
+
+          $location.path('/checkout/paymentmethod/' + vm.quotation.id).search({});
         })
         .catch(function(err){
           console.log(err);

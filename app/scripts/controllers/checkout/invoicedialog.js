@@ -14,7 +14,7 @@ function InvoiceDialogController($scope, $mdDialog, $location, quotation, client
       .search({
         activeTab: 1,
         checkoutProcess: quotation.id,
-        continueToPayment: true
+        continueToPayment: 1
       });
     $mdDialog.hide(false);
   };

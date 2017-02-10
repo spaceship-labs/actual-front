@@ -118,6 +118,8 @@
         if(queryParams && queryParams.checkoutProcess){
           //var quotationId = $location.search().checkoutProcess;
           var quotationId = quotationService.getActiveQuotationId();
+          console.log('queryParams', queryParams);
+
           if(quotationId && !queryParams.continueToPayment){
             $location.path('/checkout/client/' + quotationId);
           }

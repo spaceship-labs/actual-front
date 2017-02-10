@@ -13,6 +13,8 @@ angular.module('dashexampleApp')
 function CheckoutOrderCtrl(
   api,
   commonService ,
+  $interval,
+  $scope,
   $routeParams,
   $rootScope,
   $location,
@@ -37,6 +39,8 @@ function CheckoutOrderCtrl(
     getSerieByDetailId: getSerieByDetailId,
     sendInvoice: sendInvoice,
     print: print,
+    invoices: [],
+    invoicesInterval: false,
     calculateBalance: orderService.calculateBalance
   });
 
@@ -104,9 +108,20 @@ function CheckoutOrderCtrl(
       vm.isLoading = false;
     });
 
-    invoiceService.find($routeParams.id).then(function(invoices){
-      vm.invoiceExists = invoices.length > 0;
-    });
+    vm.invoicesInterval = $interval(function(){
+      loadInvoices();      
+    }, 3000);
+
+  }
+
+  function loadInvoices(){
+    if(vm.invoices.length === 0){
+      invoiceService.find($routeParams.id)
+        .then(function(invoices){
+          vm.invoices = invoices;
+          vm.invoiceExists = invoices.length > 0;
+        });    
+    }
   }
 
   function calculateEwalletAmounts(order){
@@ -183,6 +198,9 @@ function CheckoutOrderCtrl(
     invoiceService
       .create($routeParams.id)
       .then(function(res) {
+        var invoice = res.data;
+
+        vm.invoices.push(invoice);
         vm.isLoading = false;
         vm.invoiceExists = true;
         dialogService.showDialog('Factura creada exitosamente');
@@ -211,6 +229,12 @@ function CheckoutOrderCtrl(
         dialogService.showDialog(error);
       });
   }
+
+  $scope.$on('$destroy', function(){
+    if(vm.invoicesInterval){
+      $interval.cancel(vm.invoicesInterval);
+    }
+  });  
 
   init();
 }

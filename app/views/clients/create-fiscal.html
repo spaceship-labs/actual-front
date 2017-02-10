@@ -122,8 +122,11 @@
 
 
       <div flex="30" class="input-element select-element-wrapper">
-        <label><strong>Estado</strong></label>
-        <md-select ng-model="vm.fiscalAddress.State" class="select-element">
+        <label><strong>Estado*</strong></label>
+        <md-select 
+          ng-model="vm.fiscalAddress.State" 
+          required 
+          class="select-element">
           <md-option ng-repeat="state in vm.states" ng-value="state.Code">
             {{state.Name}}
           </md-option>
