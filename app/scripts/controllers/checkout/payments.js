@@ -163,7 +163,7 @@ function CheckoutPaymentsCtrl(
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
         
-        ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
+        //ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
         paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
       
         if(vm.quotation.Payments && vm.quotation.Payments.length > 0){
@@ -287,6 +287,20 @@ function CheckoutPaymentsCtrl(
       });      
   }
 
+  function loadPayments(){
+    quotationService.getPayments(vm.quotation.id)
+      .then(function(res){
+        var payments = res.data;
+        vm.quotation.Payments = payments;
+        vm.isLoadingPayments = false;
+      })
+      .catch(function(err){
+        console.log('err', err);
+        dialogService.showDialog('Hubo un error, recarga la página');
+        vm.isLoadingPayments = false;
+      });
+  }
+
   function addPayment(payment){
     if(
         ( (payment.ammount > 0) && (vm.quotation.ammountPaid < vm.quotation.total) )
@@ -301,8 +315,8 @@ function CheckoutPaymentsCtrl(
             vm.quotation.Payments.push(payment);
 
             updateVMQuoatation(quotation);
+            loadPayments();
 
-            vm.isLoadingPayments = false;
             vm.isLoading = false;
 
             delete vm.activeMethod;
@@ -320,7 +334,7 @@ function CheckoutPaymentsCtrl(
         })
         .then(function(){
           if(payment.type === EWALLET_TYPE){
-            ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
+            //ewalletService.updateQuotationEwalletBalance(vm.quotation, vm.paymentMethodsGroups);
           }
 
           if(payment.type === CLIENT_BALANCE_TYPE){
