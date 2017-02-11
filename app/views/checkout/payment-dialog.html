@@ -124,7 +124,7 @@
       <div flex="30" ng-if="!needsVerification"></div>
       <a 
         ng-click="save()"
-        ng-class="{'action-btn-disabled': isValidPayment() }" 
+        ng-class="{'action-btn-disabled': !isValidPayment() }" 
         class="action-btn action-btn-save" 
         href="#" 
         flex="25">

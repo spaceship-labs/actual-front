@@ -3636,6 +3636,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 }
 .deposit-dialog p{margin: 0;}
 .deposit-dialog .action-btn-save{margin: 0}
+.deposit-dialog .action-btn-disabled{background: gray}
 .deposit-dialog small{
   font-size: 12px;
   font-style: italic;

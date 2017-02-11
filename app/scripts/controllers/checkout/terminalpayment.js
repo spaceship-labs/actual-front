@@ -74,7 +74,7 @@ function TerminalController(
     return true;
   }
 
-  $scope.isvalidPayment = function(){
+  $scope.isValidPayment = function(){
     $scope.payment.min = $scope.payment.min || 0;
     if($scope.payment.ammount < $scope.payment.min){
       $scope.minStr = $filter('currency')($scope.payment.min);
@@ -113,7 +113,7 @@ function TerminalController(
   }
 
   $scope.save = function() {
-    if( $scope.isvalidPayment() ){
+    if( $scope.isValidPayment() ){
       if($scope.payment.options.length > 0){
         $scope.terminal = getSelectedTerminal($scope.payment.card);
         $scope.payment.terminal = $scope.terminal.value;

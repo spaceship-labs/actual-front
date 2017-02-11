@@ -13,7 +13,6 @@ function DepositController(
     $scope.payment = payment;
     $scope.needsVerification = payment.needsVerification;
     $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
-    console.log('payment', $scope.payment);
 
     if($scope.payment.currency === 'usd'){
       $scope.payment.ammount = $scope.payment.ammount / $scope.payment.exchangeRate;
@@ -21,6 +20,7 @@ function DepositController(
     
       if($scope.maxAmmount){
         $scope.payment.maxAmmount = $scope.maxAmmount / $scope.payment.exchangeRate;
+        $scope.maxAmmount = $scope.payment.maxAmmount;
       }
     }
 
@@ -37,9 +37,15 @@ function DepositController(
     return ammount * $scope.payment.exchangeRate;
   };
 
-  $scope.isvalidPayment = function(){
+  $scope.isValidPayment = function(){
+    $scope.errMsg = '';
     if($scope.maxAmmount){
-      return ($scope.payment.ammount <= $scope.maxAmmount);
+      if($scope.payment.ammount <= $scope.maxAmmount){
+        return true;
+      }else{
+        $scope.errMsg = 'Favor de aplicar el saldo total';
+        return false;
+      }
     }
     return true;
   };
@@ -47,14 +53,14 @@ function DepositController(
   $scope.hide = function() {
     $mdDialog.hide();
   };
+  
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
+
   $scope.save = function() {
-    if( $scope.isvalidPayment() ){
+    if( $scope.isValidPayment() ){
       $mdDialog.hide($scope.payment);
-    }else{
-      dialogService.showDialog('No hay fondos suficientes');
     }
   };
 
