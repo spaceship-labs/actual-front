@@ -84,8 +84,8 @@ function ProductCtrl(
 
         return productService.formatSingleProduct(productFound);
       })
-      .then(function(fProduct){
-        vm.product = fProduct;
+      .then(function(formattedProduct){
+        vm.product = formattedProduct;
         vm.mainPromo = vm.product.mainPromo;
         vm.lowestCategory = categoriesService.getLowestCategory(vm.product.Categories);
         vm.productCart = {
