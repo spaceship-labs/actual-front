@@ -382,6 +382,8 @@ function QuotationsEditCtrl(
           );
           vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
         }
+
+        loadPaymentMethods();
         return $rootScope.loadActiveQuotation();
       })
       .then(function(){
