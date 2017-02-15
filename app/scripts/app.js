@@ -441,6 +441,11 @@ angular
             if ( localStorageService.get('token') ) {
               config.headers.Authorization = 'JWT ' + localStorageService.get('token');
             }
+
+            if( localStorageService.get('activeStore') ){
+              config.headers.ActiveStoreId = localStorageService.get('activeStore');
+            }
+
             return config;
           },
         };
