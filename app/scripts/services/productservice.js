@@ -12,6 +12,7 @@
       api, 
       storeService, 
       localStorageService,
+      quotationService,
       $rootScope
     ){
       var FILTERS_VARIANTS = [
@@ -20,7 +21,6 @@
         {id:'5743703aef7d5e62e508e220', key:'tamano', handle:'tamano-camas-y-blancos-cama', name: 'Tamaño'},
         {id:'5743703aef7d5e62e508e226', key:'firmeza', handle: 'firmeza', name: 'Firmeza'}
       ];  
-      var storePromotions = [];
       var service = {
         addSeenTime: addSeenTime,
         advancedSearch: advancedSearch,
@@ -69,9 +69,9 @@
         return api.$http.post(url);
       }
 
-      function getMainPromo(id){
+      function getMainPromo(id, activeQuotationId){
         var url = '/product/mainpromo/' + id;
-        return api.$http.get(url);
+        return api.$http.get(url, {activeQuotationId: activeQuotationId});
       }
 
       function syncProductByItemcode(itemCode){
@@ -149,8 +149,9 @@
 
       function formatSingleProduct(product){
         var deferred = $q.defer();
-        
-        getMainPromo(product.id)
+        var activeQuotationId = quotationService.getActiveQuotationId();
+
+        getMainPromo(product.id, activeQuotationId)
           .then(function(res){
             var mainPromo = res.data;
             product.mainPromo = mainPromo;
