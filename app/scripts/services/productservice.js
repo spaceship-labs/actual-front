@@ -12,7 +12,6 @@
       api, 
       storeService, 
       localStorageService,
-      quotationService,
       $rootScope
     ){
       var FILTERS_VARIANTS = [
@@ -149,7 +148,7 @@
 
       function formatSingleProduct(product){
         var deferred = $q.defer();
-        var activeQuotationId = quotationService.getActiveQuotationId();
+        var activeQuotationId = localStorageService.get('quotation');
 
         getMainPromo(product.id, activeQuotationId)
           .then(function(res){
