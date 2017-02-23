@@ -316,8 +316,10 @@ function CheckoutPaymentsCtrl(
 
             updateVMQuoatation(quotation);
             loadPayments();
+            loadPaymentMethods().then(function(){
+              vm.isLoading = false;
+            });
 
-            vm.isLoading = false;
 
             delete vm.activeMethod;
 
