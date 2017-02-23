@@ -158,7 +158,10 @@ function CheckoutPaymentsCtrl(
 
   function loadPaymentMethods(){
     var deferred = $q.defer();
-    quotationService.getPaymentOptions(vm.quotation.id)
+    var params = {
+      financingTotals: true
+    };
+    quotationService.getPaymentOptions(vm.quotation.id, params)
       .then(function(response){
         var groups = response.data || [];
         vm.paymentMethodsGroups = groups;
