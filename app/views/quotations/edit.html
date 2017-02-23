@@ -161,17 +161,17 @@
             type="submit"
             value="CONTINUAR"
             ng-if="!vm.quotation.Order && !vm.quotation.isClosed && vm.quotation.Client"
-            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock"
-            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock }"
+            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0"
+            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 }"
             class="cart-view-btn print-btn"
           >
 
           <input
             type="submit"
             value="ASIGNAR CLIENTE"
-            ng-disabled="!vm.isValidStock(vm.quotation.Details)"
+            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0"
             ng-if="!vm.quotation.Order && !vm.quotation.isClosed && !vm.quotation.Client"
-            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) }"
+            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 }"
             class="cart-view-btn print-btn"
           >
           
