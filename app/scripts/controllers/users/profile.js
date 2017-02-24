@@ -34,7 +34,8 @@ function UserProfileCtrl(
   vm.getCashReport      =  getCashReport;
   vm.getTotalByMethod   = getTotalByMethod;
   vm.getTotalByGroup    = getTotalByGroup;
-  vm.getGeneralTotal    = getGeneralTotal;
+  vm.getSellerTotal     = getSellerTotal;
+  vm.getStoreTotal      = getStoreTotal;
   vm.print              = print;
   vm.isUserAdminOrManager     = authService.isUserAdminOrManager;
 
@@ -178,7 +179,16 @@ function UserProfileCtrl(
     return total;
   }
 
-  function getGeneralTotal(seller){
+  function getStoreTotal(){
+    var storeTotal = vm.sellers.reduce(function(acum, seller){
+      acum += getSellerTotal(seller);
+      console.log('acum',acum);
+      return acum;
+    }, 0);
+    return storeTotal;
+  }
+
+  function getSellerTotal(seller){
     var generalTotal = seller.paymentsGroups.reduce(function(acum, group){
       acum += getTotalByGroup(group);
       return acum;

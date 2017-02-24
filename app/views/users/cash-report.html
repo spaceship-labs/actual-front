@@ -1,16 +1,26 @@
 <section class="cash-report-wrapper">
   
-  <h1>REPORTE DE CAJA TIENDA: {{vm.user.mainStore.name}}</h1>
+  <h1>Corte de caja</h1>
+  <h3><strong>Tienda:</strong> {{vm.user.mainStore.name}}</h3>
   <h3>
-    <strong>Periodo:</strong>
+    <strong>Período:</strong>
     {{vm.cashRegister.startDate | date:'dd/MM/yyyy h:mm a'}} |
     {{vm.cashRegister.endDate | date:'dd/MM/yyyy h:mm a'}}
+  </h3>
+  <h3>
+    <strong>Total global ventas:</strong> {{ vm.getStoreTotal() | currency }} MXN
   </h3>
 
 
   <section ng-repeat="seller in vm.sellers" class="cash-report-inner seller-item">
 
-    <h2><strong>Vendedor:</strong> {{seller.firstName + ' ' + seller.lastName}}</h2>
+    <h2>
+      <strong>Asesor de Interiores:</strong> {{seller.firstName + ' ' + seller.lastName}}
+    </h2>
+    <h2>
+      <strong>Total general ventas: </strong> {{ vm.getSellerTotal(seller) | currency }} MXN
+    </h2>
+
 
     <section ng-repeat="group in seller.paymentsGroups">
       <h2>Grupo de pago {{group.groupNumber}}</h2>
@@ -56,10 +66,6 @@
     </section>
 
     <hr/>
-    <h2 class="pull-right cash-report-total">
-      <strong>Total vendedor {{seller.firstName + ' ' + seller.lastName}}: {{ vm.getGeneralTotal(seller) | currency }} MXN</strong>
-    </h2>
-
   </section>
 
 
