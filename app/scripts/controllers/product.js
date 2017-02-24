@@ -121,7 +121,7 @@ function ProductCtrl(
         //console.log(seenTime);
       })
       .catch(function(err){
-        $log.error(err);
+        console.log(err);
       });
 
     pmPeriodService.getActive()

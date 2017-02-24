@@ -349,6 +349,8 @@ function CheckoutPaymentsCtrl(
         })
         .catch(function(err){
           console.log(err);
+          authService.showUnauthorizedDialogIfNeeded(err);
+          
           vm.isLoadingPayments = false;
           vm.isLoading = false;
           var error = err.data || err;

@@ -151,10 +151,13 @@ function QuotationsEditCtrl(
         vm.isLoadingRecords = false;
       })
       .catch(function(err){
-        var error = err.data || err;
+        console.log(err);
+
+        authService.showUnauthorizedDialogIfNeeded(err);
+
+        var error = err.data || err;        
         error = error ? error.toString() : '';
         dialogService.showDialog('Hubo un error: ' + (error) );
-        $log.error(error);
       });
 
   }
@@ -541,7 +544,8 @@ function QuotationsEditCtrl(
           vm.isLoading = false;        
         })
         .catch(function(err){
-          $log.error(err);
+          console.log(err);
+          authService.showUnauthorizedDialogIfNeeded(err);
         });
 
     }else{

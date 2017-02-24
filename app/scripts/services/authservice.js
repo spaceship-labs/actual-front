@@ -11,6 +11,7 @@
       $rootScope,
       $location,
       localStorageService, 
+      dialogService,
       api,
       jwtHelper,
       userService
@@ -35,11 +36,19 @@
         isUserSellerOrAdmin:isUserSellerOrAdmin,
         isUserManager: isUserManager,
         runPolicies: runPolicies,
+        showUnauthorizedDialogIfNeeded: showUnauthorizedDialogIfNeeded,
         USER_ROLES: USER_ROLES
       };
 
       return service;
 
+
+      function showUnauthorizedDialogIfNeeded(err){
+        if(err.status === 401){
+          dialogService.showDialog('Usuario no autorizado');
+          return;
+        }        
+      }
 
       function signUp(data, success, error) {
          $http.post(api.baseUrl + '/user/create', data)

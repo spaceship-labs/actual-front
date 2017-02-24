@@ -24,7 +24,8 @@ function CheckoutClientCtrl(
   productService, 
   quotationService, 
   orderService,
-  dialogService
+  dialogService,
+  authService
 ){
   var vm = this;
   angular.extend(vm,{
@@ -162,6 +163,7 @@ function CheckoutClientCtrl(
         })
         .catch(function(err){
           console.log(err);
+          authService.showUnauthorizedDialogIfNeeded(err);
           var error = err.data || err;
           error = error ? error.toString() : '';
           dialogService.showDialog('Hubo un error: ' + error );          

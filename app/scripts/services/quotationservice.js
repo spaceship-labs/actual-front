@@ -15,7 +15,8 @@
       Upload, 
       productService, 
       localStorageService,
-      dialogService
+      dialogService,
+      authService
     ){
 
       var service = {
@@ -344,6 +345,7 @@
             })
             .catch(function(err){
               console.log(err);
+              authService.showUnauthorizedDialogIfNeeded(err);
             })
 
         }else{
@@ -361,6 +363,7 @@
           })
           .catch(function(err){
             console.log(err);
+            authService.showUnauthorizedDialogIfNeeded(err);
           });
         }
       }
@@ -380,6 +383,7 @@
             })
             .catch(function(err){
               console.log(err);
+              authService.showUnauthorizedDialogIfNeeded(err);
             });
 
         }else{
@@ -400,6 +404,7 @@
             }
           }).catch(function(err){
             console.log(err);
+            authService.showUnauthorizedDialogIfNeeded(err);
           });
         }
       }
