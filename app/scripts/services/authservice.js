@@ -96,7 +96,8 @@
       }
 
       function isStoreManager(user){
-        return !!(user && user.role && user.role.name === USER_ROLES.BROKER);
+        console.log('user', user);
+        return !!(user && user.role && user.role.name === USER_ROLES.STORE_MANAGER);
       }
 
       function isUserAdminOrManager(){

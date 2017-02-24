@@ -12,6 +12,7 @@ angular.module('dashexampleApp')
 
 function UserProfileCtrl(
   $rootScope, 
+  $q,
   $window, 
   $location, 
   $mdDialog, 
@@ -19,7 +20,8 @@ function UserProfileCtrl(
   userService,
   authService, 
   localStorageService,
-  paymentService
+  paymentService,
+  storeService
 ){
   var vm = this;
   vm.user = angular.copy($rootScope.user);
@@ -34,6 +36,7 @@ function UserProfileCtrl(
   vm.getTotalByGroup    = getTotalByGroup;
   vm.getGeneralTotal    = getGeneralTotal;
   vm.print              = print;
+  vm.isUserAdminOrManager     = authService.isUserAdminOrManager;
 
   if(vm.user.role.name === authService.USER_ROLES.BROKER){
     $location.path('/users/brokerprofile');
@@ -88,22 +91,33 @@ function UserProfileCtrl(
       endDate: vm.cashRegister.endDate
     };
 
+
+    var promises = [
+      storeService.getCashReport(vm.user.mainStore.id, params),
+      paymentService.getPaymentMethodsGroups(),
+    ];
+
     vm.isLoadingReport = true;
-    
-    userService.getCashReport(params)
-      .then(function(res){
-        console.log(res);
-        var payments = res.data;
-        loadPaymentGroups(payments);
-        vm.isLoadingReport = false;
-      })
-      .catch(function(err){
-        console.log(err);
+
+    $q.all(promises)
+      .then(function(results){
+        vm.sellers = results[0].data;
+        var paymentsGroups = results[1].data;
+        
+        vm.sellers = vm.sellers.map(function(seller){
+          seller.paymentsGroups = _.clone(paymentsGroups);
+          seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
+          return seller;
+        });
+      
+        console.log('vm.sellers', vm.sellers);
+        console.log('paymentsGroups', paymentsGroups);
         vm.isLoadingReport = false;
       });
+
   }
 
-  function loadPaymentGroups(payments){
+  function mapMethodGroupsWithPayments(payments, methodGroups){
     var groups = [];
     var auxGroups = _.groupBy(payments, function(payment){
       return payment.type + '#' + payment.terminal;
@@ -121,24 +135,15 @@ function UserProfileCtrl(
     });
 
     var paymentsGroups = _.groupBy(methods, 'groupNumber');
-    paymentService.getPaymentMethodsGroups()
-      .then(function(res){
-        var methodGroups = res.data;
-        for(var key in paymentsGroups){
-          var sortedMethods = sortMethodsByGroup(paymentsGroups[key], key, methodGroups);
-          groups.push({
-            groupNumber: key,
-            methods: sortedMethods
-          });
-        }
-
-      })
-      .catch(function(err){
-        console.log('err');
+    for(var key in paymentsGroups){
+      var sortedMethods = sortMethodsByGroup(paymentsGroups[key], key, methodGroups);
+      groups.push({
+        groupNumber: key,
+        methods: sortedMethods
       });
+    }
     
-
-    vm.paymentsGroups = groups;
+    return groups;
   }
 
   function sortMethodsByGroup(methods, groupNumber, methodGroups){
@@ -173,8 +178,8 @@ function UserProfileCtrl(
     return total;
   }
 
-  function getGeneralTotal(){
-    var generalTotal = vm.paymentsGroups.reduce(function(acum, group){
+  function getGeneralTotal(seller){
+    var generalTotal = seller.paymentsGroups.reduce(function(acum, group){
       acum += getTotalByGroup(group);
       return acum;
     },0);

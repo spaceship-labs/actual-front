@@ -104,7 +104,7 @@
   <!--END PROFILE EDIT-->
 
   <!--CASH REPORT-->
-  <section class="cash-report-config">
+  <section ng-if="vm.isUserAdminOrManager(vm.user)" class="cash-report-config">
 
     <h2>Generar reporte de caja</h2>
 
@@ -183,7 +183,7 @@
 </div>
 
 <section
-  ng-if="!vm.isLoadingReport && vm.paymentsGroups.length > 0"
+  ng-if="!vm.isLoadingReport && vm.sellers.length > 0 && vm.isUserAdminOrManager(vm.user)"
   id="cash-report"
   class="cash-report container container-xlg"
 >
