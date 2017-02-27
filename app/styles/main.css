@@ -3544,7 +3544,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-size: 11px;
 }
 .pay-method-wrap .method-block .bank-icons{
-  text-align: right;
+  text-align: left;
   vertical-align: middle;
 }
 .pay-method-wrap .method-block .bank-icons-v2{
