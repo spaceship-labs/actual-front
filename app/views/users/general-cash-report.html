@@ -1,0 +1,92 @@
+<section class="cash-report-wrapper">
+  
+  <h1>Corte de caja</h1>
+
+  <div class="cash-report-header" layout="row">
+    <div flex>
+
+      <h3><strong>Vista regional - por tiendas</strong></h3>
+      <h3><strong>UID:</strong>
+         {{vm.user.firstName + ' ' + vm.user.lastName}}
+      </h3>
+      <h3>
+        <strong>Período:</strong>
+        {{vm.cashRegister.startDate | date:'dd/MM/yyyy h:mm a'}} |
+        {{vm.cashRegister.endDate | date:'dd/MM/yyyy h:mm a'}}
+      </h3>
+      <h3>
+        <strong>Total global ventas:</strong> {{ vm.getAllStoresTotal() | currency }} MXN
+      </h3>
+    </div>
+
+    <div flex="25" class="input-element select-element-wrapper">
+      <label><strong>Tienda:</strong></label>
+      <md-select 
+        ng-model="vm.storeFilter" 
+        class="select-element"
+        required>
+        <md-option ng-value="'all'">
+          Todas las tiendas
+        </md-option>
+        <md-option ng-repeat="store in vm.stores" ng-value="store.id">
+          {{store.name}}
+        </md-option>
+      </md-select>
+    </div>      
+
+
+  </div>
+
+
+
+  <section ng-repeat="store in vm.filterStores(vm.stores)" class="cash-report-inner seller-item">
+
+    <h2>
+      <strong>Tienda:</strong> {{store.name}}
+    </h2>
+    <h2>
+      <strong>Total general ventas: </strong> {{ vm.getStoreTotal(store) | currency }} MXN
+    </h2>
+
+
+    <section ng-repeat="group in store.paymentsGroups">
+      <h2>Grupo de pago {{group.groupNumber}}</h2>
+      <div 
+        class="payment-group" 
+        ng-repeat="method in group.methods track by $index"
+      >
+        <div>
+          <div layout="row">
+            <div class="payment-item-header pull-left" flex><strong>Tipo de pago</strong></div>
+            <div class="payment-item-header" flex><strong>Movimientos(cantidad)</strong></div>
+            <div class="payment-item-header" flex><strong>Total</strong></div>
+          </div>
+
+          <div layout="row" class="payment-item">
+            <div ng-if="method.terminal" class="payment-item-cell pull-left" flex>{{method.name}} | {{ main.mapTerminalCode(method.terminal) }}</div>
+            <div ng-if="!method.terminal" class="payment-item-cell pull-left" flex>{{method.name}}</div>
+            <div class="payment-item-cell" flex>{{method.payments.length}}</div>
+            <div class="payment-item-cell" flex>{{vm.getTotalByMethod(method) | currency}} MXN</div>
+          </div>
+        </div>
+      </div>
+      <h2 class="pull-right total-group">
+        <strong>Total grupo {{group.groupNumber}}: {{vm.getTotalByGroup(group) | currency}} MXN</strong>
+      </h2>
+    </section>
+
+    <hr/>
+  </section>
+
+
+  <div layout="row" layout-align="center center" class="form-view-btns no-margin">
+    <button
+      ng-click="vm.print()"
+      flex="50"
+      class="form-view-btn form-view-btn-primary print-btn"
+    >
+      Imprimir reporte
+    </button>
+  </div>
+
+</section>

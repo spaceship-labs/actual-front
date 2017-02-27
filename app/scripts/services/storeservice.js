@@ -12,7 +12,8 @@
         getPromosByStore: getPromosByStore,
         getSellersByStore: getSellersByStore,
         getAllStores: getAllStores,
-        getCashReport: getCashReport,
+        getStoreCashReport: getStoreCashReport,
+        getStoresCashReport: getStoresCashReport,
         countSellers: countSellers,
         commissionables: commissionables
       };
@@ -24,8 +25,13 @@
         return api.$http.post(url);
       }
 
-      function getCashReport(id, params){
+      function getStoreCashReport(id, params){
         var url = '/store/'+id+'/cashreport';
+        return api.$http.post(url, params);
+      }
+
+      function getStoresCashReport(params){
+        var url = '/stores/cashreport';
         return api.$http.post(url, params);
       }
 

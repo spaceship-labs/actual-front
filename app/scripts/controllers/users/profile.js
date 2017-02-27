@@ -21,7 +21,8 @@ function UserProfileCtrl(
   authService, 
   localStorageService,
   paymentService,
-  storeService
+  storeService,
+  dialogService
 ){
   var vm = this;
   vm.user = angular.copy($rootScope.user);
@@ -35,9 +36,15 @@ function UserProfileCtrl(
   vm.getTotalByMethod   = getTotalByMethod;
   vm.getTotalByGroup    = getTotalByGroup;
   vm.getSellerTotal     = getSellerTotal;
-  vm.getStoreTotal      = getStoreTotal;
+  vm.getSellersTotal    = getSellersTotal;
   vm.print              = print;
+  vm.isAdmin            = authService.isAdmin;
+  vm.isStoreManager     = authService.isStoreManager;
   vm.isUserAdminOrManager     = authService.isUserAdminOrManager;
+  vm.getStoreTotal = getStoreTotal;
+  vm.getAllStoresTotal = getAllStoresTotal;
+  vm.filterStores = filterStores;
+  vm.storeFilter = 'all';
 
   if(vm.user.role.name === authService.USER_ROLES.BROKER){
     $location.path('/users/brokerprofile');
@@ -92,30 +99,70 @@ function UserProfileCtrl(
       endDate: vm.cashRegister.endDate
     };
 
+    var promises = [];
 
-    var promises = [
-      storeService.getCashReport(vm.user.mainStore.id, params),
-      paymentService.getPaymentMethodsGroups(),
-    ];
+    if(authService.isAdmin(vm.user)){
+      promises = [
+        paymentService.getPaymentMethodsGroups(),
+        storeService.getStoresCashReport(params)
+      ];
+    }
+    else if( authService.isStoreManager(vm.user) ){
+      promises = [
+        paymentService.getPaymentMethodsGroups(),      
+        storeService.getStoreCashReport(vm.user.mainStore.id, params)
+      ];
+    }
 
     vm.isLoadingReport = true;
 
     $q.all(promises)
       .then(function(results){
-        vm.sellers = results[0].data;
-        var paymentsGroups = results[1].data;
-        
-        vm.sellers = vm.sellers.map(function(seller){
-          seller.paymentsGroups = _.clone(paymentsGroups);
-          seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
-          return seller;
-        });
+        console.log('results', results);
+        var paymentsGroups = results[0].data;
+
+        if( authService.isStoreManager(vm.user) ){
+          vm.sellers = results[1].data;          
+          vm.sellers = vm.sellers.map(function(seller){
+            seller.paymentsGroups = _.clone(paymentsGroups);
+            seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
+            return seller;
+          });
+        }
+
+        else if(authService.isAdmin(vm.user)){
+          vm.stores = results[1].data;          
+          vm.stores = vm.stores.map(function(store){
+            store.paymentsGroups = _.clone(paymentsGroups);
+            store.paymentsGroups = mapMethodGroupsWithPayments(store.Payments, store.paymentsGroups);
+            return store;
+          });          
+        }
+
+        console.log('vm.stores', vm.stores);
       
-        console.log('vm.sellers', vm.sellers);
-        console.log('paymentsGroups', paymentsGroups);
         vm.isLoadingReport = false;
+      })
+      .catch(function(err){
+        console.log(err);
+        authService.showUnauthorizedDialogIfNeeded(err);        
+        vm.isLoadingReport = false;
+        var error = err.data || err;
+        error = error ? error.toString() : '';
+        dialogService.showDialog('Hubo un error: ' + error );           
       });
 
+  }
+
+  function filterStores(stores){
+    if(vm.storeFilter === 'all'){
+      return stores;
+    }
+    else{
+      return stores.filter(function(store){
+        return store.id === vm.storeFilter;
+      });
+    }
   }
 
   function mapMethodGroupsWithPayments(payments, methodGroups){
@@ -179,13 +226,12 @@ function UserProfileCtrl(
     return total;
   }
 
-  function getStoreTotal(){
-    var storeTotal = vm.sellers.reduce(function(acum, seller){
+  function getSellersTotal(){
+    var sellersTotal = vm.sellers.reduce(function(acum, seller){
       acum += getSellerTotal(seller);
-      console.log('acum',acum);
       return acum;
     }, 0);
-    return storeTotal;
+    return sellersTotal;
   }
 
   function getSellerTotal(seller){
@@ -195,6 +241,23 @@ function UserProfileCtrl(
     },0);
     return generalTotal;
   }
+
+
+  function getStoreTotal(store){
+    var storeTotal = store.paymentsGroups.reduce(function(acum, group){
+      acum += getTotalByGroup(group);
+      return acum;
+    },0);
+    return storeTotal;
+  }
+
+  function getAllStoresTotal(){
+    var storesTotal = vm.stores.reduce(function(acum, store){
+      acum += getStoreTotal(store);
+      return acum;
+    },0);
+    return storesTotal;
+  }  
 
 
   function showConfirm() {

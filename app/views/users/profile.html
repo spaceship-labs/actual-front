@@ -73,6 +73,7 @@
 
           <hr/>
 
+          <!--
           <p class="modify-password">
             <a
               ng-href="/forgot-password"
@@ -81,6 +82,7 @@
               <strong>MODIFICAR CONTRASEÑA</strong>
             </a>
           </p>
+          -->
 
         </div>
 
@@ -183,10 +185,17 @@
 </div>
 
 <section
-  ng-if="!vm.isLoadingReport && vm.sellers.length > 0 && vm.isUserAdminOrManager(vm.user)"
+  ng-if="!vm.isLoadingReport && (vm.sellers.length > 0 || vm.stores.length > 0) && vm.isUserAdminOrManager(vm.user)"
   id="cash-report"
   class="cash-report container container-xlg"
 >
-  <ng-include src="'views/users/cash-report.html'"></ng-include>
+  <ng-include 
+    ng-if="vm.isStoreManager(vm.user)" 
+    src="'views/users/store-cash-report.html'"></ng-include>
+
+  <ng-include 
+    ng-if="vm.isAdmin(vm.user)" 
+    src="'views/users/general-cash-report.html'"></ng-include>
+
 
 </section>
