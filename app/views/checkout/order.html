@@ -391,8 +391,13 @@
 
 
   <!--SELLER-->
-  <div class="order-block seller-block order-block-info" layout="row">
-    <div flex>
+  <div 
+    class="order-block seller-block seller-block-last order-block-info" 
+    layout="row" 
+    layout-align="space-between end"
+  >
+
+    <div>
       <h3><strong><i class="icon-vendedor"></i> ASESOR DE INTERIORES</strong></h3>
       <div class="order-block-inner" >
           <p><strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong></p>
@@ -402,8 +407,8 @@
       </div>
     </div>
 
-    <section class="order-texts" flex>
-      <div class="signature-section">
+    <section class="order-texts">
+      <div class="signature-section signature-section-flex">
 
         <div class="client-signature">
           <p><span class="signature-line"></span></p>
@@ -414,7 +419,7 @@
     </section>
 
   </div>
-  <hr/>
+  <hr class="only-show-print"/>
   <!--END SELLER-->
 
 </section>

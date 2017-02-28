@@ -92,7 +92,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 }
 .client-signature{
   display: none;
-  padding: 40px 0;
+  padding: 50px 0 0;
 }
 .client-signature .signature-line{
   border-bottom: 2px solid #000;
@@ -3755,6 +3755,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   border-top: 1px solid #000;
   margin: 8px 0;
 }
+.order-view .seller-block-last{
+  border-bottom: 1px solid #000;
+  padding-bottom: 20px;
+}
 
 .order-view .order-block-inner{
   padding: 4px 12px;
@@ -4164,6 +4168,8 @@ padding-left: 16px;
   .order-view .signature-section,
   .order-view .signature-section .signature-line,
   .show-print{display: block;}
+
+  .order-view .signature-section-flex{display: flex;}
 
   .cash-report h1{font-size: 16px;}
   .order-view .client-signature{
