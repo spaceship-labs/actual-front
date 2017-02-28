@@ -251,6 +251,7 @@
             <p><strong>Ciudad: </strong>{{vm.order.U_Ciudad}}</p>
             <p><strong>Estado: </strong>{{vm.order.U_Estado}}</p>
             <p><strong>C.P.: </strong>{{vm.order.U_CP}}</p>
+            <p><strong>Calle:</strong>{{vm.order.address}}</p>
             <p><strong>Entre calle: </strong>{{vm.order.U_Entrecalle}}</p>
             <p><strong>Y calle: </strong>{{vm.order.U_Ycalle}}</p>
             <p><strong>Referencias: </strong>{{vm.order.U_Notes1}}</p>
@@ -266,20 +267,6 @@
       </div>
     </div>
     <!--END ENVIO-->
-
-
-    <!--SELLER-->
-    <div class="order-block seller-block order-block-info">
-      <h3><strong><i class="icon-vendedor"></i> VENDEDOR</strong></h3>
-      <div class="order-block-inner" >
-          <p><strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong></p>
-          <p><strong>Teléfono: </strong>{{vm.order.User.phone}}</p>
-          <p><strong>Celular: </strong>{{vm.order.User.mobilePhone}}</p>
-          <p><strong>Email:</strong> {{vm.order.User.email}}</p>
-      </div>
-    </div>
-    <!--END SELLER-->
-
 
     <!--ATENCION A CLIENTES-->
     <div class="order-block seller-block order-block-info">
@@ -400,7 +387,33 @@
     </ul>
   </section>
 
-  <ng-include src="'views/checkout/sap-connection-logs.html'"></ng-include>
+  <ng-include class="only-hide-print" src="'views/checkout/sap-connection-logs.html'"></ng-include>
 
+
+  <!--SELLER-->
+  <div class="order-block seller-block order-block-info" layout="row">
+    <div flex>
+      <h3><strong><i class="icon-vendedor"></i> ASESOR DE INTERIORES</strong></h3>
+      <div class="order-block-inner" >
+          <p><strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong></p>
+          <p><strong>Teléfono: </strong>{{vm.order.User.phone}}</p>
+          <p><strong>Celular: </strong>{{vm.order.User.mobilePhone}}</p>
+          <p><strong>Email:</strong> {{vm.order.User.email}}</p>
+      </div>
+    </div>
+
+    <section class="order-texts" flex>
+      <div class="signature-section">
+
+        <div class="client-signature">
+          <p><span class="signature-line"></span></p>
+          <p><span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span><p>
+          <p>Recibí las formas de pagos aplicadas en este orden</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!--END SELLER-->
 
 </section>
