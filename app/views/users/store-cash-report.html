@@ -1,21 +1,32 @@
 <section class="cash-report-wrapper">
   
   <h1>Corte de caja</h1>
-  <h3><strong>Tienda:</strong> {{vm.user.mainStore.name}}</h3>
-  <h3>
-    <strong>Período:</strong>
-    {{vm.cashRegister.startDate | date:'dd/MM/yyyy h:mm a'}} |
-    {{vm.cashRegister.endDate | date:'dd/MM/yyyy h:mm a'}}
-  </h3>
-  <h3>
-    <strong>Total global ventas:</strong> {{ vm.getSellersTotal() | currency }} MXN
-  </h3>
+  <h2>Gerente de tienda</h2>
+
+  <div layout="row">
+    <div flex>
+      <h3><strong>Usuario:</strong> {{vm.user.firstName + ' ' + vm.user.lastName}}</h3>
+      <h3><strong>Tienda:</strong> {{vm.user.mainStore.name}}</h3>      
+    </div>
+
+    <div flex>
+      <h3>
+        <strong>Período:</strong>
+        {{vm.cashRegister.startDate | date:'dd/MM/yyyy h:mm a'}} |
+        {{vm.cashRegister.endDate | date:'dd/MM/yyyy h:mm a'}}
+      </h3>
+      <h3>
+        <strong>Total global ventas:</strong> {{ vm.getSellersTotal() | currency }} MXN
+      </h3>      
+    </div>
+    
+  </div>
 
 
   <section ng-repeat="seller in vm.sellers" class="cash-report-inner seller-item">
 
     <h2>
-      <strong>Asesor de Interiores:</strong> {{seller.firstName + ' ' + seller.lastName}}
+      <strong>Interiorista:</strong> {{seller.firstName + ' ' + seller.lastName}}
     </h2>
     <h2>
       <strong>Total general ventas: </strong> {{ vm.getSellerTotal(seller) | currency }} MXN
@@ -23,12 +34,17 @@
 
 
     <section class="payment-group" ng-repeat="group in seller.paymentsGroups">
-      <h2>Grupo de pago {{group.groupNumber}}</h2>
+      
+      <!--<h2 ng-if="group.groupNumber != 1">Grupo de pago {{group.groupNumber}}</h2>-->
+      <h2 ng-if="group.groupNumber == 1">Un solo pago</h2>
+
       <div 
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
         <h3 ng-if="method.terminal"><strong>{{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>
+        <!--<h3 ng-if="method.terminal"><strong>TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>-->
+
         <h3 ng-if="!method.terminal"><strong>{{method.name}}</strong></h3>
         <div>
           <div layout="row">
@@ -62,9 +78,16 @@
           {{vm.getTotalByMethod(method) | currency}} MXN
         </p>
       </div>
-      <h2 class="pull-right total-group">
-        <strong>Total grupo {{group.groupNumber}}: {{vm.getTotalByGroup(group) | currency}} MXN</strong>
+      
+      <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
+        <strong>Total general USP MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
       </h2>
+
+
+      <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
+        <strong>Total general {{group.msi}} MSI MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+      </h2>
+
     </section>
 
     <hr/>

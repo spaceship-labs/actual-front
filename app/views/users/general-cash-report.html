@@ -50,29 +50,39 @@
 
 
     <section class="payment-group" ng-repeat="group in store.paymentsGroups">
-      <h2>Grupo de pago {{group.groupNumber}}</h2>
+
+      <!--<h2 ng-if="group.groupNumber != 1">Grupo de pago {{group.groupNumber}}</h2>-->
+      <h2 ng-if="group.groupNumber == 1">Un solo pago</h2>
+
+      <div layout="row">
+        <div class="payment-item-header pull-left" flex><strong>Tipo de pago</strong></div>
+        <div class="payment-item-header" flex><strong>Movimientos(cantidad)</strong></div>
+        <div class="payment-item-header" flex><strong>Total</strong></div>
+      </div>
+
       <div 
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
         <div>
-          <div layout="row">
-            <div class="payment-item-header pull-left" flex><strong>Tipo de pago</strong></div>
-            <div class="payment-item-header" flex><strong>Movimientos(cantidad)</strong></div>
-            <div class="payment-item-header" flex><strong>Total</strong></div>
-          </div>
-
           <div layout="row" class="payment-item">
-            <div ng-if="method.terminal" class="payment-item-cell pull-left" flex>{{method.name}} | {{ main.mapTerminalCode(method.terminal) }}</div>
+            <div ng-if="method.terminal" class="payment-item-cell pull-left" flex>{{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}</div>
             <div ng-if="!method.terminal" class="payment-item-cell pull-left" flex>{{method.name}}</div>
             <div class="payment-item-cell" flex>{{method.payments.length}}</div>
             <div class="payment-item-cell" flex>{{vm.getTotalByMethod(method) | currency}} MXN</div>
           </div>
         </div>
       </div>
-      <h2 class="pull-right total-group">
-        <strong>Total grupo {{group.groupNumber}}: {{vm.getTotalByGroup(group) | currency}} MXN</strong>
+
+      <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
+        <strong>Total general USP MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
       </h2>
+
+
+      <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
+        <strong>Total general {{group.msi}} MSI MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+      </h2>    
+
     </section>
 
     <hr/>

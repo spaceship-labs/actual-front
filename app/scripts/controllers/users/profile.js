@@ -182,15 +182,25 @@ function UserProfileCtrl(
       };
     });
 
-    var paymentsGroups = _.groupBy(methods, 'groupNumber');
+    var paymentsGroups = _.groupBy(methods, function(method){
+      if(method.groupNumber === 1){
+        return method.groupNumber;
+      }
+      else{
+        return method.groupNumber + '#' + method.type;
+      }
+    });
+
     for(var key in paymentsGroups){
       var sortedMethods = sortMethodsByGroup(paymentsGroups[key], key, methodGroups);
       groups.push({
-        groupNumber: key,
+        groupNumber: sortedMethods[0].groupNumber,
+        msi: sortedMethods[0].msi || 0,
         methods: sortedMethods
       });
     }
     
+    groups = _.sortBy(groups, 'msi');
     return groups;
   }
 

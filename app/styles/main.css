@@ -3941,6 +3941,7 @@ padding-left: 16px;
   font-size: 14px;
 }
 .cash-report .payment-item{margin: 6px 0;}
+.cash-report .payment-group{padding: 20px 0}
 .cash-report .payment-group + .payment-group{
   border-top: 1px solid;
 }
@@ -3949,6 +3950,7 @@ padding-left: 16px;
   padding: 6px;
   text-align: right;
 }
+.cash-report .payment-item-header{font-size: 14px;}
 .cash-report .total-group{/*font-size:18px;*/}
 .cash-report .cash-report-total{font-size: 18px;}
 
