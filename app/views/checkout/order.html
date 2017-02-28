@@ -242,6 +242,7 @@
             <p><strong>Email: </strong>{{vm.order.E_Mail}}</p>
             <p><strong>Télefono: </strong>{{vm.order.Tel1}}</p>
             <p><strong>Celular: </strong>{{vm.order.Cellolar}}</p>
+            <p><strong>Calle:</strong>{{vm.order.address}}</p>
             <p><strong>No. exterior: </strong>{{vm.order.U_Noexterior}}</p>
             <p><strong>No. interior: </strong>{{vm.order.U_Nointerior}}</p>
             <p><strong>Colonia: </strong>{{vm.order.U_Colonia}}</p>
@@ -251,7 +252,6 @@
             <p><strong>Ciudad: </strong>{{vm.order.U_Ciudad}}</p>
             <p><strong>Estado: </strong>{{vm.order.U_Estado}}</p>
             <p><strong>C.P.: </strong>{{vm.order.U_CP}}</p>
-            <p><strong>Calle:</strong>{{vm.order.address}}</p>
             <p><strong>Entre calle: </strong>{{vm.order.U_Entrecalle}}</p>
             <p><strong>Y calle: </strong>{{vm.order.U_Ycalle}}</p>
             <p><strong>Referencias: </strong>{{vm.order.U_Notes1}}</p>
@@ -408,12 +408,13 @@
         <div class="client-signature">
           <p><span class="signature-line"></span></p>
           <p><span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span><p>
-          <p>Recibí las formas de pagos aplicadas en este orden</p>
+          <p>Recibí las formas de pagos aplicadas en esta orden</p>
         </div>
       </div>
     </section>
 
   </div>
+  <hr/>
   <!--END SELLER-->
 
 </section>
