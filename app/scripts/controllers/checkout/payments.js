@@ -321,17 +321,20 @@ function CheckoutPaymentsCtrl(
             loadPayments();
             loadPaymentMethods().then(function(){
               vm.isLoading = false;
+              delete vm.activeMethod;
+
+              if(vm.quotation.ammountPaid >= vm.quotation.total){
+                createOrder();
+                //dialogService.showDialog('Cantidad total pagada');
+              }else{
+                dialogService.showDialog('Pago aplicado');
+              }
+
+
             });
 
 
-            delete vm.activeMethod;
 
-            if(vm.quotation.ammountPaid >= vm.quotation.total){
-              createOrder();
-              //dialogService.showDialog('Cantidad total pagada');
-            }else{
-              dialogService.showDialog('Pago aplicado');
-            }
           }else{
             dialogService.showDialog('Hubo un error');
           }
