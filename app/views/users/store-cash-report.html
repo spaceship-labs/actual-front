@@ -48,27 +48,27 @@
         <h3 ng-if="!method.terminal"><strong>{{method.name}}</strong></h3>
         <div>
           <div layout="row">
-            <div class="payment-item-header" flex="15"><strong>Banco</strong></div>
             <div class="payment-item-header" flex="10"><strong>Folio</strong></div>
             <div class="payment-item-header" flex="15"><strong>No. aut.</strong></div>
+            <div class="payment-item-header" flex="15"><strong>Banco</strong></div>
             <div class="payment-item-header" flex="20"><strong>Fecha</strong></div>
             <div class="payment-item-header" flex="10"><strong>Pedido</strong></div>
-            <div class="payment-item-header" flex="10"><strong>Cantidad</strong></div>
-            <div class="payment-item-header" flex="10"><strong>Moneda</strong></div>
             <div class="payment-item-header" flex="10"><strong>Tipo de cambio</strong></div>
+            <div class="payment-item-header" flex="10"><strong>Moneda</strong></div>
+            <div class="payment-item-header" flex="10"><strong>Cantidad</strong></div>
           </div>
           <div layout="row" ng-repeat="payment in method.payments" class="payment-item">
-            <div class="payment-item-cell" flex="15">{{payment.card}}</div>
             <div class="payment-item-cell" flex="10">{{payment.folio}}</div>
             <div class="payment-item-cell" flex="15">{{payment.verificationCode}}</div>
+            <div class="payment-item-cell" flex="15">{{payment.card}}</div>
             <div class="payment-item-cell" flex="20">{{payment.createdAt | date:'dd/MM/yyyy h:mm a'}}</div>
             <div class="payment-item-cell" flex="10">
               <span ng-if="payment.Order.folio">#{{payment.Order.folio}}</span>
               <span ng-if="!payment.Order.folio">-</span>
             </div>
-            <div class="payment-item-cell" flex="10">{{payment.ammount | currency}}</div>
-            <div class="payment-item-cell to-upper" flex="10">{{payment.currency}}</div>
             <div class="payment-item-cell" flex="10">{{payment.exchangeRate | currency}}</div>
+            <div class="payment-item-cell to-upper" flex="10">{{payment.currency}}</div>
+            <div class="payment-item-cell" flex="10">{{payment.ammount | currency}}</div>
           </div>
         </div>
         <p class="pull-right total-method">
