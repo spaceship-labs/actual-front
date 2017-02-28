@@ -22,10 +22,10 @@
     </h2>
 
 
-    <section ng-repeat="group in seller.paymentsGroups">
+    <section class="payment-group" ng-repeat="group in seller.paymentsGroups">
       <h2>Grupo de pago {{group.groupNumber}}</h2>
       <div 
-        class="payment-group" 
+        class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
         <h3 ng-if="method.terminal"><strong>{{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>

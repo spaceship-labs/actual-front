@@ -49,10 +49,10 @@
     </h2>
 
 
-    <section ng-repeat="group in store.paymentsGroups">
+    <section class="payment-group" ng-repeat="group in store.paymentsGroups">
       <h2>Grupo de pago {{group.groupNumber}}</h2>
       <div 
-        class="payment-group" 
+        class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
         <div>

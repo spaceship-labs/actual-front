@@ -3936,7 +3936,7 @@ padding-left: 16px;
 .cash-report .seller-item:nth-child(odd){
   background: #F8F8F8
 }
-.cash-report .payment-group{
+.cash-report .method-group{
   padding: 5px 0;
   font-size: 14px;
 }
