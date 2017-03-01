@@ -107,12 +107,10 @@
       }
 
       function isStoreManager(user){
-        console.log('user', user);
         return (user && user.role && user.role.name === USER_ROLES.STORE_MANAGER);
       }
 
       function isAdmin(user){
-        console.log('user', user);
         return (user && user.role && user.role.name === USER_ROLES.ADMIN);
       }
 

@@ -34,9 +34,14 @@ function UserProfileCtrl(
   vm.init               = init;
   vm.getCashReport      =  getCashReport;
   vm.getTotalByMethod   = getTotalByMethod;
+  vm.getTotalByMethodUSD = getTotalByMethodUSD;
   vm.getTotalByGroup    = getTotalByGroup;
   vm.getSellerTotal     = getSellerTotal;
   vm.getSellersTotal    = getSellersTotal;
+  vm.requiresBankColumn = requiresBankColumn;
+  vm.paymentRequiresBankColumn = paymentRequiresBankColumn;
+  vm.isTransferOrDeposit = isTransferOrDeposit;
+  vm.isSinglePlaymentTerminal = isSinglePlaymentTerminal;
   vm.print              = print;
   vm.isAdmin            = authService.isAdmin;
   vm.isStoreManager     = authService.isStoreManager;
@@ -139,6 +144,7 @@ function UserProfileCtrl(
           });          
         }
 
+        console.log('vm.sellers', vm.sellers);
         console.log('vm.stores', vm.stores);
       
         vm.isLoadingReport = false;
@@ -154,6 +160,21 @@ function UserProfileCtrl(
 
   }
 
+  function requiresBankColumn(method){
+    return (method.groupNumber !== 1 || 
+        isTransferOrDeposit(method) || 
+        isSinglePlaymentTerminal(method)
+    );
+  }
+
+  function paymentRequiresBankColumn(payment){
+    return (isSinglePlaymentTerminal(payment) || 
+      payment.msi || 
+      isTransferOrDeposit(payment)
+    );
+
+  }
+
   function filterStores(stores){
     if(vm.storeFilter === 'all'){
       return stores;
@@ -165,9 +186,21 @@ function UserProfileCtrl(
     }
   }
 
+  function isTransferOrDeposit(method){
+    return method.type === 'transfer' || method.type === 'deposit';
+  }
+
+  function isSinglePlaymentTerminal(method){
+    return method.type === 'single-payment-terminal';
+  }
+
   function mapMethodGroupsWithPayments(payments, methodGroups){
     var groups = [];
     var auxGroups = _.groupBy(payments, function(payment){
+      if(payment.type === 'transfer' || payment.type === 'deposit'){
+        return payment.type;
+      }
+
       return payment.type + '#' + payment.terminal;
     });
     var methods = _.map(auxGroups, function(group){
@@ -178,7 +211,8 @@ function UserProfileCtrl(
         terminal: group[0].terminal,
         msi: group[0].msi,
         payments: group,
-        groupNumber: group[0].group
+        groupNumber: group[0].group,
+        currency: group[0].currency,
       };
     });
 
@@ -215,6 +249,14 @@ function UserProfileCtrl(
       }      
     }
     return sorted;
+  }
+
+  function getTotalByMethodUSD(method){
+    var total = method.payments.reduce(function(acum, current){
+      acum += current.ammount;
+      return acum;
+    },0);
+    return total;    
   }
 
   function getTotalByMethod(method){

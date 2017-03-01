@@ -3952,8 +3952,14 @@ padding-left: 16px;
 .cash-report .payment-item-header,
 .cash-report .payment-item-cell{
   padding: 6px;
+  text-align: center;
+}
+
+.cash-report .payment-item-header:last-child,
+.cash-report .payment-item-cell:last-child{
   text-align: right;
 }
+
 .cash-report .payment-item-header{font-size: 14px;}
 .cash-report .total-group{/*font-size:18px;*/}
 .cash-report .cash-report-total{font-size: 18px;}

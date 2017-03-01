@@ -42,45 +42,99 @@
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
-        <h3 ng-if="method.terminal"><strong>{{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>
-        <!--<h3 ng-if="method.terminal"><strong>TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>-->
+        <h3 ng-if="vm.isSinglePlaymentTerminal(method) || method.msi"><strong>TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>
 
-        <h3 ng-if="!method.terminal"><strong>{{method.name}}</strong></h3>
+        <h3 ng-if="!vm.isSinglePlaymentTerminal(method) && !method.msi">
+          <strong>{{method.name}}</strong>
+        </h3>
+
+
         <div>
+
+          <!--START METHOD HEADER-->
           <div layout="row">
             <div class="payment-item-header" flex="10"><strong>Folio</strong></div>
             <div class="payment-item-header" flex="15"><strong>No. aut.</strong></div>
-            <div class="payment-item-header" flex="15"><strong>Banco</strong></div>
-            <div class="payment-item-header" flex="20"><strong>Fecha</strong></div>
+            <div 
+              ng-if="vm.requiresBankColumn(method)"
+              class="payment-item-header"
+              flex="15">
+              <strong>Banco</strong>
+            </div>
+            <div 
+              class="payment-item-header" 
+              ng-attr-flex="{{vm.requiresBankColumn(method) && 20 || 30 }}"
+            >
+              <strong>Fecha/Hora</strong>
+            </div>
             <div class="payment-item-header" flex="10"><strong>Pedido</strong></div>
-            <div class="payment-item-header" flex="10"><strong>Tipo de cambio</strong></div>
+            <div 
+              class="payment-item-header" 
+              ng-attr-flex="{{vm.requiresBankColumn(method) && 10 || 15 }}"
+            >
+              <strong>Tipo de cambio</strong>
+            </div>
             <div class="payment-item-header" flex="10"><strong>Moneda</strong></div>
             <div class="payment-item-header" flex="10"><strong>Cantidad</strong></div>
           </div>
+          <!--END METHOD HEADER-->
+
+          <!--START METHOD ROWS-->
           <div layout="row" ng-repeat="payment in method.payments" class="payment-item">
             <div class="payment-item-cell" flex="10">{{payment.folio}}</div>
             <div class="payment-item-cell" flex="15">{{payment.verificationCode}}</div>
-            <div class="payment-item-cell" flex="15">{{payment.card}}</div>
-            <div class="payment-item-cell" flex="20">{{payment.createdAt | date:'dd/MM/yyyy h:mm a'}}</div>
+            <div 
+              ng-if="payment.card && !vm.isTransferOrDeposit(payment) "
+              class="payment-item-cell" 
+              flex="15">
+              {{payment.card}}
+            </div>
+            <div 
+              ng-if="payment.terminal && vm.isTransferOrDeposit(payment) "
+              class="payment-item-cell" 
+              flex="15">
+              {{payment.terminal}}
+            </div>
+            <div 
+              class="payment-item-cell" 
+              ng-attr-flex="{{vm.paymentRequiresBankColumn(payment) && 20 || 30 }}">
+              {{payment.createdAt | date:'dd/MM/yyyy h:mm a'}}
+            </div>
             <div class="payment-item-cell" flex="10">
               <span ng-if="payment.Order.folio">#{{payment.Order.folio}}</span>
               <span ng-if="!payment.Order.folio">-</span>
             </div>
-            <div class="payment-item-cell" flex="10">{{payment.exchangeRate | currency}}</div>
+            <div 
+              class="payment-item-cell" 
+              ng-attr-flex="{{vm.paymentRequiresBankColumn(payment) && 10 || 15 }}"            
+            >
+              {{payment.exchangeRate | currency}}
+            </div>
             <div class="payment-item-cell to-upper" flex="10">{{payment.currency}}</div>
             <div class="payment-item-cell" flex="10">{{payment.ammount | currency}}</div>
           </div>
         </div>
+        <!--END METHOD ROWS-->
+
+        <p class="pull-right total-method" ng-if="method.currency === 'usd'">
+          <strong>Total {{method.name}}:</strong> {{vm.getTotalByMethodUSD(method) | currency}}
+        </p>
+
         <p class="pull-right total-method">
-          <strong>Total </strong>
-          <strong ng-if="method.terminal">{{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}:</strong>
-          <strong ng-if="!method.terminal">{{method.name}}:</strong>         
+          <strong ng-if="(vm.isSinglePlaymentTerminal(method) || method.msi) && method.currency !== 'usd' ">Total {{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}:</strong>
+
+
+          <strong ng-if="!vm.isSinglePlaymentTerminal(method) && !method.msi && method.currency !== 'usd' ">Total {{method.name}}:</strong>
+
+          <strong ng-if="method.currency == 'usd' ">Total Moneda MXN:</strong>      
           {{vm.getTotalByMethod(method) | currency}} MXN
         </p>
+
+
       </div>
       
       <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
-        <strong>Total general USP MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+        <strong>Gran total general USP MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
       </h2>
 
 
