@@ -25,12 +25,14 @@
 
   <section ng-repeat="seller in vm.sellers" class="cash-report-inner seller-item">
 
-    <h2>
-      <strong>Interiorista:</strong> {{seller.firstName + ' ' + seller.lastName}}
-    </h2>
-    <h2>
-      <strong>Total general ventas: </strong> {{ vm.getSellerTotal(seller) | currency }} MXN
-    </h2>
+    <div layout="row" layout-align="space-between center">
+      <h2>
+        <strong>Interiorista:</strong> {{seller.firstName + ' ' + seller.lastName}}
+      </h2>
+      <h2>
+        <strong>Total general ventas: </strong> {{ vm.getSellerTotal(seller) | currency }} MXN
+      </h2>
+    </div>
 
 
     <section class="payment-group" ng-repeat="group in seller.paymentsGroups">
