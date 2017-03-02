@@ -7,28 +7,28 @@
 
       <h3><strong>Vista regional - por tiendas</strong></h3>
       <h3><strong>UID:</strong>
-         {{vm.user.firstName + ' ' + vm.user.lastName}}
+         {{user.firstName + ' ' + user.lastName}}
       </h3>
       <h3>
         <strong>Período:</strong>
-        {{vm.cashRegister.startDate | date:'dd/MM/yyyy h:mm a'}} |
-        {{vm.cashRegister.endDate | date:'dd/MM/yyyy h:mm a'}}
+        {{startDate | date:'dd/MM/yyyy h:mm a'}} |
+        {{endDate | date:'dd/MM/yyyy h:mm a'}}
       </h3>
       <h3>
-        <strong>Total global ventas:</strong> {{ vm.getAllStoresTotal() | currency }} MXN
+        <strong>Total global ventas:</strong> {{ getAllStoresTotal() | currency }} MXN
       </h3>
     </div>
 
     <div flex="25" class="input-element select-element-wrapper">
       <label><strong>Tienda:</strong></label>
       <md-select 
-        ng-model="vm.storeFilter" 
+        ng-model="storeFilter" 
         class="select-element"
         required>
         <md-option ng-value="'all'">
           Todas las tiendas
         </md-option>
-        <md-option ng-repeat="store in vm.stores" ng-value="store.id">
+        <md-option ng-repeat="store in stores" ng-value="store.id">
           {{store.name}}
         </md-option>
       </md-select>
@@ -39,20 +39,20 @@
 
 
 
-  <section ng-repeat="store in vm.filterStores(vm.stores)" class="cash-report-inner seller-item">
+  <section ng-repeat="store in filterStores(stores)" class="cash-report-inner seller-item">
 
     <h2>
       <strong>Tienda:</strong> {{store.name}}
     </h2>
     <h2>
-      <strong>Total general ventas: </strong> {{ vm.getStoreTotal(store) | currency }} MXN
+      <strong>Total general ventas: </strong> {{ getStoreTotal(store) | currency }} MXN
     </h2>
 
 
     <section class="payment-group" ng-repeat="group in store.paymentsGroups">
 
-      <!--<h2 ng-if="group.groupNumber != 1">Grupo de pago {{group.groupNumber}}</h2>-->
-      <h2 ng-if="group.groupNumber == 1">Un solo pago</h2>
+      <h2 class="payment-group-title" ng-if="group.groupNumber == 1">Un solo pago</h2>
+      <h2 class="payment-group-title" ng-if="group.msi">{{group.msi}} meses sin intereses</h2>
 
       <div layout="row">
         <div class="payment-item-header pull-left" flex><strong>Tipo de pago</strong></div>
@@ -68,12 +68,12 @@
           <div layout="row" class="payment-item">
             
             <div 
-              ng-if="vm.isSinglePlaymentTerminal(method) || method.msi" 
+              ng-if="isSinglePlaymentTerminal(method) || method.msi" 
               class="payment-item-cell pull-left" 
-              flex>TPV: {{ main.mapTerminalCode(method.terminal) }}</div>
+              flex>TPV: {{ mapTerminalCode(method.terminal) }}</div>
 
             <div 
-              ng-if="!vm.isSinglePlaymentTerminal(method) && !method.msi" 
+              ng-if="!isSinglePlaymentTerminal(method) && !method.msi" 
               class="payment-item-cell pull-left" 
               flex
             >
@@ -81,18 +81,18 @@
             </div>
 
             <div class="payment-item-cell" flex>{{method.payments.length}}</div>
-            <div class="payment-item-cell" flex>{{vm.getTotalByMethod(method) | currency}} MXN</div>
+            <div class="payment-item-cell" flex>{{getTotalByMethod(method) | currency}} MXN</div>
           </div>
         </div>
       </div>
 
       <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
-        <strong>Gran total general USP MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+        <strong>Gran total general USP MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>
 
 
       <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
-        <strong>Total general {{group.msi}} MSI MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+        <strong>Total general {{group.msi}} MSI MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>    
 
     </section>
@@ -103,7 +103,7 @@
 
   <div layout="row" layout-align="center center" class="form-view-btns no-margin">
     <button
-      ng-click="vm.print()"
+      ng-click="print()"
       flex="50"
       class="form-view-btn form-view-btn-primary print-btn"
     >

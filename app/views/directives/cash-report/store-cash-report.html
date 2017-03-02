@@ -3,50 +3,50 @@
   <h1>Corte de caja</h1>
   <h2>Gerente de tienda</h2>
 
-  <div layout="row">
-    <div flex>
-      <h3><strong>Usuario:</strong> {{vm.user.firstName + ' ' + vm.user.lastName}}</h3>
-      <h3><strong>Tienda:</strong> {{vm.user.mainStore.name}}</h3>      
+  <div class="store-report-header" layout="row" layout-align="space-between start">
+    <div class="store-report-header-col">
+      <h3><strong>Usuario:</strong> {{user.firstName + ' ' + user.lastName}}</h3>
+      <h3><strong>Tienda:</strong> {{user.mainStore.name}}</h3>      
     </div>
 
-    <div flex>
+    <div class="store-report-header-col">
       <h3>
         <strong>Período:</strong>
-        {{vm.cashRegister.startDate | date:'dd/MM/yyyy h:mm a'}} |
-        {{vm.cashRegister.endDate | date:'dd/MM/yyyy h:mm a'}}
+        {{startDate | date:'dd/MM/yyyy h:mm a'}} |
+        {{endDate | date:'dd/MM/yyyy h:mm a'}}
       </h3>
       <h3>
-        <strong>Total global ventas:</strong> {{ vm.getSellersTotal() | currency }} MXN
+        <strong>Total global ventas:</strong> {{ getSellersTotal() | currency }} MXN
       </h3>      
     </div>
     
   </div>
 
 
-  <section ng-repeat="seller in vm.sellers" class="cash-report-inner seller-item">
+  <section ng-repeat="seller in sellers" class="cash-report-inner seller-item">
 
     <div layout="row" layout-align="space-between center">
       <h2>
         <strong>Interiorista:</strong> {{seller.firstName + ' ' + seller.lastName}}
       </h2>
       <h2>
-        <strong>Total general ventas: </strong> {{ vm.getSellerTotal(seller) | currency }} MXN
+        <strong>Total general ventas: </strong> {{ getSellerTotal(seller) | currency }} MXN
       </h2>
     </div>
 
 
     <section class="payment-group" ng-repeat="group in seller.paymentsGroups">
       
-      <!--<h2 ng-if="group.groupNumber != 1">Grupo de pago {{group.groupNumber}}</h2>-->
-      <h2 ng-if="group.groupNumber == 1">Un solo pago</h2>
+      <h2 class="payment-group-title" ng-if="group.groupNumber == 1">Un solo pago</h2>
+      <h2 class="payment-group-title" ng-if="group.msi">{{group.msi}} meses sin intereses</h2>
 
       <div 
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
-        <h3 ng-if="vm.isSinglePlaymentTerminal(method) || method.msi"><strong>TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>
+        <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV: {{ mapTerminalCode(method.terminal) }}</strong></h3>
 
-        <h3 ng-if="!vm.isSinglePlaymentTerminal(method) && !method.msi">
+        <h3 ng-if="!isSinglePlaymentTerminal(method) && !method.msi">
           <strong>{{method.name}}</strong>
         </h3>
 
@@ -58,21 +58,21 @@
             <div class="payment-item-header" flex="10"><strong>Folio</strong></div>
             <div class="payment-item-header" flex="15"><strong>No. aut.</strong></div>
             <div 
-              ng-if="vm.requiresBankColumn(method)"
+              ng-if="requiresBankColumn(method)"
               class="payment-item-header"
               flex="15">
               <strong>Banco</strong>
             </div>
             <div 
               class="payment-item-header" 
-              ng-attr-flex="{{vm.requiresBankColumn(method) && 20 || 30 }}"
+              ng-attr-flex="{{requiresBankColumn(method) && 20 || 30 }}"
             >
               <strong>Fecha/Hora</strong>
             </div>
             <div class="payment-item-header" flex="10"><strong>Pedido</strong></div>
             <div 
               class="payment-item-header" 
-              ng-attr-flex="{{vm.requiresBankColumn(method) && 10 || 15 }}"
+              ng-attr-flex="{{requiresBankColumn(method) && 10 || 15 }}"
             >
               <strong>Tipo de cambio</strong>
             </div>
@@ -86,20 +86,20 @@
             <div class="payment-item-cell" flex="10">{{payment.folio}}</div>
             <div class="payment-item-cell" flex="15">{{payment.verificationCode}}</div>
             <div 
-              ng-if="payment.card && !vm.isTransferOrDeposit(payment) "
+              ng-if="payment.card && !isTransferOrDeposit(payment) "
               class="payment-item-cell" 
               flex="15">
               {{payment.card}}
             </div>
             <div 
-              ng-if="payment.terminal && vm.isTransferOrDeposit(payment) "
+              ng-if="payment.terminal && isTransferOrDeposit(payment) "
               class="payment-item-cell" 
               flex="15">
               {{payment.terminal}}
             </div>
             <div 
               class="payment-item-cell" 
-              ng-attr-flex="{{vm.paymentRequiresBankColumn(payment) && 20 || 30 }}">
+              ng-attr-flex="{{paymentRequiresBankColumn(payment) && 20 || 30 }}">
               {{payment.createdAt | date:'dd/MM/yyyy h:mm a'}}
             </div>
             <div class="payment-item-cell" flex="10">
@@ -108,7 +108,7 @@
             </div>
             <div 
               class="payment-item-cell" 
-              ng-attr-flex="{{vm.paymentRequiresBankColumn(payment) && 10 || 15 }}"            
+              ng-attr-flex="{{paymentRequiresBankColumn(payment) && 10 || 15 }}"            
             >
               {{payment.exchangeRate | currency}}
             </div>
@@ -118,30 +118,44 @@
         </div>
         <!--END METHOD ROWS-->
 
-        <p class="pull-right total-method" ng-if="method.currency === 'usd'">
-          <strong>Total {{method.name}}:</strong> {{vm.getTotalByMethodUSD(method) | currency}}
+        <p 
+          class="pull-right total-method" 
+          ng-if="isUsdPayment(method)"
+        >
+          <strong>Total {{method.name}}:</strong> {{getTotalByMethodUSD(method) | currency}}
         </p>
 
         <p class="pull-right total-method">
-          <strong ng-if="(vm.isSinglePlaymentTerminal(method) || method.msi) && method.currency !== 'usd' ">Total {{method.name}} | TPV: {{ main.mapTerminalCode(method.terminal) }}:</strong>
+          <strong 
+            ng-if="(isSinglePlaymentTerminal(method) || method.msi) && !isUsdPayment(method) ">
+            Total TPV {{ mapTerminalCode(method.terminal) }} MXN:
+          </strong>
 
 
-          <strong ng-if="!vm.isSinglePlaymentTerminal(method) && !method.msi && method.currency !== 'usd' ">Total {{method.name}}:</strong>
-
-          <strong ng-if="method.currency == 'usd' ">Total Moneda MXN:</strong>      
-          {{vm.getTotalByMethod(method) | currency}} MXN
+          <strong 
+            ng-if="!isSinglePlaymentTerminal(method) && !method.msi && !isUsdPayment(method) ">
+            Total {{method.name}} 
+            <span ng-if="method.type !== paymentTypes.CASH ">MXN</span>:
+          </strong>
+          
+          
+          <strong ng-if="isUsdPayment(method)">
+            Total Moneda MXN:
+          </strong>    
+          
+          {{getTotalByMethod(method) | currency}}
         </p>
 
 
       </div>
       
       <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
-        <strong>Gran total general USP MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+        <strong>Gran total general USP MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>
 
 
       <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
-        <strong>Total general {{group.msi}} MSI MXN: {{vm.getTotalByGroup(group) | currency}}</strong>
+        <strong>Total general {{group.msi}} MSI MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>
 
     </section>
@@ -152,7 +166,7 @@
 
   <div layout="row" layout-align="center center" class="form-view-btns no-margin">
     <button
-      ng-click="vm.print()"
+      ng-click="print()"
       flex="50"
       class="form-view-btn form-view-btn-primary print-btn"
     >

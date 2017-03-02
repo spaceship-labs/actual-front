@@ -9,6 +9,26 @@
     var CLIENT_BALANCE_GROUP_INDEX = 0;
     var CLIENT_BALANCE_TYPE = 'client-balance';
 
+    var currencyTypes = {
+      USD: 'usd',
+      MXN: 'mxn'
+    };
+
+    var types = {
+      CLIENT_BALANCE: 'client-balance',
+      CASH: 'cash',
+      CASH_USD: 'cash-usd',
+      CHEQUE: 'cheque',
+      DEPOSIT: 'deposit',
+      TRANSFER: 'transfer',
+      SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
+      MSI_3: '3-msi',
+      MSI_6: '3-msi',
+      MSI_9: '9-msi',
+      MSI_12: '3-msi',
+      MSI_18: '3-msi'
+    };
+
     var service = {
       addPayment: addPayment,
       cancelPayment: cancelPayment,
@@ -18,8 +38,25 @@
       getPaymentTypeString: getPaymentTypeString,
       getRefundsOptions: getRefundsOptions,
       updateQuotationClientBalance: updateQuotationClientBalance,
-      clientBalanceType: CLIENT_BALANCE_TYPE
+      clientBalanceType: CLIENT_BALANCE_TYPE,
+      types: types,
+      currencyTypes: currencyTypes,
+      isUsdPayment: isUsdPayment,
+      isTransferOrDeposit: isTransferOrDeposit,
+      isSinglePlaymentTerminal: isSinglePlaymentTerminal
     };
+
+    function isUsdPayment(payment){
+      return payment.currency === currencyTypes.USD;
+    }
+
+    function isTransferOrDeposit(payment){
+      return payment.type === types.TRANSFER || payment.type === types.DEPOSIT;
+    }
+
+    function isSinglePlaymentTerminal(payment){
+      return payment.type === types.SINGLE_PAYMENT_TERMINAL;
+    }
 
     var refundsOptions = [
       {
