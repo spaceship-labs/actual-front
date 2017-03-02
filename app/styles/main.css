@@ -3342,6 +3342,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .checkout-view{}
 .checkout-view-inner{
   margin-top: 20px;
+  border-bottom: 1px solid #000;
 }
 .checkout-title{
   background: #F8F8F8;
