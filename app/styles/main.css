@@ -4176,6 +4176,7 @@ padding-left: 16px;
   .hide-print,
   .order-view .sap-docs,
   .only-hide-print,
+  .cash-report-config,
   #footer{display: none!important;}
 
   .only-show-print,
