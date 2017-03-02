@@ -44,7 +44,7 @@
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
-        <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV: {{ main.mapTerminalCode(method.terminal) }}</strong></h3>
+        <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV: {{ mapTerminalCode(method.terminal) }}</strong></h3>
 
         <h3 ng-if="!isSinglePlaymentTerminal(method) && !method.msi">
           <strong>{{method.name}}</strong>
@@ -126,7 +126,7 @@
         <p class="pull-right total-method">
           <strong 
             ng-if="(isSinglePlaymentTerminal(method) || method.msi) && !isUsdPayment(method) ">
-            Total TPV {{ main.mapTerminalCode(method.terminal) }} MXN:
+            Total TPV {{ mapTerminalCode(method.terminal) }} MXN:
           </strong>
 
 
