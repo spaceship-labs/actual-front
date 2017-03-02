@@ -37,9 +37,8 @@ function UserProfileCtrl(
     isUsdPayment: paymentService.isUsdPayment,
     isUserAdminOrManager: authService.isUserAdminOrManager,
     paymentTypes: paymentService.types,
-    update: update,
-    storeFilter: 'all'
-
+    print: print,
+    update: update
   });
 
   if(vm.user.role.name === authService.USER_ROLES.BROKER){
@@ -52,6 +51,12 @@ function UserProfileCtrl(
       $location.path('/users/brokerprofile');
     }
   }
+
+
+  function print(){
+    $window.print();
+  }       
+
 
   function update(form){
     if(form.$valid){

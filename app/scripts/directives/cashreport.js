@@ -13,8 +13,7 @@ angular.module('dashexampleApp')
   	authService,
   	dialogService,
   	storeService,
-  	$q,
-  	$window
+  	$q
   	) {
     return {
       templateUrl: 'views/directives/cash-report/cash-report.html',
@@ -22,6 +21,7 @@ angular.module('dashexampleApp')
       replace: true,
       scope:{
         user: '=',
+        print: '='
       },
       controller: [
     	'$scope',
@@ -39,8 +39,7 @@ angular.module('dashexampleApp')
 		  	authService,
 		  	dialogService,
 		  	storeService,
-		  	$q,
-		  	$window      	
+		  	$q
       ) {
 
       	angular.extend($scope,{
@@ -65,24 +64,18 @@ angular.module('dashexampleApp')
       		onSelectEndDate: onSelectEndDate,
 			    paymentTypes: paymentService.types,
     			paymentRequiresBankColumn: paymentRequiresBankColumn,
-			    print: print,
 			    requiresBankColumn: requiresBankColumn,
-
       	});
 
       	$scope.init();
 
-			  function print(){
-			    $window.print();
-			  }      	
-
       	function init(){
-      		console.log('cashReport');
 			    var monthRange = commonService.getMonthDateRange();
 			    $scope.startDate = moment().startOf('day');
 			    $scope.endDate = moment().endOf('day');
 			    $scope.startTime = moment().startOf('day');
 			    $scope.endTime = moment().endOf('day');
+			    $scope.storeFilter = 'all';
 			  };
 
 			  function onSelectStartDate(pikaday){
@@ -176,13 +169,13 @@ angular.module('dashexampleApp')
 
 			  }
 
-			  function filterStores(stores){
-			    if($scope.storeFilter === 'all'){
+			  function filterStores(stores, storeFilter){
+			    if(storeFilter === 'all'){
 			      return stores;
 			    }
 			    else{
 			      return stores.filter(function(store){
-			        return store.id === $scope.storeFilter;
+			        return store.id === storeFilter;
 			      });
 			    }
 			  }

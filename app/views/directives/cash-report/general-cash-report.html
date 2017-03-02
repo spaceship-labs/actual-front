@@ -6,7 +6,7 @@
     <div flex>
 
       <h3><strong>Vista regional - por tiendas</strong></h3>
-      <h3><strong>UID:</strong>
+      <h3><strong>Usuario:</strong>
          {{user.firstName + ' ' + user.lastName}}
       </h3>
       <h3>
@@ -39,7 +39,9 @@
 
 
 
-  <section ng-repeat="store in filterStores(stores)" class="cash-report-inner seller-item">
+  <section 
+    ng-repeat="store in filterStores(stores, storeFilter)" 
+    class="cash-report-inner seller-item">
 
     <h2>
       <strong>Tienda:</strong> {{store.name}}
