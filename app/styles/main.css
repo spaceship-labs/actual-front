@@ -3937,6 +3937,7 @@ padding-left: 16px;
 .cash-report h3{
   font-size: 14px;
   font-weight: 400;
+  text-transform: capitalize;
 }
 .cash-report .seller-item{
   border: 1px solid #000;
@@ -3968,6 +3969,7 @@ padding-left: 16px;
 }
 
 .cash-report .payment-item-header{font-size: 14px;}
+.cash-report .total-method{text-transform: capitalize;}
 .cash-report .total-group{/*font-size:18px;*/}
 .cash-report .cash-report-total{font-size: 18px;}
 

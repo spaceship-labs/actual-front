@@ -50,7 +50,7 @@ function CheckoutOrderCtrl(
         return detail.immediateDelivery;
       });
       if(hasImmediateDelivery){
-        dialogService.showDialog('Favor de entregarle al cliente los artículos que se llevara de la tienda consigo mismo');
+        dialogService.showDialog('!Favor de entregar al cliente los artículos que se llevará¡');
       }
     }
   }

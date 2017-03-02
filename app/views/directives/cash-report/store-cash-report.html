@@ -16,7 +16,7 @@
         {{endDate | date:'dd/MM/yyyy h:mm a'}}
       </h3>
       <h3>
-        <strong>Total global ventas:</strong> {{ getSellersTotal() | currency }} MXN
+        <strong>Total Global Ventas:</strong> {{ getSellersTotal() | currency }} MXN
       </h3>      
     </div>
     
@@ -30,7 +30,7 @@
         <strong>Interiorista:</strong> {{seller.firstName + ' ' + seller.lastName}}
       </h2>
       <h2>
-        <strong>Total general ventas: </strong> {{ getSellerTotal(seller) | currency }} MXN
+        <strong>Total Global Ventas: </strong> {{ getSellerTotal(seller) | currency }} MXN
       </h2>
     </div>
 
@@ -44,7 +44,7 @@
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
-        <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV: {{ mapTerminalCode(method.terminal) }}</strong></h3>
+        <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV {{ mapTerminalCode(method.terminal) }}</strong></h3>
 
         <h3 ng-if="!isSinglePlaymentTerminal(method) && !method.msi">
           <strong>{{method.name}}</strong>
@@ -73,7 +73,6 @@
             >
               <strong>Tipo de cambio</strong>
             </th>
-            <th class="payment-item-header"><strong>Moneda</strong></th>
             <th class="payment-item-header"><strong>Cantidad</strong></th>
           </thead>
           <!--END METHOD HEADER-->
@@ -108,7 +107,6 @@
               >
                 {{payment.exchangeRate | currency}}
               </td>
-              <td class="payment-item-cell to-upper">{{payment.currency}}</td>
               <td class="payment-item-cell">{{payment.ammount | currency}}</td>
             </tr>
 
@@ -148,12 +146,12 @@
       </div>
       
       <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
-        <strong>Gran total general USP MXN: {{getTotalByGroup(group) | currency}}</strong>
+        <strong>Gran Total General USP MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>
 
 
       <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
-        <strong>Total general {{group.msi}} MSI MXN: {{getTotalByGroup(group) | currency}}</strong>
+        <strong>Total General {{group.msi}} MSI MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>
 
     </section>
