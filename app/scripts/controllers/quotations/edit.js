@@ -93,13 +93,6 @@ function QuotationsEditCtrl(
     showAlerts();
 
     console.log('start loading quotation', new Date());
-    /*var forceLatestData = true;
-    if($rootScope.activeQuotation){
-      if(quotationId === $rootScope.activeQuotation.id){
-        forceLatestData = false;
-      }
-    }
-    */
 
     quotationService.getById(quotationId)
       .then(function(res){
@@ -428,7 +421,6 @@ function QuotationsEditCtrl(
   }
 
   function updateDetailsInfo(details, newDetails){
-    var removedDetailsIds = [];
     for(var i=0;i<details.length; i++){
       var detail = details[i];
       var match = _.findWhere(newDetails, { id: detail.id } );
@@ -532,7 +524,6 @@ function QuotationsEditCtrl(
             $location.path('/checkout/client/' + vm.quotation.id);
           }
           else{
-            console.log('No hay cliente');
             //quotationService.setActiveQuotation(vm.quotation.id);
             //localStorageService.set('inCheckoutProcess', true);
             $location.path('/continuequotation')

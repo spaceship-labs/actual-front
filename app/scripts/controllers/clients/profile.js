@@ -77,7 +77,6 @@ function ClientProfileCtrl(
     apiResourceOrders: orderService.getList,
     updateContact: updateContact,
     createContact: createContact,
-    openMapDialog: openMapDialog,
     personalDataAction: personalDataAction,
     isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
@@ -119,7 +118,6 @@ function ClientProfileCtrl(
   }
 
   function copyPersonalDataToContact(client,contact){
-    console.log('copyingPersonalData', contact);
     if(!contact.copyingPersonalData){
       contact.FirstName = _.clone(client.FirstName);
       contact.LastName = _.clone(client.LastName);
@@ -369,37 +367,6 @@ function ClientProfileCtrl(
       $scope.status = 'You said the information was "' + answer + '".';
     }, function() {
       $scope.status = 'You cancelled the dialog.';
-    });
-  }
-
-
-  function MapDialogController($scope){
-    angular.extend($scope, {
-        center: {
-          lat: 21.1213286,
-          lng: -86.9194812,
-          zoom: 6
-        },
-        defaults: {
-          scrollWheelZoom: false
-        },
-        markers: {
-          Madrid: {
-              lat: 40.095,
-              lng: -3.823,
-              focus: true,
-              draggable: true
-          },
-        },
-        layers: {
-          baselayers: {
-              googleRoadmap: {
-                  name: 'Google Streets',
-                  layerType: 'ROADMAP',
-                  type: 'google'
-              }
-          }
-        }
     });
   }
 

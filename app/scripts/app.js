@@ -162,19 +162,6 @@ angular
           }
         }
       })
-      .when('/quotations/records', {
-        templateUrl: 'views/quotations/records.html',
-        controller: 'QuotationsRecordsCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-      })
       .when('/quotations/edit/:id', {
         templateUrl: 'views/quotations/edit.html',
         controller: 'QuotationsEditCtrl',

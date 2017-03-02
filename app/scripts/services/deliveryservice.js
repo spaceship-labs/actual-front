@@ -162,11 +162,6 @@
       return warehousesIds;  	
     }
 
-    function getCategoriesGroups(){
-      var url = '/productcategory/getcategoriesgroups';
-      return api.$http.post(url);
-    }
-
 	  function sortDeliveriesByHierarchy(deliveries, allWarehouses, activeStoreWarehouse){
 	    var sortedDeliveries = [];
 	    var warehouses = deliveries.map(function(delivery){

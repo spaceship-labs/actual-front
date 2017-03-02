@@ -81,8 +81,6 @@
 	    return productCartItems;
 	  }
 
-	  function formatProductCartItem(){}
-
 	  function formatProductCartItems(productCartItems, defaults){
 	  	defaults = defaults || {};
 	  	productCartItems = productCartItems.map(function(item){
