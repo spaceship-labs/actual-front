@@ -24,10 +24,6 @@
         addProduct: addProduct,
         addRecord: addRecord,
         addMultipleProducts: addMultipleProducts,
-        calculateItemsNumber: calculateItemsNumber,
-        calculateSubTotal: calculateSubTotal,
-        calculateTotal: calculateTotal,
-        calculateTotalDiscount: calculateTotalDiscount,
         closeQuotation: closeQuotation,
         create: create,
         isValidStock: isValidStock,
@@ -42,7 +38,6 @@
         getQuotationTotals: getQuotationTotals,
         getCurrentStock: getCurrentStock,        
         getRecords: getRecords,
-        getTotalByPaymentMethod: getTotalByPaymentMethod,
         getTotalsByUser: getTotalsByUser,
         getClosingReasons: getClosingReasons,
         getPaymentOptions: getPaymentOptions,
@@ -156,74 +151,6 @@
         return api.$http.post(url);
       }           
 
-      function calculateSubTotal(quotation){
-        var subTotal = 0;
-        if(quotation.Details){
-          var details = quotation.Details;
-          details.forEach(function(detail){
-            if(detail.Product && detail.Product.priceBefore){
-              subTotal+= detail.Product.priceBefore * detail.quantity;
-            }
-          });
-        }
-        return subTotal;
-
-      }
-
-      function calculateTotal(quotation){
-        var total = 0;
-        if(quotation.Details){
-          var details = quotation.Details;
-          details.forEach(function(detail){
-            if(detail.Product && detail.Product.Price){
-              total+= detail.Product.Price * detail.quantity;
-            }
-          });
-        }
-        return total;
-      }
-
-      //Siempre toma el precio actual como la promocion con pago unico
-      function calculateTotalDiscount(quotation){
-        var totalDiscount = 0;
-        if(quotation.Details){
-          var details = quotation.Details;
-          details.forEach(function(detail){
-            if(detail.Product && detail.Product.Price && detail.Product.priceBefore){
-              totalDiscount += ( detail.Product.priceBefore - detail.Product.Price) * detail.quantity;
-            }
-          });
-        }
-        return totalDiscount;
-      }
-
-      function getTotalByPaymentMethod(quotation, paymentDiscountKey){
-        var total = 0;
-        if(quotation.Details){
-          var details = quotation.Details;
-          details.forEach(function(detail){
-            if(detail.Product && detail.Product.priceBefore && detail.Product.mainPromo){
-              var product = detail.Product;
-              var discountPercent =  product.mainPromo[paymentDiscountKey];
-              var price  = product.priceBefore - ( ( product.priceBefore / 100) * discountPercent);
-              total += price * detail.quantity;
-              //total+= detail.Product.Price * detail.quantity;
-            }
-          });
-        }
-        return total;
-      }
-
-      function calculateItemsNumber(quotation){
-        var items = 0;
-        if(quotation.Details){
-          var details = quotation.Details;
-          details.forEach(function(detail){
-            items += detail.quantity;
-          });
-        }
-        return items;
-      }
 
       function populateDetailsWithProducts(quotation, options){
         options = options || {};

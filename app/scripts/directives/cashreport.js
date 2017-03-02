@@ -99,14 +99,16 @@ angular.module('dashexampleApp')
 			    };
 
 			    var promises = [];
+			    $scope.isStoreReport = authService.isStoreManager($scope.user);
+			    $scope.isGeneralReport = authService.isAdmin($scope.user);
 
-			    if(authService.isAdmin($scope.user)){
+			    if( $scope.isGeneralReport ){
 			      promises = [
 			        paymentService.getPaymentMethodsGroups(),
 			        storeService.getStoresCashReport(params)
 			      ];
 			    }
-			    else if( authService.isStoreManager($scope.user) ){
+			    else if( $scope.isStoreReport ){
 			      promises = [
 			        paymentService.getPaymentMethodsGroups(),      
 			        storeService.getStoreCashReport($scope.user.mainStore.id, params)
@@ -202,9 +204,15 @@ angular.module('dashexampleApp')
 			        currency: group[0].currency,
 			      };
 
-			      if(method.type === paymentService.types.CASH){
-			      	method.name = 'Efectivo';
-			      }
+			      if($scope.isStoreReport){
+				      if(method.type === paymentService.types.CASH){
+				      	method.name = 'Efectivo';
+				      }
+
+				      if(method.type === paymentService.types.CASH_USD){
+				      	method.name = 'Efectivo';
+				      }
+				    }
 
 			      return method;
 			    });

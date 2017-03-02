@@ -67,12 +67,8 @@
               <strong>Fecha/Hora</strong>
             </th>
             <th class="payment-item-header"><strong>Pedido</strong></th>
+            <th class="payment-item-header"><strong>Tipo de cambio</strong></th>            
             <th class="payment-item-header"><strong>Moneda</strong></th>
-            <th 
-              class="payment-item-header" 
-            >
-              <strong>Tipo de cambio</strong>
-            </th>
             <th class="payment-item-header"><strong>Cantidad</strong></th>
           </thead>
           <!--END METHOD HEADER-->
@@ -97,9 +93,6 @@
               <td class="payment-item-cell">
                 {{payment.createdAt | date:'dd/MM/yyyy h:mm a'}}
               </td>
-              <td class="payment-item-cell to-upper">
-                {{payment.currency}}
-              </td>              
               <td class="payment-item-cell">
                 <span ng-if="payment.Order.folio">#{{payment.Order.folio}}</span>
                 <span ng-if="!payment.Order.folio">-</span>
@@ -110,6 +103,9 @@
               >
                 {{payment.exchangeRate | currency}}
               </td>
+              <td class="payment-item-cell to-upper">
+                {{payment.currency}}
+              </td>              
               <td 
                 class="payment-item-cell" 
                 ng-if="!isUsdPayment(method)"            
@@ -128,7 +124,7 @@
           class="pull-right total-method" 
           ng-if="isUsdPayment(method)"
         >
-          <strong>Total {{method.name}}:</strong> {{getTotalByMethodUSD(method) | currency}}
+          <strong>Total {{method.name}} USD:</strong> {{getTotalByMethodUSD(method) | currency}}
         </p>
 
         <p class="pull-right total-method">
@@ -140,8 +136,7 @@
 
           <strong 
             ng-if="!isSinglePlaymentTerminal(method) && !method.msi && !isUsdPayment(method) ">
-            Total {{method.name}} 
-            <span ng-if="method.type !== paymentTypes.CASH ">MXN</span>:
+            Total {{method.name}} MXN:
           </strong>
           
           
