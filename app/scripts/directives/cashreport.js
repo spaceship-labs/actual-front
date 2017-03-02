@@ -191,7 +191,7 @@ angular.module('dashexampleApp')
 			      return payment.type + '#' + payment.terminal;
 			    });
 			    var methods = _.map(auxGroups, function(group){
-			      return {
+			      var method = {
 			        type: group[0].type,
 			        name: group[0].name,
 			        label: group[0].type,
@@ -201,6 +201,12 @@ angular.module('dashexampleApp')
 			        groupNumber: group[0].group,
 			        currency: group[0].currency,
 			      };
+
+			      if(method.type === paymentService.types.CASH){
+			      	method.name = 'Efectivo';
+			      }
+
+			      return method;
 			    });
 
 			    var paymentsGroups = _.groupBy(methods, function(method){

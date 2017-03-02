@@ -67,9 +67,9 @@
               <strong>Fecha/Hora</strong>
             </th>
             <th class="payment-item-header"><strong>Pedido</strong></th>
+            <th class="payment-item-header"><strong>Moneda</strong></th>
             <th 
               class="payment-item-header" 
-              ng-if="isUsdPayment(method)"
             >
               <strong>Tipo de cambio</strong>
             </th>
@@ -97,6 +97,9 @@
               <td class="payment-item-cell">
                 {{payment.createdAt | date:'dd/MM/yyyy h:mm a'}}
               </td>
+              <td class="payment-item-cell to-upper">
+                {{payment.currency}}
+              </td>              
               <td class="payment-item-cell">
                 <span ng-if="payment.Order.folio">#{{payment.Order.folio}}</span>
                 <span ng-if="!payment.Order.folio">-</span>
@@ -107,6 +110,13 @@
               >
                 {{payment.exchangeRate | currency}}
               </td>
+              <td 
+                class="payment-item-cell" 
+                ng-if="!isUsdPayment(method)"            
+              >
+                -
+              </td>
+
               <td class="payment-item-cell">{{payment.ammount | currency}}</td>
             </tr>
 
