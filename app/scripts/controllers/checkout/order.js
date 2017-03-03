@@ -107,7 +107,7 @@ function CheckoutOrderCtrl(
 
 
       vm.invoicesInterval = $interval(function(){
-        if(vm.invoiceLoadCounter <= vm.invoiceLoadLimit ){
+        if(vm.invoiceLoadCounter <= vm.invoiceLoadLimit && !vm.invoiceExists ){
           loadInvoices(); 
           vm.invoiceLoadCounter++;     
         }
@@ -155,6 +155,7 @@ function CheckoutOrderCtrl(
         .then(function(invoices){
           vm.invoices = invoices;
           vm.invoiceExists = invoices.length > 0;
+          dialogService.showDialog('Factura emitida');
         });    
     }
   }
