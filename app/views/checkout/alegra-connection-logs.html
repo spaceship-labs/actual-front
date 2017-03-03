@@ -1,0 +1,25 @@
+<div class="sap-connection-logs">
+  <div ng-if="vm.isLoadingAlegraLogs" layout="row" layout-align="center center" class="loading-circle">
+    <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
+  </div>
+  <section ng-show="vm.alegraLogs && vm.alegraLogs.length > 0">
+    <p>
+      <a href="#" ng-click="vm.showAlegraLogs = !vm.showAlegraLogs">
+        Mostrar logs de conexiones a Alegra
+        </a>
+    </p>
+
+    <div ng-show="vm.showAlegraLogs && !vm.isLoadingAlegraLogs">
+      <h3><strong>Logs de conexiones de Alegra</strong></h3>
+      <ul>
+        <li ng-repeat="log in vm.alegraLogs track by $index">
+          <strong>{{ log.createdAt | date:'h:mm:ss a d/MMM/yyyy' }}</strong>
+          <p ng-if="log.isError"><strong>Error</strong></p>
+          <p>URL: {{log.url}}</p>
+          <p>{{log.requestData}}</p>
+          <p>{{log.responseData}}</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>

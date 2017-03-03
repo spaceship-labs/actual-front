@@ -41,6 +41,11 @@ function CheckoutOrderCtrl(
     print: print,
     invoices: [],
     invoicesInterval: false,
+    invoiceLoadCounter: 0,
+    invoiceLoadLimit: 5,
+    invoiceLogInterval: false,    
+    invoiceLogLoadCounter: 0,
+    invoiceLogLoadLimit: 5,    
     calculateBalance: orderService.calculateBalance
   });
 
@@ -73,10 +78,11 @@ function CheckoutOrderCtrl(
 
       loadOrderQuotationRecords(vm.order);
       calculateEwalletAmounts(vm.order);
+      loadSapLogs(vm.order.Quotation);
 
-      vm.sapLogs = [];
-      if(vm.order.SapOrderConnectionLog){
-        vm.sapLogs.push(vm.order.SapOrderConnectionLog);
+      vm.alegraLogs = [];
+      if(vm.order.AlegraLogs){
+        vm.alegraLogs = vm.order.AlegraLogs;
       }
 
       vm.order.Details = vm.order.Details || [];
@@ -108,13 +114,37 @@ function CheckoutOrderCtrl(
       vm.isLoading = false;
     });
 
-    loadInvoices();
+    //loadInvoices();
 
     vm.invoicesInterval = $interval(function(){
-      //loadInvoices();      
+      if(vm.invoiceLoadCounter <= vm.invoiceLoadLimit ){
+        loadInvoices(); 
+        vm.invoiceLoadCounter++;     
+      }
+    }, 3000);
+
+    vm.invoiceLogInterval = $interval(function(){
+      if(vm.invoiceLogLoadCounter <= vm.invoiceLogLoadLimit ){
+        loadLogsInvoice(); 
+        vm.invoiceLogLoadCounter++;     
+      }
     }, 3000);
 
   }
+
+  function loadSapLogs(quotationId){
+    vm.isLoadingSapLogs = true;
+    quotationService.getSapOrderConnectionLogs(quotationId)
+      .then(function(res){
+        vm.sapLogs = res.data;
+        console.log('sapLogs', vm.sapLogs);
+        vm.isLoadingSapLogs = false;
+      })
+      .catch(function(err){
+        console.log('err', err);
+        vm.isLoadingSapLogs = false;        
+      });
+  }  
 
   function loadInvoices(){
     if(vm.invoices.length === 0){
@@ -123,6 +153,18 @@ function CheckoutOrderCtrl(
           vm.invoices = invoices;
           vm.invoiceExists = invoices.length > 0;
         });    
+    }
+  }
+
+  function loadLogsInvoice(){
+    if(vm.alegraLogs.length === 0){
+      invoiceService.getInvoiceLogs($routeParams.id)
+        .then(function(logs){
+          vm.alegraLogs = logs;
+        })
+        .catch(function(err){
+          console.log(err);
+        });
     }
   }
 
@@ -235,6 +277,10 @@ function CheckoutOrderCtrl(
   $scope.$on('$destroy', function(){
     if(vm.invoicesInterval){
       $interval.cancel(vm.invoicesInterval);
+    }
+    if(vm.invoiceLogInterval){
+      $interval.cancel(vm.invoiceLogInterval);
+      
     }
   });  
 
