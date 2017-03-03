@@ -199,16 +199,17 @@ function ClientCreateCtrl(
     }
 
     if( $rootScope.activeQuotation ){
-      if($rootScope.activeQuotation.immediateDelivery){
+      //When activequotation contacts arent needed
+      //if($rootScope.activeQuotation.immediateDelivery){
         return true;
-      } 
+      //} 
     }
 
     if(contacts.length > 0){
-      var areNotEmpty  = contacts.every(function(c){
+      var areFilled  = contacts.every(function(c){
         return !_.isEmpty(c);
       });
-      return areNotEmpty;
+      return areFilled;
     }
     return false;
   }
