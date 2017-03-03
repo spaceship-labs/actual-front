@@ -3782,6 +3782,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .order-view .order-item-features{
 padding-left: 16px;
 }
+.order-view .order-item-features .immediate-delivery-text{
+  font-size: 13px;
+  font-weight: 700;  
+}
 .order-view .order-item-features ul{
   margin: 0;
   list-style: none;

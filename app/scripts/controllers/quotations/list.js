@@ -342,10 +342,12 @@ function QuotationsListCtrl(
       acum += seller.untilToday;
       return acum;
     }, 0);
-     vm.store.allByDateRangeAmount = sellersAmounts.reduce(function(acum, seller){
+    
+    vm.store.allByDateRangeAmount = sellersAmounts.reduce(function(acum, seller){
       acum += seller.allByDateRange;
       return acum;
     }, 0);
+    
     vm.store.ammounts = {
       labels: ["Hoy", "Resto de la quincena"],
       data: [
