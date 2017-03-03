@@ -105,6 +105,21 @@ function CheckoutOrderCtrl(
           console.log(err);
         });
 
+
+      vm.invoicesInterval = $interval(function(){
+        if(vm.invoiceLoadCounter <= vm.invoiceLoadLimit ){
+          loadInvoices(); 
+          vm.invoiceLoadCounter++;     
+        }
+      }, 3000);
+
+      vm.invoiceLogInterval = $interval(function(){
+        if(vm.invoiceLogLoadCounter <= vm.invoiceLogLoadLimit ){
+          loadLogsInvoice(); 
+          vm.invoiceLogLoadCounter++;     
+        }
+      }, 3000);        
+
     })
     .catch(function(err){
       console.log(err);
@@ -116,19 +131,7 @@ function CheckoutOrderCtrl(
 
     //loadInvoices();
 
-    vm.invoicesInterval = $interval(function(){
-      if(vm.invoiceLoadCounter <= vm.invoiceLoadLimit ){
-        loadInvoices(); 
-        vm.invoiceLoadCounter++;     
-      }
-    }, 3000);
 
-    vm.invoiceLogInterval = $interval(function(){
-      if(vm.invoiceLogLoadCounter <= vm.invoiceLogLoadLimit ){
-        loadLogsInvoice(); 
-        vm.invoiceLogLoadCounter++;     
-      }
-    }, 3000);
 
   }
 
