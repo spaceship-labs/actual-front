@@ -155,7 +155,9 @@ function CheckoutOrderCtrl(
         .then(function(invoices){
           vm.invoices = invoices;
           vm.invoiceExists = invoices.length > 0;
-          dialogService.showDialog('Factura emitida');
+          if(vm.invoiceExists){
+            dialogService.showDialog('Factura emitida');          
+          }
         });    
     }
   }
