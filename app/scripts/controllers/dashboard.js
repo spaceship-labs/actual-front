@@ -31,7 +31,7 @@ function DashboardCtrl(
     vm.quotationsData.untilTodayAmount  = userTotals.untilToday;
     vm.quotationsData.byDateRangeAmount = userTotals.byDateRange;
     vm.quotationsData.ammounts = {
-      labels: ["Hoy", "FTD"],
+      labels: ["Hoy", "Total"],
       data: [
         vm.quotationsData.untilTodayAmount,
         (vm.quotationsData.byDateRangeAmount - vm.quotationsData.untilTodayAmount)
@@ -49,7 +49,7 @@ function DashboardCtrl(
     vm.quotationsData.untilTodayQty = userCounts.untilToday;
     vm.quotationsData.byDateRangeQty = userCounts.byDateRange;
     vm.quotationsData.quantities = {
-      labels: ["Hoy", "Resto del mes"],
+      labels: ["Hoy", "Restante"],
       data: [
         vm.quotationsData.untilTodayQty,
         (vm.quotationsData.byDateRangeQty - vm.quotationsData.untilTodayQty)

@@ -242,7 +242,7 @@ function QuotationsListCtrl(
     vm.quotationsData.untilTodayAmount  = userTotals.untilToday;
     vm.quotationsData.allByDateRangeAmount = userTotals.allByDateRange;
     vm.quotationsData.ammounts = {
-      labels: ["Hoy", "FTD"],
+      labels: ["Hoy", "Total"],
       data: [
         vm.quotationsData.untilTodayAmount,
         (vm.quotationsData.allByDateRangeAmount - vm.quotationsData.untilTodayAmount)
@@ -260,7 +260,7 @@ function QuotationsListCtrl(
     vm.quotationsData.untilTodayQty = userCounts.untilToday;
     vm.quotationsData.allByDateRangeQty = userCounts.allByDateRange;
     vm.quotationsData.quantities = {
-      labels: ["Hoy", "Resto del mes"],
+      labels: ["Hoy", "Restante"],
       data: [
         vm.quotationsData.untilTodayQty,
         (vm.quotationsData.allByDateRangeQty - vm.quotationsData.untilTodayQty)
@@ -374,7 +374,7 @@ function QuotationsListCtrl(
     }, 0);
 
     vm.store.quantities = {
-      labels: ["Hoy", "Resto del mes"],
+      labels: ["Hoy", "Restante"],
       data: [
         vm.store.untilTodayQty,
         (vm.store.allByDateRangeQty - vm.store.untilTodayQty)
