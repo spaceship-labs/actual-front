@@ -76,7 +76,8 @@
     ];
 
    	var paymentsOptions = [
-   		{
+   		/*
+      {
    			card: {label:'American Express', value:'american-express'},
    			paymentTypes: ['single-payment-terminal'],
    			storesTypes:['home','studio'],
@@ -88,6 +89,13 @@
    			storesTypes:['studio'],
    			terminal: {label:'American Express', value:'american-express'}
    		},
+      */
+      {
+        card: {label:'American Express', value:'american-express'},
+        paymentTypes: ['single-payment-terminal','3-msi','6-msi','9-msi','12-msi','18-msi'],
+        storesTypes:['home','studio'],
+        terminal: {label:'American Express', value:'american-express'}
+      },
    		{
    			card:{label:'Banamex', value:'banamex'},
    			paymentTypes: ['single-payment-terminal'],
