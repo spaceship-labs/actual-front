@@ -298,12 +298,6 @@
       return states;
     }
 
-    function dialogController($scope, $mdDialog){
-      $scope.closeDialog = function (){
-          $mdDialog.hide();
-      };
-    }
-
     function showDialog(message, parent, ev){
       var parentCon = angular.element('body');
       if(parent){
@@ -324,14 +318,10 @@
 
     function getMonthDateRange() {
       var currentTime = new Date()
-      // returns the month (from 0 to 11)
       var month = currentTime.getMonth() + 1
-      // returns the year (four digits)
       var year = currentTime.getFullYear()
       var startDate = moment([year, month]).add(-1,"month");
-      // Clone the value before .endOf()
       var endDate = moment(startDate).endOf('month');
-      // make sure to call toDate() for plain JavaScript date type
       return { start: startDate.toDate(), end: endDate.toDate() };
     }
 

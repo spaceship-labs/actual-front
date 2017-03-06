@@ -7,7 +7,6 @@
 
     /** @ngInject */
     function quotationService(
-      $http, 
       $location, 
       $q, 
       $rootScope, 

@@ -5,7 +5,7 @@
     .module('dashexampleApp')
     .factory('deliveryService', deliveryService);
 
-  function deliveryService(api, $filter){
+  function deliveryService($filter){
     var service = {
     	getAvailableByDeliveries: getAvailableByDeliveries,
     	groupDeliveryDates: groupDeliveryDates,
@@ -74,10 +74,11 @@
     	return date;
     }
 
-    function isImmediateDelivery(delivery){
+    function isDateImmediateDelivery(delivery){
+		  var FORMAT = 'D/M/YYYY';
     	var currentDate = convertDatetimeToDate(new Date());
     	var deliveryDate = convertDatetimeToDate(delivery.date);
-    	return moment(currentDate).format() === moment(deliveryDate).format();
+    	return moment(currentDate).format(FORMAT) === moment(deliveryDate).format(FORMAT);
     }
 
     function groupDeliveryDates(deliveries){
@@ -88,7 +89,7 @@
 	    		if(
 	    			delivery.companyFrom !== deliveries[i].companyFrom && 
 	    			convertDatetimeToDate(delivery.date) <= convertDatetimeToDate(deliveries[i].date) && 
-	    			!isImmediateDelivery(delivery)
+	    			!isDateImmediateDelivery(delivery)
 	    		){
 	    			return true;
 	    		}

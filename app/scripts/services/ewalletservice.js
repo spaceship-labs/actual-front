@@ -7,11 +7,7 @@
 
     /** @ngInject */
     function ewalletService(
-      $http, 
-      $location, 
-      $q,
       $filter,
-      api,
       clientService,
       commonService
     ){

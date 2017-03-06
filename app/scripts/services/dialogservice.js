@@ -22,7 +22,7 @@
     dialogController.$inject = ['$scope','$mdDialog','params'];
 
     /** @ngInject */
-    function dialogService($q, $log, $mdDialog, $window, $location, $rootScope, $mdToast){
+    function dialogService($q, $log, $mdDialog, $window, $location, $rootScope){
         var service = {
             showDialog: showDialog,
             showDestroyDialog: showDestroyDialog,

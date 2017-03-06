@@ -5,7 +5,7 @@
     .module('dashexampleApp')
     .factory('categoriesService', categoriesService);
 
-  function categoriesService(api, $q){
+  function categoriesService(api){
     var service = {
       getCategoriesGroups: getCategoriesGroups,
       createCategoriesTree: createCategoriesTree,
@@ -35,13 +35,13 @@
         'ambientes': 'ambientes',
         'colchones': 'colchones',
         'mesas': 'mesas',
-        'ambientes': 'ambientes',
         'sillas': 'sillas',
         'bebes': 'bebes',
         'ninos': 'ninos',
         'blancos': 'blancos',
         'decoracion': 'decoracion',
-      }
+      };
+      
       if(icons[handle]){
         return icons[handle];
       }

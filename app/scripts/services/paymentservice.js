@@ -324,15 +324,20 @@
       var type = '1 sola exhibición';
       if(payment.type === 'cash' || payment.type === 'cash-usd'){
         type = 'Pago de contado';
-      }else if(payment.msi){
+      }
+      else if(payment.msi){
         type = payment.msi + ' meses sin intereses';
-      }else if(payment.type === 'transfer'){
+      }
+      else if(payment.type === 'transfer'){
         type = 'Transferencia';
-      }else if(payment.type === 'deposit'){
+      }
+      else if(payment.type === 'deposit'){
         type = 'Deposito';
-      }else if(payment.type === 'ewallet'){
+      }
+      else if(payment.type === 'ewallet'){
         type = 'Monedero electrónico';
-      }else if(payment.type === 'client-balance'){
+      }
+      else if(payment.type === 'client-balance'){
         type = 'Saldo a favor cliente';
       }
       return type;
