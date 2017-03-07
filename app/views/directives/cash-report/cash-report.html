@@ -81,13 +81,16 @@
     ng-if="!isLoadingReport && (sellers.length > 0 || stores.length > 0) && isUserAdminOrManager(user)"
     id="cash-report"
     class="cash-report container container-xlg"
+    ng-class="{
+      'manager-report': isManagerReport
+    }"
   >
     <ng-include 
-      ng-if="isStoreManager(user)" 
-      src="'views/directives/cash-report/store-cash-report.html'"></ng-include>
+      ng-if="isManagerReport" 
+      src="'views/directives/cash-report/manager-cash-report.html'"></ng-include>
 
     <ng-include 
-      ng-if="isAdmin(user)" 
+      ng-if="isGeneralReport" 
       src="'views/directives/cash-report/general-cash-report.html'"></ng-include>
 
 

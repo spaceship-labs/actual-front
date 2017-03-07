@@ -14,8 +14,10 @@
         getAllStores: getAllStores,
         getStoreCashReport: getStoreCashReport,
         getStoresCashReport: getStoresCashReport,
+        getManagerCashReport: getManagerCashReport,
         countSellers: countSellers,
-        commissionables: commissionables
+        commissionables: commissionables,
+
       };
 
       return service;
@@ -24,6 +26,12 @@
         var url = '/store/'+id+'/promotions';
         return api.$http.post(url);
       }
+
+      function getManagerCashReport(params){
+        var url = '/me/managercashreport';
+        return api.$http.post(url,params);
+      }
+
 
       function getStoreCashReport(id, params){
         var url = '/store/'+id+'/cashreport';

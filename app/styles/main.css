@@ -3925,12 +3925,19 @@ padding-left: 16px;
 }
 .cash-report{
   border: 1px solid #000;
-  padding:20px;
   margin-bottom: 20px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.manager-report{
+  padding-top: 0
+}
+.manager-report .md-tab.md-active{
+  color: #000;
+}
+
+.cash-report-wrapper{padding:20px;}
 .cash-report table{width: 100%}
 .cash-report .store-report-header-col:last-child{text-align: right;}
 .cash-report h1{
@@ -4181,6 +4188,7 @@ padding-left: 16px;
   .order-view .sap-docs,
   .only-hide-print,
   .cash-report-config,
+  .cash-report md-tabs-wrapper,
   #footer{display: none!important;}
 
   .only-show-print,
