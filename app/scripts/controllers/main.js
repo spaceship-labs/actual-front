@@ -469,7 +469,8 @@
       });
     }
 
-    $rootScope.successAuth = function(res){
+    $rootScope.successAuth = function(response){
+      var res = response.data;
       vm.token = res.token;
       vm.user  = res.user;
       console.log('res.user', res.user);
