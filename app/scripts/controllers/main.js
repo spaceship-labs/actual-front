@@ -469,10 +469,11 @@
       });
     }
 
-    $rootScope.successAuth = function(res){
+    $rootScope.successAuth = function(response){
+      console.log('res', res);
+      var res = response.data;
       vm.token = res.token;
       vm.user  = res.user;
-      console.log('res.user', res.user);
       localStorageService.remove('currentQuotation');
       localStorageService.set('token', res.token);
       localStorageService.set('user' , res.user);

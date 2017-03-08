@@ -93,8 +93,11 @@ module.exports = function(config) {
       'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
       'bower_components/object-hash/dist/object_hash.js',
       'bower_components/chosen/chosen.jquery.js',
+      'bower_components/angularjs/angular.js',
       'bower_components/angular-chosen-localytics/dist/angular-chosen.js',
       'bower_components/ng-currency/dist/ng-currency.js',
+      'bower_components/angular-photoswipe/dist/angular-photoswipe.js',
+      'bower_components/angular-photoswipe/dist/angular-photoswipe.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
