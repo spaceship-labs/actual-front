@@ -109,7 +109,7 @@ function QuotationsListCtrl(
   function init(){
     if(authService.isUserManager()){
       console.log('vm.user', vm.user);
-      getSellersByStore(vm.user.mainStore.id);
+      //getSellersByStore(vm.user.mainStore.id);
       setupManagerData();
     }
     else{
@@ -135,7 +135,7 @@ function QuotationsListCtrl(
       .then(function(stores){
         console.log('stores', stores);
         var storePromises = stores.map(function(store){
-          return getSellersByStore(store.id);          
+          return getSellersByStore(store);          
         });
         return $q.all(storePromises);
       })
@@ -149,18 +149,18 @@ function QuotationsListCtrl(
     return userService.getStores(userEmail);
   }
 
-  function getSellersByStore(storeId){
+  function getSellersByStore(store){
     var deferred = $q.defer();
-    storeService.getSellersByStore(storeId)
+    storeService.getSellersByStore(store.id)
       .then(function(res){
-        vm.sellers = res.data;
-        vm.sellers = vm.sellers.map(function(seller){
+        store.sellers = res.data;
+        store.sellers = store.sellers.map(function(seller){
           seller.filters = {
             User: seller.id
           };
           return seller;
         });
-        return updateSellersTotals();
+        return updateSellersTotals(sellers);
       })
       .then(function(){
         deferred.resolve();
@@ -173,11 +173,11 @@ function QuotationsListCtrl(
     return deferred.promise;
   }
 
-  function updateSellersTotals(){
+  function updateSellersTotals(sellers){
     var deferred = $q.defer();
 
-    if(vm.sellers){
-      var promisesTotals = vm.sellers.map(function(seller){
+    if(sellers){
+      var promisesTotals = sellers.map(function(seller){
         var params = {
           startDate: vm.startDate,
           endDate: vm.endDate,
@@ -191,7 +191,7 @@ function QuotationsListCtrl(
 
       $q.all(promisesTotals)
         .then(function(totals){
-          vm.sellers = vm.sellers.map(function(seller, index){
+          sellers = sellers.map(function(seller, index){
             seller.total = totals[index].data.byDateRange;
             return seller;
           });
