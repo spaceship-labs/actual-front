@@ -275,7 +275,7 @@ function CheckoutOrderCtrl(
       })
       .catch(function(err) {
         vm.isLoading = false;
-        var error = err.data.message;
+        var error = err.data;
         dialogService.showDialog(error);
       });
   }
