@@ -94,10 +94,16 @@
     <!--
       IF MANAGER
     -->
-    <ng-include 
-      ng-if="vm.sellers" 
-      src="'views/quotations/store-quotations-list.html'">
-    </ng-include>
+    <div ng-if="vm.sellers">
+      <ng-include 
+        src="'views/quotations/store-quotations-list.html'">
+      </ng-include>
+
+      <ng-include
+        src="'views/quotations/store-charts.html'"
+      ></ng-include>
+    </div>
+
     <!--
     END IF MANAGER
     -->
@@ -105,27 +111,23 @@
     <!---
     IF SELLER
     -->
-    <ng-include
-      ng-if="vm.isUserSellerOrAdmin()"
-      src="'views/quotations/seller-quotations-list.html'">
-    </ng-include>
+    <div ng-if="vm.isUserSellerOrAdmin()">
+      <ng-include
+        src="'views/quotations/seller-quotations-list.html'">
+      </ng-include>
+
+      <ng-include
+        src="'views/quotations/seller-charts.html'"
+      ></ng-include>
+    </div>
+
     <!--
     END IF SELLER
     -->
   </section>
 
-  <!--SELLER -->
-  <ng-include
-    ng-if="vm.isUserSellerOrAdmin()"
-    src="'views/quotations/seller-charts.html'"
-  ></ng-include>
-  <!--END SELLER-->
 
   <!--STORE MANAGER -->
-  <ng-include
-    ng-if="vm.sellers"
-    src="'views/quotations/store-charts.html'"
-  ></ng-include>
   <!--END STORE MANAGER-->  
 
 </section>

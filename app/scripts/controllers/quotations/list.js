@@ -17,7 +17,8 @@ function QuotationsListCtrl(
     commonService,
     authService,
     quotationService,
-    storeService
+    storeService,
+    userService
   ){
 
   var vm = this;
@@ -107,7 +108,9 @@ function QuotationsListCtrl(
 
   function init(){
     if(authService.isUserManager()){
+      console.log('vm.user', vm.user);
       getSellersByStore(vm.user.mainStore.id);
+      setupManagerData();
     }
     else{
       getQuotationDataByUser(vm.user.id)
@@ -125,6 +128,25 @@ function QuotationsListCtrl(
       });
     }
     
+  }
+
+  function setupManagerData(){
+    getManagerStores()
+      .then(function(stores){
+        console.log('stores', stores);
+        var storePromises = stores.map(function(store){
+          return getSellersByStore(store.id);          
+        });
+        return $q.all(storePromises);
+      })
+      .then(function(sellersByStore){
+        console.log('sellersByStore', sellersByStore);
+      });
+  }
+
+  function getManagerStores(){
+    var userEmail = vm.user.email;
+    return userService.getStores(userEmail);
   }
 
   function getSellersByStore(storeId){
