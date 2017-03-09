@@ -38,7 +38,7 @@
       flex="35" 
       layout="row" 
       layout-align="space-between end" 
-      ng-if="!vm.sellers"
+      ng-if="vm.isSellerReport"
     >
       <div 
         flex="50" 
@@ -94,10 +94,32 @@
     <!--
       IF MANAGER
     -->
-    <ng-include 
-      ng-if="vm.sellers" 
-      src="'views/quotations/store-quotations-list.html'">
-    </ng-include>
+    <div ng-if="vm.isManagerReport">
+
+      <md-content>
+        <md-tabs md-dynamic-height>
+
+          <md-tab 
+            ng-repeat="store in vm.stores" 
+            label="{{store.name}}"
+            class=""
+          >
+            <md-content> 
+              <ng-include 
+                src="'views/quotations/store-quotations-list.html'">
+              </ng-include>
+
+              <ng-include
+                src="'views/quotations/store-charts.html'"
+              ></ng-include>
+            </md-content>
+          </md-tab>
+
+          
+        </md-tabs>
+      </md-content>
+    </div>
+
     <!--
     END IF MANAGER
     -->
@@ -105,27 +127,23 @@
     <!---
     IF SELLER
     -->
-    <ng-include
-      ng-if="vm.isUserSellerOrAdmin()"
-      src="'views/quotations/seller-quotations-list.html'">
-    </ng-include>
+    <div ng-if="vm.isSellerReport">
+      <ng-include
+        src="'views/quotations/seller-quotations-list.html'">
+      </ng-include>
+
+      <ng-include
+        src="'views/quotations/seller-charts.html'"
+      ></ng-include>
+    </div>
+
     <!--
     END IF SELLER
     -->
   </section>
 
-  <!--SELLER -->
-  <ng-include
-    ng-if="vm.isUserSellerOrAdmin()"
-    src="'views/quotations/seller-charts.html'"
-  ></ng-include>
-  <!--END SELLER-->
 
   <!--STORE MANAGER -->
-  <ng-include
-    ng-if="vm.sellers"
-    src="'views/quotations/store-charts.html'"
-  ></ng-include>
   <!--END STORE MANAGER-->  
 
 </section>

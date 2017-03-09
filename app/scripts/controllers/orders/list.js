@@ -23,7 +23,8 @@ function OrdersListCtrl(
   productService,
   storeService,
   commissionService,
-  localStorageService
+  localStorageService,
+  userService
   ){
 
   var vm = this;
@@ -66,7 +67,7 @@ function OrdersListCtrl(
       getCommisionsGoal(),
     ];
 
-    if(!options.sellers){
+    if(!vm.isManagerReport){
       promises.push(
         orderService.getTotalsByUser($rootScope.user.id, dateRange)
       );
@@ -84,7 +85,7 @@ function OrdersListCtrl(
           vm.current = totalsResult.fortnight || 0;
         }
 
-        if(vm.user.role.name === authService.USER_ROLES.STORE_MANAGER){
+        if(vm.isManagerReport){
           vm.goal = (commisionResult.goal / 2);
         }else{
           vm.goal = (commisionResult.goal / 2) / commisionResult.sellers;          
@@ -118,11 +119,14 @@ function OrdersListCtrl(
     vm.startDate = fortnightRange.start.toString();
     vm.endDate = fortnightRange.end.toString();
     vm.isBroker = authService.isBroker($rootScope.user);
+    
     if(vm.isBroker){
       vm.filters = {
         Broker: $rootScope.user.id,
       };
-    }else{
+    }
+
+    else{
       vm.filters = {
         User: $rootScope.user.id,
       };
@@ -131,6 +135,7 @@ function OrdersListCtrl(
         {label: 'Todas las ventas', value:'none'}
       ];      
     }
+    
     vm.dateRange = {
       field: 'createdAt',
       start: vm.startDate,
@@ -138,8 +143,12 @@ function OrdersListCtrl(
     };
     vm.user = $rootScope.user;
 
-    if(vm.user.role.name === authService.USER_ROLES.STORE_MANAGER && vm.user.mainStore){
-      getSellersByStore(vm.user.mainStore.id);
+    vm.isManagerReport = authService.isStoreManager(vm.user);
+    vm.isBrokerReport = authService.isBroker(vm.user);
+    vm.isSellerReport = authService.isUserSellerOrAdmin(vm.user);
+
+    if(authService.isStoreManager(vm.user)){
+      setupManagerData();
     }
     else{
       getOrdersData();
@@ -150,6 +159,31 @@ function OrdersListCtrl(
 
     }
   }
+
+  function setupManagerData(){
+    vm.isLoading = true;
+    getManagerStores()
+      .then(function(stores){
+        console.log('stores', stores);
+        var storePromises = stores.map(function(store){
+          return populateStoreWithSellers(store);          
+        });
+        return $q.all(storePromises);
+      })
+      .then(function(stores){
+        console.log('stores', stores);
+        vm.stores = stores;
+        vm.isLoading = false;
+      })
+      .catch(function(err){
+        console.log('err', err);
+      });
+  }
+
+  function getManagerStores(){
+    var userEmail = vm.user.email;
+    return userService.getStores(userEmail);
+  }  
 
   function getTotalByDateRange(userId, dateRange){
     var params = angular.extend(dateRange, {all:false});
@@ -164,6 +198,7 @@ function OrdersListCtrl(
   }
 
   function applyFilters(){
+    var promises = [];
     if(vm.dateStart._d && vm.dateEnd._d){
       vm.dateRange = {
         field: 'createdAt',
@@ -177,7 +212,11 @@ function OrdersListCtrl(
       endDate: vm.dateRange.end,
     });
 
-    updateSellersTotals();
+    if(vm.isManagerReport){
+      promises = vm.stores.map(function(store){
+        return  updateStoreSellers(store);
+      });
+    }
 
     vm.isLoading = true;
     $timeout(function(){
@@ -186,80 +225,78 @@ function OrdersListCtrl(
     $rootScope.$broadcast('reloadTable', true);
   }
 
-  function updateSellersTotals(){
-    if(vm.sellers){
-      var promisesTotals = [];
-      for(var i = 0; i< vm.sellers.length; i++){
-        var s = vm.sellers[i];
+  function updateStoreSellers(store){
+    var deferred = $q.defer();
+    if(store){
+      var promisesTotals = store.sellers.map(function(seller){
         var params = {
           startDate: vm.dateRange.start,
           endDate: vm.dateRange.end,
           all: false
-        };
-        promisesTotals.push(orderService.getTotalsByUser(s.id, params));
-      }
+        };       
+        return orderService.getTotalsByUser(seller.id, params); 
+      });
+
       $q.all(promisesTotals)
         .then(function(totals){
           console.log(totals);
-          vm.sellers = vm.sellers.map(function(s, index){
-            s.total = totals[index].data.dateRange;
-            return s;
+          store.sellers = store.sellers.map(function(seller, index){
+            seller.total = totals[index].data.dateRange;
+            return seller;
           });
-          setupStoreCharts(vm.sellers);
           getOrdersData({
-            sellers: vm.sellers
+            sellers: store.sellers
           });
+
+          store = setupStoreCharts(store);
+          deferred.resolve(store);
         })
         .catch(function(err){
           console.log(err);
+          deferred.reject(err);
         });
     }
+
+    return deferred.promise;
   }
 
-  function getSellersByStore(storeId){
-    storeService.getSellersByStore(storeId)
+  function populateStoreWithSellers(store){
+    var deferred = $q.defer();
+
+    storeService.getSellersByStore(store.id)
       .then(function(res){
         var promisesTotals = [];
-        vm.sellers = res.data;
-        console.log('vm.sellers', vm.sellers);
-        vm.sellers = vm.sellers.map(function(s){
-          s.filters = {
-            User: s.id
+        store.sellers = res.data;
+        store.sellers = store.sellers.map(function(seller){
+          seller.filters = {
+            User: seller.id
           };
           var params = {
             startDate: vm.startDate,
             endDate: vm.endDate,
             all: false
           };
-          promisesTotals.push(orderService.getTotalsByUser(s.id, params));
-          return s;
+          promisesTotals.push(orderService.getTotalsByUser(seller.id, params));
+          return seller;
         });
-        console.log(vm.sellers);
-        return $q.all(promisesTotals);
+        return updateStoreSellers(store);
       })
-      .then(function(totals){
-        vm.sellers = vm.sellers.map(function(s, i){
-          s.total = totals[i].data.dateRange;
-          return s;
-        });
-        console.log(vm.sellers);
-        setupStoreCharts(vm.sellers);
-        getOrdersData({
-          sellers: vm.sellers
-        });
-
+      .then(function(store){
+        deferred.resolve(store);
       })
       .catch(function(err){
         console.log(err);
+        deferred.reject(err);
       });
+
+    return deferred.promise;
   }
 
-  function setupStoreCharts(sellers){
-    vm.store = {};
-    vm.store.ammounts = {
-      total: sellers.reduce(function(acum,seller){return acum+=seller.total;},0),
-      labels: sellers.map(function(seller){return seller.firstName + ' ' + seller.lastName;}),
-      data: sellers.map(function(seller){return seller.total;}),
+  function setupStoreCharts(store){
+    store.ammounts = {
+      total: store.sellers.reduce(function(acum,seller){return acum+=seller.total;},0),
+      labels: store.sellers.map(function(seller){return seller.firstName + ' ' + seller.lastName;}),
+      data: store.sellers.map(function(seller){return seller.total;}),
       options:{
         legend:{
           display:true,
@@ -271,7 +308,8 @@ function OrdersListCtrl(
           }
         }
       },
-    };  
+    };
+    return store;  
   }  
 
   function getCommisionsGoal(){
@@ -291,8 +329,11 @@ function OrdersListCtrl(
     return number;
   }
 
-  function getStoreTotal(sellers){
-    var total = sellers.reduce(function(acum, seller){
+  function getStoreTotal(store){
+    if(!store || !store.sellers){
+      return 0;
+    }
+    var total = store.sellers.reduce(function(acum, seller){
       acum += seller.total;
       return acum;
     },0);

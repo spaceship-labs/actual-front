@@ -99,7 +99,7 @@ angular.module('dashexampleApp')
 			    };
 
 			    var promises = [];
-			    $scope.isStoreReport = authService.isStoreManager($scope.user);
+			    $scope.isManagerReport = authService.isStoreManager($scope.user);
 			    $scope.isGeneralReport = authService.isAdmin($scope.user);
 
 			    if( $scope.isGeneralReport ){
@@ -108,10 +108,10 @@ angular.module('dashexampleApp')
 			        storeService.getStoresCashReport(params)
 			      ];
 			    }
-			    else if( $scope.isStoreReport ){
+			    else if( $scope.isManagerReport ){
 			      promises = [
 			        paymentService.getPaymentMethodsGroups(),      
-			        storeService.getStoreCashReport($scope.user.mainStore.id, params)
+			        storeService.getManagerCashReport(params)
 			      ];
 			    }
 
@@ -122,16 +122,19 @@ angular.module('dashexampleApp')
 			        console.log('results', results);
 			        var paymentsGroups = results[0].data;
 
-			        if( authService.isStoreManager($scope.user) ){
-			          $scope.sellers = results[1].data;          
-			          $scope.sellers = $scope.sellers.map(function(seller){
-			            seller.paymentsGroups = _.clone(paymentsGroups);
-			            seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
-			            return seller;
-			          });
+			        if( $scope.isManagerReport ){
+			          $scope.stores = results[1].data;          
+								$scope.stores = $scope.stores.map(function(store){
+				          store.Sellers = store.Sellers.map(function(seller){
+				            seller.paymentsGroups = _.clone(paymentsGroups);
+				            seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
+				            return seller;
+				          });
+				          return store;
+				        });
 			        }
 
-			        else if(authService.isAdmin($scope.user)){
+			        else if( $scope.isGeneralReport ){
 			          $scope.stores = results[1].data;          
 			          $scope.stores = $scope.stores.map(function(store){
 			            store.paymentsGroups = _.clone(paymentsGroups);
@@ -204,7 +207,7 @@ angular.module('dashexampleApp')
 			        currency: group[0].currency,
 			      };
 
-			      if($scope.isStoreReport){
+			      if($scope.isManagerReport){
 				      if(method.type === paymentService.types.CASH){
 				      	method.name = 'Efectivo';
 				      }
@@ -279,8 +282,10 @@ angular.module('dashexampleApp')
 			    return total;
 			  }
 
-			  function getSellersTotal(){
-			    var sellersTotal = $scope.sellers.reduce(function(acum, seller){
+			  function getSellersTotal(sellers){
+			  	console.log('sellers', sellers);
+			  	sellers = sellers || [];
+			    var sellersTotal = sellers.reduce(function(acum, seller){
 			      acum += getSellerTotal(seller);
 			      return acum;
 			    }, 0);

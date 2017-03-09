@@ -34,7 +34,7 @@
     </div>
 
     <div
-      ng-if="!vm.isBroker && vm.seller.length === 0"
+      ng-if="vm.isSellerReport"
       flex="30"
       class="input-element select-element-wrapper"
     >
@@ -46,9 +46,11 @@
         class="select-element">
       </select>
     </div>
-    <div ng-if="!vm.isBroker" flex="20">
+
+    <div ng-if="!vm.isBrokerReport" flex="20">
       <a ng-click="vm.applyFilters()" href="#" class="action-btn">Aplicar filtros</a>
     </div>
+
   </div>
 
   <hr/>
@@ -66,71 +68,25 @@
 
   <div ng-show="!vm.isLoading" class="nested-table">
 
-    <!---
-    <div class="nested-top">
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th>Total</th>
-          <th>Monto cobrado</th>
-          <th>Monto diferencia</th>
-        </tr>
-
-        <tr role="row" class="odd">
-          <td class="ng-scope sorting_1">123450123</td>
-          <td class="ng-scope">Luis Perez Bautista</td>
-          <td class="ng-scope">29-abr-2016</td>
-          <td class="ng-scope">25-jun-2016</td>
-          <td class="ng-scope">$14,699</td>
-          <td class="ng-scope">$7,699</td>
-          <td class="ng-scope">$7,000</td>
-        </tr>
-
-      </table>
-    </div>
-
-    <div class="nested-bar nested-bar1" layout="row" layout-align="space-between center">
-      <span>TOTAL</span><span>$209,000</span>
-    </div>
-    -->
-
     <!--
       IF MANAGER
     -->
-    <h2 ng-if="vm.sellers">
-      TIENDA: {{vm.user.mainStore.name}}
-    </h2>
-    <div
-      ng-repeat="seller in vm.sellers track by $index"
-      class="nested-item"
-    >
-      <div
-        class="nested-bar nested-bar3"
-        ng-click="seller.selected = !seller.selected"
-        layout="row"
-        layout-align="space-between center"
-      >
-        <span>TOTAL VENDEDOR: {{seller.firstName + ' ' + seller.lastName}} </span>
-        <span>
-          {{seller.total | currency}} <i class="icon-arrow dropdown-icon" ng-class="{'dropdown-icon-closed':!seller.selected}"></i>
-        </span>
-      </div>
+    <div ng-if="vm.isManagerReport">
 
-      <div ng-show="seller.selected" class="nested-content">
-        <section ng-if="seller.selected" class="table-list-wrap table-list-wrap-nomargin">
-          <div
-            table-list
-            class="table-list table-list-v2"
-            columns="vm.columnsOrders"
-            api-resource="vm.apiResourceOrders"
-            date-range="vm.dateRange"
-            filters="seller.filters"></div>
-        </section>
-
-      </div>
+      <md-content>
+        <md-tabs md-dynamic-height>
+          <md-tab 
+            ng-repeat="store in vm.stores" 
+            label="{{store.name}}"
+            class=""
+          >
+            <md-content> 
+              <ng-include src="'views/orders/manager-list.html'"></ng-include>
+              <ng-include src="'views/orders/store-charts.html'"></ng-include>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
     </div>
     <!--
     END IF MANAGER
@@ -140,33 +96,10 @@
     IF SELLER
     -->
     <div
-      ng-if="vm.isUserSellerOrAdmin()"
+      ng-if="vm.isSellerReport"
       class="nested-item"
     >
-      <div
-        class="nested-bar nested-bar3"
-        ng-init="seller.selected = true"
-        ng-click="seller.selected = !seller.selected"
-        layout="row"
-        layout-align="space-between center"
-      >
-        <span>TOTAL VENDEDOR: {{vm.user.firstName + ' ' + vm.user.lastName}} </span>
-        <span>
-          {{vm.totalDateRange | currency}} <i class="icon-arrow dropdown-icon" ng-class="{'dropdown-icon-closed':!seller.selected}"></i>
-        </span>
-      </div>
-
-      <div ng-show="seller.selected" class="nested-content">
-        <section class="table-list-wrap table-list-wrap-nomargin">
-          <div
-            table-list
-            class="table-list table-list-v2"
-            columns="vm.columnsOrders"
-            api-resource="vm.apiResourceOrders"
-            date-range="vm.dateRange"
-            filters="vm.filters"></div>
-        </section>
-      </div>
+      <ng-include src="'views/orders/seller-list.html'"></ng-include>
     </div>
     <!--
     END IF SELLER
@@ -177,28 +110,10 @@
     -->
 
     <div
-      ng-if="vm.isBroker"
+      ng-if="vm.isBrokerReport"
       class="nested-item"
     >
-      <div
-        class="nested-bar nested-bar3"
-        layout="row"
-        layout-align="space-between center"
-      >
-        <span>BROKER: {{vm.user.firstName + ' ' + vm.user.lastName}} </span>
-      </div>
-
-      <div  class="nested-content">
-        <section class="table-list-wrap table-list-wrap-nomargin">
-          <div
-            table-list
-            class="table-list table-list-v2"
-            columns="vm.columnsOrders"
-            api-resource="vm.apiResourceOrders"
-            date-range="vm.dateRange"
-            filters="vm.filters"></div>
-        </section>
-      </div>
+      <ng-include src="'views/orders/broker-list.html'"></ng-include>
     </div>
 
     <!--END IF BROKER-->
@@ -213,10 +128,12 @@
   <!--END STORE MANAGER-->  
 
   <!--SELLER-->
+  <!--
   <ng-include 
     ng-if="!vm.isBroker"
     src="'views/orders/seller-charts.html'">
-  </ng-include>  
+  </ng-include> 
+  --> 
   <!--END SELLER-->
 
 

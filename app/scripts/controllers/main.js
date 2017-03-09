@@ -470,7 +470,6 @@
     }
 
     $rootScope.successAuth = function(response){
-      console.log('res', res);
       var res = response.data;
       vm.token = res.token;
       vm.user  = res.user;

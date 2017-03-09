@@ -37,6 +37,7 @@
         isUserAdminOrManager:isUserAdminOrManager,
         isUserSellerOrAdmin:isUserSellerOrAdmin,
         isUserManager: isUserManager,
+        isSeller: isSeller,
         runPolicies: runPolicies,
         showUnauthorizedDialogIfNeeded: showUnauthorizedDialogIfNeeded,
         USER_ROLES: USER_ROLES
@@ -113,6 +114,10 @@
       function isAdmin(user){
         return (user && user.role && user.role.name === USER_ROLES.ADMIN);
       }
+
+      function isSeller(user){
+        return (user && user.role && user.role.name === USER_ROLES.SELLER);
+      }      
 
 
       function isUserAdminOrManager(){
