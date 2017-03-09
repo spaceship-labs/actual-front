@@ -133,6 +133,7 @@ function QuotationsListCtrl(
   }
 
   function setupManagerData(){
+    vm.isLoading = true;
     getManagerStores()
       .then(function(stores){
         console.log('stores', stores);
@@ -144,7 +145,11 @@ function QuotationsListCtrl(
       .then(function(stores){
         console.log('stores', stores);
         vm.stores = stores;
-      });
+        vm.isLoading = false;
+      })
+      .catch(function(err){
+        console.log('err', err);
+      });      
   }
 
   function getManagerStores(){
@@ -207,8 +212,6 @@ function QuotationsListCtrl(
           return $q.all(promises);
         })
         .then(function(sellersData){
-          console.log('sellersData', sellersData);
-
           var sellersAmounts = sellersData.map(function(data){
             return data.values[0];
           });

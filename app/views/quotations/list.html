@@ -95,15 +95,29 @@
       IF MANAGER
     -->
     <div ng-if="vm.isManagerReport">
-      <div ng-repeat="store in vm.stores">
-        <ng-include 
-          src="'views/quotations/store-quotations-list.html'">
-        </ng-include>
 
-        <ng-include
-          src="'views/quotations/store-charts.html'"
-        ></ng-include>
-      </div>
+      <md-content>
+        <md-tabs md-dynamic-height>
+
+          <md-tab 
+            ng-repeat="store in vm.stores" 
+            label="{{store.name}}"
+            class=""
+          >
+            <md-content> 
+              <ng-include 
+                src="'views/quotations/store-quotations-list.html'">
+              </ng-include>
+
+              <ng-include
+                src="'views/quotations/store-charts.html'"
+              ></ng-include>
+            </md-content>
+          </md-tab>
+
+          
+        </md-tabs>
+      </md-content>
     </div>
 
     <!--
