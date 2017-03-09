@@ -6,14 +6,14 @@
     <div class="chart-section-col" flex="40">
       <h3>Cantidad</h3>
       <canvas
-        id="pie"
+        id="pie-{{store.code}}"
         class="chart chart-pie"
-        chart-options="vm.store.quantities.options"
-        chart-data="vm.store.quantities.data"
-        chart-labels="vm.store.quantities.labels"
-        chart-colors="vm.store.quantities.colors"></canvas>
+        chart-options="store.quantities.options"
+        chart-data="store.quantities.data"
+        chart-labels="store.quantities.labels"
+        chart-colors="store.quantities.colors"></canvas>
       <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{ vm.store.untilTodayQty }} | {{vm.store.allByDateRangeQty}}</p>
+      <p>{{ store.untilTodayQty }} | {{store.allByDateRangeQty}}</p>
     </div>
 
     <div class="chart-section-col chart-section-legends" flex="20">
@@ -24,14 +24,14 @@
     <div class="chart-section-col" flex="40">
       <h3>Monto</h3>
       <canvas
-        id="pie"
+        id="pie-{{store.code}}"
         class="chart chart-pie"
-        chart-options="vm.store.ammounts.options"
-        chart-data="vm.store.ammounts.data"
-        chart-labels="vm.store.ammounts.labels"
-        chart-colors="vm.store.ammounts.colors"></canvas>
+        chart-options="store.ammounts.options"
+        chart-data="store.ammounts.data"
+        chart-labels="store.ammounts.labels"
+        chart-colors="store.ammounts.colors"></canvas>
       <p><strong>Hoy</strong> | <strong>Total</strong></p>
-      <p>{{vm.store.untilTodayAmount | currency}} | {{vm.store.allByDateRangeAmount | currency}}</p>
+      <p>{{store.untilTodayAmount | currency}} | {{store.allByDateRangeAmount | currency}}</p>
     </div>
   </div>
 

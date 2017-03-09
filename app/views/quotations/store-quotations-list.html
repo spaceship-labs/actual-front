@@ -1,9 +1,9 @@
 <div class="sellers-lists">
-  <h2 ng-if="vm.sellers">
-    TIENDA: {{vm.user.mainStore.name}}
+  <h2>
+    TIENDA: {{store.name}}
   </h2>
   <div
-    ng-repeat="seller in vm.sellers track by $index"
+    ng-repeat="seller in store.sellers track by $index"
     class="nested-item"
   >
     <div

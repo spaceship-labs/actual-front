@@ -109,10 +109,12 @@ function QuotationsListCtrl(
   function init(){
     if(authService.isUserManager()){
       console.log('vm.user', vm.user);
+      vm.isManagerReport = true;
       //getSellersByStore(vm.user.mainStore.id);
       setupManagerData();
     }
     else{
+      vm.isSellerReport = true;
       getQuotationDataByUser(vm.user.id)
         .then(function(values){
           var userTotals = values[0];
@@ -135,12 +137,13 @@ function QuotationsListCtrl(
       .then(function(stores){
         console.log('stores', stores);
         var storePromises = stores.map(function(store){
-          return getSellersByStore(store);          
+          return populateStoreWithSellers(store);          
         });
         return $q.all(storePromises);
       })
-      .then(function(sellersByStore){
-        console.log('sellersByStore', sellersByStore);
+      .then(function(stores){
+        console.log('stores', stores);
+        vm.stores = stores;
       });
   }
 
@@ -149,7 +152,7 @@ function QuotationsListCtrl(
     return userService.getStores(userEmail);
   }
 
-  function getSellersByStore(store){
+  function populateStoreWithSellers(store){
     var deferred = $q.defer();
     storeService.getSellersByStore(store.id)
       .then(function(res){
@@ -160,10 +163,10 @@ function QuotationsListCtrl(
           };
           return seller;
         });
-        return updateSellersTotals(sellers);
+        return updateStoreSellers(store);
       })
-      .then(function(){
-        deferred.resolve();
+      .then(function(store){
+        deferred.resolve(store);
       })
       .catch(function(err){
         console.log(err);
@@ -173,8 +176,9 @@ function QuotationsListCtrl(
     return deferred.promise;
   }
 
-  function updateSellersTotals(sellers){
+  function updateStoreSellers(store){
     var deferred = $q.defer();
+    var sellers = store.sellers;
 
     if(sellers){
       var promisesTotals = sellers.map(function(seller){
@@ -196,22 +200,30 @@ function QuotationsListCtrl(
             return seller;
           });
           
-          vm.store.ammounts.total = getStoreTotal(vm.sellers);
-          var promises = vm.sellers.map(function(seller){
-            return getQuotationDataByUser(seller.id);
+          //store.ammounts.total = getStoreTotal(store.sellers);
+          var promises = sellers.map(function(seller){
+            return getQuotationDataByUser(seller.id, false, {objectMode:true});
           });
           return $q.all(promises);
         })
         .then(function(sellersData){
+          console.log('sellersData', sellersData);
 
           var sellersAmounts = sellersData.map(function(data){
-            return data[0];
+            return data.values[0];
           });
           var sellersQuantities = sellersData.map(function(data){
-            return data[1];
+            return data.values[1];
           });
-          setupStoreCharts(sellersAmounts, sellersQuantities);
-          deferred.resolve();          
+
+          store = setupStoreChartData(store, sellersAmounts, sellersQuantities);
+
+          store.sellers = store.sellers.map(function(seller){
+            seller.totals = _.findWhere(sellersData, {userId: seller.id});
+            return seller;
+          });
+
+          deferred.resolve(store);          
         })
         .catch(function(err){
           console.log(err);
@@ -230,7 +242,7 @@ function QuotationsListCtrl(
     return total;
   }
 
-  function getQuotationDataByUser(userId, params){
+  function getQuotationDataByUser(userId, params, options){
     var deferred = $q.defer();
     var defaultParams = {
       startDate : vm.startDate,
@@ -239,6 +251,7 @@ function QuotationsListCtrl(
       isClosed  : {'!': true}
     };
     params = params || defaultParams;
+    options = options || {};
     $q.all([
       quotationService.getTotalsByUser(userId, params),
       quotationService.getCountByUser(userId, params)
@@ -249,7 +262,16 @@ function QuotationsListCtrl(
           result[0].data,
           result[1].data
         ];
-        deferred.resolve(values);
+
+        if(options.objectMode){
+          deferred.resolve({
+            userId: userId,
+            values: values
+          });
+        }else{
+          deferred.resolve(values);
+        }
+
       })
       .catch(function(err){
         console.log(err);
@@ -313,22 +335,27 @@ function QuotationsListCtrl(
   }
 
   function applyFilters(){
+    var promises = [];
     vm.globalDateRange = {
       field: 'tracing',
       start: vm.startDate,
       end: vm.endDate
     }; 
 
-    var promises = [
-      getCurrentUserTotal(vm.user.id, {
-        startDate: vm.startDate,
-        endDate: vm.endDate,
-      }),
-      updateSellersTotals()
-    ];
+    if(vm.isManagerReport){
+      promises = vm.stores.map(function(store){
+        return  updateStoreSellers(store);
+      });
+    }
 
-    if(!authService.isUserManager()){
-      promises.push(getQuotationDataByUser(vm.user.id));
+    if(vm.isSellerReport){
+      promises = [
+        getQuotationDataByUser(vm.user.id),
+        getCurrentUserTotal(vm.user.id, {
+          startDate: vm.startDate,
+          endDate: vm.endDate,
+        })
+      ];
     }
 
     vm.isLoading = true;
@@ -359,22 +386,22 @@ function QuotationsListCtrl(
   }
 
   //@param sellers Array of seller object with untiltoday and bydaterange amounts and quantities
-  function setupStoreCharts(sellersAmounts, sellersQuantities){
-    vm.store.untilTodayAmount = sellersAmounts.reduce(function(acum, seller){
+  function setupStoreChartData(store, sellersAmounts, sellersQuantities){
+    store.untilTodayAmount = sellersAmounts.reduce(function(acum, seller){
       acum += seller.untilToday;
       return acum;
     }, 0);
     
-    vm.store.allByDateRangeAmount = sellersAmounts.reduce(function(acum, seller){
+    store.allByDateRangeAmount = sellersAmounts.reduce(function(acum, seller){
       acum += seller.allByDateRange;
       return acum;
     }, 0);
     
-    vm.store.ammounts = {
+    store.ammounts = {
       labels: ["Hoy", "Resto de la quincena"],
       data: [
-        vm.store.untilTodayAmount,
-        (vm.store.allByDateRangeAmount - vm.store.untilTodayAmount)
+        store.untilTodayAmount,
+        (store.allByDateRangeAmount - store.untilTodayAmount)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"],
       options:{
@@ -386,23 +413,25 @@ function QuotationsListCtrl(
       },
     };
 
-    vm.store.untilTodayQty = sellersQuantities.reduce(function(acum, seller){
+    store.untilTodayQty = sellersQuantities.reduce(function(acum, seller){
       acum += seller.untilToday;
       return acum;
     }, 0);
-     vm.store.allByDateRangeQty = sellersQuantities.reduce(function(acum, seller){
+     store.allByDateRangeQty = sellersQuantities.reduce(function(acum, seller){
       acum += seller.allByDateRange;
       return acum;
     }, 0);
 
-    vm.store.quantities = {
+    store.quantities = {
       labels: ["Hoy", "Restante"],
       data: [
-        vm.store.untilTodayQty,
-        (vm.store.allByDateRangeQty - vm.store.untilTodayQty)
+        store.untilTodayQty,
+        (store.allByDateRangeQty - store.untilTodayQty)
       ],
       colors: ["#C92933", "#48C7DB", "#FFCE56"]
-    };    
+    };
+
+    return store;    
   }
   
 

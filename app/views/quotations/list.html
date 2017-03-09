@@ -38,7 +38,7 @@
       flex="35" 
       layout="row" 
       layout-align="space-between end" 
-      ng-if="!vm.sellers"
+      ng-if="vm.isSellerReport"
     >
       <div 
         flex="50" 
@@ -94,14 +94,16 @@
     <!--
       IF MANAGER
     -->
-    <div ng-if="vm.sellers">
-      <ng-include 
-        src="'views/quotations/store-quotations-list.html'">
-      </ng-include>
+    <div ng-if="vm.isManagerReport">
+      <div ng-repeat="store in vm.stores">
+        <ng-include 
+          src="'views/quotations/store-quotations-list.html'">
+        </ng-include>
 
-      <ng-include
-        src="'views/quotations/store-charts.html'"
-      ></ng-include>
+        <ng-include
+          src="'views/quotations/store-charts.html'"
+        ></ng-include>
+      </div>
     </div>
 
     <!--
@@ -111,7 +113,7 @@
     <!---
     IF SELLER
     -->
-    <div ng-if="vm.isUserSellerOrAdmin()">
+    <div ng-if="vm.isSellerReport">
       <ng-include
         src="'views/quotations/seller-quotations-list.html'">
       </ng-include>
