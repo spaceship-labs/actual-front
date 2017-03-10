@@ -57,7 +57,7 @@
 	        activeStoreWarehouse
 	      );
 	      
-	      var farthestShipDate = deliveries[0].date;
+	      var farthestShipDate = deliveryService.getFarthestDelivery(deliveries).date;
 
 	      productCartItems = deliveries.map(function(delivery){
 	        if(quantity > delivery.available){

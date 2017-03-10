@@ -10,6 +10,7 @@
     	getAvailableByDeliveries: getAvailableByDeliveries,
     	groupDeliveryDates: groupDeliveryDates,
     	groupDetails: groupDetails,
+    	getFarthestDelivery: getFarthestDelivery,
     	sortDeliveriesByHierarchy: sortDeliveriesByHierarchy,
     	substractDeliveriesStockByQuotationDetails: substractDeliveriesStockByQuotationDetails,
     };
@@ -176,8 +177,6 @@
 	      var delivery = _.findWhere(deliveries, {companyFrom: warehouses[i].id});
 	      sortedDeliveries.push( delivery );
 	    }
-
-	    sortedDeliveries = sortDeliveriesByDate(sortedDeliveries);
 
 	    return sortedDeliveries;    
 	  }
