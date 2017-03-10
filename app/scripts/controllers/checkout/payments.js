@@ -470,16 +470,13 @@ function CheckoutPaymentsCtrl(
     }
     
     if( checkoutService.isMinimumPaid(vm.quotation) ){
-      confirmOrder()
-        .then(function(){
-          vm.isLoadingProgress = true;
-          vm.loadingEstimate = 0;
-          var params = {
-            paymentGroup: vm.quotation.paymentGroup || 1
-          };
-          animateProgress();
-          return orderService.createFromQuotation(vm.quotation.id, params);
-        })
+      vm.isLoadingProgress = true;
+      vm.loadingEstimate = 0;
+      var params = {
+        paymentGroup: vm.quotation.paymentGroup || 1
+      };
+      animateProgress();
+      orderService.createFromQuotation(vm.quotation.id, params)
         .then(function(res){
           vm.isLoadingProgress = false;
           vm.order = res.data;
