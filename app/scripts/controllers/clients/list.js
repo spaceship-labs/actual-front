@@ -10,7 +10,16 @@
 angular.module('dashexampleApp')
   .controller('ClientsListCtrl', ClientsListCtrl);
 
-function ClientsListCtrl($location,$routeParams, $q ,productService, clientService, userService, $rootScope, commonService, quotationService){
+function ClientsListCtrl(
+  $location,
+  $routeParams, 
+  $q ,
+  productService, 
+  clientService, 
+  userService, 
+  $rootScope, 
+  dialogService
+){
 
   var vm = this;
 

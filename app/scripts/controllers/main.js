@@ -32,6 +32,7 @@
     dialogService,
     deliveryService,
     commonService,
+    clientService,
     ENV
   ){
     var vm = this;
@@ -66,6 +67,7 @@
       getStores: getStores,
       saveBroker: saveBroker,
       saveSource: saveSource,
+      syncClientsDiscounts: syncClientsDiscounts,
       adminUrl: ENV.adminUrl
     });
     $rootScope.loadActiveQuotation = loadActiveQuotation;
@@ -448,6 +450,20 @@
       }
     }
 
+    function syncClientsDiscounts(){
+      vm.isLoadingClientDiscountsSync = true;
+      clientService.syncClientsDiscounts()
+        .then(function(res){
+          console.log(res);
+          dialogService.showDialog('Descuentos de clientes actualizados');
+          vm.isLoadingClientDiscountsSync = false;
+        })
+        .catch(function(err){
+          dialogService.showDialog('Hubo un error: ' + err.data);
+          vm.isLoadingClientDiscountsSync = false;
+        });
+    }    
+
     function signIn(){
       vm.isLoadingLogin = true;
       var formData = {
@@ -571,6 +587,7 @@
     'dialogService',
     'deliveryService',
     'commonService',
+    'clientService',
     'ENV'
   ];
 

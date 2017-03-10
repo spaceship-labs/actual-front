@@ -24,7 +24,8 @@
         setClientDefaultData: setClientDefaultData,
         update: update,
         updateFiscalAddress: updateFiscalAddress,
-        updateContact: updateContact
+        updateContact: updateContact,
+        syncClientsDiscounts: syncClientsDiscounts
       };
 
       return service;
@@ -83,6 +84,11 @@
       function getBalanceById(clientId){
         var url = '/client/'+clientId+'/balance';
         return api.$http.get(url);        
+      }
+
+      function syncClientsDiscounts(){
+        var url = '/sync/clientsdiscounts';
+        return api.$http.post(url);
       }
 
       function buildAddressStringByContact(contact){

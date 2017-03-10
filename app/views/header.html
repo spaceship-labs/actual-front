@@ -41,15 +41,40 @@
               >
           </div>
         </div>
-        <input type="submit" value="BUSCAR" class="searcher-btn">
+        <input type="submit" value="BUSCAR" class="searcher-btn" />
         <!--<div flex class="searcher-checkbox">-->
-          <input
-            type="checkbox"
-            class="searcher-checkbox"
-            ng-checked="main.searchingItemCode"
-            ng-model="vm.isItemCodeSearch"
-            id="isItemCode">
-          <label for="isItemCode" class="searcher-checkbox-label">ItemCode</label>
+        <div flex="30" class="sync-actions">
+          <label for="isItemCode" class="searcher-checkbox-label">
+            <input
+              type="checkbox"
+              class="searcher-checkbox"
+              ng-checked="main.searchingItemCode"
+              ng-model="vm.isItemCodeSearch"
+              id="isItemCode">
+              ItemCode
+          </label>
+
+          <label 
+            ng-if="!main.isLoadingClientDiscountsSync"
+            for="syncClientsDiscounts" 
+            class="searcher-checkbox-label"
+          >
+            <input
+              type="checkbox"
+              id="syncClientsDiscounts"
+              class="searcher-checkbox"
+              ng-click="main.syncClientsDiscounts()">
+              CteEsp
+          </label>
+
+          <label 
+            ng-if="main.isLoadingClientDiscountsSync"
+            class="searcher-checkbox-label"
+          >
+              Sincronizando...
+          </label>          
+
+        </div>
         <!--</div>-->
       </form>
 
