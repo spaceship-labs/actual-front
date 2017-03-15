@@ -408,6 +408,11 @@ select{
   padding-left: 8px;
   font-size: 14px;
 }
+.searcher-wrapper .sync-actions select{
+  border: 1px solid rgba(0,0,0,0.3);
+  background: #fff;
+  margin: 7px 0;
+}
 .searcher-wrapper .sync-actions .searcher-checkbox{
   margin: 0;
 }
@@ -421,6 +426,11 @@ select{
   text-decoration: none;
   cursor: text;
 }
+.searcher-wrapper .sync-actions .loading-label{
+  display: inline-block;
+  margin: 10px 0;
+}
+
 
 /*------------/
   #HEADER
@@ -1579,6 +1589,10 @@ md-backdrop.md-sidenav-backdrop{
   display: inline-block;
   vertical-align: middle;
   margin-right: 20px;
+}
+
+.listing-view .listing-view-title .keyword + .keyword:before{
+  content: ' ';
 }
 
 .listing-view .subs-container-list{

@@ -43,6 +43,7 @@
       isActiveCart: false,
       isActiveLogin: false,
       isLoadingLogin: false,
+      searchType: 'search',
       isMiActual: $rootScope.isMiActual,
       logInForm: {},
       mapTerminalCode: commonService.mapTerminalCode,
@@ -68,6 +69,7 @@
       saveBroker: saveBroker,
       saveSource: saveSource,
       syncClientsDiscounts: syncClientsDiscounts,
+      handleSearch: handleSearch,
       adminUrl: ENV.adminUrl
     });
     $rootScope.loadActiveQuotation = loadActiveQuotation;
@@ -129,6 +131,43 @@
         $scope.$apply();
       });
 
+    }
+
+    function handleSearch(){
+      switch(vm.searchType){
+        
+        case 'itemcode':
+          if(!vm.searchValue){
+            dialogService.showDialog('Ingresa un itemcode');
+            return;
+          }
+          searchProduct({itemcode: vm.searchValue});
+          break;
+        
+        case 'clientsDiscount':
+          syncClientsDiscounts();
+          break;
+
+        case 'clientsCredit':
+          syncClientsCredit();
+          break; 
+
+        case 'clientSync':
+          if(!vm.searchValue){
+            dialogService.showDialog('Ingresa un cardcode');
+            return;
+          }        
+          syncClientByCardCode(vm.searchValue);
+          break;
+
+        default:
+          searchProduct({term: vm.searchValue});
+          break;
+      }
+    }
+
+    function searchProduct(params){
+      $location.path('/search').search(params);
     }
 
     function buildPointersSidenav(){
@@ -450,17 +489,47 @@
       }
     }
 
+    function syncClientsCredit(){
+      vm.isLoadingSync = true;
+      clientService.syncClientsCredit()
+        .then(function(res){
+          console.log(res);
+          dialogService.showDialog('Tabla de créditos actualizada');
+          vm.isLoadingSync = false;
+        })
+        .catch(function(err){
+          dialogService.showDialog('Hubo un error: ' + err.data);
+          vm.isLoadingSync = false;
+        });
+    }    
+
+
     function syncClientsDiscounts(){
-      vm.isLoadingClientDiscountsSync = true;
+      vm.isLoadingSync = true;
       clientService.syncClientsDiscounts()
         .then(function(res){
           console.log(res);
           dialogService.showDialog('Descuentos de clientes actualizados');
-          vm.isLoadingClientDiscountsSync = false;
+          vm.isLoadingSync = false;
         })
         .catch(function(err){
           dialogService.showDialog('Hubo un error: ' + err.data);
-          vm.isLoadingClientDiscountsSync = false;
+          vm.isLoadingSync = false;
+        });
+    }    
+
+
+    function syncClientByCardCode(cardcode){
+      vm.isLoadingSync = true;
+      clientService.syncClientByCardCode(cardcode)
+        .then(function(res){
+          console.log(res);
+          dialogService.showDialog('Cliente actualizado');
+          vm.isLoadingSync = false;
+        })
+        .catch(function(err){
+          dialogService.showDialog('Hubo un error: ' + err.data);
+          vm.isLoadingSync = false;
         });
     }    
 

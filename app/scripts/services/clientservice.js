@@ -25,7 +25,9 @@
         update: update,
         updateFiscalAddress: updateFiscalAddress,
         updateContact: updateContact,
-        syncClientsDiscounts: syncClientsDiscounts
+        syncClientsDiscounts: syncClientsDiscounts,
+        syncClientByCardCode: syncClientByCardCode,
+        syncClientsCredit: syncClientsCredit
       };
 
       return service;
@@ -88,6 +90,16 @@
 
       function syncClientsDiscounts(){
         var url = '/sync/clientsdiscounts';
+        return api.$http.post(url);
+      }
+
+      function syncClientsCredit(){
+        var url = '/sync/clientscredit';
+        return api.$http.post(url);
+      }
+
+      function syncClientByCardCode(cardcode){
+        var url = '/sync/syncclientbycardcode/' + cardcode;
         return api.$http.post(url);
       }
 

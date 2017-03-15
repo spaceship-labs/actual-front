@@ -26,8 +26,7 @@
 
 
       <form 
-        action="/search" 
-        method="GET" 
+        ng-submit="main.handleSearch()" 
         class="searcher-wrapper" 
         layout="row"
       >
@@ -37,39 +36,48 @@
             <input
               type="text"
               name="term"
-              ng-attr-name="{{vm.isItemCodeSearch && 'itemcode' || 'term' }}"
+              ng-disabled="main.isLoadingSync"
+              ng-model="main.searchValue"
+              ng-attr-name="{{main.isItemCodeSearch && 'itemcode' || 'term' }}"
               >
           </div>
         </div>
-        <input type="submit" value="BUSCAR" class="searcher-btn" />
+
+        <input 
+          type="submit" 
+          value="BUSCAR"
+          ng-if="main.searchType === 'search'" 
+          ng-disabled="main.isLoadingSync"
+          class="searcher-btn" 
+        />
+
+        <input 
+          type="submit" 
+          value="SINCRONIZAR"
+          ng-if="main.searchType !== 'search'" 
+          ng-disabled="main.isLoadingSync"
+          class="searcher-btn" 
+        />
+
+
         <!--<div flex class="searcher-checkbox">-->
         <div flex="30" class="sync-actions">
-          <label for="isItemCode" class="searcher-checkbox-label">
-            <input
-              type="checkbox"
-              class="searcher-checkbox"
-              ng-checked="main.searchingItemCode"
-              ng-model="vm.isItemCodeSearch"
-              id="isItemCode">
-              ItemCode
-          </label>
+            
+            <select 
+              ng-model="main.searchType" id="#"
+              ng-if="!main.isLoadingSync"
+            >
+              <option value="search">Búsqueda</option>
+              <option value="itemcode">ItemCode</option>
+              <option value="clientsDiscount">DescEsp</option>
+              <option value="clientsCredit">Crédito</option>
+              <option value="clientSync">Cliente</option>
+
+            </select>
 
           <label 
-            ng-if="!main.isLoadingClientDiscountsSync"
-            for="syncClientsDiscounts" 
-            class="searcher-checkbox-label"
-          >
-            <input
-              type="checkbox"
-              id="syncClientsDiscounts"
-              class="searcher-checkbox"
-              ng-click="main.syncClientsDiscounts()">
-              CteEsp
-          </label>
-
-          <label 
-            ng-if="main.isLoadingClientDiscountsSync"
-            class="searcher-checkbox-label"
+            ng-if="main.isLoadingSync"
+            class="searcher-checkbox-label loading-label"
           >
               Sincronizando...
           </label>          
