@@ -26,7 +26,7 @@ function UserProfileCtrl(
 ){
   var vm = this;
   angular.extend(vm, {
-    user: angular.copy($rootScope.user),
+    user: _.clone($rootScope.user),
     cashRegister: {},
     paymentsGroups: [],
     init: init,

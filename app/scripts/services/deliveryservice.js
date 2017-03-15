@@ -48,7 +48,7 @@
     		return detail.Product.ItemCode + '#' + date + '#' + discountPercent;
     	});
     	for(var key in groupedDetails){
-    		var group = angular.copy(groupedDetails[key][0]);
+    		var group = _.clone(groupedDetails[key][0]);
     	 	group.quantity = 0;
     	 	group.subtotal = 0;
     	 	group.total = 0;

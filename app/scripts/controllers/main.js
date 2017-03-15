@@ -179,8 +179,8 @@
     function buildMenuCategories(categoryTree){
       var menuCategories = [];
       menuCategories.push( _.findWhere( categoryTree, {Handle: 'muebles'} ) );
-      menuCategories.push( angular.copy(_.findWhere( menuCategories[0].Childs, {Handle:'muebles-para-oficina'} ) ) );
-      menuCategories.push( angular.copy(_.findWhere( menuCategories[0].Childs, {Handle:'muebles-de-jardin'} ) ) );
+      menuCategories.push( _.clone(_.findWhere( menuCategories[0].Childs, {Handle:'muebles-para-oficina'} ) ) );
+      menuCategories.push( _.clone(_.findWhere( menuCategories[0].Childs, {Handle:'muebles-de-jardin'} ) ) );
       menuCategories.push( _.findWhere(categoryTree, {Handle: 'ninos'} ) );
       menuCategories.push( _.findWhere(categoryTree, {Handle: 'bebes'}  ) );
       menuCategories.push( _.findWhere(categoryTree, {Handle: 'ambientes'} ) );

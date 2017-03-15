@@ -84,7 +84,7 @@
 	  function formatProductCartItems(productCartItems, defaults){
 	  	defaults = defaults || {};
 	  	productCartItems = productCartItems.map(function(item){
-	  		item.originalDate = angular.copy(item.date);
+	  		item.originalDate = _.clone(item.date);
 	  		if(defaults.date){
 	  			item.date = defaults.date;
 	  		}

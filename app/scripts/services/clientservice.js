@@ -132,23 +132,23 @@
           client.FiscalAddress = {};
         }
         if(!client.FiscalAddress.U_Correos){
-          client.FiscalAddress.U_Correos = angular.copy(client.E_Mail);
+          client.FiscalAddress.U_Correos = _.clone(client.E_Mail);
         }
 
 
         /*
         client.Contacts = client.Contacts.map(function(contact){
           if(!contact.E_Mail){
-            contact.E_Mail = angular.copy(client.E_Mail);
+            contact.E_Mail = _.clone(client.E_Mail);
           }
           if(!contact.FirstName){
-            contact.FirstName = angular.copy(client.CardName);
+            contact.FirstName = _.clone(client.CardName);
           }
           if(!contact.Tel1){
-            contact.Tel1 = angular.copy(client.Phone1);
+            contact.Tel1 = _.clone(client.Phone1);
           }
           if(!contact.Cellolar){
-            contact.Cellolar = angular.copy(client.Cellular);
+            contact.Cellolar = _.clone(client.Cellular);
           }
           contact.editEnabled = false;
 

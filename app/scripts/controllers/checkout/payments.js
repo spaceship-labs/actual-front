@@ -187,10 +187,10 @@ function CheckoutPaymentsCtrl(
     method.storeType = $rootScope.activeStore.group;
     var options = paymentService.getPaymentOptionsByMethod(method);
     method.options = options;
-    method.group = angular.copy(group);
-    vm.quotation.total = angular.copy(method.total);
-    vm.quotation.subtotal = angular.copy(method.subtotal);
-    vm.quotation.discount = angular.copy(method.discount);
+    method.group = _.clone(group);
+    vm.quotation.total = _.clone(method.total);
+    vm.quotation.subtotal = _.clone(method.subtotal);
+    vm.quotation.discount = _.clone(method.discount);
     return method;
   }
 
@@ -245,9 +245,9 @@ function CheckoutPaymentsCtrl(
     var currentGroup = _.findWhere(vm.paymentMethodsGroups, {group: paymentGroup});
     var firstMethod = currentGroup.methods[0];
     quotation.paymentGroup = paymentGroup;
-    quotation.total = angular.copy(firstMethod.total);
-    quotation.subtotal = angular.copy(firstMethod.subtotal);
-    quotation.discount = angular.copy(firstMethod.discount);
+    quotation.total = _.clone(firstMethod.total);
+    quotation.subtotal = _.clone(firstMethod.subtotal);
+    quotation.discount = _.clone(firstMethod.discount);
     return quotation;
   }
 
@@ -374,7 +374,7 @@ function CheckoutPaymentsCtrl(
       var controller  = DepositController;
       method.currency = method.currency || 'MXP';
       method.ammount  = ammount;
-      var paymentOpts = angular.copy(method);
+      var paymentOpts = _.clone(method);
       if(method.msi || method.terminals){
         controller    = TerminalController;
       }

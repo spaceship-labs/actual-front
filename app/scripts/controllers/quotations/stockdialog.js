@@ -13,7 +13,7 @@ function StockDialogController($scope, $mdDialog, $location, quotationService, v
   $scope.modify = function(){
     vm.isLoading = true;
     $mdDialog.hide();   
-    var itemCode = angular.copy(detailGroup.Product.ItemCode);  
+    var itemCode = _.clone(detailGroup.Product.ItemCode);  
     //quotationService.setActiveQuotation(vm.quotation.id);
     vm.removeDetailsGroup(detailGroup)
       .then(function(){

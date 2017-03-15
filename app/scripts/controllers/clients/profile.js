@@ -139,21 +139,21 @@ function ClientProfileCtrl(
   function showNewFiscalForm(){
     vm.isNewFiscalFormActive = true;
     vm.newFiscalAddress = {
-      U_Correos:angular.copy(vm.client.E_Mail)
+      U_Correos:_.clone(vm.client.E_Mail)
     };
   }
 
   function showNewAddressForm(){
     vm.isNewAddressFormActive = true;
     vm.newContact = {
-      E_Mail:angular.copy(vm.client.E_Mail)
+      E_Mail:_.clone(vm.client.E_Mail)
     };
   }
 
 
   function formatClient(client){
     client.Birthdate = client.Birthdate  ? client.Birthdate : new Date();
-    client.FirstName = client.FirstName || angular.copy(client.CardName);
+    client.FirstName = client.FirstName || _.clone(client.CardName);
 
     if(client.Contacts){
       client.Contacts = client.Contacts.map(function(contact){
@@ -194,7 +194,7 @@ function ClientProfileCtrl(
     );
     if(form.$valid && isValidEmail ){
       vm.isLoading = true;
-      var params = angular.copy(vm.client);
+      var params = _.clone(vm.client);
       delete params.FiscalAddress;
       delete params.Contacts;
       console.log('params', params);
@@ -326,8 +326,8 @@ function ClientProfileCtrl(
       {excludeActualDomains: true}
     );
     if(form.$valid && isValidEmail){
-      var params = angular.copy(vm.client.FiscalAddress);
-      params.LicTradNum = angular.copy(vm.client.LicTradNum);
+      var params = _.clone(vm.client.FiscalAddress);
+      params.LicTradNum = _.clone(vm.client.LicTradNum);
 
       clientService.updateFiscalAddress(
         params.id, 
