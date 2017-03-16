@@ -348,8 +348,7 @@
             console.log('end loadActiveQuotation change page', new Date());
           });
 
-        vm.searchValue = '';
-        vm.searchType   = 'search';
+        resetSearchBox();
 
       }
 
@@ -367,6 +366,12 @@
 
 
     });
+
+    function resetSearchBox(){
+      vm.searchValue = '';
+      vm.searchType   = 'search';      
+    }
+
 
     function getActiveModule(){
       var activeModule = false;
@@ -500,6 +505,7 @@
           console.log(res);
           dialogService.showDialog('Tabla de créditos actualizada');
           vm.isLoadingSync = false;
+          resetSearchBox();
         })
         .catch(function(err){
           dialogService.showDialog('Hubo un error: ' + err.data);
@@ -515,6 +521,7 @@
           console.log(res);
           dialogService.showDialog('Descuentos de clientes actualizados');
           vm.isLoadingSync = false;
+          resetSearchBox();
         })
         .catch(function(err){
           dialogService.showDialog('Hubo un error: ' + err.data);
@@ -530,6 +537,7 @@
           console.log(res);
           dialogService.showDialog('Cliente actualizado');
           vm.isLoadingSync = false;
+          resetSearchBox();
         })
         .catch(function(err){
           dialogService.showDialog('Hubo un error: ' + err.data);
