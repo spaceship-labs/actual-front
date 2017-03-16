@@ -164,6 +164,7 @@
           searchProduct({term: vm.searchValue});
           break;
       }
+
     }
 
     function searchProduct(params){
@@ -346,6 +347,9 @@
             $rootScope.isMainDataLoaded = true;
             console.log('end loadActiveQuotation change page', new Date());
           });
+
+        vm.searchValue = '';
+        vm.searchType   = 'search';
 
       }
 
