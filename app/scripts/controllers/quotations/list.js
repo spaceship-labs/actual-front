@@ -324,10 +324,11 @@ function QuotationsListCtrl(
     });
     quotationService.getTotalsByUser($rootScope.user.id, params)
       .then(function(res){
+        console.log('res getCurrentUserTotal', res);
         var values = res.data;
         var total = values.byDateRange || 0;
         vm.currentUserTotal = total;
-        deferred.resolve();
+        deferred.resolve(values);
       })
       .catch(function(err){
         console.log(err);
@@ -366,9 +367,11 @@ function QuotationsListCtrl(
       .then(function(results){
         $rootScope.$broadcast('reloadTable', true);
 
-        if(!authService.isUserManager()){
-          var userTotals = results[2][0];
-          var userCounts = results[2][1];
+        console.log('results', results);
+
+        if( vm.isSellerReport ){
+          var userTotals = results[0][0];
+          var userCounts = results[0][1];
           setupSellerChart(userTotals, userCounts);
         }
 

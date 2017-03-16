@@ -134,13 +134,14 @@
       </div>
 
       <div flex="15" class="input-element">
-        <label><strong>Código postal</strong></label>
+        <label><strong>Código postal*</strong></label>
         <div class="input-element-inner">
           <input 
             type="text" 
             name="postal"
             ng-model="vm.fiscalAddress.ZipCode"
-            autocomplete="postal-code" 
+            autocomplete="postal-code"
+            required 
           >
         </div>
       </div>
