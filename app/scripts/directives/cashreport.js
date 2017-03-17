@@ -104,13 +104,13 @@ angular.module('dashexampleApp')
 
 			    if( $scope.isGeneralReport ){
 			      promises = [
-			        paymentService.getPaymentMethodsGroups(),
+			        paymentService.getPaymentMethodsGroups({readCreditPayments:true}),
 			        storeService.getStoresCashReport(params)
 			      ];
 			    }
 			    else if( $scope.isManagerReport ){
 			      promises = [
-			        paymentService.getPaymentMethodsGroups(),      
+			        paymentService.getPaymentMethodsGroups({readCreditPayments:true}),      
 			        storeService.getManagerCashReport(params)
 			      ];
 			    }
@@ -231,12 +231,17 @@ angular.module('dashexampleApp')
 
 			    for(var key in paymentsGroups){
 			      var sortedMethods = sortMethodsByGroup(paymentsGroups[key], key, methodGroups);
-			      groups.push({
-			        groupNumber: sortedMethods[0].groupNumber,
-			        msi: sortedMethods[0].msi || 0,
-			        methods: sortedMethods
-			      });
+						
+						if(sortedMethods.length > 0){			      
+				      groups.push({
+				        groupNumber: sortedMethods[0].groupNumber,
+				        msi: sortedMethods[0].msi || 0,
+				        methods: sortedMethods
+				      });
+				    }
 			    }
+
+			    console.log('groups', groups);
 			    
 			    groups = _.sortBy(groups, 'msi');
 			    return groups;
@@ -256,6 +261,10 @@ angular.module('dashexampleApp')
 			  }
 
 			  function getTotalByMethodUSD(method){
+			  	if(!method.payments){
+			  		return 0;
+			  	}
+
 			    var total = method.payments.reduce(function(acum, current){
 			      acum += current.ammount;
 			      return acum;
@@ -264,6 +273,10 @@ angular.module('dashexampleApp')
 			  }
 
 			  function getTotalByMethod(method){
+			  	if(!method.payments){
+			  		return 0;
+			  	}
+
 			    var total = method.payments.reduce(function(acum, current){
 			      if(current.currency === paymentService.currencyTypes.USD){
 			        acum += (current.ammount * current.exchangeRate);
@@ -283,7 +296,6 @@ angular.module('dashexampleApp')
 			  }
 
 			  function getSellersTotal(sellers){
-			  	console.log('sellers', sellers);
 			  	sellers = sellers || [];
 			    var sellersTotal = sellers.reduce(function(acum, seller){
 			      acum += getSellerTotal(seller);
@@ -293,6 +305,10 @@ angular.module('dashexampleApp')
 			  }
 
 			  function getSellerTotal(seller){
+			  	if(!seller.paymentsGroups){
+			  		return 0;
+			  	}
+
 			    var generalTotal = seller.paymentsGroups.reduce(function(acum, group){
 			      acum += getTotalByGroup(group);
 			      return acum;

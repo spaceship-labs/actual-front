@@ -301,9 +301,9 @@
    		return options;
    	}
 
-    function getPaymentMethodsGroups(){
+    function getPaymentMethodsGroups(params){
       var url = '/paymentgroups';
-      return api.$http.get(url);
+      return api.$http.post(url, params);
     }
 
     function getRefundsOptions(){
