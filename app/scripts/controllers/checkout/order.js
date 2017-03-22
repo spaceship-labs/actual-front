@@ -23,7 +23,8 @@ function CheckoutOrderCtrl(
   orderService,
   deliveryService,
   invoiceService,
-  paymentService
+  paymentService,
+  authService
 ){
   var vm = this;
   var EWALLET_POSITIVE = 'positive';
@@ -37,6 +38,7 @@ function CheckoutOrderCtrl(
     generateInvoice: generateInvoice,
     getPaymentTypeString: paymentService.getPaymentTypeString,
     getSerieByDetailId: getSerieByDetailId,
+    showInvoiceErrorIfNeeded: showInvoiceErrorIfNeeded,
     sendInvoice: sendInvoice,
     print: print,
     invoices: [],
@@ -46,7 +48,8 @@ function CheckoutOrderCtrl(
     invoiceLogInterval: false,    
     invoiceLogLoadCounter: 0,
     invoiceLogLoadLimit: 5,    
-    calculateBalance: orderService.calculateBalance
+    calculateBalance: orderService.calculateBalance,
+    isUserAdmin: authService.isAdmin($rootScope.user)
   });
 
   function showImmediateDeliveryDialog(order){
@@ -167,11 +170,20 @@ function CheckoutOrderCtrl(
       invoiceService.getInvoiceLogs($routeParams.id)
         .then(function(logs){
           vm.alegraLogs = logs;
+
         })
         .catch(function(err){
           console.log(err);
         });
     }
+  }
+
+  function showInvoiceErrorIfNeeded(logs){
+    logs = logs || [];
+    var errorExists = _.some(logs, function(log){
+      return log.isError;
+    });
+    return errorExists && (!vm.invoices || vm.invoices.length === 0);
   }
 
   function calculateEwalletAmounts(order){

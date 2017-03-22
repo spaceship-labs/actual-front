@@ -33,7 +33,7 @@
             <strong>IMPRIMIR RECIBO</strong>
           </a>
           
-          <p ng-if="!vm.invoiceExists">
+          <p ng-if="!vm.invoiceExists && !vm.showInvoiceErrorIfNeeded(vm.alegraLogs)">
             <strong>Generación/Lectura de factura en proceso</strong>
           </p>
 
@@ -286,7 +286,7 @@
           <a href="#"  ng-click="vm.print()" class="action-btn action-btn-save print-btn">
             <strong>IMPRIMIR RECIBO</strong>
           </a>
-          <a href="#" ng-if="!vm.invoiceExists" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
+          <a href="#" ng-if="!vm.invoiceExists && vm.isUserAdmin" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
             <strong>GENERAR FACTURA</strong>
           </a>
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
