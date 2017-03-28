@@ -86,6 +86,9 @@ function CheckoutOrderCtrl(
       vm.alegraLogs = [];
       if(vm.order.AlegraLogs){
         vm.alegraLogs = vm.order.AlegraLogs;
+        if( showInvoiceErrorIfNeeded(vm.alegraLogs) ){
+          dialogService.showDialog('Hubo un error en la generación de la factura');
+        }
       }
 
       vm.order.Details = vm.order.Details || [];
@@ -170,10 +173,14 @@ function CheckoutOrderCtrl(
       invoiceService.getInvoiceLogs($routeParams.id)
         .then(function(logs){
           vm.alegraLogs = logs;
-
+          //console.log('vm.invoices', vm.invoices);
+          //console.log('logs');
+          if( showInvoiceErrorIfNeeded(logs) ){
+            dialogService.showDialog('Hubo un error en la generación de la factura');
+          } 
         })
         .catch(function(err){
-          console.log(err);
+          console.log('err',err);
         });
     }
   }
