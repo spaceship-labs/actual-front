@@ -123,9 +123,11 @@
           <label><strong>Código postal*</strong></label>
           <div class="input-element-inner">
             <input 
-              type="text" 
+              type="number" 
               ng-model="vm.client.FiscalAddress.ZipCode"
               required
+              minlength="5"
+              maxlength="5"              
             >
           </div>
         </div>

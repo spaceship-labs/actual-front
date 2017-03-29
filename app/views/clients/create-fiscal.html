@@ -137,11 +137,13 @@
         <label><strong>Código postal*</strong></label>
         <div class="input-element-inner">
           <input 
-            type="text" 
+            type="number" 
             name="postal"
             ng-model="vm.fiscalAddress.ZipCode"
             autocomplete="postal-code"
-            required 
+            required
+            minlength="5"
+            maxlength="5" 
           >
         </div>
       </div>
