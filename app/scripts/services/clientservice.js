@@ -135,6 +135,10 @@
           client.FiscalAddress.U_Correos = _.clone(client.E_Mail);
         }
 
+        if(client.FiscalAddress.ZipCode){
+          client.FiscalAddress.ZipCode = parseInt(client.FiscalAddress.ZipCode);
+        }
+
 
         /*
         client.Contacts = client.Contacts.map(function(contact){
