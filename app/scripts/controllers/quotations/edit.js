@@ -107,7 +107,6 @@ function QuotationsEditCtrl(
 
         loadPaymentMethods();
 
-        console.log('details not populated '+ new Date(), _.clone(vm.quotation.Details) );
         return quotationService.populateDetailsWithProducts(
           vm.quotation,{
             populate: ['FilterValues']
@@ -115,7 +114,6 @@ function QuotationsEditCtrl(
         );
       })
       .then(function(details){
-        console.log('details post populateDetailsWithProducts' + new Date(), _.clone(details) );
         vm.quotation.Details = details;
         return quotationService.loadProductsFilters(vm.quotation.Details);
       })
@@ -128,11 +126,9 @@ function QuotationsEditCtrl(
       })
       .then(function(response){
         var detailsStock = response.data;
-        console.log('details' + new Date(), _.clone(vm.quotation.Details) );
         vm.quotation.Details = quotationService.mapDetailsStock(vm.quotation.Details, detailsStock);
         vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
 
-        console.log('end loading quotation', new Date());
         vm.isValidatingStock = false;
         vm.isLoadingRecords = true;
         return quotationService.getRecords(vm.quotation.id);
@@ -172,6 +168,11 @@ function QuotationsEditCtrl(
     if($location.search().createdClient){
       //dialogService.showDialog('Cliente registrado');
     }
+
+    if($location.search().missingAddress){
+      dialogService.showDialog('Asigna una dirección de entrega');
+    }
+
     if($location.search().stockAlert){
       quotationService.showStockAlert();
     }

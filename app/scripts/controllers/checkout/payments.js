@@ -105,16 +105,20 @@ function CheckoutPaymentsCtrl(
         var isValidStock = result[0]; 
 
         if( !isValidStock){
+          console.log('no hay stock');
           $location.path('/quotations/edit/' + vm.quotation.id)
             .search({stockAlert:true});
         }
 
         if(!vm.quotation.Details || vm.quotation.Details.length === 0){
+          console.log('no hay details');
           $location.path('/quotations/edit/' + vm.quotation.id);
         }        
 
         if(!validateQuotationAddress(vm.quotation)){
-          $location.path('/quotations/edit/' + vm.quotation.id);
+          console.log('no hay direccion');
+          $location.path('/quotations/edit/' + vm.quotation.id)
+            .search({missingAddress:true});
         }
 
         if(vm.quotation.Order){
