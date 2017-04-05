@@ -288,7 +288,10 @@ function ClientCreateCtrl(
           console.log(err);
           vm.isLoadingProgress = false;
           cancelProgressInterval();
-          dialogService.showDialog('Hubo un error: ' + (err.data || err));
+
+          var error = err.data || err;
+          error = error ? error.toString() : '';
+          dialogService.showDialog('Hubo un error: ' + error );          
         });
     }
     else if(!areValidEmails){
