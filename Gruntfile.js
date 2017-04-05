@@ -455,7 +455,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'sandbox',
-            apiEndpoint: 'http://sandbox-actual-api.herokuapp.com',
+            //apiEndpoint: 'http://sandbox-actual-api.herokuapp.com',
+            apiEndpoint: 'http://166.78.47.146:8080',
             adminUrl: 'http://sandboxadmin.miactual.com',
             tokenPrefix: 'sandbox'
           }
