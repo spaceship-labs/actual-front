@@ -79,7 +79,7 @@ function OffersCtrl(
         ItemCode: product.ItemCode,
         id      : product.id,
         quantity: product.packageRule.quantity,
-        name    : product.Name
+        name    : product.Name || product.ItemName
       };
       return packageProduct;
     });
@@ -135,10 +135,12 @@ function OffersCtrl(
 
   function showUnavailableStockMsg(products){
     var htmlProducts = products.reduce(function(acum, p){
-      acum+="<li>"+p.name+'</li>';
+      //console.log('p', p);
+      //acum+="<li>"+p.name+'</li>';
+      acum += p.name + '('+ p.ItemCode +'), ';
       return acum;
-    }, '<ul>');
-    htmlProducts += '</ul>';
+    }, '');
+    //htmlProducts += '</ul>';
     dialogService.showDialog(
       'No hay stock disponible de los siguientes productos: '
       + htmlProducts
