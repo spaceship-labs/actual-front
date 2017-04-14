@@ -213,7 +213,7 @@ function CheckoutPaymentsCtrl(
       }
     }
     
-    if(vm.activeMethod.maxAmmount < 0.01){
+    if(vm.activeMethod.maxAmmount < 0.01 && (method.type === CLIENT_BALANCE_TYPE || method.type === EWALLET_TYPE) ){
       dialogService.showDialog('Fondos insuficientes');
       return false;
     }
