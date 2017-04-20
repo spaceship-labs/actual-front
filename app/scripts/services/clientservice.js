@@ -131,13 +131,15 @@
         if(!client.FiscalAddress){
           client.FiscalAddress = {};
         }
+
+        /*
         if(!client.FiscalAddress.U_Correos){
           client.FiscalAddress.U_Correos = _.clone(client.E_Mail);
         }
 
         if(client.FiscalAddress.ZipCode){
           client.FiscalAddress.ZipCode = parseInt(client.FiscalAddress.ZipCode);
-        }
+        }*/
 
 
         /*

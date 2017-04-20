@@ -17,25 +17,28 @@ function SearchCtrl(
   $timeout,
   $routeParams, 
   $q ,
+  $mdSidenav,
   productService, 
-  dialogService
+  dialogService,
+  productSearchService
 ){
   var vm = this;
+
+  angular.extend(vm, {
+    totalResults:0,
+    isLoading: false,
+    filters: [],
+    searchValues: [],
+    syncProcessActive: false,
+    loadMore: loadMore,
+    searchByFilters: searchByFilters,
+    toggleColorFilter: toggleColorFilter,
+    scrollTo: scrollTo,
+    toggleSearchSidenav: toggleSearchSidenav,
+    removeSearchValue:removeSearchValue
+  });
+
   var mainDataListener = function(){};
-
-  vm.loadMore = loadMore;
-  vm.searchByFilters = searchByFilters;
-  vm.toggleColorFilter = toggleColorFilter;
-  vm.scrollTo = scrollTo;
-
-  vm.totalResults = 0;
-  vm.isLoading = false;
-  vm.filters = [];
-  vm.searchValues = [];
-  vm.removeSearchValue = removeSearchValue;
-
-  vm.isLoading = true;
-  vm.syncProcessActive = false;
 
   if($rootScope.activeStore){
     init();
@@ -63,7 +66,7 @@ function SearchCtrl(
         page: 1
       };
       vm.isLoading = true;
-      doSearch();
+      doInitialSearch();
 
     }
 
@@ -71,7 +74,7 @@ function SearchCtrl(
 
   }
 
-  function doSearch(){
+  function doInitialSearch(){
     productService.searchByFilters(vm.search).then(function(res){
       vm.totalResults = res.data.total;
       vm.isLoading = false;
@@ -127,6 +130,9 @@ function SearchCtrl(
       });    
   }
 
+  function toggleSearchSidenav(){
+    $mdSidenav('searchFilters').toggle();
+  }
 
   function removeSearchValue(removeValue){
     var removeIndex = vm.searchValues.indexOf(removeValue);
@@ -148,19 +154,7 @@ function SearchCtrl(
       vm.search.page = 1;
     }
     vm.isLoading = true;
-    vm.searchValues = [];
-    var searchValuesIds = [];
-    vm.filters.forEach(function(filter){
-      filter.Values.forEach(function(val){
-        if(val.selected){
-          vm.searchValues.push(val);
-        }
-      });
-    });
-
-    vm.searchValues.forEach(function(searchVal){
-      searchValuesIds.push(searchVal.id);
-    });
+    var searchValuesIds = productSearchService.getSearchValuesIdsByFilters(vm.filters);
 
     var params = {
       ids: searchValuesIds,
@@ -220,6 +214,8 @@ SearchCtrl.$inject = [
   '$timeout',
   '$routeParams',
   '$q',
+  '$mdSidenav',
   'productService',
-  'dialogService'
+  'dialogService',
+  'productSearchService'
 ];
