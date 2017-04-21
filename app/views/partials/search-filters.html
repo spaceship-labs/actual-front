@@ -3,19 +3,22 @@
   md-component-id="searchFilters"
 >
   <md-button 
-    ng-click="main.togglePointerSidenav()" 
+    ng-click="vm.toggleSearchSidenav()" 
     class="pointer-close-btn md-fab md-mini md-primary"
   >
     <i class="icon-cotizar"></i>
   </md-button>
 
+  <!--
   <md-toolbar class="md-theme-light">
-    <h1 class="md-toolbar-tools">POINTERS <i class="icon-pointer"></i></h1>
+    <h1 class="md-toolbar-tools">Filtrar resultados <i class="icon-pointer"></i></h1>
   </md-toolbar>
-  <md-content  layout-padding>
+  -->
+
+  <md-content>
 
     <section class="filters">
-      <h3 class="filters-head">FILTRAR RESULTADOS</h3>
+      <h3 class="filters-head"><!--<i class="icon-pointer"></i>--> FILTRAR RESULTADOS</h3>
       <div class="filters-inner">
         <div class="filter-block filter-block-prices">
           <h4><strong>PRECIO:</strong></h4>
@@ -43,6 +46,7 @@
 
         </div>
 
+        <!--NORMAL FILTERS-->
         <div class="filter-block" ng-repeat="filter in vm.filters track by $index">
           <h4 ng-click="vm.filters[$index].active = !vm.filters[$index].active" ng-class="{'active-arrow': vm.filters[$index].active}">
             <strong>{{filter.Name}}:</strong>
@@ -75,6 +79,51 @@
 
           </div>
         </div>
+        <!--END NORMAL FILTERS-->
+        
+        <!--BRAND FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isBrandFilterActive = !vm.isBrandFilterActive" ng-class="{'active-arrow': vm.isBrandFilterActive}">
+            <strong>Marca:</strong>
+          </h4>
+          <div ng-show="vm.isBrandFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="brand in vm.customBrands | orderBy:'Name' "
+                ng-model="brand.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{brand.Name}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END BRAND FILTER-->
+
+
+        <!--DISCOUNT FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isDiscountFilterActive = !vm.isDiscountFilterActive" ng-class="{'active-arrow': vm.isDiscountFilterActive}">
+            <strong>Descuento:</strong>
+          </h4>
+          <div ng-show="vm.isDiscountFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="discount in vm.discountFilters"
+                ng-model="discount.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{discount.label}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END DISCOUNT FILTER-->
+
       </div>
     </section>
 

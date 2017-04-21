@@ -26,10 +26,11 @@ function SearchCtrl(
 
   angular.extend(vm, {
     totalResults:0,
-    isLoading: false,
+    isLoading: true,
     filters: [],
     searchValues: [],
     syncProcessActive: false,
+    discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     loadMore: loadMore,
     searchByFilters: searchByFilters,
     toggleColorFilter: toggleColorFilter,
@@ -71,6 +72,7 @@ function SearchCtrl(
     }
 
     loadFilters();
+    loadCustomBrands();
 
   }
 
@@ -124,9 +126,23 @@ function SearchCtrl(
     productService.getAllFilters()
       .then(function(res){
         vm.filters = res.data;
+        vm.filters = vm.filters.filter(function(filter){
+          return filter.Handle !== 'marcas';
+        });
       })
       .catch(function(err){
-        console.log('err', err)
+        console.log('err', err);
+      });    
+  }
+
+  function loadCustomBrands(){
+    productService.getCustomBrands()
+      .then(function(res){
+        vm.customBrands = res.data;
+        console.log('customBrands', vm.customBrands);
+      })
+      .catch(function(err){
+        console.log('err', err);
       });    
   }
 
@@ -141,11 +157,12 @@ function SearchCtrl(
     }
     vm.filters.forEach(function(filter){
       filter.Values.forEach(function(val){
-        if(val.id == removeValue.id){
+        if(val.id === removeValue.id){
           val.selected = false;
         }
       });
     });
+
     vm.searchByFilters();
   }
 
@@ -154,15 +171,36 @@ function SearchCtrl(
       vm.search.page = 1;
     }
     vm.isLoading = true;
-    var searchValuesIds = productSearchService.getSearchValuesIdsByFilters(vm.filters);
+    vm.searchValues = productSearchService.getSearchValuesByFilters(vm.filters);
+    var searchValuesIds = productSearchService.getSearchValuesIds(vm.searchValues);
+
+    vm.brandSearchValues = vm.customBrands.filter(function(brand){
+      return brand.selected;
+    });
+
+    var brandSearchValuesIds = vm.brandSearchValues.map(function(brand){
+      return brand.id;
+    });
+
+    vm.discountFilters = vm.discountFilters.filter(function(discount){
+      return discount.selected;
+    });
+
+    var discountFiltersValues = vm.discountFilters.map(function(discount){
+      return discount.value;
+    });
 
     var params = {
       ids: searchValuesIds,
+      brandsIds: brandSearchValuesIds,
+      discounts: discountFiltersValues,
       keywords: vm.search.keywords,
       minPrice: vm.minPrice,
       maxPrice: vm.maxPrice,
       page: vm.search.page
     };
+
+    console.log('params', params);
 
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;

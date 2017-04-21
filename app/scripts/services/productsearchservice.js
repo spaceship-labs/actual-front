@@ -8,26 +8,43 @@
     /** @ngInject */
     function productSearchService(){
 
+    	var discountOptions = [
+    		10, 15, 20, 25, 30, 35
+    	];
+
+    	var DISCOUNTS_SEARCH_OPTIONS = discountOptions.map(function(option){
+    		return {
+    			label: option + '%',
+    			value: option
+    		};
+    	});
+
 	  	var service = {
-	  		getSearchValuesIdsByFilters: getSearchValuesIdsByFilters
+	  		getSearchValuesByFilters: getSearchValuesByFilters,
+	  		getSearchValuesIds: getSearchValuesIds,
+	  		DISCOUNTS_SEARCH_OPTIONS:DISCOUNTS_SEARCH_OPTIONS
 	  	};
 
-	  	function getSearchValuesIdsByFilters(filters){
-	      var searchValuesIds = filters.reduce(function(acum, filter){
+	  	function getSearchValuesByFilters(filters){
+	      var searchValues = filters.reduce(function(acum, filter){
 	      	
 	      	var selectedValues = filter.Values.filter(function(value){
 	      		return value.selected;
 	      	});
 
-	      	var selectedValuesIds = selectedValues.map(function(value){
-	      		return value.id;
-	      	});
+	      	acum = acum.concat(selectedValues);
 
-	      	acum.concat(selectedValuesIds);
 	      	return acum;
 	      },[]);
 
-	      return searchValuesIds;
+	      return searchValues;
+	  	}
+
+	  	function getSearchValuesIds(searchValues){
+      	var searchValuesIds = searchValues.map(function(value){
+      		return value.id;
+      	});
+      	return searchValuesIds;
 	  	}
 
 

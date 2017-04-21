@@ -1389,6 +1389,21 @@ md-backdrop.md-sidenav-backdrop{
   content: '';
 }
 
+.listing-product .discount-batch{
+  background: #FDE932;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 2;
+  font-size: 12px;
+  -webkit-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
+  -moz-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
+  box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
+}
+
 /*-------------
   #PRODUCTS-lIST
 /*------------*/
@@ -1661,6 +1676,8 @@ md-backdrop.md-sidenav-backdrop{
 .listing-view-nav .see-more{
   font-style: italic;
 }
+
+
 
 /*-------------/
   #PRODUCT-VIEW
@@ -2279,7 +2296,28 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 /*--------------/
   #FILTERS
 /*-------------*/
-.filters{margin-top: 20px;}
+.filters-sidenav-trigger{
+  position: fixed;
+  right: -55px;
+  top: 50%;
+  padding: 12px 30px;
+  background: #e7e9e7;
+  border: 0;
+  color: #000;
+  border-radius: 6px;
+
+  -webkit-transform: rotate(-90deg) translateY(-50%);
+  -moz-transform: rotate(-90deg) translateY(-50%);
+  -ms-transform: rotate(-90deg) translateY(-50%);
+  transform: rotate(-90deg) translateY(-50%);
+
+  margin: 0;
+  z-index: 9;  
+}
+.filters{
+  color: #000;
+  margin-top: 20px;
+}
 .filters h4,
 .filters h3{margin: 0;}
 .filters-head{
@@ -2292,13 +2330,14 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 }
 .filters .filters-inner{
   background: #F8F8F8;
+  padding: 0 0 40px;
 }
 .filters .filter-block{
   border-top: 1px solid #E7E7E7;
   padding: 6px 14px;
 }
 .filters .filter-block-prices{
-  padding: 6px 2px;
+  padding: 6px;
 }
 .filters .filter-block-prices h4{
   padding: 0 13px;

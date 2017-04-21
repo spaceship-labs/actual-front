@@ -3,6 +3,15 @@
     <span>VER</span>
   </a>
   <div class="listing-product-gallery">
+
+    <div
+      ng-if="product.Discount && product.Discount > 0"
+      class="discount-batch"
+      layout="row"
+      layout-align="center center">
+      <strong>- {{product.Discount}}%</strong>
+    </div>
+
     <img
       ng-if="images.length === 1"
       ng-src="{{images[0].url}}"

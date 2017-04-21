@@ -10,6 +10,13 @@
   </div>
 </div>
 -->
+<a 
+  ng-click="vm.toggleSearchSidenav()" 
+  href="" 
+  class="filters-sidenav-trigger">
+    Filtros
+</a>
+
 
 <div class="content-block listing-view search-view" id="search-page">
   <div class="container container-xxlg" layout="row" layout-align="space-between start">
@@ -22,8 +29,7 @@
       </sidebar-categories>
 
       <!--FILTERS-->
-        <a ng-click="vm.toggleSearchSidenav()" href="" class=""></a>
-        <ng-include src="'views/partials/search-filters.html'"></ng-include>
+      <ng-include src="'views/partials/search-filters.html'"></ng-include>
       <!--END FILTERS-->
 
     </aside>
