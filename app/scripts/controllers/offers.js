@@ -11,20 +11,35 @@ angular.module('dashexampleApp')
   .controller('OffersCtrl', OffersCtrl);
 
 function OffersCtrl(
+  $scope,
   $q,
   $filter,
+  $rootScope,
   packageService,
   quotationService,
   api,
   localStorageService,
   productService,
+  deliveryService,
   dialogService
 ){
   var vm = this;
   angular.extend(vm,{
     init:init,
-    addPackageToCart: addPackageToCart
+    addPackageToCart: addPackageToCart,
+    warehouses: [],
+    activeStoreWarehouse: false
   });
+
+  var mainDataListener = function(){};
+
+  if($rootScope.activeStore){
+    init();
+  }else{
+    mainDataListener = $rootScope.$on('activeStoreAssigned', function(e){
+      init();
+    });
+  }    
 
   function init(){
     vm.isLoading = true;
@@ -36,12 +51,26 @@ function OffersCtrl(
           p.image = api.baseUrl + '/uploads/groups/' + p.icon_filename;
           return p;
         });
+        return loadWarehouses($rootScope.activeStore);
+      })
+      .then(function(){
         vm.isLoading = false;
       })
       .catch(function(err){
         console.log(err);
       });
   }
+
+  function loadWarehouses(activeStore){
+    return api.$http.get('/company/find')
+      .then(function(res) {
+        vm.warehouses = res.data;
+        vm.activeStoreWarehouse = _.findWhere(vm.warehouses,{
+          id: activeStore.Warehouse
+        });
+      });
+  }
+
 
   function addPackageToCart(packageId){
     vm.isLoading = true;
@@ -55,6 +84,8 @@ function OffersCtrl(
       })
       .then(function(deliveries){
         var packageProducts = mapProductsDeliveryDates(products, deliveries, packageId);
+        console.log('packageProducts', packageProducts);
+        //return;
         if(packageProducts.length > 0){
           quotationService.addMultipleProducts(packageProducts);
         }
@@ -116,6 +147,15 @@ function OffersCtrl(
   function assignCloserDeliveryDate(product, productDeliveryDates, packageId){
     product.hasStock = true;
     productDeliveryDates = $filter('orderBy')(productDeliveryDates, 'date');
+
+    productDeliveryDates = deliveryService.sortDeliveriesByHierarchy(
+      productDeliveryDates,
+      vm.warehouses,
+      vm.activeStoreWarehouse
+    );
+
+    console.log('sortDeliveriesByHierarchy', productDeliveryDates);
+
     for(var i = (productDeliveryDates.length-1); i>=0; i--){
       var deliveryDate = productDeliveryDates[i];
       if( product.quantity <=  parseInt(deliveryDate.available) ){
@@ -147,16 +187,24 @@ function OffersCtrl(
     );
   }
 
+  $scope.$on('$destroy', function(){
+    //unsuscribing listeners
+    mainDataListener();
+  });
+
   vm.init();
 }
 
 OffersCtrl.$inject = [
+  '$scope',
   '$q',
   '$filter',
+  '$rootScope',
   'packageService',
   'quotationService',
   'api',
   'localStorageService',
   'productService',
+  'deliveryService',
   'dialogService'
 ];

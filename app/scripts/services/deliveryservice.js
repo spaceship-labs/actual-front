@@ -166,6 +166,7 @@
 
 	  function sortDeliveriesByHierarchy(deliveries, allWarehouses, activeStoreWarehouse){
 	    var sortedDeliveries = [];
+
 	    var warehouses = deliveries.map(function(delivery){
 	      var warehouse = _.findWhere(allWarehouses, {
 	        id: delivery.companyFrom
@@ -182,6 +183,12 @@
 	  }
 
 	  function sortWarehousesByHierarchy(warehouses, activeStoreWarehouse){
+	  	warehouses = assignStoreWarehouseAtTop(warehouses, activeStoreWarehouse);
+	  	warehouses = warehouses.map(function(whs){
+	  		whs.sorted = false;
+	  		return whs;
+	  	});
+
 	    var region = activeStoreWarehouse.region;
 	    var sorted = [];
 	    var rules  = getWarehousesRules(region, warehouses);
@@ -194,8 +201,19 @@
 	          warehouses[j].sorted = true;
 	        }
 	      }
+	    
 	    }
+
 	    return sorted;
+	  }
+
+	  function assignStoreWarehouseAtTop(warehouses, activeStoreWarehouse){
+	  	var storeWhsId = activeStoreWarehouse.id;
+			warehouses.sort(function(a,b){ 
+				return a.id == storeWhsId ? -1 : b.id == storeWhsId ? 1 : 0; 
+			});
+
+			return warehouses;
 	  }
 
 	  function sortDeliveriesByDate(deliveries){
@@ -225,7 +243,7 @@
 	    //Hierarchy
 	    /*	
 				1. Region cedis
-				2. Other regions cedis
+				2. Other regions cedis (subrule: active store warehouse has priority look at assignStoreWarehouseAtTop function)
 				3. Region warehouses
 				4. Other regions warehouses
 	    */

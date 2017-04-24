@@ -31,7 +31,8 @@ function ProductCtrl(
   cartService,
   commonService,
   categoriesService,
-  dialogService
+  dialogService,
+  ENV
 ) {
   var vm = this;
   var activeStoreId = localStorageService.get('activeStore'); 
@@ -53,7 +54,8 @@ function ProductCtrl(
     isLoading: true,
     resetProductCartQuantity: resetProductCartQuantity,
     trustAsHtml: trustAsHtml,
-    sas: commonService.getSasHash()
+    sas: commonService.getSasHash(),
+    ENV: ENV
   });
 
 
@@ -255,6 +257,8 @@ function ProductCtrl(
       activeStoreWarehouse
     );
 
+    console.log('productCartItems', productCartItems);
+
     if(productCartItems.length === 1){
       var cartItem = productCartItems[0];
       var params = cartService.buildAddProductToCartParams(vm.product.id, cartItem);
@@ -318,7 +322,8 @@ ProductCtrl.$inject = [
   'cartService',
   'commonService',
   'categoriesService',
-  'dialogService'
+  'dialogService',
+  'ENV'
 ];
 /*
 angular.element(document).ready(function() {

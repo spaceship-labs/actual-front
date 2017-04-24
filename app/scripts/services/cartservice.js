@@ -18,6 +18,7 @@
 			resetProductCartQuantity: resetProductCartQuantity    	
     };
 
+
     function buildAddProductToCartParams(productId, cartItem){
       var params = {
         id: productId,
