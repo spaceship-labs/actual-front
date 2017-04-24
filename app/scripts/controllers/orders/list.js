@@ -36,6 +36,7 @@ function OrdersListCtrl(
   vm.dateRange = false;
   vm.ordersData = {};
   vm.listScopes = [];
+  vm.defaultSort = [4, "desc"];
   vm.columnsOrders = [
     {key: 'folio', label:'Folio'},
     {key:'Client.CardName', label:'Cliente'},

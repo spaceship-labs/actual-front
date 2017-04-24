@@ -243,8 +243,8 @@
 	    //Hierarchy
 	    /*	
 				1. Region cedis
-				2. Other regions cedis (subrule: active store warehouse has priority look at assignStoreWarehouseAtTop function)
-				3. Region warehouses
+				2. Other regions cedis
+				3. Region warehouses  (subrule: active store warehouse has priority look at assignStoreWarehouseAtTop function)
 				4. Other regions warehouses
 	    */
 	    var otherRegionsRules = [];
