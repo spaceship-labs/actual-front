@@ -105,7 +105,7 @@
         card:{label:'Santander', value:'santander'},
         paymentTypes: ['3-msi','6-msi','9-msi','12-msi'],
         storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Santander', value:'santander'}
+        terminal: {label:'Banorte', value:'banorte'}
       },  
 
       //BANCOMER
