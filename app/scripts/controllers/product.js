@@ -257,7 +257,9 @@ function ProductCtrl(
       activeStoreWarehouse
     );
 
+
     console.log('productCartItems', productCartItems);
+
 
     if(productCartItems.length === 1){
       var cartItem = productCartItems[0];

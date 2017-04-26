@@ -47,7 +47,6 @@
 	    var productCartItems = [];
 	     if(deliveryGroup.deliveries.length === 1){
 	      var productCartItem = deliveryGroup.deliveries[0];
-	      console.log('productCartItem')
 	      productCartItem.quantity = quantity;
 	      productCartItem.originalDate = productCartItem.date;
 	      productCartItems.push( productCartItem );

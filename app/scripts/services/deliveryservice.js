@@ -183,26 +183,18 @@
 	  }
 
 	  function sortWarehousesByHierarchy(warehouses, activeStoreWarehouse){
-	  	warehouses = assignStoreWarehouseAtTop(warehouses, activeStoreWarehouse);
-	  	warehouses = warehouses.map(function(whs){
-	  		whs.sorted = false;
-	  		return whs;
-	  	});
+	  	var warehousesHierarchy = getWarehousesHierarchyByActiveWarehouse(activeStoreWarehouse, warehouses);
+	  	console.log('warehousesHierarchy', warehousesHierarchy);
 
-	    var region = activeStoreWarehouse.region;
-	    var sorted = [];
-	    var rules  = getWarehousesRules(region, warehouses);
-	    
-	    for(var i=0;i<rules.length;i++){
-	      for(var j=0;j<warehouses.length;j++){
-	        var hash = getWarehouseHash(warehouses[j]);
-	        if(!warehouses[j].sorted && hash == rules[i]){
-	          sorted.push(warehouses[j]);
-	          warehouses[j].sorted = true;
-	        }
-	      }
-	    
-	    }
+	  	var sorted = [];
+	  	for(var i=0;i<warehousesHierarchy.length;i++){
+	  		var warehouseMatch = _.findWhere(warehouses, {WhsCode: warehousesHierarchy[i]});
+				if(warehouseMatch){
+		  		sorted.push(warehouseMatch);
+				}
+	  	}
+
+	  	console.log('sorted', sorted);
 
 	    return sorted;
 	  }
@@ -231,35 +223,50 @@
 	    return hash;
 	  }
 
-	  function getWarehousesRules(region, warehouses){
-	    var otherRegions = warehouses
-	      .filter(function(whs){
-	        return whs.region != region;
-	      })
-	      .map(function(whs){
-	        return whs.region;
-	      });
+	  function getWarehousesHierarchyByActiveWarehouse(activeWarehouse, warehouses){
+	  	/*
+				CEDIS QROO: 01,
+				STUDIO MALECON: 02,
+				STUDIO PLAYA: 03,
+				STUDIO CUMBRES: 05,
+				HOME XCARET: 81
+	  	*/
 
-	    //Hierarchy
-	    /*	
-				1. Region cedis
-				2. Other regions cedis
-				3. Region warehouses  (subrule: active store warehouse has priority look at assignStoreWarehouseAtTop function)
-				4. Other regions warehouses
-	    */
-	    var otherRegionsRules = [];
-	    var rulesHashes = [
-	      'cedis#' + region,
-	    ];
-	    if(otherRegions.length > 0){
-	      for(var i=0;i<otherRegions.length;i++){
-	        rulesHashes.push('cedis#'+otherRegions[i]);
-	        otherRegionsRules.push('#'+otherRegions[i]);
-				}
-	    }
-	    rulesHashes.push('#'+region);
-	    rulesHashes = rulesHashes.concat(otherRegionsRules);
-	    return rulesHashes;
+	  	var hierarchy = [];
+	  	switch(activeWarehouse.WhsCode){
+
+	  		//STUDIO MALECON
+	  		case '02':
+	  			hierarchy = ["01","02","81","03","05"]; 
+	  			break;
+
+	  		//STUDIO PLAYA
+	  		case '03':
+	  			hierarchy = ["01","03","02","81","05"];
+	  			break;
+
+	  		//STUDIO CUMBRES
+	  		case '05': 
+	  			hierarchy = ["01","05","02","81","03"];
+	  			break;
+
+	  		//HOME XCARET
+	  		case '81':
+	  			hierarchy = ["01","81","02","03","05"];
+	  			break;
+
+	  		//STUDIO MERIDA
+	  		case '11':
+	  			hierarchy = ["10","11","01","81","03","02","05"];
+	  			break;
+
+	  		default:
+	  			hierarchy = [];
+	  			break;
+	  	}
+
+	  	return hierarchy;
+
 	  }
 
     return service;
