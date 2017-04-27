@@ -124,6 +124,29 @@
         </div>
         <!--END DISCOUNT FILTER-->
 
+
+        <!--STOCK FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isStockFilterActive = !vm.isStockFilterActive" ng-class="{'active-arrow': vm.isStockFilterActive}">
+            <strong>Existencia:</strong>
+          </h4>
+          <div ng-show="vm.isStockFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="stock in vm.stockFilters"
+                ng-model="stock.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{stock.label}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END STOCK FILTER-->
+
+
       </div>
     </section>
 

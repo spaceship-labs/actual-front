@@ -40,14 +40,42 @@
 
       <div class="subs-container">
 
-        <div class="filters-selected-list" ng-if="vm.searchValues.length > 0">
+        <div 
+          class="filters-selected-list" 
+          ng-if="vm.searchValues.length > 0 || 
+            vm.brandSearchValues.length > 0 || 
+            vm.discountFiltersSelected.length > 0 || 
+            vm.stockFiltersSelected.length > 0"
+        >
           <span>Filtros aplicados:</span>
           <span ng-repeat="searchValue in vm.searchValues track by $index" class="filters-selected-item">
-            {{searchValue.Name}}
+            {{vm.getFilterById(searchValue.Filter).Name}}: {{searchValue.Name}} 
             <a href="#" ng-click="vm.removeSearchValue(searchValue)" class="remove-item">
               <i class="icon-cotizar"></i>
             </a>
           </span>
+
+          <span ng-repeat="brandValue in vm.brandSearchValues track by $index" class="filters-selected-item">
+            Marca: {{brandValue.Name}} 
+            <a href="#" ng-click="vm.removeBrandSearchValue(brandValue)" class="remove-item">
+              <i class="icon-cotizar"></i>
+            </a>
+          </span>          
+
+          <span ng-repeat="discount in vm.discountFiltersSelected track by $index" class="filters-selected-item">
+            Descuento: {{discount.label}} 
+            <a href="#" ng-click="vm.removeSelectedDiscountFilter(discount)" class="remove-item">
+              <i class="icon-cotizar"></i>
+            </a>
+          </span> 
+
+          <span ng-repeat="stock in vm.stockFiltersSelected track by $index" class="filters-selected-item">
+            Existencia: {{stock.label}} 
+            <a href="#" ng-click="vm.removeSelectedStockFilter(stock)" class="remove-item">
+              <i class="icon-cotizar"></i>
+            </a>
+          </span> 
+
 
           <!--
           <span ng-repeat="keyword in vm.search.keywords track by $index" class="filters-selected-item">
@@ -57,6 +85,7 @@
             </a>
           </span>
           -->
+          
 
 
         </div>

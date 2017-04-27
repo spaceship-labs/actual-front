@@ -100,6 +100,7 @@
       function getDefaultSortOption(){
         var defaultSort = [0,'asc'];
         $scope.currentOrderColumnIndex = 0;
+        //$scope.defaultSort = [4, 'desc'];
         if($scope.defaultSort){
           defaultSort = $scope.defaultSort;
           $scope.currentOrderColumnIndex = $scope.defaultSort[0];

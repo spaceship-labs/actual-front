@@ -31,12 +31,17 @@ function SearchCtrl(
     searchValues: [],
     syncProcessActive: false,
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
+    stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     loadMore: loadMore,
+    getFilterById: getFilterById,
     searchByFilters: searchByFilters,
     toggleColorFilter: toggleColorFilter,
     scrollTo: scrollTo,
     toggleSearchSidenav: toggleSearchSidenav,
-    removeSearchValue:removeSearchValue
+    removeSearchValue:removeSearchValue,
+    removeBrandSearchValue: removeBrandSearchValue,
+    removeSelectedDiscountFilter: removeSelectedDiscountFilter,
+    removeSelectedStockFilter: removeSelectedStockFilter
   });
 
   var mainDataListener = function(){};
@@ -150,50 +155,107 @@ function SearchCtrl(
     $mdSidenav('searchFilters').toggle();
   }
 
-  function removeSearchValue(removeValue){
-    var removeIndex = vm.searchValues.indexOf(removeValue);
+  function removeSearchValue(value){
+    var removeIndex = vm.searchValues.indexOf(value);
     if(removeIndex > -1){
       vm.searchValues.splice(removeIndex, 1);
     }
     vm.filters.forEach(function(filter){
       filter.Values.forEach(function(val){
-        if(val.id === removeValue.id){
+        if(val.id === value.id){
           val.selected = false;
         }
       });
     });
 
-    vm.searchByFilters();
+    searchByFilters();
   }
+
+  function removeBrandSearchValue(value){
+    var removeIndex = vm.brandSearchValues.indexOf(value);
+    if(removeIndex > -1){
+      vm.brandSearchValues.splice(removeIndex, 1);
+    }
+    vm.customBrands.forEach(function(brand){
+      if(brand.id === value.id){
+        brand.selected = false;
+      }
+    });
+
+    searchByFilters();
+  }
+
+  function removeSelectedDiscountFilter(discount){
+    var removeIndex = vm.discountFiltersSelected.indexOf(discount);
+    if(removeIndex > -1){
+      vm.discountFiltersSelected.splice(removeIndex, 1);
+    }
+    vm.discountFilters.forEach(function(discountFilter){
+      if(discountFilter.value === discount.value){
+        discountFilter.selected = false;
+      }
+    });
+
+    searchByFilters();
+
+  }
+
+  function removeSelectedStockFilter(stockRangeObject){
+    var removeIndex = vm.stockFiltersSelected.indexOf(stockRangeObject);
+    if(removeIndex > -1){
+      vm.stockFiltersSelected.splice(removeIndex, 1);
+    }
+    vm.stockFilters.forEach(function(stockFilters){
+      if(stockFilters.id === stockRangeObject.id){
+        stockFilters.selected = false;
+      }
+    });
+
+    searchByFilters();
+
+  }  
+
 
   function searchByFilters(options){
     if(!options || !angular.isDefined(options.isLoadingMore)){
       vm.search.page = 1;
     }
     vm.isLoading = true;
+    
+    //SEARCH VALUES
     vm.searchValues = productSearchService.getSearchValuesByFilters(vm.filters);
     var searchValuesIds = productSearchService.getSearchValuesIds(vm.searchValues);
 
+    //BRANDS
     vm.brandSearchValues = vm.customBrands.filter(function(brand){
       return brand.selected;
     });
-
     var brandSearchValuesIds = vm.brandSearchValues.map(function(brand){
       return brand.id;
     });
 
-    vm.discountFilters = vm.discountFilters.filter(function(discount){
+    //DISCOUNTS
+    vm.discountFiltersSelected = vm.discountFilters.filter(function(discount){
       return discount.selected;
     });
-
-    var discountFiltersValues = vm.discountFilters.map(function(discount){
+    var discountFiltersValues = vm.discountFiltersSelected.map(function(discount){
       return discount.value;
     });
+
+    //STOCK
+    vm.stockFiltersSelected = vm.stockFilters.filter(function(stock){
+      return stock.selected;
+    });
+    var stockFiltersValues = vm.stockFiltersSelected.map(function(stock){
+      return stock.value;
+    });
+
 
     var params = {
       ids: searchValuesIds,
       brandsIds: brandSearchValuesIds,
       discounts: discountFiltersValues,
+      stockRanges: stockFiltersValues,
       keywords: vm.search.keywords,
       minPrice: vm.minPrice,
       maxPrice: vm.maxPrice,
@@ -216,6 +278,10 @@ function SearchCtrl(
       }
       vm.isLoading = false;
     });
+  }
+
+  function getFilterById(filterId){
+    return _.findWhere(vm.filters, {id: filterId});
   }
 
   function toggleColorFilter(value, filter){

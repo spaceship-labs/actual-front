@@ -33,15 +33,15 @@
             Entrega en tienda
           </span> 
 
-          <!--
-          <p>Debug</p>                       
-          <span 
-              class="comma-separated"
-              ng-repeat="d in deliveryGroup.deliveries track by $index"
-            >
-            {{ vm.getWarehouseName(d.companyFrom) }}: {{d.available}} ({{d.date | date: 'd/MMM/yyyy'}})
-          </span>
-          -->
+          <div ng-show="vm.ENV.name === 'sandbox' || vm.ENV.name === 'dev' ">
+            <p>Debug</p>                       
+            <span 
+                class="comma-separated"
+                ng-repeat="d in deliveryGroup.deliveries track by $index"
+              >
+              {{ vm.getWarehouseName(d.companyFrom) }}: {{d.available}} ({{d.date | date: 'd/MMM/yyyy'}})
+            </span>
+          </div>
         </td>
         <td class="delivery-date-stock">
           {{deliveryGroup.available | number: 0}} {{vm.getPiecesString(deliveryGroup.available)}}

@@ -29,7 +29,8 @@ function QuotationsEditCtrl(
   paymentService,
   deliveryService,
   authService,
-  siteService
+  siteService,
+  ENV
 ){
   var vm = this;
   var mainDataListener = function(){};
@@ -68,7 +69,8 @@ function QuotationsEditCtrl(
     showBigTicketDialog: showBigTicketDialog,
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     toggleRecord: toggleRecord,
-    deattachImage: deattachImage
+    deattachImage: deattachImage,
+    ENV: ENV
   });
 
   if($rootScope.activeStore){
@@ -663,4 +665,5 @@ QuotationsEditCtrl.$inject = [
   'deliveryService',
   'authService',
   'siteService',
+  'ENV'
 ];
