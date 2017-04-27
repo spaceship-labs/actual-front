@@ -23,10 +23,11 @@
       TRANSFER: 'transfer',
       SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
       MSI_3: '3-msi',
-      MSI_6: '3-msi',
+      MSI_6: '6-msi',
       MSI_9: '9-msi',
-      MSI_12: '3-msi',
-      MSI_18: '3-msi'
+      MSI_12: '12-msi',
+      MSI_13: '13-msi',
+      MSI_18: '18-msi'
     };
 
     var service = {
@@ -88,7 +89,7 @@
       //BANAMEX
       {
         card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['single-payment-terminal'],
+        paymentTypes: ['single-payment-terminal', '13-msi'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },
