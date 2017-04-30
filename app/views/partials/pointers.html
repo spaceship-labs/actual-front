@@ -81,10 +81,19 @@
               Broker
             </md-radio-button>
             
+            <div
+              ng-show="!main.brokers"
+              layout="row"
+              layout-align="center center"
+              class="loading-circle loading-circle-small"
+            >
+              <md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="30"></md-progress-circular>
+            </div>
+
             <select 
               class="broker-select" 
               ng-model="main.activeQuotation.Broker" 
-              ng-show="main.activeQuotation.source === 'Broker'">
+              ng-show="main.brokers && (main.activeQuotation.source === 'Broker' || main.activeQuotation.Broker)">
               <option 
                 value="" 
                 selected 
@@ -93,11 +102,11 @@
                 Escoge un broker
               </option>
               <option 
-                ng-repeat="broker in main.brokers" 
+                ng-repeat="broker in main.brokers | orderBy:'Name'" 
                 ng-value="broker.id"
                 ng-selected="broker.id === main.activeQuotation.Broker"
               >
-                {{broker.firstName +  ' ' +broker.lastName}}
+                {{broker.Name}}
               </option>
             </select>
 
