@@ -77,6 +77,33 @@
     ];
 
    	var paymentsOptions = [
+      //MASTER CARD(International)
+      {
+        card: {label:'Master Card', value:'american-express'},
+        paymentTypes: ['single-payment-terminal'],
+        storesTypes:['home','studio','proyectos'],
+        isInternational: true,
+        terminal: {label:'Banamex', value:'banamex'}
+      },
+
+      //VISA(International)
+      {
+        card: {label:'Visa', value:'visa'},
+        paymentTypes: ['single-payment-terminal'],
+        storesTypes:['home','studio','proyectos'],
+        isInternational: true,
+        terminal: {label:'Banamex', value:'banamex'}
+      },
+
+
+      //AMERICAN EXPRESS (International)
+      {
+        card: {label:'American Express', value:'american-express'},
+        paymentTypes: ['single-payment-terminal'],
+        storesTypes:['home','studio','proyectos'],
+        isInternational: true,
+        terminal: {label:'American Express', value:'american-express'}
+      },
 
       //AMERICAN EXPRESS
       {
@@ -89,10 +116,18 @@
       //BANAMEX
       {
         card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['single-payment-terminal', '13-msi'],
+        paymentTypes: ['single-payment-terminal'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },
+
+      {
+        card:{label:'Banamex', value:'banamex'},
+        paymentTypes: ['3-msi-banamex','6-msi-banamex','9-msi-banamex','13-msi-banamex'],
+        storesTypes:['home','studio','proyectos'],
+        terminal: {label:'Banamex', value:'banamex'}
+      },
+
 
       //SANTANDER
       {
@@ -320,9 +355,12 @@
 		
 
    	function getPaymentOptionsByMethod(method){
+
    		var options = _.filter(paymentsOptions, function(option){
    			var hasPaymentType = false;
    			var hasStore = false;
+        option.isInternational = !_.isUndefined(option.isInternational) ? option.isInternational : false;
+        method.isInternational = !_.isUndefined(method.isInternational) ? method.isInternational : false;
  			 	
         if(option.paymentTypes.indexOf(method.type) > -1){
  			 		hasPaymentType = true;
@@ -332,7 +370,10 @@
  			 		hasStore = true;
  			 	}
 
- 			 	if(hasStore && hasPaymentType){
+ 			 	if(hasStore && 
+          hasPaymentType &&
+          method.isInternational === option.isInternational
+        ){
  			 		return true;
  			 	}
  			 	

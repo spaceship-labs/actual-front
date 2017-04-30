@@ -3504,9 +3504,14 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 0;
 }
 .pay-method-wrap .method-block ul li{
-  border-bottom: 1px solid #d2d2d2;
+  /*border-bottom: 1px solid #d2d2d2;*/
   padding: 12px 10px;
 }
+
+.pay-method-wrap .method-block ul li:hover{
+  background: #ebebeb;
+}
+
 .pay-method-wrap .method-block ul li md-radio-button{
   display: inline-block;
   margin-bottom: 0;

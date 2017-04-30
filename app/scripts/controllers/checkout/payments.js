@@ -189,8 +189,8 @@ function CheckoutPaymentsCtrl(
 
   function setMethod(method, group){
     method.storeType = $rootScope.activeStore.group;
-    var options = paymentService.getPaymentOptionsByMethod(method);
-    method.options = options;
+    //var options = paymentService.getPaymentOptionsByMethod(method);
+    //method.options = options;
     method.group = _.clone(group);
     vm.quotation.total = _.clone(method.total);
     vm.quotation.subtotal = _.clone(method.subtotal);
@@ -393,6 +393,7 @@ function CheckoutPaymentsCtrl(
           'commonService', 
           'ewalletService',
           'dialogService',
+          'paymentService',
           'payment', 
           controller
         ],

@@ -6,6 +6,7 @@ function DepositController(
   commonService, 
   ewalletService,
   dialogService,
+  paymentService,
   payment
 ) {
 
@@ -35,6 +36,19 @@ function DepositController(
 
   $scope.getAmmountMXN = function(ammount){
     return ammount * $scope.payment.exchangeRate;
+  };
+
+  $scope.isCardPayment = function(payment){
+    return ( payment.terminals && !$scope.isTransferPayment(payment) && !$scope.isDepositPayment(payment))  
+      || payment.type === 'single-payment-terminal';
+  };  
+
+  $scope.isTransferPayment = function(payment){
+    return payment.type === 'transfer';
+  };
+
+  $scope.isDepositPayment = function(payment){
+    return payment.type === 'deposit';
   };
 
   $scope.isValidPayment = function(){

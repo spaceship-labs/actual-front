@@ -6,12 +6,17 @@ function TerminalController(
   commonService, 
   ewalletService,
   dialogService,  
+  paymentService,
   payment
 ) {
 
   $scope.payment = payment;
   $scope.needsVerification = payment.needsVerification;
   $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
+
+  $scope.payment.options = paymentService.getPaymentOptionsByMethod($scope.payment);
+  console.log('$sopcpepayment options', $scope.payment.options);
+
 
   //ROUNDING
   $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);     
@@ -27,6 +32,11 @@ function TerminalController(
 
   $scope.numToLetters = function(num){
     return formatService.numberToLetters(num);
+  };
+
+  $scope.isCardPayment = function(payment){
+    return ( payment.terminals && payment.type !== 'transfer' && payment.type !== 'deposit')  
+      || payment.type === 'single-payment-terminal';
   };
 
   $scope.hide = function() {
@@ -102,7 +112,11 @@ function TerminalController(
     $scope.terminal = getSelectedTerminal(card);
   };
 
-  function getSelectedTerminal(card){
+  $scope.onChangePaymentNation = function(payment){
+    $scope.payment.options = paymentService.getPaymentOptionsByMethod(payment);    
+  };
+
+  function getSelectedTerminal(card ,isInternational){
     var option = _.find($scope.payment.options, function(option){
       return option.card.value === card;
     });

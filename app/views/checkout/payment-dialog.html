@@ -4,21 +4,23 @@
     <hr />
 
     <h4 class="deposit-type"><strong>{{payment.name}}</strong></h4>
+    
+    <div ng-show="isTransferPayment(payment) || isDepositPayment(payment) ">
+      <strong>Banco</strong>
+      <p ng-show="isTransferPayment(payment)">
+        Selecciona el banco en el cual el cliente realizó la transferencia.
+      </p>
+      <p ng-show="isDepositPayment(payment)">
+        Selecciona el banco en el cual el cliente realizó el deposito.
+      </p>
+    </div>
 
     <div 
-      ng-if="( payment.terminals && payment.type !== 'transfer' && payment.type !== 'deposit')  || payment.type === 'single-payment-terminal' "
+      class="dialog-block main-dialog-block" 
+      layout="row" 
+      layout-align="space-between end"
+      layout-wrap
     >
-      <p><strong>Tarjeta</strong></p> 
-      <p><small>Selecciona la tarjeta de credito/debito a utilizar </small></p>
-    </div>
-    
-    <div ng-show="payment.type === 'transfer' || payment.type === 'deposit' ">
-      <strong>Banco</strong>
-      <p ng-show="payment.type === 'transfer'">Selecciona el banco en el cual el cliente realizó la transferencia.</p>
-      <p ng-show="payment.type === 'deposit'">Selecciona el banco en el cual el cliente realizó el deposito.</p>
-    </div>
-
-    <div class="dialog-block main-dialog-block" layout="row" layout-align="space-between end">
       <!--TERMINALS-->
       <div flex="45" ng-if="payment.terminals && (payment.type === 'transfer' || payment.type === 'deposit') ">
         <div class="input-element select-element-wrapper">
@@ -34,12 +36,53 @@
       </div>
       <!--END TERMINALS-->
 
+
+      <!--NATION TYPE-->
+      <div flex="45" ng-if="payment.type === 'single-payment-terminal'">
+
+        <div 
+          ng-if="isCardPayment(payment)"
+        >
+          <p><strong>Origen tarjeta</strong></p> 
+          <p><small>Selecciona si la tarjeta es nacional o extranjera</small></p>
+        </div>
+
+        <div class="input-element select-element-wrapper">
+          <md-select 
+            ng-model="payment.isInternational"
+            ng-change="onChangePaymentNation(payment)" 
+            class="select-element"
+          >
+            <md-option
+              ng-selected="true"
+              ng-value="false">
+              Nacional
+            </md-option>          
+            <md-option
+              ng-selected="false"
+              ng-value="true">
+              Extranjera
+            </md-option>
+          </md-select>
+        </div>
+        <input type="hidden" name="card" ng-model="payment.card">
+      </div>
+      <!--END NATION TYPE-->
+
       <!--CARDs-->
       <div flex="45" ng-if="payment.options.length > 0">
+
+        <div 
+          ng-if="isCardPayment(payment)"
+        >
+          <p><strong>Tarjeta</strong></p> 
+          <p><small>Selecciona la tarjeta de credito/debito a utilizar </small></p>
+        </div>
+
         <div class="input-element select-element-wrapper">
           <md-select 
             ng-model="payment.card"
-            ng-change="onChangeCard(payment.card)" 
+            ng-change="onChangeCard(payment.card, payment.isInternational)" 
             class="select-element"
           >
             <md-option
@@ -54,11 +97,6 @@
       </div>
       <!--END CARDS-->
 
-      <!--
-      <div flex="50" ng-if="payment.msi">
-        <h3><strong>{{payment.msi}}</strong> Meses SIN INTERESES</h3>
-      </div>
-      -->
     </div>
 
     <p ng-if="terminal">
