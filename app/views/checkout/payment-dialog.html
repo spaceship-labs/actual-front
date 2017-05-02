@@ -24,7 +24,11 @@
       <!--TERMINALS-->
       <div flex="45" ng-if="payment.terminals && (payment.type === 'transfer' || payment.type === 'deposit') ">
         <div class="input-element select-element-wrapper">
-          <md-select ng-model="payment.terminal" class="select-element">
+          <md-select 
+            ng-model="payment.terminal" 
+            class="select-element"
+            ng-disabled="isConfirmationActive"
+          >
             <md-option
               ng-repeat="terminal in payment.terminals track by $index"
               ng-selected="$index==0"
@@ -104,6 +108,7 @@
             required
             ng-change="onChangeCard(payment.card)" 
             class="select-element"
+            ng-disabled="isConfirmationActive"
           >
             <md-option
               ng-repeat="option in payment.options track by $index"
@@ -150,11 +155,13 @@
               ng-model="payment.ammount"
               class="with-maxammount"
               ng-currency
+              ng-disabled="isConfirmationActive"
               >
             <input
               ng-if="!maxAmmount"
               type="text"
               ng-currency
+              ng-disabled="isConfirmationActive"
               ng-model="payment.ammount"
               >
 
@@ -170,20 +177,29 @@
       </p>
     </div>
 
-    <div  layout="row" layout-align="space-between end">
+    <div 
+      layout="row" 
+      layout-align="space-between end"
+    >
       <div ng-if="needsVerification" flex="70">
         <p>
           <strong># AUTORIZACIÓN:</strong> <small>Ingresa el # de autorización de esta transacción</small>
         </p>
         <div class="input-element verification-code">
           <div class="input-element-inner">
-            <input type="text" ng-model="payment.verificationCode" required>
+            <input 
+              type="text" 
+              ng-model="payment.verificationCode" 
+              required
+              ng-disabled="isConfirmationActive"
+            >
           </div>
         </div>
       </div>
       <div flex="30" ng-if="!needsVerification"></div>
       <a 
-        ng-click="save()"
+        ng-show="!isConfirmationActive"
+        ng-click="openConfirmation()"
         ng-class="{'action-btn-disabled': !isValidPayment() }" 
         class="action-btn action-btn-save" 
         href="#" 
@@ -191,5 +207,33 @@
         <strong>GUARDAR</strong>
       </a>
     </div>
+
+    <section class="confirm-section" ng-if="isConfirmationActive">
+      
+      <p><strong>Favor de confirmar que el monto ingresado es el correcto.</strong></p>
+
+      <div layout="row" layout-align="space-between center" >
+        <a 
+          ng-click="save()"
+          ng-class="{'action-btn-disabled': !isValidPayment() }" 
+          class="action-btn action-btn-save" 
+          href="#" 
+          flex="45">
+          <strong>CONFIRMAR</strong>
+        </a>
+
+        <a 
+          
+          ng-click="cancel()"
+          ng-class="{'action-btn-disabled': !isValidPayment() }" 
+          class="action-btn" 
+          href="#" 
+          flex="45">
+          <strong>CANCELAR</strong>
+        </a>
+      </div>
+
+    </section>
+
   </div>
 </md-dialog>

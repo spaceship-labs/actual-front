@@ -68,13 +68,19 @@ function DepositController(
     $mdDialog.hide();
   };
   
-  $scope.cancel = function() {
-    $mdDialog.cancel();
+  $scope.openConfirmation = function(){
+    $scope.isConfirmationActive = true;
+  };
+
+  $scope.cancel = function(){
+    $scope.isConfirmationActive = false;
   };
 
   $scope.save = function() {
     if( $scope.isValidPayment() ){
       $mdDialog.hide($scope.payment);
+    }else{
+      $scope.isConfirmationActive = false;
     }
   };
 

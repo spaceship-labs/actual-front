@@ -42,9 +42,6 @@ function TerminalController(
   $scope.hide = function() {
     $mdDialog.hide();
   };
-  $scope.cancel = function() {
-    $mdDialog.cancel();
-  };
 
   $scope.isMinimumValid = function(){
     $scope.payment.min = $scope.payment.min || 0;   
@@ -130,6 +127,14 @@ function TerminalController(
     return false;
   }
 
+  $scope.openConfirmation = function(){
+    $scope.isConfirmationActive = true;
+  };
+
+  $scope.cancel = function(){
+    $scope.isConfirmationActive = false;
+  };
+
   $scope.save = function() {
     if( $scope.isValidPayment() ){
       if($scope.payment.options.length > 0){
@@ -139,8 +144,10 @@ function TerminalController(
       //alert('cumple');
       console.log('$scope.payment save', $scope.payment);
       $mdDialog.hide($scope.payment);
-    }else{
+    }
+    else{
       console.log('no cumple');
+      $scope.isConfirmationActive = false;
     }
   };
 }
