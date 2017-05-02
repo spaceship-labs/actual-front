@@ -50,10 +50,9 @@
       }
 
       function getBrokers(page, limit) {
-        var url      = '/user/brokers';
+        var url      = '/brokers';
         var params   = {};
-        params.page  = page  || 0;
-        params.limit = limit || 10;
+
         return api.$http.get(url, params).then(function(res){
          return res.data;
         });
