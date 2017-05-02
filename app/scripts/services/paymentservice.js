@@ -79,7 +79,7 @@
    	var paymentsOptions = [
       //MASTER CARD(International)
       {
-        card: {label:'Master Card', value:'american-express'},
+        card: {label:'Master Card', value:'master-card'},
         paymentTypes: ['single-payment-terminal'],
         storesTypes:['home','studio','proyectos'],
         isInternational: true,
@@ -123,7 +123,7 @@
 
       {
         card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['3-msi-banamex','6-msi-banamex','9-msi-banamex','13-msi-banamex'],
+        paymentTypes: ['3-msi-banamex','6-msi-banamex','9-msi-banamex','13-msi'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },

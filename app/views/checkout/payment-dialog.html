@@ -52,6 +52,7 @@
             ng-model="payment.isInternational"
             ng-change="onChangePaymentNation(payment)" 
             class="select-element"
+            required
           >
             <md-option
               ng-selected="true"
@@ -65,7 +66,6 @@
             </md-option>
           </md-select>
         </div>
-        <input type="hidden" name="card" ng-model="payment.card">
       </div>
       <!--END NATION TYPE-->
 
@@ -80,9 +80,13 @@
         </div>
 
         <div class="input-element select-element-wrapper">
-          <md-select 
+          
+          <!--NATIONAL OPTIONS-->
+          <md-select
+            ng-if="payment.options.length > 0 && !payment.isInternational" 
             ng-model="payment.card"
-            ng-change="onChangeCard(payment.card, payment.isInternational)" 
+            required
+            ng-change="onChangeCard(payment.card)" 
             class="select-element"
           >
             <md-option
@@ -92,8 +96,26 @@
               {{option.card.label}}
             </md-option>
           </md-select>
+
+          <!--INTERNATIONAL OPTIONS-->
+          <md-select
+            ng-if="payment.options.length > 0 && payment.isInternational" 
+            ng-model="payment.card"
+            required
+            ng-change="onChangeCard(payment.card)" 
+            class="select-element"
+          >
+            <md-option
+              ng-repeat="option in payment.options track by $index"
+              ng-selected="$index==0"
+              ng-value="option.card.value">
+              {{option.card.label}}
+            </md-option>
+          </md-select>
+
+
+
         </div>
-        <input type="hidden" name="card" ng-model="payment.card">
       </div>
       <!--END CARDS-->
 

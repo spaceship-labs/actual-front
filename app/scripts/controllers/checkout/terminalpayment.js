@@ -113,10 +113,14 @@ function TerminalController(
   };
 
   $scope.onChangePaymentNation = function(payment){
-    $scope.payment.options = paymentService.getPaymentOptionsByMethod(payment);    
+    $scope.payment.card = null;
+    $scope.terminal = null;
+    $scope.payment.options = [];
+    $scope.payment.options = paymentService.getPaymentOptionsByMethod(payment);  
+    console.log('$scope.payment.options', $scope.payment.options);
   };
 
-  function getSelectedTerminal(card ,isInternational){
+  function getSelectedTerminal(card){
     var option = _.find($scope.payment.options, function(option){
       return option.card.value === card;
     });
