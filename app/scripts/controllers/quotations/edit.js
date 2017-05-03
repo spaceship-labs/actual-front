@@ -70,6 +70,7 @@ function QuotationsEditCtrl(
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     toggleRecord: toggleRecord,
     deattachImage: deattachImage,
+    methodsHaveMsi: methodsHaveMsi,
     ENV: ENV
   });
 
@@ -201,6 +202,12 @@ function QuotationsEditCtrl(
         console.log('err', err);
         vm.isLoadingPaymentMethods = false;
       });
+  }
+
+  function methodsHaveMsi(methods){
+    return _.every(methods, function(method){
+      return method.msi;
+    });
   }
 
   function formatPaymentMethodsGroups(paymentMethodsGroups){
