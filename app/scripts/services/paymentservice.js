@@ -26,6 +26,12 @@
       MSI_6: '6-msi',
       MSI_9: '9-msi',
       MSI_12: '12-msi',
+
+      MSI_3_BANAMEX: '3-msi-banamex',
+      MSI_6_BANAMEX: '6-msi-banamex',
+      MSI_9_BANAMEX: '9-msi-banamex',
+      MSI_12_BANAMEX: '12-msi-banamex',
+
       MSI_13: '13-msi',
       MSI_18: '18-msi'
     };
@@ -123,7 +129,7 @@
 
       {
         card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['3-msi-banamex','6-msi-banamex','9-msi-banamex','13-msi'],
+        paymentTypes: ['3-msi-banamex','6-msi-banamex','9-msi-banamex', '12-msi-banamex','13-msi'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },
