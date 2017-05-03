@@ -28,6 +28,24 @@
 	<div 
 		ng-repeat="paymentGroup in vm.paymentMethodsGroups | filter: {group: '!1'}"
 	>
+		<div layout="row" class="method-row" ng-repeat="subGroup in paymentGroup.subGroups">
+			
+			<div flex="25" class="data-cell">
+				<p>
+					<span class="comma-separated" ng-repeat="method in subGroup">{{method.name}}</span>
+				</p>
+			</div>
+			
+			<div flex="60" class="data-cell">
+				<p>
+					<span class="comma-separated" ng-repeat="card in subGroup[0].cards">{{card}}</span>
+				</p>
+			</div>
+			<div flex="15" class="totals data-cell">
+				<p><strong>{{ subGroup[0].total | roundCurrency  }}</strong></p>
+			</div>
+		</div>	
+		<!--
 		<div layout="row" class="method-row" ng-repeat="method in paymentGroup.methods">
 			<div flex="25" class="data-cell"><p>{{method.name}}</p></div>
 			<div flex="60" class="data-cell">
@@ -39,6 +57,7 @@
 				<p><strong>{{ method.total | roundCurrency  }}</strong></p>
 			</div>
 		</div>
+		-->
 	</div>
 
 </section>

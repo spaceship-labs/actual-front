@@ -194,7 +194,7 @@ function QuotationsEditCtrl(
     quotationService.getPaymentOptions(vm.quotation.id)
       .then(function(response){
         var groups = response.data || [];
-        vm.paymentMethodsGroups = groups;
+        vm.paymentMethodsGroups = formatPaymentMethodsGroups(groups);
         vm.isLoadingPaymentMethods = false;
       })
       .catch(function(err){
@@ -202,7 +202,19 @@ function QuotationsEditCtrl(
         vm.isLoadingPaymentMethods = false;
       });
   }
- 
+
+  function formatPaymentMethodsGroups(paymentMethodsGroups){
+    for(var i=0; i < paymentMethodsGroups.length; i++){
+      var subGroupsObject = _.groupBy(paymentMethodsGroups[i].methods, 'mainCard');
+      var subGroups = [];
+      for(var key in subGroupsObject){
+        subGroups.push(subGroupsObject[key]);
+      }
+      paymentMethodsGroups[i].subGroups = subGroups;
+    }    
+    return paymentMethodsGroups;
+  }
+
   function print(){
     window.print();
   }
