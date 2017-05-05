@@ -2534,7 +2534,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .form-view .select-element{max-width: 100%;}
 
 .form-view .input-element label{
-  font-size: 11px;
+  font-size: 10px;
   margin-bottom: 10px;
   display: block;
   text-transform: uppercase;
