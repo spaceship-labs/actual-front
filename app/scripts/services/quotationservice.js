@@ -451,6 +451,8 @@
 
       function getClosingReasons(){
         var closingReasons = [
+          'Cliente de otro asesor',
+          'Duplicada',
           'Cliente compró en otra tienda de la empresa.',
           'Cliente compró en otra mueblería.',
           'Cliente se murió',

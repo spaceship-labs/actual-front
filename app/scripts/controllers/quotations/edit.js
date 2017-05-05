@@ -281,9 +281,15 @@ function QuotationsEditCtrl(
       var dateTime = moment(time).set('year',year).set('month',month).set('date',day)._d;
 
       vm.newRecord.dateTime = dateTime;
+
+      //Formating estimated close date
+      var estimatedCloseDate = moment(vm.newRecord.estimatedCloseDate._d).endOf('day').toDate();
+
+
       var params = {
         dateTime: vm.newRecord.dateTime,
         eventType: vm.newRecord.eventType,
+        estimatedCloseDate: estimatedCloseDate,
         notes: vm.newRecord.notes,
         User: $rootScope.user.id,
         file: vm.newRecord.file
@@ -291,9 +297,17 @@ function QuotationsEditCtrl(
 
       quotationService.addRecord(vm.quotation.id, params)
         .then(function(res){
-          if(res.data.id){
-            vm.quotation.Records.push(res.data);
+          var record = res.data.record;
+          var estimatedCloseDate = res.data.estimatedCloseDate;
+
+          if(record){
+            vm.quotation.Records.push(record);
           }
+
+          if(estimatedCloseDate){
+            vm.quotation.estimatedCloseDate = estimatedCloseDate;
+          }
+
           vm.newRecord = {};
           vm.isLoadingRecords = false;
           dialogService.showDialog('Evento guardado');

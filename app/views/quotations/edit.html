@@ -81,16 +81,28 @@
       </div>
     </div>
 
-    <div ng-show="vm.quotation.source" class="quotation-data-row">
-      <label>¿Cómo se entero de Actual?</label>
-      <p>{{vm.quotation.source}}</p>
+    <div layout="row" layout-align="start center" class="quotation-data-row">
+
+      <div flex="25" ng-show="vm.quotation.source" class="quotation-data-row">
+        <label>¿Cómo se entero de Actual?</label>
+        <p>{{vm.quotation.source}}</p>
+      </div>
+
+      <div flex="25"  ng-show="vm.quotation.estimatedCloseDate">
+        <label for="">Fecha estimada de cierre</label>
+        <p>{{vm.quotation.estimatedCloseDate | date: 'd/MMM/yyyy'}}</p>
+      </div>      
+
     </div>
 
     <div class="quotation-data-row quotation-validity">
       <label>Vigencia</label>
       <p>Hasta agotar existencias y sujeto a términos de promociones.</p>
     </div>
-  <div class="hr"><hr /></div>
+  
+    <div class="hr">
+      <hr />
+    </div>
 
   </section>
 

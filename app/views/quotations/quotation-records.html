@@ -7,7 +7,7 @@
   <form ng-if="!vm.quotation.isClosed" ng-submit="vm.addRecord(newRecordForm)" name="newRecordForm" class="new-record">
     <div layout="row" layout-align="space-between start
     ">
-      <div flex="40">
+      <div flex="30">
         <div class="input-element textarea-element">
           <label><strong>NOTAS</strong></label>
           <div class="input-element-inner">
@@ -15,10 +15,10 @@
           </div>
         </div>
       </div>
-      <div flex="55">
+      <div flex="65">
         <div layout="row" layout-align="space-between start">
 
-          <div flex="30" class="input-element select-element-wrapper">
+          <div flex="25" class="input-element select-element-wrapper">
             <label><strong>Tipo de evento</strong></label>
             <select 
               required 
@@ -30,7 +30,7 @@
             </select>
           </div>
 
-          <div flex="30" class="input-element select-element-wrapper">
+          <div flex="25" class="input-element select-element-wrapper">
             <label><strong>Fecha de seguimiento</strong></label>
             <div class="input-element-inner">
               <input 
@@ -44,7 +44,7 @@
             </div>
           </div>
 
-          <div flex="30" class="input-element select-element-wrapper">
+          <div flex="25" class="input-element select-element-wrapper">
             <label><strong>Hora de seguimiento</strong></label>
             <div class="input-element-inner">
               <input
@@ -57,6 +57,20 @@
               >
             </div>
           </div>
+
+          <div flex="25" class="input-element select-element-wrapper">
+            <label><strong>Fecha estimada cierre</strong></label>
+            <div class="input-element-inner">
+              <input 
+                ng-if="!vm.isLoadingRecords" 
+                pikaday="vm.newRecord.estimatedCloseDate" 
+                readonly 
+                required 
+                type="text" 
+                on-select="onPikadaySelect(pikaday)"
+              >
+            </div>
+          </div>          
 
         </div>
 
