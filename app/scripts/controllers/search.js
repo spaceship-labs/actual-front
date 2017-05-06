@@ -32,6 +32,7 @@ function SearchCtrl(
     syncProcessActive: false,
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
+    sortOptions: productSearchService.SORT_OPTIONS,
     loadMore: loadMore,
     getFilterById: getFilterById,
     searchByFilters: searchByFilters,
@@ -41,7 +42,8 @@ function SearchCtrl(
     removeSearchValue:removeSearchValue,
     removeBrandSearchValue: removeBrandSearchValue,
     removeSelectedDiscountFilter: removeSelectedDiscountFilter,
-    removeSelectedStockFilter: removeSelectedStockFilter
+    removeSelectedStockFilter: removeSelectedStockFilter,
+    setActiveSortOption: setActiveSortOption
   });
 
   var mainDataListener = function(){};
@@ -56,6 +58,9 @@ function SearchCtrl(
 
   function init(){
     var keywords = [''];
+    var activeSortOptionKey = 'DiscountPrice';
+    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
+
     if($routeParams.itemcode) {
       vm.isLoading = true;
       vm.search = {};
@@ -259,7 +264,8 @@ function SearchCtrl(
       keywords: vm.search.keywords,
       minPrice: vm.minPrice,
       maxPrice: vm.maxPrice,
-      page: vm.search.page
+      page: vm.search.page,
+      sortOption: vm.activeSortOption
     };
 
     console.log('params', params);
@@ -278,6 +284,18 @@ function SearchCtrl(
       }
       vm.isLoading = false;
     });
+  }
+
+  function setActiveSortOption(sortOption){
+
+    if(vm.activeSortOption.key  === sortOption.key){
+      sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
+    }else{
+      sortOption.direction = 'ASC';
+    }
+
+    vm.activeSortOption = sortOption;
+    searchByFilters();
   }
 
   function getFilterById(filterId){

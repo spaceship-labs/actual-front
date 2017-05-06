@@ -3310,6 +3310,40 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   transform: rotate(46deg);
 }
 
+/*----------------/
+  #ORDERBY-SECTION
+/*---------------*/
+.orderby-selectors{margin-bottom: 14px;}
+.orderby-selectors .orderby-item{
+  border-right: 1px solid #b9b9b9;
+  text-align: center;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  line-height: 2.7;
+  font-weight: 700;
+}
+.orderby-selectors .orderby-item:first-child{border-left: 1px solid #b9b9b9;}
+.orderby-selectors .orderby-item img{
+  display: none;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+.orderby-selectors .orderby-item-active span{
+  position: relative;
+  padding-right: 28px;
+  background: url(../images/arrow-up.png) right -10px no-repeat;
+  /*
+  display: inline-block;
+  transform: rotate(180deg);*/
+}
+.orderby-selectors .orderby-item-active.orderby-item-desc span{
+  background: url(../images/arrow-down.png) right -10px no-repeat;
+}
+
+
 /*--------------/
   #DASHBOARD-VIEW
 /*--------------*/
