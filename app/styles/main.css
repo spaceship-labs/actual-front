@@ -1190,6 +1190,12 @@ md-backdrop.md-sidenav-backdrop{
   padding: 5px;
 }
 
+/*-----------------/
+  #FILTERS-SIDENAV
+/*-----------------*/
+.filters-sidenav{background: #F8F8F8;}
+
+
 /*---------------/
   #HOME
 /*--------------*/
@@ -1320,6 +1326,13 @@ md-backdrop.md-sidenav-backdrop{
 .listing-product .listing-product-info-extra{
   text-transform: lowercase;
   text-align: right;
+  /*
+  font-size: 12px;
+  text-align: right;
+  position: absolute;
+  left: 5px;
+  top: 2px;  
+  */
 }
 .listing-product .listing-product-gallery{
   min-height: 230px;
@@ -1403,6 +1416,37 @@ md-backdrop.md-sidenav-backdrop{
   -moz-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
   box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
 }
+
+.listing-product .stock-batch{
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  right:44px;
+  top: 5px;
+  z-index: 2;
+  font-size: 12px;
+  -webkit-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
+  -moz-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
+  box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
+}
+
+.listing-product .stock-available{
+  font-weight: 700;
+  font-size: 15px!important;
+  /*
+  position: absolute;
+  left: 4px;
+  top: 5px;
+  color: #2ABC1C;
+  font-weight: 700;
+  font-size: 12px;
+  */
+}
+.listing-product .stock-available .small{font-size: 10px;}
 
 /*-------------
   #PRODUCTS-lIST
@@ -1613,6 +1657,7 @@ md-backdrop.md-sidenav-backdrop{
 .listing-view .subs-container-list{
   margin-left: -20px;
   margin-right: -20px;
+  margin-bottom: 20px;
 }
 .listing-view .sub-wrapper{padding: 20px;}
 .listing-view .sub{
@@ -3290,7 +3335,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 
 .filters-selected-list{margin-bottom: 10px;}
 .filters-selected-item {
-  background: #E7E7E7;
+  /*background: #E7E7E7;*/
+  background: #fff;
+  border: 1px solid #000;
   border-radius: 3px;
   padding: 4px 8px;
   font-size: 13px;
@@ -3313,14 +3360,14 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 /*----------------/
   #ORDERBY-SECTION
 /*---------------*/
-.orderby-selectors{margin-bottom: 14px;}
+.orderby-selectors{margin: 14px 0;}
 .orderby-selectors .orderby-item{
   border-right: 1px solid #b9b9b9;
   text-align: center;
   color: #000;
   font-size: 12px;
   text-transform: uppercase;
-  padding: 12px 16px;
+  padding: 4px 16px;
   line-height: 2.7;
   font-weight: 700;
 }

@@ -43,6 +43,8 @@ function SearchCtrl(
     removeBrandSearchValue: removeBrandSearchValue,
     removeSelectedDiscountFilter: removeSelectedDiscountFilter,
     removeSelectedStockFilter: removeSelectedStockFilter,
+    removeMinPrice: removeMinPrice,
+    removeMaxPrice: removeMaxPrice,
     setActiveSortOption: setActiveSortOption
   });
 
@@ -219,6 +221,16 @@ function SearchCtrl(
     searchByFilters();
 
   }  
+
+  function removeMinPrice(){
+    delete vm.minPrice;
+    searchByFilters();
+  }
+
+  function removeMaxPrice(){
+    delete vm.maxPrice;
+    searchByFilters();
+  }
 
 
   function searchByFilters(options){
