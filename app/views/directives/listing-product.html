@@ -30,15 +30,20 @@
   <div class="listing-product-info">
     <div class="listing-product-info-main">
       <p><strong>{{product.Name}}</strong></p>
-      <p class="price">
-        <span class="price-before">{{product.priceBefore | currency:'$':0}}</span>
-        <span ng-if="product.priceBefore">|</span>
-        <strong class="price-now">{{product.Price | currency:'$':0}}</strong>
-      </p>
+      <div layout="row" layout-align="space-between center">
+        <p flex="40"><strong class="small">{{product[activeStore.code]}} disponibles</strong></p>      
+        <p flex="55" class="price">
+          <span class="price-before">{{product.priceBefore | currency:'$':0}}</span>
+          <span ng-if="product.priceBefore">|</span>
+          <strong class="price-now">{{product.Price | currency:'$':0}}</strong>
+        </p>
+      </div>
     </div>
+    <!--
     <div flex class="listing-product-info-extra">
       <p><strong class="small">{{product[activeStore.code]}} disponibles</strong></p>
     </div>
+    -->
     <!--
     <div flex class="listing-product-info-extra">
       <p>...</p>
