@@ -37,6 +37,7 @@
         getListNoImages: getListNoImages,
         getMainCategories: getMainCategories,
         getMainPromo: getMainPromo,
+        getCustomBrands: getCustomBrands,
         loadVariants: loadVariants,
         multipleGetByIds: multipleGetByIds,
         search: search,
@@ -243,6 +244,11 @@
         var url = '/product/advancedsearch/';
         return api.$http.post(url, params);
       }
+
+      function getCustomBrands(){
+        var url = '/custombrand/getall';
+        return api.$http.post(url);
+      }      
 
       function searchByFilters(params){
         var url = '/product/searchbyfilters/';

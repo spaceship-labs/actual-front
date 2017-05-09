@@ -8,6 +8,35 @@
     /** @ngInject */
     function productSearchService(){
 
+        var SORT_OPTIONS = [
+            {
+                label:'Mi actual recomienda',
+                key: 'recomienda',
+                direction: 'ASC'
+            },
+            {
+                label:'Existencia',
+                key: 'stock',
+                direction: 'ASC'
+            },
+            {
+                label:'Precio',
+                key: 'DiscountPrice',
+                direction: 'ASC'
+            },
+            {
+                label:'Descuento',
+                key: 'Discount',
+                direction: 'ASC'
+            },
+
+            {
+                label:'Oportunidad',
+                key: 'opp',
+                direction: 'ASC'
+            },
+        ];
+
     	var discountOptions = [
     		10, 15, 20, 25, 30, 35
     	];
@@ -38,12 +67,6 @@
             };
         });
 
-	  	var service = {
-	  		getSearchValuesByFilters: getSearchValuesByFilters,
-	  		getSearchValuesIds: getSearchValuesIds,
-	  		DISCOUNTS_SEARCH_OPTIONS:DISCOUNTS_SEARCH_OPTIONS,
-            STOCK_SEARCH_OPTIONS: STOCK_SEARCH_OPTIONS
-	  	};
 
 	  	function getSearchValuesByFilters(filters){
 	      var searchValues = filters.reduce(function(acum, filter){
@@ -61,12 +84,20 @@
 	  	}
 
 	  	function getSearchValuesIds(searchValues){
-      	var searchValuesIds = searchValues.map(function(value){
-      		return value.id;
-      	});
-      	return searchValuesIds;
+          	var searchValuesIds = searchValues.map(function(value){
+          		return value.id;
+          	});
+          	return searchValuesIds;
 	  	}
 
+
+        var service = {
+            getSearchValuesByFilters: getSearchValuesByFilters,
+            getSearchValuesIds: getSearchValuesIds,
+            DISCOUNTS_SEARCH_OPTIONS:DISCOUNTS_SEARCH_OPTIONS,
+            STOCK_SEARCH_OPTIONS: STOCK_SEARCH_OPTIONS,
+            SORT_OPTIONS: SORT_OPTIONS
+        };        
 
 	  	return service;
 
