@@ -3287,6 +3287,11 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 /*-------------/
   #RECORDS-VIEW
 /*------------*/
+.records-view .estimated-close-date img{
+  max-width: 40px;
+  position: relative;
+  top: 12px;
+}
 .records-view .attachments-section{margin-top: 20px}
 .records-view .attachments-section a{
   color: #000;

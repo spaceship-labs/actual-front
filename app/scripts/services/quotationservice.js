@@ -50,6 +50,7 @@
         removeDetailsGroup: removeDetailsGroup,
         removeCurrentQuotation: removeCurrentQuotation,
         setActiveQuotation: setActiveQuotation,
+        setEstimatedCloseDate: setEstimatedCloseDate,
         sendByEmail: sendByEmail,
         showStockAlert: showStockAlert,
         update: update,
@@ -410,6 +411,15 @@
         var url = '/quotation/'+id+'/payments';
         return api.$http.get(url);
       }
+
+
+      function setEstimatedCloseDate(id, estimatedCloseDate){
+        var params = {
+          estimatedCloseDate: estimatedCloseDate
+        };
+        var url = '/quotation/'+id+'/estimatedclosedate';
+        return api.$http.post(url, params);
+      }      
 
 
       function mapDetailsStock(details, detailsStock){
