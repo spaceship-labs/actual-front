@@ -25,6 +25,7 @@ function CategoryCtrl(
     subnavIndex: 0,
     showLevel2: false,
     showLevel3: false,
+    enableSortOptions: false,
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     sortOptions: productSearchService.SORT_OPTIONS,
@@ -166,6 +167,13 @@ function CategoryCtrl(
       category: $routeParams.category,
       page: vm.search.page,
     };
+
+    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
+      params.slowMovement = true;      
+    }
+    else if(vm.activeSortOption && vm.activeSortOption.key === 'spotlight'){
+      params.spotlight = true;      
+    }
 
     productService.searchCategoryByFilters(params)
       .then(function(res){

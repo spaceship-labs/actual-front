@@ -11,7 +11,7 @@
         var SORT_OPTIONS = [
             {
                 label:'Mi actual recomienda',
-                key: 'recomienda',
+                key: 'spotlight',
                 direction: 'ASC'
             },
             {
@@ -32,7 +32,7 @@
 
             {
                 label:'Oportunidad',
-                key: 'opp',
+                key: 'slowMovement',
                 direction: 'ASC'
             },
         ];

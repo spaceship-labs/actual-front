@@ -30,6 +30,7 @@ function SearchCtrl(
     filters: [],
     searchValues: [],
     syncProcessActive: false,
+    enableSortOptions: true,    
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     sortOptions: productSearchService.SORT_OPTIONS,
@@ -267,7 +268,6 @@ function SearchCtrl(
       return stock.value;
     });
 
-
     var params = {
       ids: searchValuesIds,
       brandsIds: brandSearchValuesIds,
@@ -279,6 +279,14 @@ function SearchCtrl(
       page: vm.search.page,
       sortOption: vm.activeSortOption
     };
+
+    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
+      params.slowMovement = true;      
+    }
+    else if(vm.activeSortOption && vm.activeSortOption.key === 'spotlight'){
+      params.spotlight = true;      
+    }
+
 
     console.log('params', params);
 

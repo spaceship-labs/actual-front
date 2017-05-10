@@ -61,11 +61,11 @@
   -->
 </div>
 
-<div class="orderby-section">
+<div ng-if="vm.enableSortOptions" class="orderby-section">
   <div layout="row" class="orderby-selectors">
     <a 
       ng-repeat="sortOption in vm.sortOptions track by $index"
-      ng-attr-flex="{{sortOption.key === 'recomienda' && '30' || '' }}"
+      ng-attr-flex="{{sortOption.key === 'spotlight' && '30' || '' }}"
       class="orderby-item" 
       ng-class="{
         'orderby-item-active': vm.activeSortOption.key === sortOption.key,
