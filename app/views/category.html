@@ -78,10 +78,10 @@
         </div>
         <!--END SUBCATEGORIES LIST LEVEL 3-->
 
-        <ng-include src="'views/partials/search-options.html'"></ng-include>
-
         <!--RESULTS-->
         <div id="products-results">
+
+          <ng-include src="'views/partials/search-options.html'"></ng-include>
 
           <div 
             ng-if="!vm.isLoadingProducts || vm.search.page > 1"
@@ -104,7 +104,7 @@
               ng-cloak
             >
               <div
-                flex="30"
+                flex="33"
                 class="listing-product-wrap"
                 ng-repeat="product in vm.products track by product.ItemCode">
                 <listing-product product="product"></listing-product>

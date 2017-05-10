@@ -70,6 +70,11 @@ function CategoryCtrl(
     vm.isLoading = true;
     categoriesService.getCategoryByHandle($routeParams.category).then(function(res){
       vm.category = res.data;
+
+      if(vm.category && vm.category.Childs.length === 0){
+      	vm.enableSortOptions = true;
+      }
+
       var hasLevel2Categories = false;
       var filters = vm.category.Filters.map(function(filter){
         return filter.id;
