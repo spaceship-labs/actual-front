@@ -146,6 +146,27 @@
         </div>
         <!--END STOCK FILTER-->
 
+        <!--STOCK FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isSocietyFilterActive = !vm.isSocietyFilterActive" ng-class="{'active-arrow': vm.isSocietyFilterActive}">
+            <strong>Sociedad:</strong>
+          </h4>
+          <div ng-show="vm.isSocietyFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="society in vm.societyFilters"
+                ng-model="society.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{society.label}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END STOCK FILTER-->
+
 
       </div>
     </section>

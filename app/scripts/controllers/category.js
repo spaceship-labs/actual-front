@@ -28,6 +28,7 @@ function CategoryCtrl(
     enableSortOptions: false,
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
+    societyFilters: productSearchService.SOCIETY_OPTIONS,
     sortOptions: productSearchService.SORT_OPTIONS,
 
     setSubnavIndex: setSubnavIndex,
@@ -41,6 +42,7 @@ function CategoryCtrl(
     removeBrandSearchValue: removeBrandSearchValue,
     removeSelectedDiscountFilter: removeSelectedDiscountFilter,
     removeSelectedStockFilter: removeSelectedStockFilter,
+    removeSelectedSocietyFilter: removeSelectedSocietyFilter,
     toggleColorFilter: toggleColorFilter,
     setActiveSortOption: setActiveSortOption,
     getFilterById: getFilterById
@@ -158,12 +160,21 @@ function CategoryCtrl(
       return stock.value;
     });
 
+    //SOCIETIES
+    vm.societyFiltersSelected = vm.societyFilters.filter(function(society){
+      return society.selected;
+    });
+    var societyFiltersValues = vm.societyFiltersSelected.map(function(society){
+      return society.code;
+    });
 
 
     var params = {
       filtervalues: searchValuesIds,
       brandsIds: brandSearchValuesIds,
       discounts: discountFiltersValues,
+      societyCodes: societyFiltersValues,
+
       stockRanges: stockFiltersValues,
       sortOption: vm.activeSortOption,
 
@@ -259,8 +270,22 @@ function CategoryCtrl(
     });
 
     searchByFilters();
-
   }  
+
+  function removeSelectedSocietyFilter(society){
+    var removeIndex = vm.societyFiltersSelected.indexOf(society);
+    if(removeIndex > -1){
+      vm.societyFiltersSelected.splice(removeIndex, 1);
+    }
+    vm.societyFilters.forEach(function(societyFilter){
+      if(societyFilter.code === society.code){
+        societyFilter.selected = false;
+      }
+    });
+
+    searchByFilters();
+  } 
+
 
   function removeMinPrice(){
     delete vm.minPrice;

@@ -4,10 +4,12 @@
     vm.brandSearchValues.length > 0 || 
     vm.discountFiltersSelected.length > 0 || 
     vm.stockFiltersSelected.length > 0 || 
+    vm.societyFiltersSelected.length > 0 ||
     vm.minPrice || 
     vm.maxPrice" 
 >
   <span>Filtros aplicados:</span>
+
   <span ng-repeat="searchValue in vm.searchValues track by $index" class="filters-selected-item">
     {{vm.getFilterById(searchValue.Filter).Name}}: {{searchValue.Name}} 
     <a href="#" ng-click="vm.removeSearchValue(searchValue)" class="remove-item">
@@ -32,6 +34,13 @@
   <span ng-repeat="stock in vm.stockFiltersSelected track by $index" class="filters-selected-item">
     Existencia: {{stock.label}} 
     <a href="#" ng-click="vm.removeSelectedStockFilter(stock)" class="remove-item">
+      <i class="icon-cotizar"></i>
+    </a>
+  </span> 
+
+  <span ng-repeat="society in vm.societyFiltersSelected track by $index" class="filters-selected-item">
+    Sociedad: {{society.label}} 
+    <a href="#" ng-click="vm.removeSelectedSocietyFilter(society)" class="remove-item">
       <i class="icon-cotizar"></i>
     </a>
   </span> 

@@ -33,6 +33,7 @@ function SearchCtrl(
     enableSortOptions: true,    
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
+    societyFilters: productSearchService.SOCIETY_OPTIONS,
     sortOptions: productSearchService.SORT_OPTIONS,
     loadMore: loadMore,
     getFilterById: getFilterById,
@@ -44,6 +45,7 @@ function SearchCtrl(
     removeBrandSearchValue: removeBrandSearchValue,
     removeSelectedDiscountFilter: removeSelectedDiscountFilter,
     removeSelectedStockFilter: removeSelectedStockFilter,
+    removeSelectedSocietyFilter: removeSelectedSocietyFilter,
     removeMinPrice: removeMinPrice,
     removeMaxPrice: removeMaxPrice,
     setActiveSortOption: setActiveSortOption
@@ -208,6 +210,21 @@ function SearchCtrl(
 
   }
 
+  function removeSelectedSocietyFilter(society){
+    var removeIndex = vm.societyFiltersSelected.indexOf(society);
+    if(removeIndex > -1){
+      vm.societyFiltersSelected.splice(removeIndex, 1);
+    }
+    vm.societyFilters.forEach(function(societyFilter){
+      if(societyFilter.code === society.code){
+        societyFilter.selected = false;
+      }
+    });
+
+    searchByFilters();
+
+  }  
+
   function removeSelectedStockFilter(stockRangeObject){
     var removeIndex = vm.stockFiltersSelected.indexOf(stockRangeObject);
     if(removeIndex > -1){
@@ -268,10 +285,20 @@ function SearchCtrl(
       return stock.value;
     });
 
+    //SOCIETIES
+    vm.societyFiltersSelected = vm.societyFilters.filter(function(society){
+      return society.selected;
+    });
+    var societyFiltersValues = vm.societyFiltersSelected.map(function(society){
+      return society.code;
+    });
+
+
     var params = {
       ids: searchValuesIds,
       brandsIds: brandSearchValuesIds,
       discounts: discountFiltersValues,
+      societyCodes: societyFiltersValues,
       stockRanges: stockFiltersValues,
       keywords: vm.search.keywords,
       minPrice: vm.minPrice,

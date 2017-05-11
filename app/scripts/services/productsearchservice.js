@@ -67,6 +67,12 @@
             };
         });
 
+        var SOCIETY_OPTIONS = [
+            {label: 'Studio', code: '001'},
+            {label: 'Home', code: '002'},
+            {label: 'Kids', code: '004'},
+            {label: 'Ambas(Studio+Home)', code: '003'},
+        ];
 
 	  	function getSearchValuesByFilters(filters){
 	      var searchValues = filters.reduce(function(acum, filter){
@@ -96,7 +102,8 @@
             getSearchValuesIds: getSearchValuesIds,
             DISCOUNTS_SEARCH_OPTIONS:DISCOUNTS_SEARCH_OPTIONS,
             STOCK_SEARCH_OPTIONS: STOCK_SEARCH_OPTIONS,
-            SORT_OPTIONS: SORT_OPTIONS
+            SORT_OPTIONS: SORT_OPTIONS,
+            SOCIETY_OPTIONS: SOCIETY_OPTIONS
         };        
 
 	  	return service;
