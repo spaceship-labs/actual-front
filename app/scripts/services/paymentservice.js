@@ -299,6 +299,21 @@
         terminal: {label:'Banorte', value:'banorte'}        
       },            
  		
+      //INVEX
+      {
+        card:{label:'Invex Banco', value:'invex-banco'},
+        paymentTypes: ['single-payment-terminal'],
+        storesTypes:['home','studio','proyectos'],
+        terminal: {label:'Banamex', value:'banamex'}        
+      },                    
+      {
+        card:{label:'Invex Banco', value:'invex-banco'},
+        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
+        storesTypes:['home','studio','proyectos'],
+        terminal: {label:'Banorte', value:'banorte'}        
+      },            
+
+
 			//ITAUCARD
       {
         card:{label:'Itaucard', value:'itaucard'},
