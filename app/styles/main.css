@@ -1417,34 +1417,9 @@ md-backdrop.md-sidenav-backdrop{
   box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
 }
 
-.listing-product .stock-batch{
-  background: #000;
-  color: #fff;
-  font-weight: 700;
-  border-radius: 50%;
-  height: 45px;
-  width: 45px;
-  position: absolute;
-  right:44px;
-  top: 5px;
-  z-index: 2;
-  font-size: 12px;
-  -webkit-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
-  -moz-box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
-  box-shadow: 0px 6px 3px -2px rgba(0,0,0,0.44);
-}
-
 .listing-product .stock-available{
   font-weight: 700;
   font-size: 15px!important;
-  /*
-  position: absolute;
-  left: 4px;
-  top: 5px;
-  color: #2ABC1C;
-  font-weight: 700;
-  font-size: 12px;
-  */
 }
 .listing-product .stock-available .small{font-size: 10px;}
 

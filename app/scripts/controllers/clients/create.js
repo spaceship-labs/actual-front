@@ -33,6 +33,7 @@ function ClientCreateCtrl(
     contacts        :[{}],
     fiscalAddress   :{},
     loadingEstimate :0,
+    companyNameMaxLength: 50,
     isLoadingProgress: false,
     intervalProgress: false,
     titles          : clientService.getTitles(),
