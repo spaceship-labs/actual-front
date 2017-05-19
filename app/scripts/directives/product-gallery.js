@@ -51,6 +51,15 @@ angular.module('dashexampleApp')
           scope.areImagesLoaded = true;
           var imageSize = api.imageSizes.gallery[imageSizeIndexGallery];
           scope.product.files = productService.sortProductImages(scope.product) || scope.product.files; 
+          
+          //Default image services sr
+          if(scope.product.icons.length >= 0 && scope.product.InvntItem === 'N'){
+            if(!scope.product.icons[0].url){
+              scope.product.icons[0].url = api.baseUrl + '/wallpaper-installation.jpg';
+            }
+          }
+
+          
           if(scope.product.icons.length >= 0){
             var img = {
               src: scope.product.icons[0].url,
