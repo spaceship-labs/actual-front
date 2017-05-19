@@ -11,7 +11,8 @@ angular.module('dashexampleApp')
     return {
       scope:{
         product:'=',
-        showStock: '=?'
+        showStock: '=?',
+        srService: '=?'
       },
       templateUrl: 'views/directives/listing-product.html',
       restrict: 'E',
@@ -27,6 +28,14 @@ angular.module('dashexampleApp')
           scope.imageSizeIndexIcon = 10;
           scope.imageSize = api.imageSizes.gallery[scope.imageSizeIndexGallery];
 
+
+          //Setting default sr service image
+          if(scope.srService && scope.product.icons.length > 0){
+            if(!scope.product.icons[0].url){
+              scope.product.icons[0].url = api.baseUrl + '/wallpaper-installation.jpg';
+            }
+          }
+
           //Adding icon as gallery first image
           if(scope.product.icons[scope.imageSizeIndexIcon]){
             scope.images.push(scope.product.icons[0]);
@@ -34,6 +43,9 @@ angular.module('dashexampleApp')
             scope.images.push(scope.product.icons[0]);
           }
 
+          console.log('image', scope.product.icons);
+
+          //Images for gallery
           if(scope.product.files){
             scope.imageSize = '';
             scope.product.files.forEach(function(img){
