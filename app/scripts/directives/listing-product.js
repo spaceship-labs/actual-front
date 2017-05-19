@@ -10,11 +10,14 @@ angular.module('dashexampleApp')
   .directive('listingProduct',['$rootScope', '$timeout','api', 'commonService' ,function ($rootScope,$timeout, api, commonService) {
     return {
       scope:{
-        product:'='
+        product:'=',
+        showStock: '=?'
       },
       templateUrl: 'views/directives/listing-product.html',
       restrict: 'E',
       link: function postLink(scope) {
+        console.log('scope.showStock', scope.showStock);
+        scope.showStock = _.isUndefined(scope.showStock) ? true : scope.showStock;
         scope.areImagesLoaded = false;
         scope.images = [];
         scope.activeStore = $rootScope.activeStore;

@@ -5,3 +5,4 @@
 /bower_components
 /coverage
 /app/scripts/envconfig.js
+.eslintrc.js

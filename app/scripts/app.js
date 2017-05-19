@@ -81,6 +81,11 @@ angular
         controller: 'SearchCtrl',
         controllerAs: 'vm'
       })
+      .when('/servicios', {
+        templateUrl: 'views/sr-services.html',
+        controller: 'SrServicesCtrl',
+        controllerAs: 'vm'
+      })      
       .when('/addquotation', {
         templateUrl: 'views/addquotation.html',
         controller: 'AddquotationCtrl',

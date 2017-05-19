@@ -4,23 +4,6 @@
   </a>
   <div class="listing-product-gallery">
 
-    <!--
-    <div
-      layout="row"
-      layout-align="center center"
-      class="stock-batch">
-      <div>
-        <p>{{product[activeStore.code]}}</p>
-      </div>
-    </div>
-    -->
-
-    <!--<div class="stock-available">
-      <p>{{product[activeStore.code]}} disponibles</p>
-    </div>
-    -->
-    
-
     <div
       ng-if="product.Discount && product.Discount > 0"
       class="discount-batch"
@@ -47,18 +30,13 @@
   <div class="listing-product-info">
     <div class="listing-product-info-main">
       <p><strong>{{product.Name}}</strong></p>
-      <!--
-      <p class="price">
-        <span class="price-before">{{product.priceBefore | currency:'$':0}}</span>
-        <span ng-if="product.priceBefore">|</span>
-        <strong class="price-now">{{product.Price | currency:'$':0}}</strong>
-      </p>
-      -->      
-      
+         
       <div layout="row" layout-align="space-between center">
-        <p flex="40" class="stock-available">
-          {{product[activeStore.code]}} <strong class="small">disponibles</strong>
-        </p>      
+        <div flex="40">
+          <p ng-if="showStock" class="stock-available">
+            {{product[activeStore.code]}} <strong class="small">disponibles</strong>
+          </p>
+        </div>
         <p flex="55" class="price">
           <span class="price-before">{{product.priceBefore | currency:'$':0}}</span>
           <span ng-if="product.priceBefore">|</span>
@@ -67,16 +45,6 @@
       </div>
       
     </div>
-    <!--
-    <div flex class="listing-product-info-extra">
-      <p><strong class="small">{{product[activeStore.code]}} disponibles</strong></p>
-    </div>
-    -->
-    <!--
-    <div flex class="listing-product-info-extra">
-      <p>...</p>
-      <p><strong class="small">visto 16 veces hoy</strong></p>
-    </div>
-    -->
+
   </div>
 </div>
