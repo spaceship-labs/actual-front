@@ -4,9 +4,9 @@
 >
 
   <div class="input-element">
-    <label><strong>RFC (Principal) <span class="hl-label">*</span></strong></label>
+    <label class="rfc-label"><strong>Registro Federal de Contribuyente (RFC)  <span class="ast">*</span></strong></label>
     <div class="input-element-inner">
-      <input type="text" ng-model="vm.client.LicTradNum" required>
+      <input type="text" ng-model="vm.LicTradNum" required>
     </div>
   </div>
 
@@ -14,17 +14,22 @@
 
     <div layout="row">
       <div flex="45" class="input-element">
-        <label><strong>Razón social <span class="hl-label">*</span></strong></label>
+        <label><strong>Razón social <span class="ast">*</span></strong></label>
         <div class="input-element-inner">
           <input type="text" ng-model="vm.fiscalAddress.companyName" min="12" maxlength="50" required>
         </div>
+        <p
+          ng-if="vm.fiscalAddress" 
+          class="input-note">
+            Máximo de caracteres: <strong>{{ (50 - vm.fiscalAddress.companyName.length) }}</strong>
+        </p>
       </div>
     </div>
 
     <div layout="row">
       <!--
       <div flex="20" class="input-element">
-        <label><strong>RFC <span class="hl-label">*</span></strong></label>
+        <label><strong>RFC <span class="ast">*</span></strong></label>
         <div class="input-element-inner">
           <input type="text" ng-model="vm.fiscalAddress.rfc" required>
         </div>
@@ -32,7 +37,7 @@
       -->
 
       <div flex="25" class="input-element">
-        <label><strong>Teléfono <span class="hl-label">*</span></strong></label>
+        <label><strong>Teléfono <span class="ast">*</span></strong></label>
         <div class="input-element-inner">
           <input
             type="tel"
@@ -42,6 +47,7 @@
             autocomplete="tel"
             placeholder="Lada + Número">
         </div>
+        <p class="input-note">Caracteres numéricos</p>                    
       </div>
 
       <div flex="30" class="input-element">
@@ -71,6 +77,11 @@
             autocomplete="street-address" 
           >
         </div>
+        <p
+          ng-if="vm.fiscalAddress" 
+          class="input-note">
+            Máximo de caracteres <strong>{{ (50 - vm.fiscalAddress.Street.length) }}</strong>
+        </p>          
       </div>
 
       <div flex="10" class="input-element">
@@ -78,6 +89,11 @@
         <div class="input-element-inner">
           <input type="text" ng-model="vm.fiscalAddress.U_NumExt">
         </div>
+        <p
+          ng-if="vm.fiscalAddress" 
+          class="input-note">
+            Máx. carac. <strong>{{ (15 - vm.fiscalAddress.U_NumExt.length) }}</strong>
+        </p>         
       </div>
 
       <div flex="10" class="input-element">
@@ -85,6 +101,11 @@
         <div class="input-element-inner">
           <input type="text" ng-model="vm.fiscalAddress.U_NumInt">
         </div>
+        <p
+          ng-if="vm.fiscalAddress" 
+          class="input-note">
+            Máx. carac. <strong>{{ (18 - vm.fiscalAddress.U_NumInt.length) }}</strong>
+        </p>         
       </div>
 
       <div flex="25" class="input-element">
@@ -92,6 +113,11 @@
         <div class="input-element-inner">
           <input type="text" ng-model="vm.fiscalAddress.Block">
         </div>
+        <p
+          ng-if="vm.fiscalAddress" 
+          class="input-note">
+            Máximo de caracteres <strong>{{ (18 - vm.fiscalAddress.Block.length) }}</strong>
+        </p>         
       </div>
 
       <div flex="20" class="input-element">
@@ -122,7 +148,7 @@
 
 
       <div flex="30" class="input-element select-element-wrapper">
-        <label><strong>Estado*</strong></label>
+        <label><strong>Estado</strong><span class="ast">*</span></label>
         <md-select 
           ng-model="vm.fiscalAddress.State" 
           required 
@@ -146,6 +172,7 @@
             maxlength="5" 
           >
         </div>
+        <p class="input-note">Caracteres numéricos</p>
       </div>
 
     </div>

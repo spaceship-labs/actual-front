@@ -2539,6 +2539,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   display: block;
   text-transform: uppercase;
 }
+.form-view .input-element .rfc-label{
+  font-size: 12px;
+}
+
 .form-view .input-element label .hint{
   font-size: 12px;
   font-weight: 400;
@@ -2645,6 +2649,12 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 4px 24px;
 }
 .form-view .md-tab.md-active{color: #000;}
+.form-view .ast{color: #C82828}
+.form-view .input-note{
+  margin: 4px 0;
+  text-align: left;
+  font-size: 12px;
+}
 
 /*---------------/
   #CHART-SECTION
