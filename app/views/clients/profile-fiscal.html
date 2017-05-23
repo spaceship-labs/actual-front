@@ -25,13 +25,13 @@
             <input 
               type="text" 
               ng-model="vm.client.FiscalAddress.companyName" 
-              maxlength="50" 
+              maxlength="vm.fiscalAddressConstraints.companyName.max"
               required>
           </div>
           <p
             ng-if="vm.client.FiscalAddress" 
             class="input-note">
-              Máximo de caracteres <strong>{{ (50 - vm.client.FiscalAddress.companyName.length) }}</strong>
+              Máximo de caracteres <strong>{{ (vm.fiscalAddressConstraints.companyName.max  - vm.client.FiscalAddress.companyName.length) }}</strong>
           </p>          
         </div>
       </div>
@@ -53,7 +53,10 @@
         <div flex="30" class="input-element">
           <label><strong>Email</strong><span class="ast">*</span> </label>
           <div class="input-element-inner">
-            <input type="email" ng-model="vm.client.FiscalAddress.U_Correos" required>
+            <input 
+              type="email" 
+              ng-model="vm.client.FiscalAddress.U_Correos" required
+            >
           </div>
         </div>
       </div>
@@ -65,48 +68,64 @@
         <div flex="20" class="input-element">
           <label><strong>Calle</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.Street">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.Street"
+              maxlength="vm.fiscalAddressConstraints.Street.max"
+            >
           </div>
           <p
             ng-if="vm.client.FiscalAddress" 
             class="input-note">
-              Máximo de caracteres <strong>{{ (50 - vm.client.FiscalAddress.Street.length) }}</strong>
+              Máximo de caracteres <strong>{{ ( vm.fiscalAddressConstraints.Street.max - vm.client.FiscalAddress.Street.length) }}</strong>
           </p>          
         </div>
 
         <div flex="10" class="input-element">
           <label><strong>No. exterior</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.U_NumExt">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.U_NumExt"
+              maxlength="vm.fiscalAddressConstraints.U_NumExt.max"
+            >
           </div>
           <p
             ng-if="vm.client.FiscalAddress" 
             class="input-note">
-              Máx. carac. <strong>{{ (15 - vm.client.FiscalAddress.U_NumExt.length) }}</strong>
+              Máx. carac. <strong>{{ ( vm.fiscalAddressConstraints.companyName.max - vm.client.FiscalAddress.U_NumExt.length) }}</strong>
           </p>           
         </div>
 
         <div flex="10" class="input-element">
           <label><strong>No. interior</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.U_NumInt">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.U_NumInt"
+              maxlength="vm.fiscalAddressConstraints.U_NumInt.max"
+            >
           </div>
           <p
             ng-if="vm.client.FiscalAddress" 
             class="input-note">
-              Máx. carac. <strong>{{ (18 - vm.client.FiscalAddress.U_NumInt.length) }}</strong>
+              Máx. carac. <strong>{{ ( vm.fiscalAddressConstraints.U_NumInt.max - vm.client.FiscalAddress.U_NumInt.length) }}</strong>
           </p>           
         </div>
 
         <div flex="25" class="input-element">
           <label><strong>Colonia</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.Block">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.Block"
+              maxlength="vm.fiscalAddressConstraints.Block.max"
+            >
           </div>
           <p
             ng-if="vm.client.FiscalAddress" 
             class="input-note">
-              Máximo de caracteres <strong>{{ (18 - vm.client.FiscalAddress.Block.length) }}</strong>
+              Máximo de caracteres <strong>{{ ( vm.fiscalAddressConstraints.Block.max - vm.client.FiscalAddress.Block.length) }}</strong>
           </p>           
         </div>
 

@@ -34,6 +34,7 @@ function ClientProfileCtrl(
     genders : clientService.getGenders(),
     states: [],
     countries: commonService.getCountries(),
+    fiscalAddressConstraints: clientService.fiscalAddressConstraints,
     columnsLeads: [
       {key: 'folio', label:'Folio'},
       {key:'Client.CardName', label:'Cliente'},
