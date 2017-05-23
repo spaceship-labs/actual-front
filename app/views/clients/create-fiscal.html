@@ -20,15 +20,17 @@
             type="text" 
             ng-model="vm.fiscalAddress.companyName" 
             min="vm.fiscalAddressConstraints.companyName.min" 
-            maxlength="vm.fiscalAddressConstraints.companyName.max" 
+            ng-maxlength="vm.fiscalAddressConstraints.companyName.max"
+            maxlength="vm.fiscalAddressConstraints.companyName.max"
+            max="vm.fiscalAddressConstraints.companyName.max" 
+            name="companyName"
             required
           />
         </div>
         <p
           ng-if="vm.fiscalAddress" 
           class="input-note">
-            Máximo de caracteres: <strong>{{ (vm.fiscalAddressConstraints.companyName.max - vm.fiscalAddress.companyName.length) }}</strong>
-        </p>
+          Caracteres <strong>{{vm.createFiscalForm.companyName.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.companyName.max }}</strong>        </p>
       </div>
     </div>
 
@@ -78,16 +80,17 @@
         <div class="input-element-inner">
           <input 
             type="text" 
-            name="street"
             ng-model="vm.fiscalAddress.Street"
+            ng-maxlength="vm.fiscalAddressConstraints.Street.max"
             maxlength="vm.fiscalAddressConstraints.Street.max"
             autocomplete="street-address" 
+            name="Street"
           >
         </div>
         <p
           ng-if="vm.fiscalAddress" 
           class="input-note">
-            Máximo de caracteres <strong>{{ (vm.fiscalAddressConstraints.Street.max - vm.fiscalAddress.Street.length) }}</strong>
+          Caracteres <strong>{{vm.createFiscalForm.Street.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.Street.max }}</strong>        </p>
         </p>          
       </div>
 
@@ -97,13 +100,15 @@
           <input 
             type="text" 
             ng-model="vm.fiscalAddress.U_NumExt"
+            ng-maxlength="vm.fiscalAddressConstraints.U_NumExt.max"
             maxlength="vm.fiscalAddressConstraints.U_NumExt.max"
+            name="U_NumExt"
           />
         </div>
         <p
           ng-if="vm.fiscalAddress" 
           class="input-note">
-            Máx. carac. <strong>{{ (vm.fiscalAddressConstraints.U_NumExt.max - vm.fiscalAddress.U_NumExt.length) }}</strong>
+          Carac. <strong>{{vm.createFiscalForm.U_NumExt.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.U_NumExt.max }}</strong>        </p>
         </p>         
       </div>
 
@@ -113,13 +118,15 @@
           <input 
             type="text" 
             ng-model="vm.fiscalAddress.U_NumInt"
+            ng-maxlength="vm.fiscalAddressConstraints.U_NumInt.max"
             maxlength="vm.fiscalAddressConstraints.U_NumInt.max"
+            name="U_NumInt"
           />
         </div>
         <p
           ng-if="vm.fiscalAddress" 
           class="input-note">
-            Máx. carac. <strong>{{ (vm.fiscalAddressConstraints.U_NumInt.max - vm.fiscalAddress.U_NumInt.length) }}</strong>
+          Carac. <strong>{{vm.createFiscalForm.U_NumInt.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.U_NumInt.max }}</strong>        </p>
         </p>         
       </div>
 
@@ -129,13 +136,15 @@
           <input 
             type="text"
             ng-model="vm.fiscalAddress.Block"
-            maxlength="vm.fiscalAddressConstraints.Block.max"          
+            ng-maxlength="vm.fiscalAddressConstraints.Block.max"
+            maxlength="vm.fiscalAddressConstraints.Block.max" 
+            name="Block"         
           >
         </div>
         <p
           ng-if="vm.fiscalAddress" 
           class="input-note">
-            Máximo de caracteres <strong>{{ (vm.fiscalAddressConstraints.Block.max - vm.fiscalAddress.Block.length) }}</strong>
+          Carac. <strong>{{vm.createFiscalForm.Block.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.Block.max }}</strong>        </p>
         </p>         
       </div>
 
