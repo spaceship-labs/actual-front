@@ -2651,6 +2651,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .form-view .md-tab.md-active{color: #000;}
 .form-view .ast{color: #C82828}
 .form-view .input-note{
+  color: gray;
   margin: 4px 0;
   text-align: left;
   font-size: 12px;
