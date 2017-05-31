@@ -53,7 +53,7 @@ angular.module('dashexampleApp')
           scope.product.files = productService.sortProductImages(scope.product) || scope.product.files; 
           
           //Default image services sr
-          if(scope.product.icons.length >= 0 && scope.product.InvntItem === 'N'){
+          if(scope.product.icons.length >= 0 && scope.product.Service === 'Y'){
             if(!scope.product.icons[0].url){
               scope.product.icons[0].url = api.baseUrl + '/wallpaper-installation.jpg';
             }

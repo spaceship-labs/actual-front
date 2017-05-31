@@ -550,9 +550,7 @@ function QuotationsEditCtrl(
           }
 
 
-          if(vm.quotation.Client){
-            //quotationService.setActiveQuotation(vm.quotation.id);
-            
+          if(vm.quotation.Client){            
             if(quotationUpdated.immediateDelivery){
               return $location.path('/checkout/paymentmethod/' + quotationUpdated.id);
             }
@@ -560,8 +558,6 @@ function QuotationsEditCtrl(
             $location.path('/checkout/client/' + vm.quotation.id);
           }
           else{
-            //quotationService.setActiveQuotation(vm.quotation.id);
-            //localStorageService.set('inCheckoutProcess', true);
             $location.path('/continuequotation')
               .search({
                 checkoutProcess: vm.quotation.id,
