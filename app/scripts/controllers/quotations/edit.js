@@ -578,7 +578,7 @@ function QuotationsEditCtrl(
 
   function quotationHasImmediateDeliveryProducts(quotation){
     return _.some(quotation.Details, function(detail){
-      return detail.immediateDelivery;
+      return detail.immediateDelivery && !detail.isSRService;
     });
   }
 

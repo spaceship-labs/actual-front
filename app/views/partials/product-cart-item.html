@@ -91,7 +91,7 @@
         <strong>Entrega aproximada: </strong> {{detailGroup.shipDate | date: "d/MMM/yyyy"}}
       </p>
 
-      <p ng-if="detailGroup.immediateDelivery" class="bottom-text">
+      <p ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService" class="bottom-text">
         <span class="immediate-delivery-label">Entrega en tienda</span>
       </p>
 
@@ -101,7 +101,7 @@
         {{detail.shipDate | date: "d/MMM/yyyy"}}
         (en {{vm.daysDiff(detail.shipDate)}} días)  
         <span 
-          ng-if="detail.immediateDelivery"
+          ng-if="detail.immediateDelivery && !detail.isSRService"
           class="immediate-delivery-label"
         >
           Entrega en tienda

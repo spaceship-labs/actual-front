@@ -291,7 +291,11 @@ function ProductCtrl(
   function isImmediateDelivery(date){
     var currentDate = moment().startOf('date');
     date = moment(date).startOf('date');
-    return (currentDate.format() === date.format());
+    return (currentDate.format() === date.format() && !isSRService(vm.product) );
+  }
+
+  function isSRService(product){
+    return product.Service === 'Y';
   }
 
 

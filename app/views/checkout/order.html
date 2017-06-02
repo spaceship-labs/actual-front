@@ -115,14 +115,20 @@
             </div>
             <div flex="20" class="order-item-data"><span>{{detailGroup.quantity}}</span></div>
             <div flex="20" class="order-item-data">
-              <span>{{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span>  <span class="immediate-delivery-tag" ng-if="detailGroup.immediateDelivery">Entrega en tienda</span>
+              <span>
+                {{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span>  
+                <span 
+                  class="immediate-delivery-tag" 
+                  ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService">
+                  Entrega en tienda
+                </span>
             </div>
             <div flex="20" class="order-item-data">
               <span>{{detailGroup.total | currency}} MXN</span>
             </div>
           </div>
 
-          <p ng-if="detailGroup.immediateDelivery" class="immediate-delivery-text">
+          <p ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService" class="immediate-delivery-text">
             ¡Recibí artículo en perfectas condiciones directamente en tienda!
           </p>
 

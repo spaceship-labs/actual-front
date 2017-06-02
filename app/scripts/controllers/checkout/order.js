@@ -55,7 +55,7 @@ function CheckoutOrderCtrl(
   function showImmediateDeliveryDialog(order){
     if(order.Details){
       var hasImmediateDelivery = order.Details.some(function(detail){
-        return detail.immediateDelivery;
+        return detail.immediateDelivery && !detail.isSRService;
       });
       if(hasImmediateDelivery){
         dialogService.showDialog('!Favor de entregar al cliente los artículos que se llevará¡');
