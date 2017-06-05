@@ -3335,6 +3335,17 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 /*----------------/
   #ORDERBY-SECTION
 /*---------------*/
+.orderby-section-fixed{
+  background: #F8F8F8;
+  position: fixed;
+  width: 70%;
+  z-index: 9999;
+  top: 76px;
+}
+.orderby-section-fixed .orderby-item:first-child,
+.orderby-section-fixed .orderby-item:last-child{
+  border: none!important;
+}
 .orderby-selectors{margin: 14px 0;}
 .orderby-selectors .orderby-item{
   border-right: 1px solid #b9b9b9;

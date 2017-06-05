@@ -70,7 +70,13 @@
   -->
 </div>
 
-<div ng-if="vm.enableSortOptions" class="orderby-section">
+<div 
+  ng-if="vm.enableSortOptions" 
+  class="orderby-section"
+  fixed-element  
+  top="70" 
+  ng-class="{'orderby-section-fixed': scrolled}"
+>  
   <div layout="row" class="orderby-selectors">
     <a 
       ng-repeat="sortOption in vm.sortOptions track by $index"

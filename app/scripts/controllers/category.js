@@ -187,9 +187,6 @@ function CategoryCtrl(
     if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
       params.slowMovement = true;      
     }
-    else if(vm.activeSortOption && vm.activeSortOption.key === 'spotlight'){
-      params.spotlight = true;      
-    }
 
     productService.searchCategoryByFilters(params)
       .then(function(res){
@@ -326,7 +323,11 @@ function CategoryCtrl(
 
     if(vm.activeSortOption.key  === sortOption.key){
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
-    }else{
+    }
+    else if(sortOption.key === 'salesCount'){
+      sortOption.direction = 'DESC';
+    }
+    else{
       sortOption.direction = 'ASC';
     }
 

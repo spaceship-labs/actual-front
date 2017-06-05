@@ -11,7 +11,7 @@
         var SORT_OPTIONS = [
             {
                 label:'Lo más vendido',
-                key: 'soldCount'
+                key: 'salesCount'
             },
             {
                 label:'Existencia',
@@ -24,8 +24,8 @@
                 direction: 'ASC'
             },
             {
-                label:'Descuento',
-                key: 'Discount',
+                label:'Promociones',
+                key: 'slowMovement',
                 direction: 'ASC'
             },
         ];
