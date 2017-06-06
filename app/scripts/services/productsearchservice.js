@@ -14,7 +14,7 @@
                 key: 'salesCount'
             },
             {
-                label:'Existencia',
+                label:'Disponibilidad',
                 key: 'stock',
                 direction: 'ASC'
             },
