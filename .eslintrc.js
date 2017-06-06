@@ -3,28 +3,14 @@ module.exports = {
         "browser": true
     },
     "extends": "eslint:recommended",
-    "globals":{
-        "angular": true,
-    },
     "rules": {
         "no-console": 0
-        /*
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ]
-        */
+    },
+    "globals": {
+        "moment": true,
+        "angular": true
+    },
+    "rules":{
+        "no-console": 0
     }
 };

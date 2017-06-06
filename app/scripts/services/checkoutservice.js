@@ -37,6 +37,15 @@
         if(quotation){
           percentage = quotation.ammountPaid / (quotation.total / 100);
         }
+
+        //Floating point issue precision with JS
+        //TODO find fix to precision
+        //Problem: sometimes ammount paid and total is equal, but percentage throws: 99.99999999999999
+        //Return 100 when total and ammount paid is equal
+        if(quotation.ammountPaid === quotation.total){
+          percentage = 100;
+        }
+
         return percentage;
       }
 

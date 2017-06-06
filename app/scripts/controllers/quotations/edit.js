@@ -71,6 +71,9 @@ function QuotationsEditCtrl(
     toggleRecord: toggleRecord,
     deattachImage: deattachImage,
     methodsHaveMsi: methodsHaveMsi,
+    setEstimatedCloseDate: setEstimatedCloseDate,
+    getSourceName: getSourceName,
+    getSourceTypeName: getSourceTypeName,
     ENV: ENV
   });
 
@@ -101,6 +104,11 @@ function QuotationsEditCtrl(
       .then(function(res){
         vm.isLoading = false;
         vm.quotation = res.data;
+        
+        if(vm.quotation.estimatedCloseDate){
+          vm.estimatedCloseDateWrapper.setDate(new Date(vm.quotation.estimatedCloseDate) );
+        }
+
         quotationService.setActiveQuotation(vm.quotation.id);
 
         vm.status = 'Abierta';
@@ -268,6 +276,35 @@ function QuotationsEditCtrl(
     return appliesFor;
   }
 
+  function setEstimatedCloseDate(){
+    console.log('pikaday vm.quotation.estimatedCloseDateWrapper', vm.estimatedCloseDateWrapper);
+    console.log('vm.quotation.estimatedCloseDateHolder', vm.quotation.estimatedCloseDateHolder);
+    
+    if(vm.quotation.estimatedCloseDateHolder && vm.estimatedCloseDateWrapper){
+      vm.isLoadingEstimatedCloseDate = true;
+      vm.quotation.estimatedCloseDate = moment(vm.estimatedCloseDateWrapper._d).endOf('day').toDate();
+
+      quotationService.setEstimatedCloseDate(vm.quotation.id, vm.quotation.estimatedCloseDate)
+        .then(function(res){
+          if(res.data){
+            vm.quotation.estimatedCloseDate = res.data;
+            dialogService.showDialog('Fecha estimada de cierre guardada');
+          }else{
+            dialogService.showDialog('Hubo un error al guardar los datos, revisa tu información');            
+          }
+          vm.isLoadingEstimatedCloseDate = false;
+        })
+        .catch(function(err){
+          console.log('err', err);
+          dialogService.showDialog('Hubo un error al guardar los datos, revisa tu información');                      
+          vm.isLoadingEstimatedCloseDate = false;        
+        });
+    }
+    else{
+      dialogService.showDialog('Ingresa la fecha estimada de cierre para guardar');
+    }
+  }
+
   function addRecord(form){
     if(vm.newRecord.eventType && form.$valid){
       vm.isLoadingRecords = true;
@@ -282,14 +319,10 @@ function QuotationsEditCtrl(
 
       vm.newRecord.dateTime = dateTime;
 
-      //Formating estimated close date
-      var estimatedCloseDate = moment(vm.newRecord.estimatedCloseDate._d).endOf('day').toDate();
-
 
       var params = {
         dateTime: vm.newRecord.dateTime,
         eventType: vm.newRecord.eventType,
-        estimatedCloseDate: estimatedCloseDate,
         notes: vm.newRecord.notes,
         User: $rootScope.user.id,
         file: vm.newRecord.file
@@ -297,15 +330,10 @@ function QuotationsEditCtrl(
 
       quotationService.addRecord(vm.quotation.id, params)
         .then(function(res){
-          var record = res.data.record;
-          var estimatedCloseDate = res.data.estimatedCloseDate;
+          var record = res.data;
 
           if(record){
             vm.quotation.Records.push(record);
-          }
-
-          if(estimatedCloseDate){
-            vm.quotation.estimatedCloseDate = estimatedCloseDate;
           }
 
           vm.newRecord = {};
@@ -528,10 +556,15 @@ function QuotationsEditCtrl(
 
     if(!vm.quotation.Order){
 
+      if(vm.quotation.estimatedCloseDateHolder && vm.estimatedCloseDateWrapper){
+        vm.quotation.estimatedCloseDate = moment(vm.estimatedCloseDateWrapper._d).endOf('day').toDate();      
+      }
+
       //Not updating Details, not necessary
       var params = angular.copy(vm.quotation);
       delete params.Details;
-
+      delete params.source;
+      delete params.sourceType;
 
       showInvoiceDataAlertIfNeeded()
         .then(function(continueProcess){
@@ -625,6 +658,28 @@ function QuotationsEditCtrl(
       console.log('cancelled');
     });    
   }
+
+  function getSourceName(){
+    var sourceValue = vm.quotation.source; 
+    var source = _.findWhere($rootScope.pointersSources,{value: sourceValue});
+    var sourceName = source.label || sourceValue;
+    return sourceName;
+  }
+
+  function getSourceTypeName(){
+    var sourceType;
+    var sourceValue = vm.quotation.source; 
+    var sourceTypeValue = vm.quotation.sourceType;
+
+    var source = _.findWhere($rootScope.pointersSources,{value: sourceValue});
+    if(source){
+      sourceType = _.findWhere(source.childs,{value:sourceTypeValue})
+    }
+
+    var sourceTypeName = sourceType ? sourceType.label : sourceTypeValue;
+    return sourceTypeName;
+  }
+
 
 
   function showBigTicketDialog(ev){

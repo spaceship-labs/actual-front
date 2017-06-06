@@ -27,7 +27,15 @@
         updateContact: updateContact,
         syncClientsDiscounts: syncClientsDiscounts,
         syncClientByCardCode: syncClientByCardCode,
-        syncClientsCredit: syncClientsCredit
+        syncClientsCredit: syncClientsCredit,
+
+        fiscalAddressConstraints:{
+          companyName:{max:50},
+          Street:{max:100},
+          U_NumExt:{max:20},
+          U_NumInt:{max:20},
+          Block:{max:100},
+        }
       };
 
       return service;

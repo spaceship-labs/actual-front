@@ -8,7 +8,7 @@
     >
 
     <div class="input-element">
-      <label><strong>RFC (Principal) <span class="hl-label">*</span></strong></label>
+      <label class="rfc-label"><strong>Registro Federal de Contribuyente (RFC) <span class="ast">*</span></strong></label>
       <div class="input-element-inner">
         <input type="text" ng-model="vm.client.LicTradNum">
       </div>
@@ -20,30 +20,28 @@
 
       <div layout="row">
         <div flex="45" class="input-element">
-          <label><strong>Razón social <span class="hl-label">*</span></strong></label>
+          <label><strong>Razón social <span class="ast">*</span></strong></label>
           <div class="input-element-inner">
             <input 
               type="text" 
               ng-model="vm.client.FiscalAddress.companyName" 
-              maxlength="50" 
-              ng-maxlength="50" 
+              maxlength="vm.fiscalAddressConstraints.companyName.max"
+              ng-maxlength="vm.fiscalAddressConstraints.companyName.max"
+              name="companyName"
               required>
           </div>
+          <p
+            ng-if="vm.client.FiscalAddress" 
+            class="input-note">
+              Caracteres <strong>{{fiscalForm.companyName.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.companyName.max }}</strong>
+          </p>          
         </div>
       </div>
 
       <div layout="row">
-        <!--
-        <div flex="20" class="input-element">
-          <label><strong>RFC <span class="hl-label">*</span></strong></label>
-          <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.rfc" required>
-          </div>
-        </div>
-        -->
 
         <div flex="25" class="input-element">
-          <label><strong>Teléfono <span class="hl-label">*</span></strong></label>
+          <label><strong>Teléfono <span class="ast">*</span></strong></label>
           <div class="input-element-inner">
             <input
               type="text"
@@ -51,12 +49,16 @@
               ng-model="vm.client.FiscalAddress.Phone1"
               required>
           </div>
+          <p class="input-note">Caracteres numéricos</p>            
         </div>
 
         <div flex="30" class="input-element">
-          <label><strong>Email</strong>*</label>
+          <label><strong>Email</strong><span class="ast">*</span> </label>
           <div class="input-element-inner">
-            <input type="email" ng-model="vm.client.FiscalAddress.U_Correos" required>
+            <input 
+              type="email" 
+              ng-model="vm.client.FiscalAddress.U_Correos" required
+            >
           </div>
         </div>
       </div>
@@ -68,29 +70,73 @@
         <div flex="20" class="input-element">
           <label><strong>Calle</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.Street">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.Street"
+              maxlength="vm.fiscalAddressConstraints.Street.max"
+              ng-maxlength="vm.fiscalAddressConstraints.Street.max"
+              name="Street"
+            >
           </div>
+          <p
+            ng-if="vm.client.FiscalAddress" 
+            class="input-note">
+              Caracteres <strong>{{fiscalForm.Street.$viewValue.length || 0}} de {{vm.fiscalAddressConstraints.Street.max}}</strong>
+          </p>          
         </div>
 
         <div flex="10" class="input-element">
           <label><strong>No. exterior</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.U_NumExt">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.U_NumExt"
+              maxlength="vm.fiscalAddressConstraints.U_NumExt.max"
+              ng-maxlength="vm.fiscalAddressConstraints.U_NumExt.max"
+              name="U_NumExt"
+            >
           </div>
+          <p
+            ng-if="vm.client.FiscalAddress" 
+            class="input-note">
+              Carac. <strong>{{fiscalForm.U_NumExt.$viewValue.length || 0}} de {{vm.fiscalAddressConstraints.U_NumExt.max}}</strong>
+          </p>           
         </div>
 
         <div flex="10" class="input-element">
           <label><strong>No. interior</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.U_NumInt">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.U_NumInt"
+              maxlength="vm.fiscalAddressConstraints.U_NumInt.max"
+              ng-maxlength="vm.fiscalAddressConstraints.U_NumInt.max"
+              name="U_NumInt"
+            >
           </div>
+          <p
+            ng-if="vm.client.FiscalAddress" 
+            class="input-note">
+              Carac. <strong>{{fiscalForm.U_NumInt.$viewValue.length || 0}} de {{vm.fiscalAddressConstraints.U_NumInt.max}}</strong>
+          </p>           
         </div>
 
         <div flex="25" class="input-element">
           <label><strong>Colonia</strong></label>
           <div class="input-element-inner">
-            <input type="text" ng-model="vm.client.FiscalAddress.Block">
+            <input 
+              type="text" 
+              ng-model="vm.client.FiscalAddress.Block"
+              maxlength="vm.fiscalAddressConstraints.Block.max"
+              ng-maxlength="vm.fiscalAddressConstraints.Block.max"
+              name="Block"
+            >
           </div>
+          <p
+            ng-if="vm.client.FiscalAddress" 
+            class="input-note">
+              Caracteres <strong>{{fiscalForm.Block.$viewValue.length || 0}} de {{vm.fiscalAddressConstraints.Block.max}}</strong>
+          </p>           
         </div>
 
         <div flex="20" class="input-element">
@@ -125,7 +171,7 @@
         </div>
 
         <div flex="15" class="input-element">
-          <label><strong>Código postal*</strong></label>
+          <label><strong>Código postal</strong><span class="ast">*</span></label>
           <div class="input-element-inner">
             <input 
               type="text" 
@@ -135,6 +181,7 @@
               maxlength="5"              
             >
           </div>
+          <p class="input-note">Caracteres numéricos</p>
         </div>
 
       </div>

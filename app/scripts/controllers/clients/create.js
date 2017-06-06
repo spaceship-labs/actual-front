@@ -46,6 +46,7 @@ function ClientCreateCtrl(
     removeContactForm: removeContactForm,
     clearTabFields  : clearTabFields,
     copyPersonalDataToContact: copyPersonalDataToContact,
+    fiscalAddressConstraints: clientService.fiscalAddressConstraints,
     PERSONAL_DATA_TAB: 0,
     FISCAL_DATA_TAB: 1,
     DELIVERY_DATA_TAB: 3

@@ -1184,6 +1184,14 @@ md-backdrop.md-sidenav-backdrop{
   max-width: 150px;
   margin: 10px auto;
 }
+.pointers-sidenav .pointer-source-item select{
+  margin-left: 30px;
+  background: #fff;
+  max-width: 100%;
+  font-size: 14px;
+  padding: 4px;
+  box-sizing: border-box;
+}
 .pointers-sidenav .broker-select{
   background: rgb(255, 255, 255);
   margin-left: 26px;
@@ -2600,6 +2608,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   display: block;
   text-transform: uppercase;
 }
+.form-view .input-element .rfc-label{
+  font-size: 12px;
+}
+
 .form-view .input-element label .hint{
   font-size: 12px;
   font-weight: 400;
@@ -2706,6 +2718,13 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   padding: 4px 24px;
 }
 .form-view .md-tab.md-active{color: #000;}
+.form-view .ast{color: #C82828}
+.form-view .input-note{
+  color: gray;
+  margin: 4px 0;
+  text-align: left;
+  font-size: 12px;
+}
 
 /*---------------/
   #CHART-SECTION
@@ -3395,6 +3414,11 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 /*-------------/
   #RECORDS-VIEW
 /*------------*/
+.records-view .estimated-close-date img{
+  max-width: 40px;
+  position: relative;
+  top: 12px;
+}
 .records-view .attachments-section{margin-top: 20px}
 .records-view .attachments-section a{
   color: #000;
