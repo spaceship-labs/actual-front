@@ -83,9 +83,11 @@
 
     <div layout="row" layout-align="start center" class="quotation-data-row">
 
-      <div flex="25" ng-show="vm.quotation.source" class="quotation-data-row">
+      <div flex="25" ng-if="vm.quotation.source" class="quotation-data-row">
         <label>¿Cómo se entero de Actual?</label>
-        <p>{{vm.quotation.source}}</p>
+        <p>{{ ::vm.getSourceName() }} 
+          <span ng-show="vm.quotation.sourceType">| {{ ::vm.getSourceTypeName() }}</span>
+        </p>
       </div>
 
       <div flex="25"  ng-show="vm.quotation.estimatedCloseDate">

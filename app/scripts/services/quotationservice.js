@@ -41,6 +41,7 @@
         getClosingReasons: getClosingReasons,
         getPaymentOptions: getPaymentOptions,
         getPayments: getPayments,
+        getPointersSources: getPointersSources,
         getRecordTypes: getRecordTypes,
         getSapOrderConnectionLogs: getSapOrderConnectionLogs,
         loadProductsFilters: loadProductsFilters,
@@ -488,6 +489,180 @@
           'Visita'
         ];
         return recordTypes;
+      }
+      
+      function getPointersSources(){
+        var sources = [
+          {
+            label:'Internet',
+            value:'internet',
+            childs: [
+              {label:'Facebook', value: 'facebook'},
+              {label:'Mailing', value:'mailing'},  
+              {label:'Google(Buscador)', value:'google'},
+              {label:'Yucatán premier', value:'yucatan-premier'},
+              {label:'Instagram', value:'Instagram'},
+              {label:'Diario de Yucatán Online', value:'diario-de-yucatan-online'},
+              {label:'Foursquare', value:'foursquare'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          },
+          {
+            label:'Periódico o Revista',
+            value:'periodico-revista',
+            childs:[
+              {label:'Diario de Yucatán',value:'diario-de-yucatan'},
+              {label:'The playa times', value:'the-playa-times'},
+              {label:'Ambientes', value:'ambientes'},
+              {label:'Abitat', value:'abitat'},
+              {label:'Portal Inmobiliario', value:'portal-inmobiliario'},
+              {label:'Ser Playa', value:'ser-playa'},
+              {label:'Vive', value:'vive'},
+              {label:'Ya la hice', value:'ya-la-hice'},
+              {label:'Playacar', value:'playacar'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          },
+          {
+            label:'Radio',
+            value:'radio',
+            childs:[
+              {label:'Mix Cancún',value:'mix-cancun'},
+              {label:'Imagen Cancún',value:'imagen-cancun'},
+              {label:'Radiofórmula Cancún',value:'radioformula-cancun'},
+              {label:'Pirata',value:'pirata'},
+              {label:'Kiss Mérida',value:'kiss-merida'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          },
+          {
+            label:'Volanteo',
+            value:'volanteo',
+            childs:[
+              {label:'En calle',value:'calle'},
+              {label:'En plaza',value:'plaza'},
+              {label:'En evento',value:'evento'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          },
+          {
+            label:'Espectular',
+            value: 'espectacular',
+            childs:[
+              {label:'Carr. Playa del Carmen - Cáncun', value:'carretera-playa-del-carmen-cancun'},
+              {label:'Cancún - Distribuidor Vial', value:'cancun-distribuidor-vial'},
+              {label:'Cancún - Entrada Pto. Cancun (Bonampak)', value:'cancun-entrada-pto-cancun-bonampak'},
+              {label:'Mérida - El country', value:'merida-el-country'},
+              {label:'Tulum', value:'tulum'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          },
+          {
+            label:'Ubicación',
+            value:'ubicacion',
+            childs:[
+              {label:'Tienda', value:'tienda'}
+            ]
+          },
+          {
+            label: 'Activaciones Especiales',
+            value:'activaciones-especiales',
+            childs:[
+              {label:'Valla Móvil', value:'valla-movil'},
+              {label:'Pantalla Digital', value:'pantalla-digital'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          },
+          {
+            label: 'Recomendado Cancún',
+            value:'recomendado-cancun',
+            childs:[
+              {label:'Sky', value:'sky'},
+              {label:'Astoria', value:'astoria'},
+              {label:'BeTowers', value:'be-towers'},
+              {label:'Towers', value:'towers'},
+              {label:'Tribeca', value:'tribeca'},
+              {label:'Liverté', value:'liverte'},
+              {label:'Jardines del Sur', value:'jardines-del-sur'},
+              {label:'Prado Norte', value:'prado-norte'},
+              {label:'Taina', value:'taina'},
+              {label:'Ynfinity', value:'ynfinity'},
+              {label:'Kaanali', value:'kaanali'},
+              {label:'Isola', value:'isola'},
+              {label:'SLS', value:'sls'}
+            ]
+          },     
+          {
+            label: 'Recomendado Playa del Carmen',
+            value:'recomendado-playa-del-carmen',
+            childs:[
+              {label:'Mareazul', value:'mareazul'},
+              {label:'Lagunas de Mayakoba', value:'lagunas-de-mayakoba'},
+              {label:'Lorena Ochoa', value:'lorena-ochoa'},
+              {label:'Mooh Ha', value:'moon-ha'},
+              {label:'Menesse', value:'menesse'},
+              {label:'Akab', value:'akab'},
+              {label:'Nick Prince', value:'nick-prince'},
+              {label:'Bahía Príncipe', value:'bahia-principe'},
+              {label:'Calle 38', value:'calle-38'},
+              {label:'Terrazas', value:'terrazas'},
+              {label:'Encanto', value:'encanto'},
+              {label:'Aldea Zama', value:'aldea-zama'},
+              {label:'Los Olivos', value:'los-olivos'},
+              {label:'La Joya', value:'la-joya'},
+              {label:'The Shore', value:'the-shore'},
+              {label:'Central Park', value:'central-park'},
+              {label:'iPlaya', value:'iplaya'},
+
+            ]
+          },
+          {
+            label: 'Recomendado Mérida',
+            value:'recomendado-merida',
+            childs:[
+              {label:'Altozano', value:'altozano'},
+              {label:'Armonia', value:'armonia'},
+              {label:'Country Towers', value:'country-towers'},
+              {label:'Serena', value:'serena'},
+              {label:'Anthea', value:'anthea'},
+              {label:'La Vista', value:'la-vista'},
+              {label:'Floresta', value:'floresta'},
+
+            ]
+          },     
+          {
+            label: 'Recomendado Chetumal',
+            value:'recomendado-chetumal',
+            childs:[
+              {label:'La conquista', value:'la-conquista'},
+              {label:'Andara', value:'andara'},
+            ]
+          },   
+          {
+            label: 'Recomendado Puerto Morelos',
+            value: 'recomendado-puerto-morelos',
+            childs:[
+              {label:'Palma Real', value:'palma-real'}
+            ]
+          }  
+                    
+          
+          /*
+          {
+            label: 'Recomendado',
+            value:'recomendado',
+            childs:[
+              {label:'Cancún', value:'cancun'},
+              {label:'Playa del Carmen', value:'playa-del-carmen'},
+              {label:'Mérida', value:'merida'},
+              {label:'Chetumal', value:'chetumal'},
+              {label:'Puerto Morelos', value:'puerto-morelos'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          }          
+          */
+        ];
+        return sources;
       }
 
       function showStockAlert(){

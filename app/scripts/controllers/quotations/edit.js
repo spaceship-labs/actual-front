@@ -72,6 +72,8 @@ function QuotationsEditCtrl(
     deattachImage: deattachImage,
     methodsHaveMsi: methodsHaveMsi,
     setEstimatedCloseDate: setEstimatedCloseDate,
+    getSourceName: getSourceName,
+    getSourceTypeName: getSourceTypeName,
     ENV: ENV
   });
 
@@ -561,7 +563,8 @@ function QuotationsEditCtrl(
       //Not updating Details, not necessary
       var params = angular.copy(vm.quotation);
       delete params.Details;
-
+      delete params.source;
+      delete params.sourceType;
 
       showInvoiceDataAlertIfNeeded()
         .then(function(continueProcess){
@@ -659,6 +662,28 @@ function QuotationsEditCtrl(
       console.log('cancelled');
     });    
   }
+
+  function getSourceName(){
+    var sourceValue = vm.quotation.source; 
+    var source = _.findWhere($rootScope.pointersSources,{value: sourceValue});
+    var sourceName = source.label || sourceValue;
+    return sourceName;
+  }
+
+  function getSourceTypeName(){
+    var sourceType;
+    var sourceValue = vm.quotation.source; 
+    var sourceTypeValue = vm.quotation.sourceType;
+
+    var source = _.findWhere($rootScope.pointersSources,{value: sourceValue});
+    if(source){
+      sourceType = _.findWhere(source.childs,{value:sourceTypeValue})
+    }
+
+    var sourceTypeName = sourceType ? sourceType.label : sourceTypeValue;
+    return sourceTypeName;
+  }
+
 
 
   function showBigTicketDialog(ev){

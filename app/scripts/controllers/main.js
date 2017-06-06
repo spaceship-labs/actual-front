@@ -48,6 +48,7 @@
       logInForm: {},
       mapTerminalCode: commonService.mapTerminalCode,
       menuCategories: [],
+      pointersSources: quotationService.getPointersSources(),
       menuCategoriesOn: false,
       pointersSidenav: [],
       activateCartModal: activateCartModal,
@@ -70,9 +71,11 @@
       saveSource: saveSource,
       syncClientsDiscounts: syncClientsDiscounts,
       handleSearch: handleSearch,
+      setPointerSourceType: setPointerSourceType,
       adminUrl: ENV.adminUrl
     });
     $rootScope.loadActiveQuotation = loadActiveQuotation;
+    $rootScope.pointersSources = vm.pointersSources;
     $scope.mainData;
 
     init();
@@ -318,6 +321,10 @@
     }
 
     function togglePointerSidenav(){
+      if( !quotationService.getActiveQuotationId() ){
+        return;
+      }
+
       $mdSidenav('right').toggle();
       if($mdSidenav('right').isOpen() && !vm.brokers){
         loadBrokers();
@@ -601,12 +608,18 @@
       });
     }
 
+    function setPointerSourceType(source){
+      if(vm.activeQuotation){
+        vm.activeQuotation.sourceType = vm.activeQuotation.sourceType || source.childs[0].value;
+      }
+    }
+
     function saveBroker(broker) {
       localStorageService.set('broker', broker);
       togglePointerSidenav();
     }
 
-    function saveSource(source){
+    function saveSource(source, sourceType){
       if(source === 'Broker'){
         quotationService.updateBroker(vm.quotation, {brokerId:vm.activeQuotation.Broker})
           .then(function(res){
@@ -623,7 +636,11 @@
       }else{
         if(vm.quotation){
           vm.pointersLoading = true;
-          quotationService.updateSource(vm.quotation, {source:source})
+          var params = {
+            source: source,
+            sourceType: sourceType
+          }
+          quotationService.updateSource(vm.quotation, params)
             .then(function(res){
               vm.pointersLoading = false;
               togglePointerSidenav();
