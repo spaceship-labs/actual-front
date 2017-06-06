@@ -325,8 +325,8 @@
         return;
       }
 
-      $mdSidenav('right').toggle();
-      if($mdSidenav('right').isOpen() && !vm.brokers){
+      $mdSidenav('pointers').toggle();
+      if($mdSidenav('pointers').isOpen() && !vm.brokers){
         loadBrokers();
       }
     }

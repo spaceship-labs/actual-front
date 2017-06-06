@@ -95,6 +95,12 @@
         <p>{{vm.quotation.estimatedCloseDate | date: 'd/MMM/yyyy'}}</p>
       </div>      
 
+      <div flex="25"  ng-show="vm.quotation.isClosedReason">
+        <label for="">Motivo de cierre</label>
+        <p>{{vm.quotation.isClosedReason}}</p>
+      </div>      
+
+
     </div>
 
     <div class="quotation-data-row quotation-validity">
