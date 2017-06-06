@@ -545,7 +545,7 @@
             ]
           },
           {
-            label:'Espectular',
+            label:'Espectacular',
             value: 'espectacular',
             childs:[
               {label:'Carr. Playa del Carmen - Cáncun', value:'carretera-playa-del-carmen-cancun'},
