@@ -106,7 +106,6 @@
       function addRecord(quotationId, params){
         var url = '/quotation/addrecord/' + quotationId;
         return Upload.upload({url: api.baseUrl + url, data:params});
-        //return api.$http.post(url,params);
       }
 
       function addDetail(quotationId, params){
