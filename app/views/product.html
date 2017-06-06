@@ -67,7 +67,8 @@
               </div>
               <div flex="15">
                 <div class="product-view-qty input-element">
-                  <label>Piezas</label>
+                  <label ng-show="!vm.isSRService(vm.product)">Piezas</label>
+                  <label ng-show="vm.isSRService(vm.product)">Unidades</label>
                   <select
                     class="select-element"
                     ng-model="vm.productCart.quantity"

@@ -46,6 +46,91 @@
 
         </div>
 
+        <!--STOCK FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isSocietyFilterActive = !vm.isSocietyFilterActive" ng-class="{'active-arrow': vm.isSocietyFilterActive}">
+            <strong>Sociedad:</strong>
+          </h4>
+          <div ng-show="vm.isSocietyFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="society in vm.societyFilters"
+                ng-model="society.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{society.label}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END STOCK FILTER-->  
+
+        <!--BRAND FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isBrandFilterActive = !vm.isBrandFilterActive" ng-class="{'active-arrow': vm.isBrandFilterActive}">
+            <strong>Marca:</strong>
+          </h4>
+          <div ng-show="vm.isBrandFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="brand in vm.customBrands | orderBy:'Name' "
+                ng-model="brand.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{brand.Name}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END BRAND FILTER-->
+
+        <!--STOCK FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isStockFilterActive = !vm.isStockFilterActive" ng-class="{'active-arrow': vm.isStockFilterActive}">
+            <strong>Disponibilidad:</strong>
+          </h4>
+          <div ng-show="vm.isStockFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="stock in vm.stockFilters"
+                ng-model="stock.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{stock.label}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END STOCK FILTER-->
+
+        <!--DISCOUNT FILTER-->
+        <div class="filter-block">
+          <h4 ng-click="vm.isDiscountFilterActive = !vm.isDiscountFilterActive" ng-class="{'active-arrow': vm.isDiscountFilterActive}">
+            <strong>Promociones:</strong>
+          </h4>
+          <div ng-show="vm.isDiscountFilterActive" class="filter-block-inner">
+
+            <div>
+              <md-checkbox
+                ng-repeat="discount in vm.discountFilters"
+                ng-model="discount.selected"
+                ng-change="vm.searchByFilters()"
+                aria-label="Checkbox Indeterminate">
+                {{discount.label}}
+              </md-checkbox>
+            </div>
+
+          </div>
+        </div>
+        <!--END DISCOUNT FILTER-->
+              
+
         <!--NORMAL FILTERS-->
         <div class="filter-block" ng-repeat="filter in vm.filters track by $index">
           <h4 ng-click="vm.filters[$index].active = !vm.filters[$index].active" ng-class="{'active-arrow': vm.filters[$index].active}">
@@ -81,92 +166,6 @@
         </div>
         <!--END NORMAL FILTERS-->
         
-        <!--BRAND FILTER-->
-        <div class="filter-block">
-          <h4 ng-click="vm.isBrandFilterActive = !vm.isBrandFilterActive" ng-class="{'active-arrow': vm.isBrandFilterActive}">
-            <strong>Marca:</strong>
-          </h4>
-          <div ng-show="vm.isBrandFilterActive" class="filter-block-inner">
-
-            <div>
-              <md-checkbox
-                ng-repeat="brand in vm.customBrands | orderBy:'Name' "
-                ng-model="brand.selected"
-                ng-change="vm.searchByFilters()"
-                aria-label="Checkbox Indeterminate">
-                {{brand.Name}}
-              </md-checkbox>
-            </div>
-
-          </div>
-        </div>
-        <!--END BRAND FILTER-->
-
-
-        <!--DISCOUNT FILTER-->
-        <div class="filter-block">
-          <h4 ng-click="vm.isDiscountFilterActive = !vm.isDiscountFilterActive" ng-class="{'active-arrow': vm.isDiscountFilterActive}">
-            <strong>Descuento:</strong>
-          </h4>
-          <div ng-show="vm.isDiscountFilterActive" class="filter-block-inner">
-
-            <div>
-              <md-checkbox
-                ng-repeat="discount in vm.discountFilters"
-                ng-model="discount.selected"
-                ng-change="vm.searchByFilters()"
-                aria-label="Checkbox Indeterminate">
-                {{discount.label}}
-              </md-checkbox>
-            </div>
-
-          </div>
-        </div>
-        <!--END DISCOUNT FILTER-->
-
-
-        <!--STOCK FILTER-->
-        <div class="filter-block">
-          <h4 ng-click="vm.isStockFilterActive = !vm.isStockFilterActive" ng-class="{'active-arrow': vm.isStockFilterActive}">
-            <strong>Existencia:</strong>
-          </h4>
-          <div ng-show="vm.isStockFilterActive" class="filter-block-inner">
-
-            <div>
-              <md-checkbox
-                ng-repeat="stock in vm.stockFilters"
-                ng-model="stock.selected"
-                ng-change="vm.searchByFilters()"
-                aria-label="Checkbox Indeterminate">
-                {{stock.label}}
-              </md-checkbox>
-            </div>
-
-          </div>
-        </div>
-        <!--END STOCK FILTER-->
-
-        <!--STOCK FILTER-->
-        <div class="filter-block">
-          <h4 ng-click="vm.isSocietyFilterActive = !vm.isSocietyFilterActive" ng-class="{'active-arrow': vm.isSocietyFilterActive}">
-            <strong>Sociedad:</strong>
-          </h4>
-          <div ng-show="vm.isSocietyFilterActive" class="filter-block-inner">
-
-            <div>
-              <md-checkbox
-                ng-repeat="society in vm.societyFilters"
-                ng-model="society.selected"
-                ng-change="vm.searchByFilters()"
-                aria-label="Checkbox Indeterminate">
-                {{society.label}}
-              </md-checkbox>
-            </div>
-
-          </div>
-        </div>
-        <!--END STOCK FILTER-->
-
 
       </div>
     </section>

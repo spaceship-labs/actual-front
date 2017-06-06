@@ -77,8 +77,12 @@
           <div flex="30" class="cart-item-data-qty">
             <p>
               {{detailGroup.quantity}}
-              <span ng-if="detailGroup.quantity == 1">pieza</span>
-              <span ng-if="detailGroup.quantity > 1">piezas</span>
+              <span ng-show="detailGroup.quantity == 1 && !detailGroup.isSRService">pieza</span>
+              <span ng-show="detailGroup.quantity > 1 && !detailGroup.isSRService">piezas</span>
+
+              <span ng-show="detailGroup.quantity == 1 && detailGroup.isSRService">unidad</span>
+              <span ng-show="detailGroup.quantity > 1 && detailGroup.isSRService">unidades</span>
+
             </p>
           </div>
           <h3 flex class="product-view-price-hl product-view-price-main">

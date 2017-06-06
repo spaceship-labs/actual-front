@@ -52,6 +52,7 @@ function ProductCtrl(
     init: init,
     isImmediateDelivery: isImmediateDelivery,
     isLoading: true,
+    isSRService: isSRService,
     resetProductCartQuantity: resetProductCartQuantity,
     trustAsHtml: trustAsHtml,
     sas: commonService.getSasHash(),
