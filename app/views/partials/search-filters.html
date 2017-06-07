@@ -140,7 +140,7 @@
 
             <div ng-if=" filter.Handle != 'color' " >
               <md-checkbox
-                ng-repeat="value in filter.Values"
+                ng-repeat="value in filter.Values | orderBy:filter.orderBy"
                 ng-model="value.selected"
                 ng-change="vm.searchByFilters()"
                 aria-label="Checkbox Indeterminate">
