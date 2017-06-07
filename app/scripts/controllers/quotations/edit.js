@@ -85,6 +85,13 @@ function QuotationsEditCtrl(
     });
   }
 
+  $rootScope.$on('changedActiveQuotationSource', function(e, params){
+    if(vm.quotation && params.source && params.sourceType){
+      vm.quotation.source = params.source;
+      vm.quotation.sourceType = params.sourceType;      
+    }
+  });  
+
   function init(quotationId, options){
     console.log('entered init.js', new Date());
 

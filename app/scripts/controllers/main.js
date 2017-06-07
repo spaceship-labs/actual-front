@@ -645,6 +645,7 @@
               vm.pointersLoading = false;
               togglePointerSidenav();
               dialogService.showDialog('Datos guardados');
+              $rootScope.$emit('changedActiveQuotationSource', params);
               console.log(res);
             })
             .catch(function(err){

@@ -85,8 +85,8 @@
 
       <div flex="25" ng-if="vm.quotation.source" class="quotation-data-row">
         <label>¿Cómo se entero de Actual?</label>
-        <p>{{ ::vm.getSourceName() }} 
-          <span ng-show="vm.quotation.sourceType">| {{ ::vm.getSourceTypeName() }}</span>
+        <p>{{ vm.getSourceName() }} 
+          <span ng-show="vm.quotation.sourceType">| {{ vm.getSourceTypeName() }}</span>
         </p>
       </div>
 
