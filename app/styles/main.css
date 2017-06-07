@@ -1616,7 +1616,8 @@ md-backdrop.md-sidenav-backdrop{
 }
 
 .listing-view .listing-view-title{
-  font-size: 32px;
+  /*font-size: 32px;*/
+  font-size: 26px;
   font-weight: 400;
   /*text-transform: uppercase;*/
   margin:  0 0 12px;
@@ -1631,6 +1632,11 @@ md-backdrop.md-sidenav-backdrop{
   display: inline-block;
   vertical-align: middle;
   margin-right: 20px;
+}
+
+.listing-view .results-block-header h3{
+  margin-top: 0;
+  font-size: 16px;
 }
 
 .listing-view .listing-view-title .keyword + .keyword:before{
