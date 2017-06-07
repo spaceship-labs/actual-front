@@ -588,7 +588,8 @@
               {label:'Ynfinity', value:'ynfinity'},
               {label:'Kaanali', value:'kaanali'},
               {label:'Isola', value:'isola'},
-              {label:'SLS', value:'sls'}
+              {label:'SLS', value:'sls'},
+              {label:'Otro / No recuerda', value:'otro'}              
             ]
           },     
           {
@@ -612,7 +613,7 @@
               {label:'The Shore', value:'the-shore'},
               {label:'Central Park', value:'central-park'},
               {label:'iPlaya', value:'iplaya'},
-
+              {label:'Otro / No recuerda', value:'otro'}              
             ]
           },
           {
@@ -626,7 +627,7 @@
               {label:'Anthea', value:'anthea'},
               {label:'La Vista', value:'la-vista'},
               {label:'Floresta', value:'floresta'},
-
+              {label:'Otro / No recuerda', value:'otro'}
             ]
           },     
           {
@@ -635,13 +636,15 @@
             childs:[
               {label:'La conquista', value:'la-conquista'},
               {label:'Andara', value:'andara'},
+              {label:'Otro / No recuerda', value:'otro'}              
             ]
           },   
           {
             label: 'Recomendado Puerto Morelos',
             value: 'recomendado-puerto-morelos',
             childs:[
-              {label:'Palma Real', value:'palma-real'}
+              {label:'Palma Real', value:'palma-real'},
+              {label:'Otro / No recuerda', value:'otro'}              
             ]
           }  
                     
