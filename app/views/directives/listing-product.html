@@ -35,6 +35,11 @@
         <div flex="40">
           <p ng-if="showStock" class="stock-available">
             {{product[activeStore.code]}} <strong class="small">disponibles</strong>
+            <!--
+            <strong class="small" ng-show="product.slowMovement">
+              | LM
+            </strong>
+            -->
           </p>
         </div>
         <p flex="55" class="price">
