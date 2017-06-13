@@ -63,7 +63,7 @@ function SearchCtrl(
 
   function init(){
     var keywords = [''];
-    var activeSortOptionKey = 'DiscountPrice';
+    var activeSortOptionKey = 'slowMovement';
     vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
 
     if($routeParams.itemcode) {
@@ -92,6 +92,12 @@ function SearchCtrl(
   }
 
   function doInitialSearch(){
+    vm.search.sortOption = vm.activeSortOption;
+    if(vm.search.sortOption.key === 'slowMovement'){
+      vm.search.slowMovement = true;
+    }else{
+      vm.search.slowMovement = false;
+    }
     productService.searchByFilters(vm.search).then(function(res){
       vm.totalResults = res.data.total;
       vm.isLoading = false;
@@ -315,8 +321,6 @@ function SearchCtrl(
       params.slowMovement = true;      
     }
 
-    console.log('params', params);
-
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;
       return productService.formatProducts(res.data.products);
@@ -338,7 +342,7 @@ function SearchCtrl(
     if(vm.activeSortOption.key  === sortOption.key){
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
     }
-    else if(sortOption.key === 'salesCount'){
+    else if(sortOption.key === 'salesCount' || sortOption.key === 'slowMovement'){
       sortOption.direction = 'DESC';
     }
     else{

@@ -17,7 +17,6 @@ angular.module('dashexampleApp')
       templateUrl: 'views/directives/listing-product.html',
       restrict: 'E',
       link: function postLink(scope) {
-        console.log('scope.showStock', scope.showStock);
         scope.showStock = _.isUndefined(scope.showStock) ? true : scope.showStock;
         scope.areImagesLoaded = false;
         scope.images = [];
@@ -42,8 +41,6 @@ angular.module('dashexampleApp')
           }else{
             scope.images.push(scope.product.icons[0]);
           }
-
-          console.log('image', scope.product.icons);
 
           //Images for gallery
           if(scope.product.files){

@@ -54,13 +54,14 @@ function CategoryCtrl(
   }
 
   function init(){
-    var activeSortOptionKey = 'DiscountPrice';
+    var activeSortOptionKey = 'slowMovement';
     vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
         
     vm.search = {
       items: 10,
       page: 1,
-      category: $routeParams.category
+      category: $routeParams.category,
+      sortOption: vm.activeSortOption
     };
 
     loadCustomBrands();
@@ -114,6 +115,11 @@ function CategoryCtrl(
   function doInitialProductsSearch(){
     vm.isLoadingProducts = true;
 
+    if(vm.search.sortOption.key === 'slowMovement' && vm.enableSortOptions){
+      vm.search.slowMovement = true;
+    }else{
+      vm.search.slowMovement = false;
+    }    
     productService.searchCategoryByFilters(vm.search)
       .then(function(res){
         console.log('res', res);
@@ -190,7 +196,7 @@ function CategoryCtrl(
       page: vm.search.page,
     };
 
-    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
+    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement' && vm.enableSortOptions){
       params.slowMovement = true;      
     }
 
@@ -330,7 +336,7 @@ function CategoryCtrl(
     if(vm.activeSortOption.key  === sortOption.key){
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
     }
-    else if(sortOption.key === 'salesCount'){
+    else if(sortOption.key === 'salesCount' || sortOption.key === 'slowMovement'){
       sortOption.direction = 'DESC';
     }
     else{

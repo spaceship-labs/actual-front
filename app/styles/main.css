@@ -3365,13 +3365,13 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   position: fixed;
   width: 70%;
   z-index: 9999;
-  top: 76px;
+  top: 72px;
 }
 .orderby-section-fixed .orderby-item:first-child,
 .orderby-section-fixed .orderby-item:last-child{
   border: none!important;
 }
-.orderby-selectors{margin: 14px 0;}
+.orderby-selectors{/*margin: 14px 0;*/}
 .orderby-selectors .orderby-item{
   border-right: 1px solid #b9b9b9;
   text-align: center;
@@ -3388,6 +3388,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   vertical-align: middle;
   position: relative;
   top: -2px;
+}
+.orderby-selectors .orderby-item-active{
+  background: #000;
+  color: #fff;
 }
 .orderby-selectors .orderby-item-active span{
   position: relative;

@@ -26,7 +26,7 @@
             {
                 label:'Promociones',
                 key: 'slowMovement',
-                direction: 'ASC'
+                direction: 'DESC'
             },
         ];
 
