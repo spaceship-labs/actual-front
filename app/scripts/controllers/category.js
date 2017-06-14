@@ -114,12 +114,13 @@ function CategoryCtrl(
 
   function doInitialProductsSearch(){
     vm.isLoadingProducts = true;
-
+    /*
     if(vm.search.sortOption.key === 'slowMovement' && vm.enableSortOptions){
       vm.search.slowMovement = true;
     }else{
       vm.search.slowMovement = false;
-    }    
+    } 
+    */   
     productService.searchCategoryByFilters(vm.search)
       .then(function(res){
         console.log('res', res);
@@ -196,9 +197,11 @@ function CategoryCtrl(
       page: vm.search.page,
     };
 
+    /*
     if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement' && vm.enableSortOptions){
       params.slowMovement = true;      
     }
+    */
 
     productService.searchCategoryByFilters(params)
       .then(function(res){

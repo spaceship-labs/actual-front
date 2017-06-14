@@ -93,11 +93,13 @@ function SearchCtrl(
 
   function doInitialSearch(){
     vm.search.sortOption = vm.activeSortOption;
+    /*
     if(vm.search.sortOption.key === 'slowMovement'){
       vm.search.slowMovement = true;
     }else{
       vm.search.slowMovement = false;
     }
+    */
     productService.searchByFilters(vm.search).then(function(res){
       vm.totalResults = res.data.total;
       vm.isLoading = false;
@@ -317,9 +319,11 @@ function SearchCtrl(
       sortOption: vm.activeSortOption
     };
 
+    /*
     if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
       params.slowMovement = true;      
     }
+    */
 
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;
