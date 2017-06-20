@@ -117,14 +117,14 @@ function CheckoutOrderCtrl(
           loadInvoices(); 
           vm.invoiceLoadCounter++;     
         }
-      }, 3000);
+      }, 3000, 10);
 
       vm.invoiceLogInterval = $interval(function(){
         if(vm.invoiceLogLoadCounter <= vm.invoiceLogLoadLimit ){
           loadLogsInvoice(); 
           vm.invoiceLogLoadCounter++;     
         }
-      }, 3000);        
+      }, 3000, 10);        
 
     })
     .catch(function(err){
