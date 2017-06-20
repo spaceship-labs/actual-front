@@ -4,6 +4,10 @@
   </a>
   <div class="listing-product-gallery">
 
+    <div class="slow-movement-sticker" ng-show="product.slowMovement">
+      <img src="images/slowmovement.png" alt="Lento movimiento">
+    </div>
+
     <div
       ng-if="product.Discount && product.Discount > 0"
       class="discount-batch"
