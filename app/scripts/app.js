@@ -48,7 +48,7 @@ angular
     ENV
   ) {
 
-    AnalyticsProvider.setAccount('UA-101490349-1');  //UU-XXXXXXX-X should be your tracking code
+    AnalyticsProvider.setAccount('UA-101469133-1');  //UU-XXXXXXX-X should be your tracking code
 
     $mdThemingProvider.theme('default')
       .accentPalette('red', {
