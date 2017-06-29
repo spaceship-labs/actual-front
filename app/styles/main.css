@@ -758,7 +758,7 @@ select{
 .login-modal-header .error-msg{
   color: #C82828;
   font-weight: 700;
-  text-align: center;  
+  text-align: center;
 }
 
 
@@ -1339,7 +1339,7 @@ md-backdrop.md-sidenav-backdrop{
   text-align: right;
   position: absolute;
   left: 5px;
-  top: 2px;  
+  top: 2px;
   */
 }
 .listing-product .listing-product-gallery{
@@ -1728,6 +1728,11 @@ md-backdrop.md-sidenav-backdrop{
   padding: 10px 40px 0px 0px;
   position: relative;
 }
+.product-view-gallery-wrap .slow-movement-sticker{
+  left: 5px;
+  top: 5px;
+}
+
 .product-view-gallery-discount{
   background: #FDE932;
   border-radius: 50%;
@@ -1747,8 +1752,8 @@ md-backdrop.md-sidenav-backdrop{
   position: absolute;
   width: 80px;
   z-index: 1;
-  top:0;
-  left: 0;
+  top:-5px;
+  left: -5px;
 }
 .slow-movement-sticker img{
   max-width: 100%;
@@ -2348,7 +2353,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   transform: rotate(-90deg) translateY(-50%);
 
   margin: 0;
-  z-index: 9;  
+  z-index: 9;
 }
 .filters{
   color: #000;
@@ -2933,7 +2938,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   margin: 0 4px;
 }
 .table-list .highlight-row td{
-  background: #E2E2E2;  
+  background: #E2E2E2;
 }
 
 .table-list .populate-search-checkbox input{
@@ -2944,7 +2949,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 }
 .table-list .populate-search-checkbox{
   font-size: 12px;
-  vertical-align: middle; 
+  vertical-align: middle;
   float: none;
 }
 
@@ -3531,7 +3536,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 }
 .checkout-title h1{
   font-size: 26px!important;
-  font-weight: 700!important;  
+  font-weight: 700!important;
 }
 
 .checkout-title p{
@@ -3748,7 +3753,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   max-width: 80px;
 }
 .pay-method-wrap .method-block .cards-tooltip{
-  
+
 }
 
 .pay-method-wrap .method-block .input-element label{
@@ -3972,7 +3977,7 @@ padding-left: 16px;
 }
 .order-view .immediate-delivery-text{
   font-size: 13px;
-  font-weight: 700;  
+  font-weight: 700;
 }
 .order-view .order-item-features ul{
   margin: 0;
@@ -3994,7 +3999,7 @@ padding-left: 16px;
   color: #000;
   padding: 2px;
   margin: 2px;
-  display: inline-block;  
+  display: inline-block;
 }
 
 .order-view .order-block h3{
@@ -4356,7 +4361,7 @@ padding-left: 16px;
 
 
 @media screen and (max-width: 960px){
-  .header-top-bar.fixed-head{position:static;} 
+  .header-top-bar.fixed-head{position:static;}
 }
 
 @media screen and (max-width: 600px){
@@ -4402,8 +4407,8 @@ padding-left: 16px;
     border-top: solid 1px #aaa;
   }
 
-  .quotation-view .quotation-data p{font-size: 13px;} 
-  
+  .quotation-view .quotation-data p{font-size: 13px;}
+
   .company-data,
   .quotation-view .quotation-validity{display: block!important;}
 
