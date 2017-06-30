@@ -7,12 +7,12 @@
 
     /** @ngInject */
     function quotationService(
-      $location, 
-      $q, 
-      $rootScope, 
-      api, 
-      Upload, 
-      productService, 
+      $location,
+      $q,
+      $rootScope,
+      api,
+      Upload,
+      productService,
       localStorageService,
       dialogService,
       authService
@@ -35,7 +35,7 @@
         getList: getList,
         populateDetailsWithProducts: populateDetailsWithProducts,
         getQuotationTotals: getQuotationTotals,
-        getCurrentStock: getCurrentStock,        
+        getCurrentStock: getCurrentStock,
         getRecords: getRecords,
         getTotalsByUser: getTotalsByUser,
         getClosingReasons: getClosingReasons,
@@ -144,12 +144,12 @@
       function closeQuotation(id, params){
         var url = '/quotation/' + id  + '/close';
         return api.$http.post(url,params);
-      }      
+      }
 
       function getSapOrderConnectionLogs(id){
         var url = '/quotation/' + id  + '/saporderconnectionlogs';
         return api.$http.post(url);
-      }           
+      }
 
 
       function populateDetailsWithProducts(quotation, options){
@@ -171,14 +171,14 @@
               return productService.formatProducts(res.data);
             })
             .then(function(formattedProducts){
-              
+
               //Match detail - product
               quotation.Details = quotation.Details.map(function(detail){
                 detail.Product = _.findWhere( formattedProducts, {id : detail.Product } );
                 return detail;
               });
               deferred.resolve(quotation.Details);
-            
+
             })
             .catch(function(err){
               console.log('err', err);
@@ -208,13 +208,13 @@
       function setActiveQuotation(quotationId){
         if(getActiveQuotationId() !== quotationId || !quotationId){
           localStorageService.set('quotation', quotationId);
-          $rootScope.$broadcast('newActiveQuotation', quotationId);          
+          $rootScope.$broadcast('newActiveQuotation', quotationId);
         }
       }
 
       function removeCurrentQuotation(){
         localStorageService.remove('quotation');
-        $rootScope.$broadcast('newActiveQuotation', false); 
+        $rootScope.$broadcast('newActiveQuotation', false);
       }
 
       function newQuotation(params, options){
@@ -322,7 +322,7 @@
               return detail;
             })
           };
-          
+
           create(params).then(function(res){
             var quotation = res.data;
             if(quotation){
@@ -351,7 +351,7 @@
             details.forEach(function(detail){
               filters = filters.map(function(filter){
                 filter.Values = [];
-                
+
                 if(detail.Product && detail.Product.FilterValues){
                   detail.Product.FilterValues.forEach(function(value){
                     if(value.Filter === filter.id){
@@ -359,7 +359,7 @@
                     }
                   });
                 }
-                
+
                 return filter;
               });
 
@@ -370,7 +370,7 @@
               if(detail.Product && detail.Product.Filters){
                 detail.Product.Filters = filters;
               }
-            
+
             });
 
             deferred.resolve(details);
@@ -419,7 +419,7 @@
         };
         var url = '/quotation/'+id+'/estimatedclosedate';
         return api.$http.post(url, params);
-      }      
+      }
 
 
       function mapDetailsStock(details, detailsStock){
@@ -475,7 +475,7 @@
           'Los precios son altos',
           'Las fechas de entrega son tardadas',
           'No vendemos el articulo solicitado',
-          'Otra razón (especificar)',        
+          'Otra razón (especificar)',
         ];
         return closingReasons;
       }
@@ -483,13 +483,13 @@
       function getRecordTypes(){
         var recordTypes = [
           'Email',
-          'Llamada', 
-          'WhatsApp', 
+          'Llamada',
+          'WhatsApp',
           'Visita'
         ];
         return recordTypes;
       }
-      
+
       function getPointersSources(){
         var sources = [
           {
@@ -497,7 +497,7 @@
             value:'internet',
             childs: [
               {label:'Facebook', value: 'facebook'},
-              {label:'Mailing', value:'mailing'},  
+              {label:'Mailing', value:'mailing'},
               {label:'Google(Buscador)', value:'google'},
               {label:'Yucatán premier', value:'yucatan-premier'},
               {label:'Instagram', value:'Instagram'},
@@ -589,9 +589,9 @@
               {label:'Kaanali', value:'kaanali'},
               {label:'Isola', value:'isola'},
               {label:'SLS', value:'sls'},
-              {label:'Otro / No recuerda', value:'otro'}              
+              {label:'Otro / No recuerda', value:'otro'}
             ]
-          },     
+          },
           {
             label: 'Recomendado Playa del Carmen',
             value:'recomendado-playa-del-carmen',
@@ -613,7 +613,7 @@
               {label:'The Shore', value:'the-shore'},
               {label:'Central Park', value:'central-park'},
               {label:'iPlaya', value:'iplaya'},
-              {label:'Otro / No recuerda', value:'otro'}              
+              {label:'Otro / No recuerda', value:'otro'}
             ]
           },
           {
@@ -629,26 +629,29 @@
               {label:'Floresta', value:'floresta'},
               {label:'Otro / No recuerda', value:'otro'}
             ]
-          },     
+          },
           {
             label: 'Recomendado Chetumal',
             value:'recomendado-chetumal',
             childs:[
               {label:'La conquista', value:'la-conquista'},
               {label:'Andara', value:'andara'},
-              {label:'Otro / No recuerda', value:'otro'}              
+              {label:'Otro / No recuerda', value:'otro'}
             ]
-          },   
+          },
           {
             label: 'Recomendado Puerto Morelos',
             value: 'recomendado-puerto-morelos',
             childs:[
               {label:'Palma Real', value:'palma-real'},
-              {label:'Otro / No recuerda', value:'otro'}              
+              {label:'Otro / No recuerda', value:'otro'}
             ]
-          }  
-                    
-          
+          },
+          {
+            label: 'Otro',
+            value: 'Otro',
+          }
+
           /*
           {
             label: 'Recomendado',
@@ -661,7 +664,7 @@
               {label:'Puerto Morelos', value:'puerto-morelos'},
               {label:'Otro / No recuerda', value:'otro'}
             ]
-          }          
+          }
           */
         ];
         return sources;
@@ -669,8 +672,8 @@
 
       function showStockAlert(){
         var msg = 'Hay un cambio de disponibilidad en uno o más de tus articulos';
-        dialogService.showDialog(msg);        
-      }                
+        dialogService.showDialog(msg);
+      }
 
     }
 

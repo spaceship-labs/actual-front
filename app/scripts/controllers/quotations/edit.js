@@ -88,9 +88,9 @@ function QuotationsEditCtrl(
   $rootScope.$on('changedActiveQuotationSource', function(e, params){
     if(vm.quotation && params.source && params.sourceType){
       vm.quotation.source = params.source;
-      vm.quotation.sourceType = params.sourceType;      
+      vm.quotation.sourceType = params.sourceType;
     }
-  });  
+  });
 
   function init(quotationId, options){
     console.log('entered init.js', new Date());
@@ -111,7 +111,7 @@ function QuotationsEditCtrl(
       .then(function(res){
         vm.isLoading = false;
         vm.quotation = res.data;
-        
+
         if(vm.quotation.estimatedCloseDate){
           vm.estimatedCloseDateWrapper.setDate(new Date(vm.quotation.estimatedCloseDate) );
         }
@@ -140,7 +140,7 @@ function QuotationsEditCtrl(
         vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
         vm.isLoadingDetails = false;
         vm.isValidatingStock = true;
-        return quotationService.getCurrentStock(vm.quotation.id);       
+        return quotationService.getCurrentStock(vm.quotation.id);
       })
       .then(function(response){
         var detailsStock = response.data;
@@ -162,7 +162,7 @@ function QuotationsEditCtrl(
 
         authService.showUnauthorizedDialogIfNeeded(err);
 
-        var error = err.data || err;        
+        var error = err.data || err;
         error = error ? error.toString() : '';
         dialogService.showDialog('Hubo un error: ' + (error) );
       });
@@ -176,13 +176,13 @@ function QuotationsEditCtrl(
       })
       .catch(function(err){
         console.log(err);
-      });    
+      });
   }
 
   function showAlerts(){
     if($location.search().startQuotation){
       //dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
-    }    
+    }
     if($location.search().createdClient){
       //dialogService.showDialog('Cliente registrado');
     }
@@ -233,7 +233,7 @@ function QuotationsEditCtrl(
         subGroups.push(subGroupsObject[key]);
       }
       paymentMethodsGroups[i].subGroups = subGroups;
-    }    
+    }
     return paymentMethodsGroups;
   }
 
@@ -286,7 +286,7 @@ function QuotationsEditCtrl(
   function setEstimatedCloseDate(){
     console.log('pikaday vm.quotation.estimatedCloseDateWrapper', vm.estimatedCloseDateWrapper);
     console.log('vm.quotation.estimatedCloseDateHolder', vm.quotation.estimatedCloseDateHolder);
-    
+
     if(vm.quotation.estimatedCloseDateHolder && vm.estimatedCloseDateWrapper){
       vm.isLoadingEstimatedCloseDate = true;
       vm.quotation.estimatedCloseDate = moment(vm.estimatedCloseDateWrapper._d).endOf('day').toDate();
@@ -297,14 +297,14 @@ function QuotationsEditCtrl(
             vm.quotation.estimatedCloseDate = res.data;
             dialogService.showDialog('Fecha estimada de cierre guardada');
           }else{
-            dialogService.showDialog('Hubo un error al guardar los datos, revisa tu información');            
+            dialogService.showDialog('Hubo un error al guardar los datos, revisa tu información');
           }
           vm.isLoadingEstimatedCloseDate = false;
         })
         .catch(function(err){
           console.log('err', err);
-          dialogService.showDialog('Hubo un error al guardar los datos, revisa tu información');                      
-          vm.isLoadingEstimatedCloseDate = false;        
+          dialogService.showDialog('Hubo un error al guardar los datos, revisa tu información');
+          vm.isLoadingEstimatedCloseDate = false;
         });
     }
     else{
@@ -384,8 +384,8 @@ function QuotationsEditCtrl(
           vm.isLoading = false;
           vm.quotation.Records.forEach(function(rec){
             rec.isActive = false;
-          }); 
-        })         
+          });
+        })
         .catch(function(err){
           $log.error(err);
         });
@@ -393,7 +393,7 @@ function QuotationsEditCtrl(
   }
 
   function getPromotionPackageById(packageId){
-    return _.findWhere(vm.promotionPackages, {id:packageId}); 
+    return _.findWhere(vm.promotionPackages, {id:packageId});
   }
 
   function attachImage(file){
@@ -422,7 +422,7 @@ function QuotationsEditCtrl(
       .targetEvent(ev)
       .ok('Eliminar')
       .cancel('Cancelar');
-    
+
     $mdDialog.show(confirm).then(function() {
       removeDetailsGroup(detailsGroup);
     }, function() {
@@ -447,7 +447,7 @@ function QuotationsEditCtrl(
         vm.quotation.totalProducts = updatedQuotation.totalProducts;
         if(updatedQuotation.Details){
           vm.quotation.Details =  updateDetailsInfo(
-            vm.quotation.Details, 
+            vm.quotation.Details,
             updatedQuotation.Details
           );
           vm.quotation.DetailsGroups = deliveryService.groupDetails(vm.quotation.Details);
@@ -480,7 +480,7 @@ function QuotationsEditCtrl(
         vm.quotation.totalProducts = updatedQuotation.totalProducts;
         if(updatedQuotation.Details){
           vm.quotation.Details =  updateDetailsInfo(
-            updatedQuotation.Details, 
+            updatedQuotation.Details,
             updatedQuotation.Details
           );
         }
@@ -516,12 +516,12 @@ function QuotationsEditCtrl(
     if(!details){
       return false;
     }
-    return quotationService.isValidStock(details);    
+    return quotationService.isValidStock(details);
   }
 
   function showInvoiceDataAlertIfNeeded(ev){
     var controller = InvoiceDialogController;
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')); 
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
     if(!vm.quotation.immediateDelivery || !vm.quotation.Client){
       var deferred = $q.defer();
@@ -531,7 +531,7 @@ function QuotationsEditCtrl(
 
     return $mdDialog.show({
       controller: [
-        '$scope', 
+        '$scope',
         '$mdDialog',
         '$location',
         'quotation',
@@ -548,7 +548,7 @@ function QuotationsEditCtrl(
         client: vm.quotation.Client
       }
     });
-  }  
+  }
 
   function continueBuying(){
     if( !isValidStock(vm.quotation.Details) ){
@@ -564,7 +564,7 @@ function QuotationsEditCtrl(
     if(!vm.quotation.Order){
 
       if(vm.quotation.estimatedCloseDateHolder && vm.estimatedCloseDateWrapper){
-        vm.quotation.estimatedCloseDate = moment(vm.estimatedCloseDateWrapper._d).endOf('day').toDate();      
+        vm.quotation.estimatedCloseDate = moment(vm.estimatedCloseDateWrapper._d).endOf('day').toDate();
       }
 
       //Not updating Details, not necessary
@@ -590,7 +590,7 @@ function QuotationsEditCtrl(
           }
 
 
-          if(vm.quotation.Client){            
+          if(vm.quotation.Client){
             if(quotationUpdated.immediateDelivery){
               return $location.path('/checkout/paymentmethod/' + quotationUpdated.id);
             }
@@ -604,7 +604,7 @@ function QuotationsEditCtrl(
                 goToCheckout:true
               });
           }
-          vm.isLoading = false;        
+          vm.isLoading = false;
         })
         .catch(function(err){
           console.log(err);
@@ -638,14 +638,14 @@ function QuotationsEditCtrl(
 
   function showDetailGroupStockAlert(ev,detailGroup){
     var controller = StockDialogController;
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));    
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
     $mdDialog.show({
       controller: [
-        '$scope', 
+        '$scope',
         '$mdDialog',
         '$location',
-        'quotationService', 
-        'vm', 
+        'quotationService',
+        'vm',
         'detailGroup',
         controller
       ],
@@ -663,24 +663,29 @@ function QuotationsEditCtrl(
     })
     .catch(function() {
       console.log('cancelled');
-    });    
+    });
   }
 
   function getSourceName(){
-    var sourceValue = vm.quotation.source; 
+    var sourceValue = vm.quotation.source;
     var source = _.findWhere($rootScope.pointersSources,{value: sourceValue});
+    if(!source){
+      source = {};
+    }
     var sourceName = source.label || sourceValue;
     return sourceName;
   }
 
   function getSourceTypeName(){
     var sourceType;
-    var sourceValue = vm.quotation.source; 
+    var sourceValue = vm.quotation.source;
     var sourceTypeValue = vm.quotation.sourceType;
 
     var source = _.findWhere($rootScope.pointersSources,{value: sourceValue});
     if(source){
       sourceType = _.findWhere(source.childs,{value:sourceTypeValue})
+    }else{
+      sourceType = {};
     }
 
     var sourceTypeName = sourceType ? sourceType.label : sourceTypeValue;
@@ -699,7 +704,7 @@ function QuotationsEditCtrl(
       controller: [
         '$scope',
         '$mdDialog',
-        'options', 
+        'options',
         controller
       ],
       templateUrl: 'views/quotations/bigticket-dialog.html',
@@ -726,8 +731,8 @@ function QuotationsEditCtrl(
         });
     }, function() {
       console.log('No autorizado');
-    });    
-  } 
+    });
+  }
 
 
   $scope.$on('$destroy', function(){
