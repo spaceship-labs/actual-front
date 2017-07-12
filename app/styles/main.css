@@ -4418,6 +4418,7 @@ padding-left: 16px;
   .quotation-view .cart-list{max-width: 100%;}
   .quotation-view .cart-aside{display: none;}
 
+  .quotation-view .stock-alert-layer{display: none;}
 
 }
 
