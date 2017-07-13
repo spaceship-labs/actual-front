@@ -434,7 +434,7 @@
         type = 'Transferencia';
       }
       else if(payment.type === 'deposit'){
-        type = 'Deposito';
+        type = 'Deposito en ventanilla';
       }
       else if(payment.type === 'ewallet'){
         type = 'Monedero electrónico';
