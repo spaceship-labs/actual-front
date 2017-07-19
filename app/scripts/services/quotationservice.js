@@ -648,10 +648,12 @@
               {label:'Otro / No recuerda', value:'otro'}
             ]
           },
+          /*
           {
             label: 'Otro',
             value: 'Otro',
           }
+          */
 
           /*
           {
