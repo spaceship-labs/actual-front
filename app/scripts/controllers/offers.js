@@ -85,7 +85,7 @@ function OffersCtrl(
       .then(function(deliveries){
         var packageProducts = mapProductsDeliveryDates(products, deliveries, packageId);
         console.log('packageProducts', packageProducts);
-        //return;
+
         if(packageProducts.length > 0){
           quotationService.addMultipleProducts(packageProducts);
         }
@@ -155,6 +155,9 @@ function OffersCtrl(
     );
 
     console.log('sortDeliveriesByHierarchy', productDeliveryDates);
+    productDeliveryDates = removeImmediateDeliveryDates(productDeliveryDates);
+
+    console.log('removeImmediateDeliveryDates', productDeliveryDates);
 
     for(var i = (productDeliveryDates.length-1); i>=0; i--){
       var deliveryDate = productDeliveryDates[i];
@@ -171,6 +174,12 @@ function OffersCtrl(
       product.hasStock = false;
     }
     return product;    
+  }
+
+  function removeImmediateDeliveryDates(deliveryDates){
+    return deliveryDates.filter(function(deliveryDate){
+      return !deliveryDate.ImmediateDelivery;
+    });
   }
 
   function showUnavailableStockMsg(products){

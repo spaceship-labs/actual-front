@@ -175,8 +175,10 @@
 	    });
 	    warehouses = sortWarehousesByHierarchy(warehouses, activeStoreWarehouse);
 	    for(var i = 0; i < warehouses.length; i++){
-	      var delivery = _.findWhere(deliveries, {companyFrom: warehouses[i].id});
-	      sortedDeliveries.push( delivery );
+	      var deliveriesWithWhsMatch = _.where(deliveries, {companyFrom:warehouses[i].id});
+	      sortedDeliveries = sortedDeliveries.concat( deliveriesWithWhsMatch );
+	      //var delivery = _.findWhere(deliveries, {companyFrom: warehouses[i].id});
+	      //sortedDeliveries.push( delivery );
 	    }
 
 	    return sortedDeliveries;    
