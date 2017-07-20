@@ -13,6 +13,7 @@ angular.module('dashexampleApp')
   	authService,
   	dialogService,
   	storeService,
+  	siteService,
   	$q
   	) {
     return {
@@ -30,8 +31,8 @@ angular.module('dashexampleApp')
 	  	'authService',
 	  	'dialogService',
 	  	'storeService',
+	  	'siteService',
 	  	'$q',
-	  	'$window',
       function postLink(
 	    	$scope,
 		  	commonService, 
@@ -39,6 +40,7 @@ angular.module('dashexampleApp')
 		  	authService,
 		  	dialogService,
 		  	storeService,
+		  	siteService,
 		  	$q
       ) {
 
@@ -65,6 +67,7 @@ angular.module('dashexampleApp')
 			    paymentTypes: paymentService.types,
     			paymentRequiresBankColumn: paymentRequiresBankColumn,
 			    requiresBankColumn: requiresBankColumn,
+			    isWebStore: isWebStore
       	});
 
       	$scope.init();
@@ -105,7 +108,9 @@ angular.module('dashexampleApp')
 			    if( $scope.isGeneralReport ){
 			      promises = [
 			        paymentService.getPaymentMethodsGroups({readCreditPayments:true}),
-			        storeService.getStoresCashReport(params)
+			        storeService.getStoresCashReport(params),
+			        siteService.getSitesCashReport(params),
+			        paymentService.getPaymentWebMethodsGroups()
 			      ];
 			    }
 			    else if( $scope.isManagerReport ){
@@ -135,9 +140,19 @@ angular.module('dashexampleApp')
 			        }
 
 			        else if( $scope.isGeneralReport ){
-			          $scope.stores = results[1].data;          
+			          $scope.stores = results[1].data;    
+			          var sites = results[2].data;
+			          var paymentsWebGroups = results[3].data;
+
+			          $scope.stores = assingSitesReport($scope.stores, sites);
+
 			          $scope.stores = $scope.stores.map(function(store){
 			            store.paymentsGroups = _.clone(paymentsGroups);
+
+			            if( isWebStore(store) ){
+			            	store.paymentsGroups = _.clone(paymentsWebGroups);
+			            }
+
 			            store.paymentsGroups = mapMethodGroupsWithPayments(store.Payments, store.paymentsGroups);
 			            return store;
 			          });          
@@ -158,6 +173,35 @@ angular.module('dashexampleApp')
 			      });
 
 			  }
+
+			  function assingSitesReport(stores, sites){
+			  	var storesNames = [
+			  		'actualstudio.com',
+			  		'actualhome.com',
+			  		'actualkids.com'
+			  	];
+          //Stores substract 
+          stores = stores.filter(function(store){
+          	return storesNames.indexOf(store.name) === -1;
+          });			
+
+          sites = sites.map(function(site){
+          	site.Payments = site.PaymentsWeb;
+          	return site;
+          });
+
+          stores = stores.concat(sites);
+          return stores;
+			  }
+
+				function isWebStore(store){
+			  	var storesNames = [
+			  		'actualstudio.com',
+			  		'actualhome.com',
+			  		'actualkids.com'
+			  	];
+			  	return storesNames.indexOf(store.name) > -1;					
+				}			  
 
 			  function requiresBankColumn(method){
 			    return (method.groupNumber !== 1 || 
@@ -187,6 +231,8 @@ angular.module('dashexampleApp')
 
 
 			  function mapMethodGroupsWithPayments(payments, methodGroups){
+			  	console.log('methodGroups', methodGroups);
+
 			    var groups = [];
 			    var auxGroups = _.groupBy(payments, function(payment){
 			      if( $scope.isTransferOrDeposit(payment) ){
@@ -205,6 +251,7 @@ angular.module('dashexampleApp')
 			        payments: group,
 			        groupNumber: group[0].group,
 			        currency: group[0].currency,
+			        card: group[0].card || false
 			      };
 
 			      if($scope.isManagerReport){
