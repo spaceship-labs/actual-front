@@ -174,14 +174,39 @@
 	      return warehouse;
 	    });
 	    warehouses = sortWarehousesByHierarchy(warehouses, activeStoreWarehouse);
+	    
+	    var afterPurchaseDeliveries = getAfterPurchaseDeliveries(deliveries);
+	    var onWarehouseDeliveries = getOnWarehouseDeliveries(deliveries);
+
 	    for(var i = 0; i < warehouses.length; i++){
-	      var deliveriesWithWhsMatch = _.where(deliveries, {companyFrom:warehouses[i].id});
+	      var deliveriesWithWhsMatch = _.where(afterPurchaseDeliveries, {companyFrom:warehouses[i].id});
 	      sortedDeliveries = sortedDeliveries.concat( deliveriesWithWhsMatch );
 	      //var delivery = _.findWhere(deliveries, {companyFrom: warehouses[i].id});
 	      //sortedDeliveries.push( delivery );
 	    }
 
+	    for(i = 0; i < warehouses.length; i++){
+	      var deliveriesWithWhsMatch2 = _.where(onWarehouseDeliveries, {companyFrom:warehouses[i].id});
+	      sortedDeliveries = sortedDeliveries.concat( deliveriesWithWhsMatch2 );
+	      //var delivery = _.findWhere(deliveries, {companyFrom: warehouses[i].id});
+	      //sortedDeliveries.push( delivery );
+	    }
+
 	    return sortedDeliveries;    
+	  }
+
+	  function getAfterPurchaseDeliveries(deliveries){
+	  	var afterPurchaseDeliveries = [];
+	  	return afterPurchaseDeliveries = deliveries.filter(function(delivery){
+	  		return delivery.PurchaseAfter;
+	  	});
+	  }
+
+	  function getOnWarehouseDeliveries(deliveries){
+	  	var onWarehouseDeliveries = [];
+	  	return onWarehouseDeliveries = deliveries.filter(function(delivery){
+	  		return !delivery.PurchaseAfter;
+	  	});
 	  }
 
 	  function sortWarehousesByHierarchy(warehouses, activeStoreWarehouse){

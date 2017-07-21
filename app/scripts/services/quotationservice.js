@@ -252,7 +252,9 @@
           productDate: params.productDate,
           shipCompany: params.shipCompany,
           shipCompanyFrom: params.shipCompanyFrom,
-          PromotionPackage: params.promotionPackage || null
+          PromotionPackage: params.promotionPackage || null,
+          PurchaseAfter: params.PurchaseAfter,
+          PurchaseDocument: params.PurchaseDocument
         };
         if(quotationId){
           detail.Quotation = quotationId;

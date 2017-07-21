@@ -164,10 +164,12 @@ function OffersCtrl(
       if( product.quantity <=  parseInt(deliveryDate.available) ){
         product.shipDate         = deliveryDate.date;
         product.originalShipDate = _.clone(deliveryDate.date);
-        product.productDate      = deliveryDate.productDate,
+        product.productDate      = deliveryDate.productDate;
         product.shipCompany      = deliveryDate.company;
         product.shipCompanyFrom  = deliveryDate.companyFrom;
         product.promotionPackage = packageId;
+        product.PurchaseAfter    = deliveryDate.PurchaseAfter;
+        product.PurchaseDocument = deliveryDate.PurchaseDocument;
       }
     }
     if(!product.shipDate){
