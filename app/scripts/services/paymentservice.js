@@ -40,6 +40,7 @@
       addPayment: addPayment,
       cancelPayment: cancelPayment,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
+      getPaymentWebMethodsGroups: getPaymentWebMethodsGroups,
       getMethodAvailableBalance: getMethodAvailableBalance,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getPaymentTypeString: getPaymentTypeString,
@@ -405,6 +406,11 @@
 
     function getPaymentMethodsGroups(params){
       var url = '/paymentgroups';
+      return api.$http.post(url, params);
+    }
+
+    function getPaymentWebMethodsGroups(params){
+      var url = '/paymentwebgroups';
       return api.$http.post(url, params);
     }
 

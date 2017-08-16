@@ -66,7 +66,8 @@
         class="method-group" 
         ng-repeat="method in group.methods track by $index"
       >
-        <div>
+        
+        <div ng-if="!isWebStore(store)">
           <div layout="row" class="payment-item">
             
             <div 
@@ -86,6 +87,22 @@
             <div class="payment-item-cell" flex>{{getTotalByMethod(method) | currency}} MXN</div>
           </div>
         </div>
+
+        <div ng-if="isWebStore(store)">
+          <div layout="row" class="payment-item">
+            
+            <div 
+              class="payment-item-cell pull-left" 
+              flex
+            >
+              {{method.name}} <span ng-if="method.card">| {{method.card}}</span>
+            </div>
+
+            <div class="payment-item-cell" flex>{{method.payments.length}}</div>
+            <div class="payment-item-cell" flex>{{getTotalByMethod(method) | currency}} MXN</div>
+          </div>
+        </div>
+
       </div>
 
       <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
