@@ -257,6 +257,7 @@
 				STUDIO PLAYA: 03,
 				STUDIO CUMBRES: 05,
 				HOME XCARET: 81
+				PUERTO CANCUN: 82
 	  	*/
 
 	  	var hierarchy = [];
@@ -264,28 +265,35 @@
 
 	  		//STUDIO MALECON
 	  		case '02':
-	  			hierarchy = ["01","02","81","03","05"]; 
+	  			hierarchy = ["01","02","03","05", "81", "82"]; 
 	  			break;
 
 	  		//STUDIO PLAYA
 	  		case '03':
-	  			hierarchy = ["01","03","02","81","05"];
+	  			hierarchy = ["01","03","02", "05","81","82"];
 	  			break;
 
 	  		//STUDIO CUMBRES
 	  		case '05': 
-	  			hierarchy = ["01","05","02","81","03"];
+	  			hierarchy = ["01","05","02","03","81","82"];
 	  			break;
 
 	  		//HOME XCARET
 	  		case '81':
-	  			hierarchy = ["01","81","02","03","05"];
+	  			hierarchy = ["01","81","82","02","03","05"];
+	  			break;
+
+	  		//HOME PUERTO CANCUN
+	  		case '82':
+	  			hierarchy = ["01","82","81","02","03","05"];
 	  			break;
 
 	  		//STUDIO MERIDA
 	  		case '11':
-	  			hierarchy = ["10","11","01","81","03","02","05"];
+	  			hierarchy = ["10","11","01","81","82","02","03","05"];
 	  			break;
+
+
 
 	  		default:
 	  			hierarchy = [];
