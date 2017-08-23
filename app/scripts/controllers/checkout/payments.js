@@ -550,6 +550,7 @@ function CheckoutPaymentsCtrl(
 
 
   $scope.$on('$destroy', function(){
+    $mdDialog.cancel();
     mainDataListener();
     if(vm.intervalProgress){
       $interval.cancel(vm.intervalProgress);
