@@ -30,8 +30,16 @@
             
           </div>
 
+          <section  ng-if="isWebStore(store)" class="cash-report-inner seller-item">
+            <ng-include 
+              src="'views/directives/cash-report/manager-website-cash-report.html'"></ng-include>            
+          </section>
 
-          <section ng-repeat="seller in store.Sellers" class="cash-report-inner seller-item">
+          <section 
+            ng-if="!isWebStore(store)"
+            ng-repeat="seller in store.Sellers" 
+            class="cash-report-inner seller-item"
+          >
 
             <div layout="row" layout-align="space-between center">
               <h2>

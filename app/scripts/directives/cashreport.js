@@ -116,7 +116,8 @@ angular.module('dashexampleApp')
 			    else if( $scope.isManagerReport ){
 			      promises = [
 			        paymentService.getPaymentMethodsGroups({readCreditPayments:true}),      
-			        storeService.getManagerCashReport(params)
+			        storeService.getManagerCashReport(params),
+			        paymentService.getPaymentWebMethodsGroups()
 			      ];
 			    }
 
@@ -126,16 +127,25 @@ angular.module('dashexampleApp')
 			      .then(function(results){
 			        console.log('results', results);
 			        var paymentsGroups = results[0].data;
+			        var paymentsWebGroups = results[2].data;
 
 			        if( $scope.isManagerReport ){
 			          $scope.stores = results[1].data;          
 								$scope.stores = $scope.stores.map(function(store){
-				          store.Sellers = store.Sellers.map(function(seller){
-				            seller.paymentsGroups = _.clone(paymentsGroups);
-				            seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
-				            return seller;
-				          });
-				          return store;
+
+									if(isWebStore(store) ){
+										store.paymentsGroups = _.clone(paymentsWebGroups);
+										store.paymentsGroups = mapMethodGroupsWithPayments(store.PaymentsWeb, store.paymentsGroups);
+					          return store;
+				        	}
+				        	else{
+					          store.Sellers = store.Sellers.map(function(seller){
+					            seller.paymentsGroups = _.clone(paymentsGroups);
+					            seller.paymentsGroups = mapMethodGroupsWithPayments(seller.Payments, seller.paymentsGroups);
+					            return seller;
+					          });
+					          return store;				        		
+				        	}
 				        });
 			        }
 
