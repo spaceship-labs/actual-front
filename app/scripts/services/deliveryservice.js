@@ -251,46 +251,96 @@
 	  }
 
 	  function getWarehousesHierarchyByActiveWarehouse(activeWarehouse, warehouses){
-	  	/*
-				CEDIS QROO: 01,
-				STUDIO MALECON: 02,
-				STUDIO PLAYA: 03,
-				STUDIO CUMBRES: 05,
-				HOME XCARET: 81
-				PUERTO CANCUN: 82
-	  	*/
+	  	var CEDIS_QROO = '01';
+	  	var STUDIO_MALECON = '02';
+	  	var STUDIO_PLAYA = '03';
+	  	var STUDIO_CUMBRES = '05';
+	  	var CEDIS_MERIDA = '10';
+	  	var STUDIO_MERIDA = '11';
+	  	var HOME_XCARET = '81';
+	  	var PUERTO_CANCUN = '82';
 
 	  	var hierarchy = [];
 	  	switch(activeWarehouse.WhsCode){
 
 	  		//STUDIO MALECON
-	  		case '02':
-	  			hierarchy = ["01","02","03","05", "81", "82"]; 
+	  		case STUDIO_MALECON:
+	  			hierarchy = [
+	  				CEDIS_QROO,
+	  				STUDIO_MALECON,
+	  				STUDIO_PLAYA,
+	  				STUDIO_CUMBRES,
+	  				HOME_XCARET,
+	  				PUERTO_CANCUN
+	  			];
+	  			//hierarchy = ["01","02","03","05", "81", "82"]; 
 	  			break;
 
 	  		//STUDIO PLAYA
-	  		case '03':
-	  			hierarchy = ["01","03","02", "05","81","82"];
+	  		case STUDIO_PLAYA:
+	  			hierarchy = [
+	  				CEDIS_QROO,
+	  				STUDIO_PLAYA,
+	  				STUDIO_MALECON,
+	  				STUDIO_CUMBRES,
+	  				HOME_XCARET,
+	  				PUERTO_CANCUN
+	  			];
+	  			//hierarchy = ["01","03","02", "05","81","82"];
 	  			break;
 
 	  		//STUDIO CUMBRES
-	  		case '05': 
-	  			hierarchy = ["01","05","02","03","81","82"];
+	  		case STUDIO_CUMBRES: 
+	  			hierarchy = [
+	  				CEDIS_QROO,
+	  				STUDIO_CUMBRES,
+	  				STUDIO_MALECON,
+	  				STUDIO_PLAYA,
+	  				HOME_XCARET,
+	  				PUERTO_CANCUN
+	  			];
+	  			//hierarchy = ["01","05","02","03","81","82"];
 	  			break;
 
 	  		//HOME XCARET
-	  		case '81':
-	  			hierarchy = ["01","81","82","02","03","05"];
+	  		case HOME_XCARET:
+	  			hierarchy = [
+	  				CEDIS_QROO,
+	  				HOME_XCARET,
+	  				PUERTO_CANCUN,
+	  				STUDIO_MALECON,
+	  				STUDIO_PLAYA,
+	  				STUDIO_CUMBRES
+	  			];
+	  			//hierarchy = ["01","81","82","02","03","05"];
 	  			break;
 
 	  		//HOME PUERTO CANCUN
-	  		case '82':
-	  			hierarchy = ["01","82","81","02","03","05"];
+	  		case PUERTO_CANCUN:
+	  			hierarchy = [
+	  				CEDIS_QROO,
+	  				PUERTO_CANCUN,
+	  				HOME_XCARET,
+	  				STUDIO_MALECON,
+	  				STUDIO_PLAYA,
+	  				STUDIO_CUMBRES
+	  			];
+	  			//hierarchy = ["01","82","81","02","03","05"];
 	  			break;
 
 	  		//STUDIO MERIDA
-	  		case '11':
-	  			hierarchy = ["10","11","01","81","82","02","03","05"];
+	  		case STUDIO_MERIDA:
+	  			hierarchy = [
+	  				CEDIS_MERIDA,
+	  				CEDIS_QROO,
+	  				STUDIO_MERIDA,
+	  				HOME_XCARET,
+	  				PUERTO_CANCUN,
+	  				STUDIO_MALECON,
+	  				STUDIO_PLAYA,
+	  				STUDIO_CUMBRES
+	  			];
+	  			//hierarchy = ["10","01","11","81","82","02","03","05"];
 	  			break;
 
 
