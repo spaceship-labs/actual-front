@@ -23,9 +23,16 @@
                 {{startDate | date:'dd/MM/yyyy h:mm a'}} |
                 {{endDate | date:'dd/MM/yyyy h:mm a'}}
               </h3>
-              <h3>
+
+              <h3 ng-if="isWebStore(store)">
+                <strong>Total Global Ventas:</strong> {{ getStoreTotal(store) | currency }} MXN
+              </h3>      
+              
+              <h3 ng-if="!isWebStore(store)">
                 <strong>Total Global Ventas:</strong> {{ getSellersTotal(store.Sellers) | currency }} MXN
               </h3>      
+            
+
             </div>
             
           </div>
