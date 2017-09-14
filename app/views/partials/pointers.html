@@ -38,14 +38,16 @@
           <p>¿Cómo se entero de Actual?</p>
           <md-radio-group ng-model="main.activeQuotation.source">
 
-            <div class="pointer-source-item" ng-repeat="pointerSource in main.pointersSources track by $index">
+            <div class="pointer-source-item" ng-repeat="pointerSource in main.pointersSources | orderBy:'label' track by $index">
               <md-radio-button ng-value="pointerSource.value">
                 {{pointerSource.label}}
               </md-radio-button>
+              <!--ng-init="main.activeQuotation.sourceType = pointerSource.childs[0].value"-->
+
               <select 
                 ng-if="pointerSource.value === main.activeQuotation.source"
-                ng-options="option.value as option.label for option in pointerSource.childs"
-                ng-init="main.activeQuotation.sourceType = pointerSource.childs[0].value"
+                ng-options="option.value as option.label for option in pointerSource.childs | orderBy:'label' "
+                ng-init="main.activeQuotation.sourceType = main.getFirstPointerSourceValue(pointerSource.childs, main.activeQuotation)"                
                 placeholder="Selecciona una opción"
                 ng-model="main.activeQuotation.sourceType">
               </select>

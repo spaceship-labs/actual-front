@@ -19,6 +19,7 @@
     $window,
     $route,
     $mdSidenav,
+    $filter,
     authService,
     cartService,
     productService,
@@ -71,6 +72,7 @@
       saveSource: saveSource,
       syncClientsDiscounts: syncClientsDiscounts,
       handleSearch: handleSearch,
+      getFirstPointerSourceValue: getFirstPointerSourceValue,
       setPointerSourceType: setPointerSourceType,
       adminUrl: ENV.adminUrl
     });
@@ -265,6 +267,8 @@
           var quotation = res.data;
           $rootScope.isActiveQuotationLoaded = true;
           if(quotation && quotation.id){
+            quotation.savedSourceType = _.clone(quotation.sourceType);
+            quotation.savedSource = _.clone(quotation.source);
             vm.activeQuotation = quotation;
             $rootScope.activeQuotation = quotation;
             $rootScope.$emit('activeQuotationAssigned', vm.activeQuotation);
@@ -639,7 +643,7 @@
           var params = {
             source: source,
             sourceType: sourceType
-          }
+          };
           quotationService.updateSource(vm.quotation, params)
             .then(function(res){
               vm.pointersLoading = false;
@@ -658,6 +662,14 @@
       }
     }
 
+    function getFirstPointerSourceValue(sourceChilds, activeQuotation){
+      if(activeQuotation.savedSourceType && activeQuotation.savedSource === activeQuotation.source){
+        return activeQuotation.savedSourceType;
+      }
+      var sortedChilds =  $filter('orderBy')(sourceChilds, 'label');
+      return sortedChilds[0].value;
+    }
+
     //$scope.$on('$destroy', $mdUtil.enableScrolling);
 
   }
@@ -673,6 +685,7 @@
     '$window',
     '$route',
     '$mdSidenav',
+    '$filter',
     'authService',
     'cartService',
     'productService',

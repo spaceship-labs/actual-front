@@ -599,6 +599,7 @@
             label: 'Recomendado Playa del Carmen',
             value:'recomendado-playa-del-carmen',
             childs:[
+              {label:'Maji Condos', value:'maji-condos'},
               {label:'Mareazul', value:'mareazul'},
               {label:'Lagunas de Mayakoba', value:'lagunas-de-mayakoba'},
               {label:'Lorena Ochoa', value:'lorena-ochoa'},
