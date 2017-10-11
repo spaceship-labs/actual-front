@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?f2fzfu');
-  src:  url('../fonts/icomoon.eot?f2fzfu#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?f2fzfu') format('truetype'),
-    url('../fonts/icomoon.woff?f2fzfu') format('woff'),
-    url('../fonts/icomoon.svg?f2fzfu#icomoon') format('svg');
+  src:  url('../fonts/icomoon.eot?ckb55f');
+  src:  url('../fonts/icomoon.eot?ckb55f#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?ckb55f') format('truetype'),
+    url('../fonts/icomoon.woff?ckb55f') format('woff'),
+    url('../fonts/icomoon.svg?ckb55f#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -63,102 +63,123 @@
 .icon-colchones:before {
   content: "\e90c";
 }
-.icon-comisiones:before {
+.icon-color:before {
   content: "\e90d";
 }
-.icon-cotizar:before {
+.icon-comisiones:before {
   content: "\e90e";
 }
-.icon-dashboard:before {
+.icon-cotizar:before {
   content: "\e90f";
 }
-.icon-decoracion:before {
+.icon-dashboard:before {
   content: "\e910";
 }
-.icon-envio:before {
+.icon-decoracion:before {
   content: "\e911";
 }
-.icon-file:before {
+.icon-descuento:before {
   content: "\e912";
 }
-.icon-home:before {
+.icon-disponibilidad:before {
   content: "\e913";
 }
-.icon-info:before {
+.icon-envio:before {
   content: "\e914";
 }
-.icon-jardin:before {
+.icon-estilo:before {
   content: "\e915";
 }
-.icon-login:before {
+.icon-file:before {
   content: "\e916";
 }
-.icon-mail:before {
+.icon-forma:before {
   content: "\e917";
 }
-.icon-mesas:before {
+.icon-home:before {
   content: "\e918";
 }
-.icon-metodo-pago:before {
+.icon-info:before {
   content: "\e919";
 }
-.icon-monedero:before {
+.icon-jardin:before {
   content: "\e91a";
 }
-.icon-murbles:before {
+.icon-login:before {
   content: "\e91b";
 }
-.icon-ninos:before {
+.icon-mail:before {
   content: "\e91c";
 }
-.icon-ofertas:before {
+.icon-marca:before {
   content: "\e91d";
 }
-.icon-office:before {
+.icon-material:before {
   content: "\e91e";
 }
-.icon-oportunidades:before {
+.icon-mesas:before {
   content: "\e91f";
 }
-.icon-pedidos:before {
+.icon-metodo-pago:before {
   content: "\e920";
 }
-.icon-phone:before {
+.icon-monedero:before {
   content: "\e921";
 }
-.icon-photo:before {
+.icon-murbles:before {
   content: "\e922";
 }
-.icon-place:before {
+.icon-ninos:before {
   content: "\e923";
 }
-.icon-pointer:before {
+.icon-ofertas:before {
   content: "\e924";
 }
-.icon-scorecard:before {
+.icon-office:before {
   content: "\e925";
 }
-.icon-search:before {
+.icon-oportunidades:before {
   content: "\e926";
 }
-.icon-settings:before {
+.icon-pedidos:before {
   content: "\e927";
 }
-.icon-sillas:before {
+.icon-phone:before {
   content: "\e928";
 }
-.icon-sofa:before {
+.icon-photo:before {
   content: "\e929";
 }
-.icon-terminal:before {
+.icon-place:before {
   content: "\e92a";
 }
-.icon-transfer:before {
+.icon-pointer:before {
   content: "\e92b";
 }
-.icon-vendedor:before {
+.icon-precio:before {
   content: "\e92c";
 }
-.icon-link:before {
-  content: "\e904";
+.icon-scorecard:before {
+  content: "\e92d";
+}
+.icon-search:before {
+  content: "\e92e";
+}
+.icon-settings:before {
+  content: "\e92f";
+}
+.icon-sillas:before {
+  content: "\e930";
+}
+.icon-sofa:before {
+  content: "\e931";
+}
+.icon-terminal:before {
+  content: "\e932";
+}
+.icon-transfer:before {
+  content: "\e933";
+}
+.icon-vendedor:before {
+  content: "\e934";
 }
