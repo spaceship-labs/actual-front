@@ -215,7 +215,7 @@ function CategoryCtrl(
           vm.products = productsAux.concat(productsFormatted);
         }else{
           vm.products = productsFormatted;
-          vm.scrollTo('products-results');
+          vm.scrollTo('category-page');
         }
 
         vm.isLoadingProducts = false;
