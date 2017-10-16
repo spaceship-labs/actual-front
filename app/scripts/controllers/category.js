@@ -26,6 +26,7 @@ function CategoryCtrl(
     showLevel2: false,
     showLevel3: false,
     enableSortOptions: false,
+    enableFiltersTrigger: false,
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     societyFilters: productSearchService.SOCIETY_OPTIONS,
@@ -76,6 +77,7 @@ function CategoryCtrl(
 
       if(vm.category && vm.category.Childs.length === 0){
       	vm.enableSortOptions = true;
+        vm.enableFiltersTrigger = true;
       }
 
       var hasLevel2Categories = false;
@@ -90,6 +92,9 @@ function CategoryCtrl(
           return filter;
         });
 
+        vm.filters = sortFiltersByList(vm.filters);
+        onCloseSidenav();
+
       });
       hasLevel2Categories = !!vm.category.Childs.find(function(child) {
         return child.CategoryLevel === 2;
@@ -99,6 +104,25 @@ function CategoryCtrl(
       vm.isLoading = false;
     });
 
+  }
+
+  function onCloseSidenav(){
+    $mdSidenav('searchFilters').onClose(function () {
+      for(var i = 0; i < vm.filters.length; i++){
+        vm.filters[i].active = false;
+      }
+      vm.isBrandFilterActive = false;
+      vm.isDiscountFilterActive = false;
+      vm.isStockFilterActive = false;
+    });
+  }  
+
+  function sortFiltersByList(filters){
+    var sortList = ['estilo','material','color','forma'];
+    var sorted =  filters.sort(function(a,b){
+      return sortList.indexOf(b.Handle) - sortList.indexOf(a.Handle);
+    });
+    return sorted;
   }
 
   function loadCustomBrands(){
@@ -330,9 +354,33 @@ function CategoryCtrl(
     vm.searchByFilters();
   }
 
-  function toggleSearchSidenav(){
+  function toggleSearchSidenav(filterHandleToOpen){
     $mdSidenav('searchFilters').toggle();
-  }  
+    
+    if(filterHandleToOpen){
+      var filterIndexToOpen = _.findIndex(vm.filters, function(filter){
+        return filter.Handle === filterHandleToOpen;
+      });
+      if(filterIndexToOpen >= 0){
+        vm.filters[filterIndexToOpen].active = true;
+      }
+      else{
+
+        switch(filterHandleToOpen){
+          case 'brand':
+            vm.isBrandFilterActive = true;
+            break;
+          case 'discount':
+            vm.isDiscountFilterActive = true;
+            break;
+          case 'stock':
+            vm.isStockFilterActive = true;
+            break;
+        }
+      }
+    }
+  }
+
 
   function setActiveSortOption(sortOption){
 

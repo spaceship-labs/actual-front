@@ -9,14 +9,12 @@
   </div>
 </div>
 -->
-<a 
-  ng-click="vm.toggleSearchSidenav()" 
-  href="" 
-  class="filters-sidenav-trigger">
-    Filtros
-</a>
 
 <div class="content-block listing-view" id="category-page">
+
+  <ng-include ng-show="vm.enableFiltersTrigger" src="'views/partials/search-filters-trigger.html'"></ng-include>
+  <ng-include src="'views/partials/search-filters.html'"></ng-include>
+  
   <div class="container container-xxlg" layout="row" layout-align="space-between start">
     <!--START NAV-->
     <aside flex="20">
