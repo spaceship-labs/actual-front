@@ -21,6 +21,7 @@
       CHEQUE: 'cheque',
       DEPOSIT: 'deposit',
       TRANSFER: 'transfer',
+      TRANSFER_USD: 'transfer-usd',
       SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
       MSI_3: '3-msi',
       MSI_6: '6-msi',
@@ -436,7 +437,7 @@
       else if(payment.msi){
         type = payment.msi + ' meses sin intereses';
       }
-      else if(payment.type === 'transfer'){
+      else if(payment.type === 'transfer' || payment.type === 'transfer-usd'){
         type = 'Transferencia';
       }
       else if(payment.type === 'deposit'){
