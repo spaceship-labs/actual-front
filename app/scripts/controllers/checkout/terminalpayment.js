@@ -10,28 +10,44 @@ function TerminalController(
   payment
 ) {
 
-  $scope.payment = payment;
-  $scope.needsVerification = payment.needsVerification;
-  $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
+  $scope.init = function(){
+    $scope.payment = payment;
+    $scope.needsVerification = payment.needsVerification;
+    $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
 
-  $scope.payment.options = paymentService.getPaymentOptionsByMethod($scope.payment);
-  console.log('$sopcpepayment options', $scope.payment.options);
+    $scope.payment.options = paymentService.getPaymentOptionsByMethod($scope.payment);
+    console.log('$sopcpepayment options', $scope.payment.options);
+
+    if($scope.payment.currency === 'usd'){
+      $scope.payment.ammount = $scope.payment.ammount / $scope.payment.exchangeRate;
+      $scope.payment.ammountMXN = $scope.getAmmountMXN($scope.payment.ammount);
+    
+      if($scope.maxAmmount){
+        $scope.payment.maxAmmount = $scope.maxAmmount / $scope.payment.exchangeRate;
+        $scope.maxAmmount = $scope.payment.maxAmmount;
+      }
+    }
 
 
-  //ROUNDING
-  $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);     
-  $scope.payment.remaining = commonService.roundCurrency($scope.payment.remaining); 
-  if($scope.maxAmmount){
-    $scope.maxAmmount = commonService.roundCurrency($scope.maxAmmount);
-  }
-  if($scope.payment.min){
-    $scope.payment.min = commonService.roundCurrency($scope.payment.min);      
-  }
+    //ROUNDING
+    $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);     
+    $scope.payment.remaining = commonService.roundCurrency($scope.payment.remaining); 
+    if($scope.maxAmmount){
+      $scope.maxAmmount = commonService.roundCurrency($scope.maxAmmount);
+    }
+    if($scope.payment.min){
+      $scope.payment.min = commonService.roundCurrency($scope.payment.min);      
+    }
 
-  console.log('$scope.payment.min', $scope.payment.min);
+    console.log('$scope.payment.min', $scope.payment.min);
+  };
 
   $scope.numToLetters = function(num){
     return formatService.numberToLetters(num);
+  };
+
+  $scope.getAmmountMXN = function(ammount){
+    return ammount * $scope.payment.exchangeRate;
   };
 
   $scope.isCardPayment = function(payment){
@@ -117,6 +133,10 @@ function TerminalController(
     console.log('$scope.payment.options', $scope.payment.options);
   };
 
+  $scope.isTransferPayment = function(payment){
+    return payment.type === 'transfer' || payment.type === 'transfer-usd';
+  };  
+
   function getSelectedTerminal(card){
     var option = _.find($scope.payment.options, function(option){
       return option.card.value === card;
@@ -150,4 +170,6 @@ function TerminalController(
       $scope.isConfirmationActive = false;
     }
   };
+
+  $scope.init();
 }

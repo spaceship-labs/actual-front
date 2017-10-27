@@ -161,7 +161,13 @@
             <span><i class="icon-cash"></i></span> <strong>Pago en efectivo (USD)</strong>
             <p class="small-note">Tipo de cambio: {{payment.exchangeRate | currency}} MXN</p>
           </div>
-          <div ng-if="payment.type !== 'cash' && payment.type !== 'cash-usd' " flex class="order-payment-item-data">
+          
+          <div ng-if="payment.currency === 'usd' && payment.type !== 'cash-usd' " flex class="order-payment-item-data">
+            <span><i class="icon-terminal"></i></span> <strong>{{payment.name}}</strong>            
+            <p class="small-note">Tipo de cambio: {{payment.exchangeRate | currency}} MXN</p>
+          </div>
+
+          <div ng-if="payment.type !== 'cash' && payment.type !== 'cash-usd' && payment.currency !== 'usd' " flex class="order-payment-item-data">
             <span><i class="icon-terminal"></i></span> <strong>{{payment.name}}</strong>
           </div>
 
@@ -178,8 +184,8 @@
             <span>{{ main.mapTerminalCode(payment.terminal) }}</span>
           </div>
           <div flex class="order-payment-item-data">
-            <span ng-if="payment.type !='cash-usd'">{{payment.ammount | currency}} MXN</span>
-            <span ng-if="payment.type =='cash-usd'">{{payment.ammount | currency}} USD.</span>
+            <span ng-if="payment.currency !== 'usd'">{{payment.ammount | currency}} MXN</span>
+            <span ng-if="payment.currency === 'usd'">{{payment.ammount | currency}} USD.</span>
           </div>
         </div>
       </div>

@@ -40,8 +40,8 @@
           </div>
           <div flex="33">
             <p><strong>CANTIDAD</strong></p>
-            <p ng-if="payment.type !=='cash-usd'">{{payment.ammount | roundCurrency}}</p>
-            <p ng-if="payment.type ==='cash-usd'">{{payment.ammount | roundCurrency}} USD.</p>
+            <p ng-if="payment.currency !== 'usd'">{{payment.ammount | roundCurrency}}</p>
+            <p ng-if="payment.currency ==='usd'">{{payment.ammount | roundCurrency}} USD.</p>
           </div>
 
         </div>

@@ -44,7 +44,7 @@ function DepositController(
   };  
 
   $scope.isTransferPayment = function(payment){
-    return payment.type === 'transfer';
+    return payment.type === 'transfer' || payment.type === 'transfer-usd';
   };
 
   $scope.isDepositPayment = function(payment){
