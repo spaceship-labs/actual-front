@@ -162,7 +162,7 @@
             <p class="small-note">Tipo de cambio: {{payment.exchangeRate | currency}} MXN</p>
           </div>
           
-          <div ng-if="payment.currency === 'usd' && payment.type !== 'cash-usd' ">
+          <div ng-if="payment.currency === 'usd' && payment.type !== 'cash-usd' " flex class="order-payment-item-data">
             <span><i class="icon-terminal"></i></span> <strong>{{payment.name}}</strong>            
             <p class="small-note">Tipo de cambio: {{payment.exchangeRate | currency}} MXN</p>
           </div>

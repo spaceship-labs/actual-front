@@ -22,7 +22,7 @@
       layout-wrap
     >
       <!--TERMINALS-->
-      <div flex="45" ng-if="payment.terminals && (payment.type === 'transfer' || payment.type === 'deposit') ">
+      <div flex="45" ng-if="payment.terminals && (payment.type === 'transfer' || payment.type === 'deposit' || payment.type === 'transfer-usd') ">
         <div class="input-element select-element-wrapper">
           <md-select 
             ng-model="payment.terminal" 
