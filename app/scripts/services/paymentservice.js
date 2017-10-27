@@ -60,7 +60,7 @@
     }
 
     function isTransferOrDeposit(payment){
-      return payment.type === types.TRANSFER || payment.type === types.DEPOSIT;
+      return payment.type === types.TRANSFER || payment.type === types.TRANSFER_USD || payment.type === types.DEPOSIT;
     }
 
     function isSinglePlaymentTerminal(payment){
