@@ -36,10 +36,11 @@ function OrdersListCtrl(
   vm.dateRange = false;
   vm.ordersData = {};
   vm.listScopes = [];
-  vm.defaultSort = [4, "desc"];
+  vm.defaultSort = [5, "desc"]; //Order by 5th column (begins on 0)
   vm.columnsOrders = [
     {key: 'folio', label:'Folio'},
     {key:'Client.CardName', label:'Cliente'},
+    {key: 'Broker.Name', label: 'Broker'},
     {key:'total', label: 'Total', currency:true},
     {key:'ammountPaid', label: 'Monto cobrado', currency:true},
     {key:'createdAt', label:'Venta', date:true},
