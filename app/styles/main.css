@@ -1327,9 +1327,17 @@ md-backdrop.md-sidenav-backdrop{
 .listing-product .listing-product-info .price-before{
   text-decoration: line-through;
 }
+.listing-product .listing-product-info .price-before-currency{
+  font-size: 9px;
+  color: #000;
+}
 .listing-product .listing-product-info .price-now{
   color: #E2023F;
   font-size: 16px;
+}
+.listing-product .listing-product-info .price-now-currency{
+  color: #E2023F;
+  font-size: 10px;  
 }
 .listing-product .listing-product-info .small{
   font-size: 10px;
@@ -1431,6 +1439,11 @@ md-backdrop.md-sidenav-backdrop{
 .listing-product .stock-available{
   font-weight: 700;
   font-size: 15px!important;
+}
+.listing-product .stock-available .small{font-size: 10px;}
+.listing-product .taxes-included{
+  color: #000;
+  font-size: 11px;
 }
 .listing-product .stock-available .small{font-size: 10px;}
 
@@ -1917,6 +1930,10 @@ md-backdrop.md-sidenav-backdrop{
 .product-view-data-block tr td:first-child{width: 30%;}
 .product-view-data-block tr td:nth-child(2){padding-left: 10px;}
 .product-view-data-block tr td.price-col{text-align: right;}
+.product-view-data-block tr td.price-col .currency-label{font-size: 9px}
+
+.product-view-data-block .promotions-table td:first-child{width: 50%;}
+
 .product-view-data-block .delivery-date-stock{text-align: right;}
 .product-view-data-block .delivery-table tr td:first-child{width: auto!important;}
 .product-view-data-block .delivery-table .immediate-delivery{
@@ -1985,6 +2002,7 @@ md-backdrop.md-sidenav-backdrop{
   font-weight: 700;
   font-size: 14px;
 }
+.product-view p{margin: 0}
 .product-view-price-crossed{
   text-decoration: line-through;
   margin: 0 4px;
@@ -1992,8 +2010,14 @@ md-backdrop.md-sidenav-backdrop{
 .product-view-price-main,
 .product-view-price-hl{
   color: #E2023F;
-  margin: 6px 4px 0;
+  margin: 6px 0 0!important;
 }
+.product-view .currency-label,
+.product-view-price-crossed .currency-label,
+.product-view-price-hl .currency-label {
+  font-size: 10px;
+}
+
 .product-view-qty{
   max-width: 70px;
   margin: 0 auto;
@@ -2012,8 +2036,17 @@ md-backdrop.md-sidenav-backdrop{
   outline: none!important;
 }
 
+
+.product-view .product-view-price-main{line-height: 1}
+.product-view .product-view-price-main h3{margin-bottom: 0;}
+.product-view .taxes-included{
+  font-size: 12px;
+  color: #000;
+}
+
 .product-view-price-main{
-  font-size: 26px;
+  /*font-size: 26px;*/
+  font-size: 22px;
   margin: 0;
 }
 
@@ -2214,6 +2247,19 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   margin-left: 5%;
 }
 .cart-view .cart-item-data h5{margin: 0}
+.cart-item .cart-item-data-prices p{margin: 0;}
+
+.cart-view .cart-item-data .price-crossed .currency-label{font-size: 11px;}
+.cart-view .cart-item-data .price-hl .currency-label{font-size: 11px;}
+
+.cart-item .cart-item-data-prices .included-taxes-label{
+  text-align: left;
+  font-size: 12px;
+}
+.cart-item .cart-item-data-prices .included-taxes-label.pull-right{
+  text-align: right;
+}
+
 .cart-view .cart-item-data .bottom-text{
   margin-bottom: 0;
   margin-right: 15px;
@@ -3158,6 +3204,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   text-decoration: underline;
 }
 .quotation-view .payments-options-totals {}
+.quotation-view .payments-options-totals .bottom-note{
+  text-align: right;
+  font-size: 12px;
+}
 .quotation-view .payments-options-totals .data-header{
   margin-bottom: 10px;
   text-align: center;
@@ -3270,7 +3320,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   /*margin-top: 20px;*/
 }
 .cart-item .cart-item-data-prices h3{
-  font-size: 23px;
+  font-size: 20px;
   text-align: right;
 }
 .cart-item .cart-item-data-prices .discount-label{
@@ -3290,7 +3340,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .cart-item .cart-item-data-prices .price-main,
 .cart-item .cart-item-data-prices .price-hl{
   color: #E2023F;
-  margin: 6px 4px 0;
+  margin: 6px 0;
 }
 
 .cart-item .immediate-delivery-label{
@@ -3354,7 +3404,7 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-size: 24px;
   margin: 0;
 }
-.cart-view .cart-summary .cart-totals .price-crossed,
+.cart-view .cart-summary .cart-totals .price-crossed-block,
 .cart-view .cart-summary .cart-totals .price-main,
 .cart-view .cart-summary .cart-totals .price-main-v2{
   margin: 4px 0 0;
@@ -3364,6 +3414,20 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   text-decoration: line-through;
   font-weight: 400;
 }
+
+.cart-view .cart-summary .taxes-included{
+  margin: 0;
+  text-align: right;
+  font-size: 11px;  
+}
+
+.cart-view .cart-item-data .currency-label,
+.cart-view .cart-summary .cart-totals .price-crossed-block .currency-label,
+.cart-view .cart-summary .cart-totals .price-main .currency-label,
+.cart-view .cart-summary .cart-totals .price-main-v2 .currency-label{
+  font-size: 10px;
+}
+
 .cart-view .cart-summary .cart-totals .price-main{
   color: #E2023F;
   font-weight: 700;
@@ -3815,10 +3879,11 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   font-weight: 400;
   text-decoration: line-through;
 }
-.pay-method-wrap .method-block .price-now{font-size: 32px;}
+.pay-method-wrap .method-block .price-now{font-size: 26px;}
+.pay-method-wrap .method-block .price-now .currency-label{font-size: 12px;}
 .pay-method-wrap .method-block .price-now.price-hl{
-  /*font-size: 32px;*/
-  font-size: 28px;
+  font-size: 26px;
+  /*font-size: 28px;*/
 }
 .pay-method-wrap .method-block .price-hl{color: #E2023F;}
 .pay-method-wrap .method-block p{

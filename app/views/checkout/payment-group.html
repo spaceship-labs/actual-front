@@ -63,7 +63,8 @@
     ng-show="!vm.areMethodsDisabled(paymentGroup.methods, vm.quotation)"
   >
     <h2 class="price-now" ng-class="{'price-hl' : $index == 0 }">
-      {{ vm.calculateRemaining(paymentGroup.total) | roundCurrency }}
+      <span class="currency-label">MXN</span> {{ vm.calculateRemaining(paymentGroup.total) | roundCurrency }}
     </h2>
+    <p>Impuestos incluidos</p>
   </div>
 </div>

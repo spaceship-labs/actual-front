@@ -55,18 +55,21 @@
 
 
             <div class="product-view-prices" layout="row" layout-align="space-between end">
-              <div flex="15">
-                <p 
-                  class="product-view-price-discount" 
+              <div flex="20">
+                <p
+                  class="product-view-price-discount"
                   ng-if="vm.product.mainPromo">
                   - {{vm.mainPromo.discountPg1}}%
                 </p>
-                <p class="product-view-price-crossed">{{vm.product.priceBefore | currency:'$':0 }}</p>
+                <p>
+                  <span class="currency-label">MXN</span> 
+                  <span class="product-view-price-crossed">{{vm.product.priceBefore | currency:'$':0 }}</span>
+                </p>
                 <p class="product-view-price-hl">
-                  <strong>{{vm.product.Price | currency:'$':0 }}</strong>
+                  <span class="currency-label">MXN</span> <strong>{{vm.product.Price | currency:'$':0 }}</strong>
                 </p>
               </div>
-              <div flex="15">
+              <div flex="10">
                 <div class="product-view-qty input-element">
                   <label ng-show="!vm.isSRService(vm.product)">Piezas</label>
                   <label ng-show="vm.isSRService(vm.product)">Unidades</label>
@@ -90,9 +93,12 @@
                   </select>
                 </div>
               </div>
-              <h3 flex="25" class="product-view-price-hl product-view-price-main">
-                <strong>{{vm.product.Price * vm.productCart.quantity | currency:'$':0 }}</strong>
-              </h3>
+              <div
+                flex="25"
+                class="product-view-price-hl product-view-price-main">
+                <h3><span class="currency-label">MXN</span><strong>{{vm.product.Price * vm.productCart.quantity | currency:'$':0 }}</strong></h3>
+                <span class="taxes-included">Impuestos incluidos</span>
+              </div>
             </div>
 
             <a

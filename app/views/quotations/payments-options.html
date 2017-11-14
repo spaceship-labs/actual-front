@@ -21,7 +21,7 @@
 			ng-if="vm.paymentMethodsGroups && vm.paymentMethodsGroups.length > 0" 
 			flex="15" 
 			class="totals data-cell">
-			<p><strong>{{ vm.paymentMethodsGroups[0].total | roundCurrency  }}</strong></p>
+			<p><strong>MXN {{ vm.paymentMethodsGroups[0].total | roundCurrency  }}</strong></p>
 		</div>
 	</div>	
 
@@ -47,7 +47,7 @@
 				</p>
 			</div>
 			<div flex="15" class="totals data-cell">
-				<p><strong>{{ subGroup[0].total | roundCurrency  }}</strong></p>
+				<p><strong>MXN {{ subGroup[0].total | roundCurrency  }}</strong></p>
 			</div>
 		</div>	
 		<!--
@@ -64,5 +64,7 @@
 		</div>
 		-->
 	</div>
+
+	<p class="bottom-note">Precios con impuestos incluidos</p>
 
 </section>
