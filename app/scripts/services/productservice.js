@@ -64,9 +64,9 @@
         return api.$http.post(url,params);
       }
 
-      function getById(id){
+      function getById(id, params){
         var url = '/product/findbyid/' + id;
-        return api.$http.post(url);
+        return api.$http.post(url, params);
       }
 
       function getMainPromo(id, activeQuotationId){

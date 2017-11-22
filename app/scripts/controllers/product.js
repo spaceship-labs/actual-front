@@ -78,7 +78,9 @@ function ProductCtrl(
     vm.isLoading             = true;
     vm.isLoadingDeliveries   = true;
 
-    productService.getById(productId)
+    var params = {populateFields: ['CustomBrand']};
+
+    productService.getById(productId, params)
       .then(function(res){
         var productFound = res.data.data;
         if(!productFound || !productFound.ItemCode){
