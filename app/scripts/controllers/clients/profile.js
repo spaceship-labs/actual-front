@@ -32,6 +32,7 @@ function ClientProfileCtrl(
     personalEditEnabled: false,    
     titles  : clientService.getTitles(),
     genders : clientService.getGenders(),
+    cfdiUseList: clientService.getCFDIUseList(),
     states: [],
     countries: commonService.getCountries(),
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
@@ -329,6 +330,7 @@ function ClientProfileCtrl(
     if(form.$valid && isValidEmail){
       var params = _.clone(vm.client.FiscalAddress);
       params.LicTradNum = _.clone(vm.client.LicTradNum);
+      params.cfdiUse = vm.client.cfdiUse;
 
       clientService.updateFiscalAddress(
         params.id, 

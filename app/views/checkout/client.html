@@ -68,6 +68,8 @@
             <span ng-show="!vm.isClientFiscalDataValid(vm.client)">Incompletos</span>
             | 
             <strong>RFC:</strong> {{vm.client.LicTradNum}}
+            |
+            <strong>Uso CFDI:</strong> {{vm.mapCFDIuseCode(vm.client.cfdiUse).label }} ({{vm.mapCFDIuseCode(vm.client.cfdiUse).code}})
           </p>
         </section>
         <!--END FISCAL SECTION-->

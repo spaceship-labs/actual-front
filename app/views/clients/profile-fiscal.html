@@ -36,6 +36,23 @@
               Caracteres <strong>{{fiscalForm.companyName.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.companyName.max }}</strong>
           </p>          
         </div>
+
+        <div flex="40" class="input-element select-element-wrapper">
+          <label><strong>Uso CFDI</strong></label>
+          <md-select 
+            ng-model="vm.client.cfdiUse" 
+            class="select-element"
+            required>
+            <md-option 
+              ng-repeat="use in vm.cfdiUseList | orderBy:'label'"
+              ng-value="use.code"
+            >
+              {{use.label}} ({{use.code}})
+            </md-option>
+          </md-select>
+        </div>
+
+
       </div>
 
       <div layout="row">

@@ -31,6 +31,7 @@ function CheckoutClientCtrl(
   angular.extend(vm,{
     continueProcess: continueProcess,
     getContactName: getContactName,
+    mapCFDIuseCode: clientService.mapCFDIuseCode,
     isClientFiscalDataValid: clientService.isClientFiscalDataValid
   });
 
