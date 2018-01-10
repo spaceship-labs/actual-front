@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:HomeCtrl
- * @description
- * # HomeCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('HomeCtrl', HomeCtrl);
 
@@ -15,25 +7,16 @@ function HomeCtrl(
   $scope,
   $rootScope,
   api, 
-  dialogService
+  activeStore
 ){
   var vm = this;
-  var mainDataListener = function(){};
   angular.extend(vm,{
     areProductsLoaded: false,
     api: api,
   });
 
   function init(){
-    setCategoryStockProperty();
-    if($location.search().startQuotation){
-      //dialogService.showDialog('Cotizacion creada, agrega productos a tu cotización');
-    }
-    mainDataListener = $rootScope.$on('mainDataLoaded', setCategoryStockProperty);
-  }
-
-  function setCategoryStockProperty(event, mainData){
-    var activeStore = mainData ?  mainData.activeStore : false;
+    vm.activeStore = activeStore;
     vm.stockProperty = 'productsNum';
     if(activeStore && activeStore.code !== 'proyectos'){
       vm.stockProperty = activeStore.code;
@@ -41,10 +24,6 @@ function HomeCtrl(
   }
 
   init();
-
-  $scope.$on('$destroy', function(){
-    mainDataListener();
-  });
 }
 
 HomeCtrl.$inject = [
@@ -52,5 +31,5 @@ HomeCtrl.$inject = [
   '$scope',
   '$rootScope',
   'api',
-  'dialogService'
+  'activeStore'
 ];
