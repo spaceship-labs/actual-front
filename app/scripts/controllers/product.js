@@ -29,7 +29,6 @@ function ProductCtrl(
 ) {
   var vm = this;
   var activeStoreWarehouse = false;
-  var mainDataListener = function(){};
   var activeQuotationListener = function(){};
 
   angular.extend(vm, {
@@ -118,9 +117,6 @@ function ProductCtrl(
       .catch(function(err){
         $log.error(err);
       });
-
-    //Unsuscribing  mainDataListener
-    mainDataListener();
   }
 
   function setUpDeliveries(deliveries){
@@ -285,8 +281,6 @@ function ProductCtrl(
 
 
   $scope.$on('$destroy', function(){
-    //unsuscribing listeners
-    mainDataListener();
     activeQuotationListener();
   });
 

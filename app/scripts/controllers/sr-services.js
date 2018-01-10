@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:SrServicesCtrl
- * @description
- * # SrServicesCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('SrServicesCtrl', SrServicesCtrl);
 
@@ -35,18 +27,7 @@ function SrServicesCtrl(
     scrollTo: scrollTo,
   });
 
-  var mainDataListener = function(){};
-
   init();
-  /*
-  if($rootScope.activeStore){
-    init();
-  }else{
-    mainDataListener = $rootScope.$on('activeStoreAssigned', function(ev){
-      init();
-    });
-  } 
-  */ 
 
   function init(){
     vm.search = {
@@ -65,14 +46,12 @@ function SrServicesCtrl(
     })
     .then(function(fProducts){
       vm.products = fProducts;
-      mainDataListener();
     })
     .catch(function(err){
       console.log(err);
       var error = err.data || err;
       error = error ? error.toString() : '';
       dialogService.showDialog('Hubo un error: ' + error );           
-      mainDataListener();
     });    
   }
 
@@ -117,13 +96,6 @@ function SrServicesCtrl(
         300
     );
   }
-
-  /*
-  $scope.$on('$destroy', function(){
-    mainDataListener();
-  });
-  */
-
 }
 
 SrServicesCtrl.$inject = [
