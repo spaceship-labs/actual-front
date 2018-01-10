@@ -66,7 +66,6 @@ function QuotationsEditCtrl(
     removeDetail: removeDetail,
     removeDetailsGroup: removeDetailsGroup,
     sendByEmail: sendByEmail,
-    showBigTicketDialog: showBigTicketDialog,
     showDetailGroupStockAlert: showDetailGroupStockAlert,
     toggleRecord: toggleRecord,
     deattachImage: deattachImage,
@@ -331,7 +330,6 @@ function QuotationsEditCtrl(
         dateTime: vm.newRecord.dateTime,
         eventType: vm.newRecord.eventType,
         notes: vm.newRecord.notes,
-        User: $rootScope.user.id,
         file: vm.newRecord.file
       };
 
@@ -690,49 +688,6 @@ function QuotationsEditCtrl(
     var sourceTypeName = sourceType ? sourceType.label : sourceTypeValue;
     return sourceTypeName;
   }
-
-
-
-  function showBigTicketDialog(ev){
-    var controller = BigTicketController;
-    var options = {
-      bigticketMaxPercentage: vm.quotation.bigticketMaxPercentage,
-      bigticketPercentage: vm.quotation.bigticketPercentage || 0
-    };
-    $mdDialog.show({
-      controller: [
-        '$scope',
-        '$mdDialog',
-        'options',
-        controller
-      ],
-      templateUrl: 'views/quotations/bigticket-dialog.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true,
-      fullscreen: false,
-      locals:{
-        options: options
-      }
-    })
-    .then(function(percentage) {
-      console.log('Big ticket aplicado');
-      vm.isLoading = true;
-      quotationService.update(vm.quotation.id, {bigticketPercentage: percentage})
-        .then(function(res){
-          var quotation = res.data;
-          console.log('res', res);
-          init(quotation.id, {reload:true});
-        })
-        .catch(function(err){
-          vm.isLoading = false;
-          console.log('err', err);
-        });
-    }, function() {
-      console.log('No autorizado');
-    });
-  }
-
 
   $scope.$on('$destroy', function(){
     mainDataListener();

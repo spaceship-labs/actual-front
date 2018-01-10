@@ -58,9 +58,6 @@
               class="discount-label"
             >
               -{{detailGroup.discountPercentPromos}}%
-              <span ng-if="detailGroup.bigticketDiscountPercentage > 0"> 
-                y -{{detailGroup.bigticketDiscountPercentage}}% adicional
-              </span>
             </p>
             <p 
               ng-if="vm.getUnitPriceWithDiscount(detailGroup.unitPrice, detailGroup.discountPercent) != detailGroup.unitPrice"
@@ -134,11 +131,6 @@
         <p class="bottom-text" ng-if="detailGroup.ewallet > 0">
           Beneficio monedero eléctronico: {{detailGroup.ewallet | currency}}
         </p>                  
-      </div>
-      <div ng-if="detailGroup.bigticketDiscountPercentage > 0">
-        <p class="bottom-text">
-          Descuento Big Ticket: -{{detailGroup.bigticketDiscountPercentage}}% adicional
-        </p>
       </div>
     </div>
     <!--END ITEM DATA-->
