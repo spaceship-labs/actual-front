@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:QuotationsEditCtrl
- * @description
- * # QuotationsEditCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('QuotationsEditCtrl', QuotationsEditCtrl);
 
@@ -33,7 +25,6 @@ function QuotationsEditCtrl(
   ENV
 ){
   var vm = this;
-  var mainDataListener = function(){};
   angular.extend(vm, {
     newRecord: {},
     api: api,
@@ -76,13 +67,7 @@ function QuotationsEditCtrl(
     ENV: ENV
   });
 
-  if($rootScope.activeStore){
-    init($routeParams.id);
-  }else{
-    mainDataListener = $rootScope.$on('activeStoreAssigned', function(e){
-      init($routeParams.id);
-    });
-  }
+  init($routeParams.id);
 
   $rootScope.$on('changedActiveQuotationSource', function(e, params){
     if(vm.quotation && params.source && params.sourceType){
@@ -92,11 +77,9 @@ function QuotationsEditCtrl(
   });
 
   function init(quotationId, options){
-    console.log('entered init.js', new Date());
+    options = options || {};
 
-    vm.activeStore       = $rootScope.activeStore;
     vm.promotionPackages = [];
-    options              = options || {};
     vm.isLoading = true;
     vm.isLoadingDetails = true;
 
@@ -124,11 +107,10 @@ function QuotationsEditCtrl(
 
         loadPaymentMethods();
 
-        return quotationService.populateDetailsWithProducts(
-          vm.quotation,{
-            populate: ['FilterValues']
-          }
-        );
+        return quotationService.populateDetailsWithProducts(vm.quotation,{
+          populate: ['FilterValues']
+        });
+
       })
       .then(function(details){
         vm.quotation.Details = details;
@@ -688,10 +670,6 @@ function QuotationsEditCtrl(
     var sourceTypeName = sourceType ? sourceType.label : sourceTypeValue;
     return sourceTypeName;
   }
-
-  $scope.$on('$destroy', function(){
-    mainDataListener();
-  });
 
 }
 
