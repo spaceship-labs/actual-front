@@ -364,7 +364,6 @@ function QuotationsEditCtrl(
       vm.isLoading = true;
       var params = {
         notes: extraNotes,
-        User: $rootScope.user.id,
         closeReason: closeReason,
         extraNotes: extraNotes
       };

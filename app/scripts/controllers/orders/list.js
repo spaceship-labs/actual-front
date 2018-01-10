@@ -123,15 +123,11 @@ function OrdersListCtrl(
     vm.isBroker = authService.isBroker($rootScope.user);
     
     if(vm.isBroker){
-      vm.filters = {
-        Broker: $rootScope.user.id,
-      };
+      vm.filters = {Broker: $rootScope.user.id};
     }
 
     else{
-      vm.filters = {
-        User: $rootScope.user.id,
-      };
+      vm.filters = {User: $rootScope.user.id};
       vm.listScopes = [
         {label: 'Mis ventas', value: $rootScope.user.id},
         {label: 'Todas las ventas', value:'none'}

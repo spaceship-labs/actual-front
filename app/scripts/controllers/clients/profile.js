@@ -223,10 +223,7 @@ function ClientProfileCtrl(
 
 
   function createQuotation(){
-    var params = {
-      User: $rootScope.user.id,
-      Client: vm.client.id,
-    };
+    var params = {Client: vm.client.id};
     vm.isLoading = true;
     quotationService.newQuotation(params);
   }

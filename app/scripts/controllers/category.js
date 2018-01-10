@@ -66,11 +66,11 @@ function CategoryCtrl(
     };
 
     loadCustomBrands();
-    getCategories();
+    loadCategories();
     doInitialProductsSearch();
   }
 
-  function getCategories() {
+  function loadCategories() {
     vm.isLoading = true;
     categoriesService.getCategoryByHandle($routeParams.category).then(function(res){
       vm.category = res.data;

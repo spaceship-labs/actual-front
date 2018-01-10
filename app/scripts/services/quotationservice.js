@@ -279,11 +279,9 @@
 
         }else{
           //Crear cotizacion con producto agregado
-          var params = {
-            User: $rootScope.user.id,
-            Details: [detail]
-          };
-          create(params).then(function(res){
+          var createParams = {Details: [detail]};
+
+          create(createParams).then(function(res){
             var quotation = res.data;
             if(quotation){
               setActiveQuotation(quotation.id);
@@ -317,15 +315,14 @@
 
         }else{
           //Crear cotizacion con producto agregado
-          var params = {
-            User: $rootScope.user.id,
+          var createParams = {
             Details: products.map(function(product){
               var detail = createDetailFromParams(product.id, product);
               return detail;
             })
           };
 
-          create(params).then(function(res){
+          create(createParams).then(function(res){
             var quotation = res.data;
             if(quotation){
               setActiveQuotation(quotation.id);
