@@ -170,7 +170,20 @@ angular
       .when('/ofertas', {
         templateUrl: 'views/offers.html',
         controller: 'OffersCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          activeStore: function($rootScope, $q){
+            if($rootScope.activeStore){
+              return $q.resolve($rootScope.activeStore);
+            }else{
+              var deferred = $q.defer();
+              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+                deferred.resolve(_activeStore);
+              });
+              return deferred.promise;
+            }
+          }
+        }        
       })
       .when('/politicas-de-entrega', {
         templateUrl: 'views/delivery-policy.html',

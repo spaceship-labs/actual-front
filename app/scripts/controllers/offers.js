@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:OffersCtrl
- * @description
- * # OffersCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('OffersCtrl', OffersCtrl);
 
@@ -21,7 +13,8 @@ function OffersCtrl(
   localStorageService,
   productService,
   deliveryService,
-  dialogService
+  dialogService,
+  activeStore
 ){
   var vm = this;
   angular.extend(vm,{
@@ -31,29 +24,22 @@ function OffersCtrl(
     activeStoreWarehouse: false
   });
 
-  var mainDataListener = function(){};
-
-  if($rootScope.activeStore){
-    init();
-  }else{
-    mainDataListener = $rootScope.$on('activeStoreAssigned', function(e){
-      init();
-    });
-  }    
 
   function init(){
     vm.isLoading = true;
-    var activeStoreId = localStorageService.get('activeStore');
-    packageService.getPackagesByStore(activeStoreId)
+    packageService.getPackagesByStore(activeStore.id)
       .then(function(res){
         vm.packages = res.data || [];
         vm.packages = vm.packages.map(function(p){
           p.image = api.baseUrl + '/uploads/groups/' + p.icon_filename;
           return p;
         });
-        return loadWarehouses($rootScope.activeStore);
+        return loadWarehouses(activeStore);
       })
-      .then(function(){
+      .then(function(warehouses){
+        vm.activeStoreWarehouse = _.findWhere(warehouses,{
+          id: activeStore.Warehouse
+        });
         vm.isLoading = false;
       })
       .catch(function(err){
@@ -61,13 +47,11 @@ function OffersCtrl(
       });
   }
 
-  function loadWarehouses(activeStore){
+  function loadWarehouses(){
     return api.$http.get('/company/find')
       .then(function(res) {
         vm.warehouses = res.data;
-        vm.activeStoreWarehouse = _.findWhere(vm.warehouses,{
-          id: activeStore.Warehouse
-        });
+        return res.data;
       });
   }
 
@@ -97,9 +81,8 @@ function OffersCtrl(
 
   function getProductsDeliveriesPromises(products){
     var promises    = [];
-    var activeStoreId = localStorageService.get('activeStore');
     for(var i = 0; i<products.length;i++){
-      promises.push(productService.delivery(products[i].ItemCode, activeStoreId));
+      promises.push(productService.delivery(products[i].ItemCode, activeStore.id));
     }
     return promises;
   }
@@ -198,12 +181,7 @@ function OffersCtrl(
     );
   }
 
-  $scope.$on('$destroy', function(){
-    //unsuscribing listeners
-    mainDataListener();
-  });
-
-  vm.init();
+  init();
 }
 
 OffersCtrl.$inject = [
@@ -217,5 +195,6 @@ OffersCtrl.$inject = [
   'localStorageService',
   'productService',
   'deliveryService',
-  'dialogService'
+  'dialogService',
+  'activeStore'
 ];
