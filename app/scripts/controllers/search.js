@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:SearchCtrl
- * @description
- * # SearchCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('SearchCtrl', SearchCtrl);
 
@@ -20,7 +12,8 @@ function SearchCtrl(
   $mdSidenav,
   productService, 
   dialogService,
-  productSearchService
+  productSearchService,
+  activeStore
 ){
   var vm = this;
 
@@ -30,7 +23,8 @@ function SearchCtrl(
     filters: [],
     searchValues: [],
     syncProcessActive: false,
-    enableSortOptions: true,    
+    enableSortOptions: true,  
+    activeStore: activeStore,  
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     societyFilters: productSearchService.SOCIETY_OPTIONS,
@@ -51,15 +45,7 @@ function SearchCtrl(
     setActiveSortOption: setActiveSortOption
   });
 
-  var mainDataListener = function(){};
-
-  if($rootScope.activeStore){
-    init();
-  }else{
-    mainDataListener = $rootScope.$on('activeStoreAssigned', function(ev){
-      init();
-    });
-  }  
+  init();
 
   function init(){
     var keywords = [''];
@@ -107,14 +93,12 @@ function SearchCtrl(
     })
     .then(function(fProducts){
       vm.products = fProducts;
-      mainDataListener();
     })
     .catch(function(err){
       console.log(err);
       var error = err.data || err;
       error = error ? error.toString() : '';
       dialogService.showDialog('Hubo un error: ' + error );           
-      mainDataListener();
     });    
   }
 
@@ -133,7 +117,6 @@ function SearchCtrl(
         dialogService.showDialog('Producto sincronizado');
         vm.totalResults = 1;
         vm.products = [formattedProduct];
-        mainDataListener();
       })
       .catch(function(err){
         console.log(err);
@@ -141,7 +124,6 @@ function SearchCtrl(
         error = error ? error.toString() : '';
         dialogService.showDialog('Hubo un error: ' + error );           
         vm.isLoading = false;
-        mainDataListener();
       });    
   }
 
@@ -426,11 +408,6 @@ function SearchCtrl(
         300
     );
   }
-
-  $scope.$on('$destroy', function(){
-    mainDataListener();
-  });
-
 }
 
 SearchCtrl.$inject = [
@@ -443,5 +420,6 @@ SearchCtrl.$inject = [
   '$mdSidenav',
   'productService',
   'dialogService',
-  'productSearchService'
+  'productSearchService',
+  'activeStore'
 ];

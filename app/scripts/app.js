@@ -103,7 +103,20 @@ angular
       .when('/search', {
         templateUrl: 'views/search.html',
         controller: 'SearchCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          activeStore: function($rootScope, $q){
+            if($rootScope.activeStore){
+              return $q.resolve($rootScope.activeStore);
+            }else{
+              var deferred = $q.defer();
+              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+                deferred.resolve(_activeStore);
+              });
+              return deferred.promise;
+            }
+          }
+        }                        
       })
       .when('/servicios', {
         templateUrl: 'views/sr-services.html',
