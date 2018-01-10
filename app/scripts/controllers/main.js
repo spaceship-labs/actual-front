@@ -1,14 +1,5 @@
 (function(){
-
   'use strict';
-
-  /**
-   * @ngdoc function
-   * @name dashexampleApp.controller:MainCtrl
-   * @description
-   * # MainCtrl
-   * Controller of the dashexampleApp
-   */
   function MainCtrl(
     api,
     $mdUtil,
@@ -38,14 +29,12 @@
   ){
     var vm = this;
     angular.extend(vm, {
-      cart: {},
       activeStore: {},
       isActiveBackdrop: false,
       isActiveCart: false,
       isActiveLogin: false,
       isLoadingLogin: false,
       searchType: 'search',
-      isMiActual: $rootScope.isMiActual,
       logInForm: {},
       mapTerminalCode: commonService.mapTerminalCode,
       menuCategories: [],
@@ -85,7 +74,6 @@
     function init(){
       vm.token = localStorageService.get('token');
       vm.user = localStorageService.get('user');
-      vm.activeStoreId = localStorageService.get('activeStore');
       $rootScope.user = vm.user;
       if ($location.search().itemcode) {
         vm.searchingItemCode = true;
@@ -577,14 +565,14 @@
       });
     }
 
-    $rootScope.successAuth = function(response){
-      var res = response.data;
-      vm.token = res.token;
-      vm.user  = res.user;
+    $rootScope.successAuth = function(res){
+      var responseData = res.data;
+
+      vm.user  = responseData.user;
       localStorageService.remove('currentQuotation');
-      localStorageService.set('token', res.token);
-      localStorageService.set('user' , res.user);
-      localStorageService.set('activeStore', res.user.activeStore);
+      localStorageService.set('token', responseData.token);
+      localStorageService.set('user' , responseData.user);
+      localStorageService.set('activeStore', responseData.user.activeStore);
       $window.location.reload();
     };
 

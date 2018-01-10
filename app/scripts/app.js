@@ -64,11 +64,6 @@ angular
         controller: 'HomeCtrl',
         controllerAs: 'vm'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'vm'
-      })
       .when('/category/:category', {
         templateUrl: 'views/category.html',
         controller: 'CategoryCtrl',
@@ -105,24 +100,12 @@ angular
       .when('/clients/create', {
         templateUrl: 'views/clients/create.html',
         controller: 'ClientCreateCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/clients/profile/:id', {
         templateUrl: 'views/clients/profile.html',
         controller: 'ClientProfileCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/clients/list', {
         templateUrl: 'views/clients/list.html',
@@ -139,24 +122,7 @@ angular
       .when('/user/profile', {
         templateUrl: 'views/users/profile.html',
         controller: 'UserProfileCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-      })
-      .when('/cart/:id', {
-        templateUrl: 'views/cart.html',
-        controller: 'CartCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/quotations/list', {
         templateUrl: 'views/quotations/list.html',
@@ -173,13 +139,7 @@ angular
       .when('/quotations/edit/:id', {
         templateUrl: 'views/quotations/edit.html',
         controller: 'QuotationsEditCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/dashboard', {
         templateUrl: 'views/dashboard/dashboard.html',
@@ -236,82 +196,24 @@ angular
         }
 
       })
-      .when('/commissions/list', {
-        templateUrl: 'views/commissions/list.html',
-        controller: 'CommissionsListCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-
-      })
       .when('/orders/list', {
         templateUrl: 'views/orders/list.html',
         controller: 'OrdersListCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-
+        controllerAs: 'vm'
       })
       .when('/checkout/order/:id', {
         templateUrl: 'views/checkout/order.html',
         controller: 'CheckoutOrderCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-      })
-      .when('/refunds/:id', {
-        templateUrl: 'views/refunds.html',
-        controller: 'CheckoutRefundsCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/users/brokerprofile', {
         templateUrl: 'views/users/broker.html',
         controller: 'UsersBrokerCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/ofertas', {
         templateUrl: 'views/offers.html',
         controller: 'OffersCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope){
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-      })
-      .when('/refunds/products/:id', {
-        templateUrl: 'views/refunds/products.html',
-        controller: 'RefundsProductsCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/refunds/payments/:id', {
-        templateUrl: 'views/refunds/payments.html',
-        controller: 'RefundsPaymentsCtrl',
         controllerAs: 'vm'
       })
       .when('/politicas-de-entrega', {
@@ -448,9 +350,6 @@ angular
     ]);
 
   })
-
-
-
   .run(function(
     Analytics,
     localStorageService, 
@@ -461,18 +360,18 @@ angular
     $rootScope,
     $route
   ){
-
-      authService.runPolicies();
-      //Configures $location.path second parameter, for no reloading
-      var original = $location.path;
-      $location.path = function (path, reload) {
-        if (reload === false) {
-          var lastRoute = $route.current;
-          var un = $rootScope.$on('$locationChangeSuccess', function () {
-            $route.current = lastRoute;
-            un();
-          });
-        }
-        return original.apply($location, [path]);
-      };
+    authService.runPolicies();
+    
+    //Configures $location.path second parameter, for no reloading
+    var original = $location.path;
+    $location.path = function (path, reload) {
+      if (reload === false) {
+        var lastRoute = $route.current;
+        var un = $rootScope.$on('$locationChangeSuccess', function () {
+          $route.current = lastRoute;
+          un();
+        });
+      }
+      return original.apply($location, [path]);
+    };
   });
