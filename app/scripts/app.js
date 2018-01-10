@@ -87,15 +87,7 @@ angular
       .when('/addquotation', {
         templateUrl: 'views/addquotation.html',
         controller: 'AddquotationCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/clients/create', {
         templateUrl: 'views/clients/create.html',
@@ -110,14 +102,7 @@ angular
       .when('/clients/list', {
         templateUrl: 'views/clients/list.html',
         controller: 'ClientsListCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/user/profile', {
         templateUrl: 'views/users/profile.html',
@@ -127,14 +112,7 @@ angular
       .when('/quotations/list', {
         templateUrl: 'views/quotations/list.html',
         controller: 'QuotationsListCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope,authService){
-            authService.dennyAccessBroker();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/quotations/edit/:id', {
         templateUrl: 'views/quotations/edit.html',
@@ -144,57 +122,22 @@ angular
       .when('/dashboard', {
         templateUrl: 'views/dashboard/dashboard.html',
         controller: 'DashboardCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
+        controllerAs: 'vm'
       })
       .when('/checkout/client/:id', {
         templateUrl: 'views/checkout/client.html',
         controller: 'CheckoutClientCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-
+        controllerAs: 'vm'
       })
       .when('/checkout/paymentmethod/:id', {
         templateUrl: 'views/checkout/payments.html',
         controller: 'CheckoutPaymentsCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-
+        controllerAs: 'vm'
       })
       .when('/continuequotation', {
         templateUrl: 'views/continuequotation.html',
         controller: 'ContinuequotationCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          isMiActual: function($rootScope, authService){
-            authService.dennyAccessBroker();
-            authService.dennyAccessStoreManager();
-            $rootScope.isMiActual = true;
-            return true;
-          }
-        }
-
+        controllerAs: 'vm'
       })
       .when('/orders/list', {
         templateUrl: 'views/orders/list.html',

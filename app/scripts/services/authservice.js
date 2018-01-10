@@ -140,9 +140,6 @@
       }       
 
       function runPolicies(){
-        var _token = localStorageService.get('token') || false;
-        var _user  = localStorageService.get('user')  || false;
-        var currentPath = $location.path();
         var publicPaths = [
           '/',
           '/forgot-password',
@@ -164,35 +161,87 @@
           '/manual-de-cuidados-y-recomendaciones/vinilos',
           '/manual-de-cuidados-y-recomendaciones/pintura-electrostatica'
         ];
+        
+        var storeManagerForbiddenPaths = [
+          '/addquotation',
+          '/dashboard',
+          '/checkout/client',
+          '/checkout/paymentmethod',
+          '/continuequotation'
+        ];
+
+        var brokerForbiddenPaths = [
+          '/clients/list',
+          '/quotations/list',
+          '/dashboard',
+          '/checkout/client',
+          '/checkout/paymentmethod',
+          '/continuequotation',
+          '/addquotation'
+        ];
+
         var isPublicPath = function(path){
           return publicPaths.indexOf(path) > -1;
         };
 
-        //Check if token is expired
-        if(_token){
-            var expiration = jwtHelper.getTokenExpirationDate(_token);
-            if(expiration <= new Date()){
-              logout(function(){
-                $location.path('/');
-              });
-            }else{
-              console.log('getUser');
-              userService.getUser(_user.id, {quickRead: true})
-                .then(function(res){
-                  _user = res.data.data;
-                  localStorageService.set('user', _user);
-                  $rootScope.user = _user;
-                })
-                .catch(function(err){
-                  console.log('err', err);
-                });
-            }
-        }else{
+        var isStoreManagerForbiddenPath = function(path){
+          var result = _.some(storeManagerForbiddenPaths, function(forbiddenPath){
+            return path.search(forbiddenPath) > -1;
+          });
+          return result;
+        };
+
+        var isBrokerForbiddenPath = function(path){
+          var result = _.some(brokerForbiddenPaths, function(forbiddenPath){
+            return path.search(forbiddenPath) > -1;
+          });
+          return result;
+        };
+
+        var token = localStorageService.get('token') || false;
+        var user  = localStorageService.get('user')  || false;
+        var currentPath = $location.path();
+
+        if(token){
+
+          //Check if token is expired
+          var expiration = jwtHelper.getTokenExpirationDate(token);
+          if(expiration <= new Date()){
+            return logout(function(){
+              $location.path('/');
+            });
+          }
+
+          if(user.role.name === USER_ROLES.STORE_MANAGER && isStoreManagerForbiddenPath(currentPath)){
+            return $location.path('/');            
+          }
+          else if(user.role.name === USER_ROLES.BROKER && isBrokerForbiddenPath(currentPath)){
+            return $location.path('/');            
+          }
+
+          //Gets user from API and save it to local storage
+          return saveMostRecentUserInfoToStorage(user);
+        }
+        else{
           logout();
           if(!isPublicPath(currentPath)){
             $location.path('/');
           }
         }
+      }
+
+      function saveMostRecentUserInfoToStorage(user){
+        return userService.getUser(user.id, {quickRead: true})
+          .then(function(res){
+            user = res.data.data;
+            localStorageService.set('user', user);
+            $rootScope.user = user;
+            return true;
+          })
+          .catch(function(err){
+            console.log('err saveMostRecentUserInfoToStorage', err);
+          });
+
       }      
 
     }
