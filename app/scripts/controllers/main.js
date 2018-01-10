@@ -36,7 +36,6 @@
       isLoadingLogin: false,
       searchType: 'search',
       logInForm: {},
-      mapTerminalCode: commonService.mapTerminalCode,
       menuCategories: [],
       pointersSources: quotationService.getPointersSources(),
       menuCategoriesOn: false,

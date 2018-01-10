@@ -47,7 +47,8 @@ function CheckoutOrderCtrl(
     invoiceLoadLimit: 5,
     invoiceLogInterval: false,    
     invoiceLogLoadCounter: 0,
-    invoiceLogLoadLimit: 5,    
+    invoiceLogLoadLimit: 5,  
+    mapTerminalCode: commonService.mapTerminalCode,  
     calculateBalance: orderService.calculateBalance,
     isUserAdmin: authService.isAdmin($rootScope.user)
   });
