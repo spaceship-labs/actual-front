@@ -169,12 +169,9 @@ function OffersCtrl(
 
   function showUnavailableStockMsg(products){
     var htmlProducts = products.reduce(function(acum, p){
-      //console.log('p', p);
-      //acum+="<li>"+p.name+'</li>';
       acum += p.name + '('+ p.ItemCode +'), ';
       return acum;
     }, '');
-    //htmlProducts += '</ul>';
     dialogService.showDialog(
       'No hay stock disponible de los siguientes productos: '
       + htmlProducts

@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:ProductCtrl
- * @description
- * # ProductCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('ProductCtrl', ProductCtrl);
 
@@ -32,10 +24,10 @@ function ProductCtrl(
   commonService,
   categoriesService,
   dialogService,
-  ENV
+  ENV,
+  activeStore
 ) {
   var vm = this;
-  var activeStoreId = localStorageService.get('activeStore'); 
   var activeStoreWarehouse = false;
   var mainDataListener = function(){};
   var activeQuotationListener = function(){};
@@ -56,19 +48,11 @@ function ProductCtrl(
     resetProductCartQuantity: resetProductCartQuantity,
     trustAsHtml: trustAsHtml,
     sas: commonService.getSasHash(),
-    ENV: ENV
+    ENV: ENV,
+    activeStore: activeStore
   });
-
-
-  if($rootScope.activeStore){
-    init($routeParams.id);
-  }else{
-    mainDataListener = $rootScope.$on('activeStoreAssigned', function(e){
-      init($routeParams.id);
-    });
-  }  
   
-  //init($routeParams.id);
+  init($routeParams.id);
 
   function init(productId, reload){
     console.log('start loading product', new Date());
@@ -102,14 +86,12 @@ function ProductCtrl(
           loadProductFilters(vm.product);
         }else{
           loadProductFilters(vm.product);
-          if($rootScope.activeStore){ 
-            loadWarehouses($rootScope.activeStore);
-            loadVariants(vm.product);
-          }
+          loadWarehouses(activeStore);
+          loadVariants(vm.product);
         }
 
         vm.isLoading = false;
-        return productService.delivery(productId, activeStoreId);
+        return productService.delivery(productId, activeStore.id);
       })
       .then(function(deliveries){
         if($rootScope.activeQuotation || $rootScope.isActiveQuotationLoaded){
@@ -164,7 +146,7 @@ function ProductCtrl(
   } 
 
   function loadVariants(product){
-    productService.loadVariants(product, $rootScope.activeStore)
+    productService.loadVariants(product,activeStore)
       .then(function(variants){
         vm.variants = variants;
         vm.hasVariants = checkIfHasVariants(vm.variants);
@@ -332,10 +314,6 @@ ProductCtrl.$inject = [
   'commonService',
   'categoriesService',
   'dialogService',
-  'ENV'
+  'ENV',
+  'activeStore'
 ];
-/*
-angular.element(document).ready(function() {
-  angular.bootstrap(document, ['actualApp']);
-});
-*/
