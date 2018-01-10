@@ -38,9 +38,7 @@
       loginForm: {},
       pointersSources: quotationService.getPointersSources(),
       pointersSidenav: [],
-      activateCartModal: activateCartModal,
       activateLoginModal: activateLoginModal,
-      deactivateCartModal: deactivateCartModal,
       deactivateLoginModal: deactivateLoginModal,
       getActiveModule: getActiveModule,
       getCategoryBackground: getCategoryBackground,
@@ -48,7 +46,6 @@
       logOut: logOut,
       removeCurrentQuotation: removeCurrentQuotation,
       signIn: signIn,
-      toggleCartModal: toggleCartModal,
       toggleLoginModal: toggleLoginModal,
       togglePointerSidenav: togglePointerSidenav,
       toggleProfileModal: toggleProfileModal,
@@ -390,7 +387,6 @@
         vm.isActiveLogin = true;
         vm.isActiveBackdrop = true;
         vm.isActiveProfileHeader = false;
-        vm.isActiveCart = false;
       }
     }
 
@@ -401,7 +397,6 @@
       }else{
         vm.isActiveProfileHeader = true;
         vm.isActiveBackdrop = true;
-        vm.isActiveCart = false;
       }
     }
 
@@ -422,27 +417,6 @@
         vm.isActiveLogin = false;
         vm.isActiveBackdrop = false;
       }
-    }
-
-    function toggleCartModal(){
-      if(vm.isActiveCart){
-        vm.isActiveCart = false;
-        vm.isActiveBackdrop = false;
-      }else{
-        vm.isActiveCart = true;
-        vm.isActiveBackdrop = true;
-        vm.isActiveProfileHeader = false;
-      }
-    }
-
-    function activateCartModal(){
-      vm.isActiveCart = true;
-      vm.isActiveBackdrop = true;
-    }
-
-    function deactivateCartModal(){
-      vm.isActiveCart = false;
-      vm.isActiveBackdrop = false;
     }
 
     function handleSignInError(err){
