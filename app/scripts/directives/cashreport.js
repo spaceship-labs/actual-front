@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name dashexampleApp.directive:cashReport
+ * @name actualApp.directive:cashReport
  * @description
  * # cashReport
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .directive('cashReport', function (
   	commonService, 
   	paymentService, 

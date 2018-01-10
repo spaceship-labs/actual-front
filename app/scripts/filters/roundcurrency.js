@@ -2,7 +2,7 @@
 	'use-strict';
 
 	angular
-		.module('dashexampleApp')
+		.module('actualApp')
 		.filter('roundCurrency', ['$filter',function($filter) {
 		  return function(input, up) {
 		  	

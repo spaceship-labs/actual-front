@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:SrServicesCtrl
+ * @name actualApp.controller:SrServicesCtrl
  * @description
  * # SrServicesCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('SrServicesCtrl', SrServicesCtrl);
 
 function SrServicesCtrl(

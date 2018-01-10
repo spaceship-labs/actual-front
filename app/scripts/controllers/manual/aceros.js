@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:ManualAcerosCtrl
+ * @name actualApp.controller:ManualAcerosCtrl
  * @description
  * # ManualAcerosCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('ManualAcerosCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

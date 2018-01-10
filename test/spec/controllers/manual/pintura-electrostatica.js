@@ -3,7 +3,7 @@
 describe('Controller: ManualPinturaElectrostaticaCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('dashexampleApp'));
+  beforeEach(module('actualApp'));
 
   var ManualPinturaElectrostaticaCtrl,
     scope;

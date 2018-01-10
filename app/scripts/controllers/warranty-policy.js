@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:WarrantyPolicyCtrl
+ * @name actualApp.controller:WarrantyPolicyCtrl
  * @description
  * # WarrantyPolicyCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('WarrantyPolicyCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

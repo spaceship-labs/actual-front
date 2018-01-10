@@ -662,7 +662,7 @@
 
   }
 
-  angular.module('dashexampleApp').controller('MainCtrl', MainCtrl);
+  angular.module('actualApp').controller('MainCtrl', MainCtrl);
   MainCtrl.$inject = [
     'api',
     '$mdUtil',

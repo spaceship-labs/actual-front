@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:CheckoutPaymentsCtrl
+ * @name actualApp.controller:CheckoutPaymentsCtrl
  * @description
  * # CheckoutPaymentsCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('CheckoutPaymentsCtrl', CheckoutPaymentsCtrl);
 
 function CheckoutPaymentsCtrl(

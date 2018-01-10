@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:ProductCtrl
+ * @name actualApp.controller:ProductCtrl
  * @description
  * # ProductCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('ProductCtrl', ProductCtrl);
 
 function ProductCtrl(
@@ -336,6 +336,6 @@ ProductCtrl.$inject = [
 ];
 /*
 angular.element(document).ready(function() {
-  angular.bootstrap(document, ['dashexampleApp']);
+  angular.bootstrap(document, ['actualApp']);
 });
 */

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('dashexampleApp')
+        .module('actualApp')
         .directive('tableList', tableList);
 
     var controller = function($scope, $rootScope , $timeout, DTOptionsBuilder, DTColumnBuilder, dialogService, $compile, $filter){

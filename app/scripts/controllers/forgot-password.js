@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('ForgotPasswordCtrl', ForgotPasswordCtrl);
 
 function ForgotPasswordCtrl(

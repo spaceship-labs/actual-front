@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('dashexampleApp')
+    .module('actualApp')
     .factory('cartService', cartService);
 
   function cartService(

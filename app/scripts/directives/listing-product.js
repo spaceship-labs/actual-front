@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name dashexampleApp.directive:listingProduct
+ * @name actualApp.directive:listingProduct
  * @description
  * # listingProduct
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .directive('listingProduct',['$rootScope', '$timeout','api', 'commonService' ,function ($rootScope,$timeout, api, commonService) {
     return {
       scope:{

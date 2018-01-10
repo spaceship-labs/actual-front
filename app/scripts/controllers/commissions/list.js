@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:CommissionsListCtrl
+ * @name actualApp.controller:CommissionsListCtrl
  * @description
  * # CommissionsListCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('CommissionsListCtrl', CommissionsListCtrl);
 
 function CommissionsListCtrl(

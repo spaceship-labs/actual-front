@@ -3,7 +3,7 @@
 describe('Controller: ManualPielesCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('dashexampleApp'));
+  beforeEach(module('actualApp'));
 
   var ManualPielesCtrl,
     scope;

@@ -3,7 +3,7 @@
 describe('Controller: SalesListCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('dashexampleApp'));
+  beforeEach(module('actualApp'));
 
   var SalesListCtrl,
     scope;

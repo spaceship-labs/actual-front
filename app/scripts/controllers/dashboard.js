@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:DashboardCtrl
+ * @name actualApp.controller:DashboardCtrl
  * @description
  * # DashboardCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('DashboardCtrl', DashboardCtrl);
 
 function DashboardCtrl(

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('dashexampleApp')
+        .module('actualApp')
         .factory('dialogService', dialogService);
 
     function dialogController($scope, $mdDialog, params){

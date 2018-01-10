@@ -3,7 +3,7 @@
 describe('Controller: CheckoutPaymentmethodCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('dashexampleApp'));
+  beforeEach(module('actualApp'));
 
   var CheckoutPaymentmethodCtrl,
     scope;

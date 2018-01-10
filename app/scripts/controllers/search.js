@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:SearchCtrl
+ * @name actualApp.controller:SearchCtrl
  * @description
  * # SearchCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('SearchCtrl', SearchCtrl);
 
 function SearchCtrl(

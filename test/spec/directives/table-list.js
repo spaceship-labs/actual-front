@@ -3,7 +3,7 @@
 describe('Directive: tableList', function () {
 
   // load the directive's module
-  beforeEach(module('dashexampleApp'));
+  beforeEach(module('actualApp'));
 
   var element,
     scope;

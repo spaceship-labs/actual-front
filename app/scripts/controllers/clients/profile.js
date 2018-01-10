@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:ClientProfileCtrl
+ * @name actualApp.controller:ClientProfileCtrl
  * @description
  * # ClientProfileCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('ClientProfileCtrl', ClientProfileCtrl);
 
 function ClientProfileCtrl(

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:ClientCreateCtrl
+ * @name actualApp.controller:ClientCreateCtrl
  * @description
  * # ClientCreateCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('ClientCreateCtrl', ClientCreateCtrl);
 
 function ClientCreateCtrl(

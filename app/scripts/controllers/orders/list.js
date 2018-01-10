@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:OrdersListCtrl
+ * @name actualApp.controller:OrdersListCtrl
  * @description
  * # OrdersListCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('OrdersListCtrl', OrdersListCtrl);
 
 function OrdersListCtrl(

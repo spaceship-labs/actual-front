@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name dashexampleApp
+ * @name actualApp
  * @description
- * # dashexampleApp
+ * # actualApp
  *
  * Main module of the application.
  */
 angular
-  .module('dashexampleApp', [
+  .module('actualApp', [
     'ngAnimate',
     'ngStorage',
     'ngResource',

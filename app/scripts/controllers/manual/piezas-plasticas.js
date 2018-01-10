@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:ManualPiezasPlasticasCtrl
+ * @name actualApp.controller:ManualPiezasPlasticasCtrl
  * @description
  * # ManualPiezasPlasticasCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('ManualPiezasPlasticasCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

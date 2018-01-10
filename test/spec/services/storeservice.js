@@ -3,7 +3,7 @@
 describe('Service: storeService', function () {
 
   // load the service's module
-  beforeEach(module('dashexampleApp'));
+  beforeEach(module('actualApp'));
 
   // instantiate service
   var storeService;

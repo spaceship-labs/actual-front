@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('dashexampleApp')
+        .module('actualApp')
         .factory('quotationService', quotationService);
 
     /** @ngInject */

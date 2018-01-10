@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:OffersCtrl
+ * @name actualApp.controller:OffersCtrl
  * @description
  * # OffersCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('OffersCtrl', OffersCtrl);
 
 function OffersCtrl(

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:AddquotationCtrl
+ * @name actualApp.controller:AddquotationCtrl
  * @description
  * # AddquotationCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('AddquotationCtrl', AddquotationCtrl);
 
 function AddquotationCtrl(

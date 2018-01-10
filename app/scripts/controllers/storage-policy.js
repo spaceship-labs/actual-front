@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dashexampleApp.controller:StoragePolicyCtrl
+ * @name actualApp.controller:StoragePolicyCtrl
  * @description
  * # StoragePolicyCtrl
- * Controller of the dashexampleApp
+ * Controller of the actualApp
  */
-angular.module('dashexampleApp')
+angular.module('actualApp')
   .controller('StoragePolicyCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
