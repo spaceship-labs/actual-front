@@ -35,10 +35,8 @@
       isActiveLogin: false,
       isLoadingLogin: false,
       searchType: 'search',
-      logInForm: {},
-      menuCategories: [],
+      loginForm: {},
       pointersSources: quotationService.getPointersSources(),
-      menuCategoriesOn: false,
       pointersSidenav: [],
       activateCartModal: activateCartModal,
       activateLoginModal: activateLoginModal,
@@ -52,7 +50,6 @@
       signIn: signIn,
       toggleCartModal: toggleCartModal,
       toggleLoginModal: toggleLoginModal,
-      toggleMenuCategory: toggleMenuCategory,
       togglePointerSidenav: togglePointerSidenav,
       toggleProfileModal: toggleProfileModal,
       getStores: getStores,
@@ -87,7 +84,6 @@
         .then(function(res){
           vm.isLoadingCategoriesTree = false;
           vm.categoriesTree = res.data;
-          vm.menuCategories = buildMenuCategories(vm.categoriesTree);
         })
         .catch(function(err){
           console.log(err);
@@ -167,40 +163,6 @@
       for (var i = 0; i < 9; i++) {
         vm.pointersSidenav.push({selected:false});
       }
-    }
-
-    function buildMenuCategories(categoryTree){
-      var menuCategories = [];
-      menuCategories.push( _.findWhere( categoryTree, {Handle: 'muebles'} ) );
-      menuCategories.push( _.clone(_.findWhere( menuCategories[0].Childs, {Handle:'muebles-para-oficina'} ) ) );
-      menuCategories.push( _.clone(_.findWhere( menuCategories[0].Childs, {Handle:'muebles-de-jardin'} ) ) );
-      menuCategories.push( _.findWhere(categoryTree, {Handle: 'ninos'} ) );
-      menuCategories.push( _.findWhere(categoryTree, {Handle: 'bebes'}  ) );
-      menuCategories.push( _.findWhere(categoryTree, {Handle: 'ambientes'} ) );
-      menuCategories.push( _.findWhere(categoryTree, {Handle: 'ofertas'}  ) );
-      return menuCategories;
-    }
-
-
-    function toggleMenuCategory(index){
-      vm.menuCategories.forEach(function(category, i){
-        if(i !== index){
-          category.isActive = false;
-          category.Childs.forEach(function (subcategory){
-            subcategory.isActive = false;
-          });
-        }
-      });
-      vm.menuCategories[index].isActive = !vm.menuCategories[index].isActive;
-    }
-
-    function toggleMenuSubCategory(index, category){
-      category.Childs.forEach(function(subcategory, i){
-        if(i !== index){
-          subcategory.isActive = false;
-        }
-      });
-      category.isActive = !category.isActive;
     }
 
     function loadMainData(){
@@ -350,11 +312,6 @@
 
       }
 
-      //loadMainData();
-      vm.menuCategoriesOn = false;
-      vm.menuCategories.forEach(function(category){
-        category.isActive = false;
-      });
       vm.activeModule = vm.getActiveModule();
       if($location.search().itemcode){
         vm.searchingItemCode = true;
@@ -546,9 +503,9 @@
     function signIn(){
       vm.isLoadingLogin = true;
       var formData = {
-        email: vm.logInForm.email,
-        password: vm.logInForm.password,
-        activeStore: vm.logInForm.activeStoreId
+        email: vm.loginForm.email,
+        password: vm.loginForm.password,
+        activeStore: vm.loginForm.activeStoreId
       };
       authService.signIn(
         formData, 
@@ -583,7 +540,6 @@
     }
 
     $scope.$on('$routeChangeStart', function(next, current) {
-      vm.menuCategoriesOn = false;
       vm.isActiveBackdrop = false;
       vm.isActiveLogin = false;
       vm.isActiveCart = false;
@@ -594,7 +550,7 @@
       userService.getStores(email).then(function(stores){
         vm.stores = stores;
         if(vm.stores.length > 0){
-          vm.logInForm.activeStoreId = vm.stores[0].id;
+          vm.loginForm.activeStoreId = vm.stores[0].id;
         }
       });
     }

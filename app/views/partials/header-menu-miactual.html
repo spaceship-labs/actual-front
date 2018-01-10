@@ -5,7 +5,7 @@
           <img src="images/logo.png" alt="Actual Group">
         </a>
       </div>
-      <nav flex="80" layout="row" ng-mouseover="main.menuCategoriesOn = false" class="nav-categories">
+      <nav flex="80" layout="row" class="nav-categories">
         <a  href="/dashboard" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'dashboard'}">
           <i class="icon-dashboard"></i>
           <span class="nav-categories-item-text" href="#">Mi muro</span>
@@ -39,16 +39,5 @@
 
       </nav>
     </div>
-
-    <div class="container container-xxlg absolute-menus" layout="row">
-      <div flex="100" class="menu-categories-wrapper">
-        <ng-include src="'views/menus/menu-categories.html'"></ng-include>
-      </div>
-
-      <!--<ng-include src="'views/menus/categories/hogar/menu-subcategories.html'"></ng-include>-->
-
-    </div>
-
-
 
   </div>
