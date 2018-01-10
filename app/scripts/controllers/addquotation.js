@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:AddquotationCtrl
- * @description
- * # AddquotationCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('AddquotationCtrl', AddquotationCtrl);
 
@@ -25,12 +17,11 @@ function AddquotationCtrl(
 
   function queryClients(term){
     if(term !== '' && term){
-      var deferred = $q.defer();
       var params = {term: term, autocomplete: true};
-      clientService.getClients(1,params).then(function(res){
-        deferred.resolve(res.data.data);
-      });
-      return deferred.promise;
+      return clientService.getClients(1,params)
+        .then(function(res){
+          return res.data.data;
+        });
     }
     else{
       return [];
@@ -39,34 +30,23 @@ function AddquotationCtrl(
 
   function selectedItemChange(item){
     if(item && item.id){
-      vm.createQuotation(item.id);
+      createQuotation(item.id);
     }
   }
 
   function addQuotationAndClient(){
-    createQuotation(null, {createClient:true});
+    createQuotation(null, {createClient: true});
   }
 
   function createQuotation(clientId, options){
     options = options || {};
-    var params = {
-      User: $rootScope.user.id
-    };
-    
+    var params = {};
     if(clientId) {
       params.Client = clientId;
     }
     
     vm.isLoading = true;
-    var createClient = false;
-
-    if(options.createClient){
-      createClient =  true;
-    }
-
-    quotationService.newQuotation(params, {
-      createClient: createClient
-    });
+    quotationService.newQuotation(params, {createClient: options.createClient});
   }
 }
 AddquotationCtrl.$inject = [
