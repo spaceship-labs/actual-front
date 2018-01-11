@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name actualApp.controller:OrdersListCtrl
- * @description
- * # OrdersListCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('OrdersListCtrl', OrdersListCtrl);
 
