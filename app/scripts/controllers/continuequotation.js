@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:ContinuequotationCtrl
- * @description
- * # ContinuequotationCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('ContinuequotationCtrl', ContinuequotationCtrl);
 
@@ -21,12 +13,11 @@ function ContinuequotationCtrl($location,$routeParams, $rootScope, $q ,productSe
 
   function queryClients(term){
     if(term !== '' && term){
-      var deferred = $q.defer();
       var params = {term: term, autocomplete: true};
-      clientService.getClients(1,params).then(function(res){
-        deferred.resolve(res.data.data);
-      });
-      return deferred.promise;
+      return clientService.getClients(1,params)
+        .then(function(res){
+          return res.data.data;
+        });
     }
     else{
       return [];
