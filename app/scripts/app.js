@@ -64,7 +64,11 @@ angular
         controller: 'HomeCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q){
+          activeStore: function($rootScope, $q, authService){
+            if(!authService.isUserSignedIn()){
+              return $q.resolve(false);
+            }
+
             if($rootScope.activeStore){
               return $q.resolve($rootScope.activeStore);
             }else{

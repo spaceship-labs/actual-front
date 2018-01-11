@@ -40,11 +40,16 @@
         isSeller: isSeller,
         runPolicies: runPolicies,
         showUnauthorizedDialogIfNeeded: showUnauthorizedDialogIfNeeded,
-        USER_ROLES: USER_ROLES
+        USER_ROLES: USER_ROLES,
+        isUserSignedIn: isUserSignedIn
       };
 
       return service;
 
+      function isUserSignedIn(){
+        var user = localStorageService.get('user');
+        return user ? true : false;
+      }
 
       function showUnauthorizedDialogIfNeeded(err){
         if(err.status === 401){
