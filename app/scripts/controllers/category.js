@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:CategoryCtrl
- * @description
- * # CategoryCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('CategoryCtrl', CategoryCtrl);
 
