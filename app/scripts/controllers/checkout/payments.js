@@ -40,7 +40,6 @@ function CheckoutPaymentsCtrl(
   angular.extend(vm,{
     api: api,
     applyTransaction: applyTransaction,
-    authorizeOrder: authorizeOrder,
     areMethodsDisabled: checkoutService.areMethodsDisabled,
     cancelPayment     : cancelPayment,
     calculateRemaining: calculateRemaining,
@@ -444,28 +443,6 @@ function CheckoutPaymentsCtrl(
         console.log(err);
         dialogService.showDialog('Error en la autorización');
       });
-  }
-
-  function authorizeOrder(ev, method, ammount) {
-    if( checkoutService.getPaidPercentage(vm.quotation) >= 60 ){
-      var controller  = AuthorizeOrderController;
-      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
-      $mdDialog.show({
-        controller: ['$scope', '$mdDialog', controller],
-        templateUrl: 'views/checkout/authorize-dialog.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: true,
-        fullscreen: useFullScreen,
-      })
-      .then(function(manager) {
-        authManager(manager);
-      }, function() {
-        console.log('No autorizado');
-      });
-    }else{
-      commonService.showDialog('La suma pagada debe ser mayor o igual al 60% del total de la orden');
-    }
   }
 
   function createOrder(form){

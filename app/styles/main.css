@@ -4010,36 +4010,6 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 
 
 /*---------------/
-  #AUTHORIZE DIALOG
-/*--------------*/
-.authorize-dialog .authorize-dialog-inner{
-  padding: 15px 20px;
-  max-width: 600px;
-}
-.authorize-dialog h2{
-  font-weight: 400;
-  font-size: 18px;
-  margin: 4px 0;
-}
-.authorize-dialog hr{
-  height: 2px;
-  background: #000;
-  border:0;
-  margin: 10px 0;
-}
-.authorize-dialog h2 i{
-  color: #33BA2C;
-  font-size: 24px;
-  vertical-align: middle;
-  margin-right: 3px;
-}
-.authorize-dialog .text-note{
-  margin: 8px 0;
-  font-size: 12px;
-}
-
-
-/*---------------/
   #CHECKOUT CLIENT INFO
 /*---------------*/
 .client-checkout .input-element label{margin-bottom: 5px;}
