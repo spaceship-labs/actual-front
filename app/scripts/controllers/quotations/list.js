@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:QuotationsListCtrl
- * @description
- * # QuotationsListCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('QuotationsListCtrl', QuotationsListCtrl);
 

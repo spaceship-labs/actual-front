@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:UserProfileCtrl
- * @description
- * # UserProfileCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('UserProfileCtrl', UserProfileCtrl);
 
@@ -20,9 +12,7 @@ function UserProfileCtrl(
   userService,
   authService, 
   localStorageService,
-  paymentService,
-  storeService,
-  dialogService
+  paymentService
 ){
   var vm = this;
   angular.extend(vm, {

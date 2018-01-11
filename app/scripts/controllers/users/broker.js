@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:UsersBrokerCtrl
- * @description
- * # UsersBrokerCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('UsersBrokerCtrl', UsersBrokerCtrl);
 
