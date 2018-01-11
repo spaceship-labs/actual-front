@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:ClientProfileCtrl
- * @description
- * # ClientProfileCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('ClientProfileCtrl', ClientProfileCtrl);
 
@@ -353,24 +345,5 @@ function ClientProfileCtrl(
 
   }
 
-
-
-  function openMapDialog(){
-    $mdDialog.show({
-      controller: ['$scope',MapDialogController],
-      templateUrl: 'views/clients/dialog-map.html',
-      parent: angular.element(document.body),
-      targetEvent: null,
-      clickOutsideToClose:true,
-    })
-    .then(function(answer) {
-      $scope.status = 'You said the information was "' + answer + '".';
-    }, function() {
-      $scope.status = 'You cancelled the dialog.';
-    });
-  }
-
   init();
-
-
 }

@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:ClientCreateCtrl
- * @description
- * # ClientCreateCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('ClientCreateCtrl', ClientCreateCtrl);
 
