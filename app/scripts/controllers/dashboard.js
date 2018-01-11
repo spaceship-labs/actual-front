@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:DashboardCtrl
- * @description
- * # DashboardCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('DashboardCtrl', DashboardCtrl);
 
