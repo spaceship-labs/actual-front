@@ -22,7 +22,8 @@ function QuotationsEditCtrl(
   deliveryService,
   authService,
   siteService,
-  ENV
+  ENV,
+  activeStore
 ){
   var vm = this;
   angular.extend(vm, {
@@ -64,7 +65,8 @@ function QuotationsEditCtrl(
     setEstimatedCloseDate: setEstimatedCloseDate,
     getSourceName: getSourceName,
     getSourceTypeName: getSourceTypeName,
-    ENV: ENV
+    ENV: ENV,
+    activeStore: activeStore
   });
 
   init($routeParams.id);
@@ -693,5 +695,6 @@ QuotationsEditCtrl.$inject = [
   'deliveryService',
   'authService',
   'siteService',
-  'ENV'
+  'ENV',
+  'activeStore'
 ];
