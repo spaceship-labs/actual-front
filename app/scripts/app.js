@@ -30,7 +30,6 @@ angular
     'infinite-scroll',
     'ngPhotoswipe',
     'ui.utils.masks',
-    'leaflet-directive',
     'localytics.directives',
     'ng-currency',
     'angular-google-analytics',
