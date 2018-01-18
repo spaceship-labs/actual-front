@@ -260,11 +260,12 @@
         return api.$http.post(url, params);
       }
 
-      function delivery(productCode, storeId) {
+      function delivery(productCode, storeId, activeQuotationId) {
         var url    = '/shipping/product';
         var params = {
           productCode: productCode,
-          storeId: storeId
+          storeId: storeId,
+          activeQuotationId: activeQuotationId
         };
         return api.$http.get(url, params).then(function(res){
           return res.data;

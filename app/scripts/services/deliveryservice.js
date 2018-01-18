@@ -12,33 +12,7 @@
     	groupDetails: groupDetails,
     	getFarthestDelivery: getFarthestDelivery,
     	sortDeliveriesByHierarchy: sortDeliveriesByHierarchy,
-    	substractDeliveriesStockByQuotationDetails: substractDeliveriesStockByQuotationDetails,
     };
-
-    function substractDeliveriesStockByQuotationDetails(details, deliveries, productId){
-    	details = details.filter(function(detail){
-    		var detailProductId;
-    		if(angular.isObject(detail.Product)){
-    			detailProductId = detail.Product.id;
-    		}else{
-    			detailProductId = detail.Product;
-    		}
-    		return detailProductId === productId;
-    	});
-
-    	for(var i = 0; i<deliveries.length; i++){
-    		for(var j=0; j<details.length; j++){
-    			if(
-  					details[j].shipCompany === deliveries[i].company && 
-  					details[j].shipCompanyFrom === deliveries[i].companyFrom  					
-    			){
-    				deliveries[i].available -= details[j].quantity;
-    			}
-    		}
-    	}
-    	
-    	return deliveries;
-    }
 
     function groupDetails(details){
     	var groups = [];

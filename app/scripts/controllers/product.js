@@ -4,7 +4,6 @@ angular.module('actualApp')
 
 function ProductCtrl(
   productService,
-  $scope,
   $log,
   $location,
   $rootScope,
@@ -29,7 +28,6 @@ function ProductCtrl(
 ) {
   var vm = this;
   var activeStoreWarehouse = false;
-  var activeQuotationListener = function(){};
 
   angular.extend(vm, {
     customFullscreen: ($mdMedia('xs') || $mdMedia('sm') ),
@@ -90,21 +88,11 @@ function ProductCtrl(
         }
 
         vm.isLoading = false;
-        return productService.delivery(productId, activeStore.id);
+        var activeQuotationId = quotationService.getActiveQuotationId();
+        return productService.delivery(productId, activeStore.id, activeQuotationId);
       })
       .then(function(deliveries){
-        if($rootScope.activeQuotation || $rootScope.isActiveQuotationLoaded){
-          setUpDeliveries(deliveries);
-        }else{
-          activeQuotationListener = $rootScope.$on('activeQuotationAssigned', function(e){
-            setUpDeliveries(deliveries);
-          });
-        }          
-
-        return productService.addSeenTime(vm.product.ItemCode);
-      })
-      .then(function(seenTime){
-        //console.log(seenTime);
+        setUpDeliveries(deliveries);
       })
       .catch(function(err){
         console.log(err);
@@ -121,24 +109,18 @@ function ProductCtrl(
 
   function setUpDeliveries(deliveries){
     deliveries = $filter('orderBy')(deliveries, 'date');        
-    if($rootScope.activeQuotation){
-      deliveries = deliveryService.substractDeliveriesStockByQuotationDetails(
-        $rootScope.activeQuotation.Details, 
-        deliveries,
-        vm.product.id
-      );
-    }
+
     vm.deliveries  = deliveries;
     vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
     vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
     vm.available = deliveryService.getAvailableByDeliveries(deliveries);
+
     if(vm.deliveries && vm.deliveries.length > 0){
       vm.productCart.deliveryGroup = vm.deliveriesGroups[0];
     }else{
       vm.productCart.quantity = 0;
     }
     vm.isLoadingDeliveries = false;
-    activeQuotationListener();  
   } 
 
   function loadVariants(product){
@@ -275,17 +257,10 @@ function ProductCtrl(
   function isSRService(product){
     return product.Service === 'Y';
   }
-
-
-  $scope.$on('$destroy', function(){
-    activeQuotationListener();
-  });
-
 }
 
 ProductCtrl.$inject = [
   'productService',
-  '$scope',
   '$log',
   '$location',
   '$rootScope',
