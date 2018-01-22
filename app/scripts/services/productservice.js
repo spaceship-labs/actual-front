@@ -315,6 +315,7 @@
                   var values = _.where( product.FilterValues, { Filter: filter.id } );
                   values.forEach(function(val){
 
+                    /*
                     if($rootScope.activeQuotation){
                       product = substractProductStockByQuotationDetails(
                         product,
@@ -324,6 +325,7 @@
                     }else{
                       console.log('no $rootScope.activeQuotation');
                     }
+                    */
 
                     val.product = product.ItemCode;
                     val.stock   = product.Available;
