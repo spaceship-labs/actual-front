@@ -28,6 +28,7 @@ function ClientCreateCtrl(
     companyNameMaxLength: 50,
     isLoadingProgress: false,
     intervalProgress: false,
+    cfdiUseList: clientService.getCFDIUseList(),    
     titles          : clientService.getTitles(),
     genders         : clientService.getGenders(),
     states          : [],

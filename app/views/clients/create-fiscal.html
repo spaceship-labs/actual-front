@@ -6,7 +6,7 @@
   <div class="input-element">
     <label class="rfc-label"><strong>Registro Federal de Contribuyente (RFC)  <span class="ast">*</span></strong></label>
     <div class="input-element-inner">
-      <input type="text" ng-model="vm.LicTradNum" required>
+      <input type="text" ng-model="vm.client.LicTradNum" required>
     </div>
   </div>
 
@@ -32,6 +32,18 @@
           class="input-note">
           Caracteres <strong>{{vm.createFiscalForm.companyName.$viewValue.length || 0}} de {{ vm.fiscalAddressConstraints.companyName.max }}</strong>        </p>
       </div>
+      <div flex="40" class="input-element select-element-wrapper">
+        <label><strong>Uso CFDI</strong></label>
+        <select
+          class="select-element"
+          ng-model="vm.client.cfdiUse"
+          ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.cfdiUseList | orderBy:'label'"
+        >
+        </select>
+        
+      </div>
+
+
     </div>
 
     <div layout="row">
