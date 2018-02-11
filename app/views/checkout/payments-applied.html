@@ -1,6 +1,4 @@
 <section class="method-block">
-
-  <!--PAYMENTS APPLIED-->
   <div ng-if="vm.isLoadingPayments" layout="row" layout-align="center center">
     <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
   </div>
@@ -16,8 +14,6 @@
           <strong>{{payment.name}}</strong>
           <p class="pull-left">
             {{payment.description}}
-            <!--<span ng-if="payment.isCancelled">| Cancelado</span>
-            <span ng-if="payment.isCancellation">| Cancelación</span>-->
           </p>
         </div>
 
@@ -29,7 +25,6 @@
         </div>
 
         <div class="method-data" flex="60" layout="row">
-          
           <div flex="33" ng-show="payment.terminal">
             <p><strong>TERMINAL</strong></p>
             <p>{{payment.terminal}}</p>
@@ -52,39 +47,9 @@
           class="payment-icon-wrap"
         >
           <i class="icon-checkmark payment-icon"></i>
-
-          <!--<a href="#" ng-click="vm.cancelPayment(payment)">
-            <img src="images/cancel.png" class="payment-img-icon">
-          </a>-->
-
         </div>
-
-        <!--
-        <div
-          ng-if="payment.isCancelled && !payment.isCancellation"
-          flex="10"
-          class="payment-icon-wrap"
-        >
-          <p class="cancelled-label">Cancelado</p>
-        </div>
-
-        <div
-          ng-if="payment.isCancellation"
-          flex="10"
-          class="payment-icon-wrap"
-        >
-          <img src="images/minus.png" class="payment-img-icon">
-        </div>
-        -->
-
-
       </div>
-
-
     </li>
 
   </ul>
-  <!--END PAYMENTS APPLIED-->
-
-
 </section>

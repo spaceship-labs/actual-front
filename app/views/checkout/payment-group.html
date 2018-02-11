@@ -23,7 +23,7 @@
           </strong>
         </md-radio-button>
         <span
-          ng-if="!method.msi && method.type != 'single-payment-terminal' "
+          ng-if="!method.msi && method.type != 'single-payment-terminal' && method.type != 'credit-card' && method.type != 'debit-card' "
           class="method-text"
         >
           {{method.description}}

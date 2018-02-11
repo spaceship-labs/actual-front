@@ -241,8 +241,6 @@ angular.module('actualApp')
 
 
 			  function mapMethodGroupsWithPayments(payments, methodGroups){
-			  	console.log('methodGroups', methodGroups);
-
 			    var groups = [];
 			    var auxGroups = _.groupBy(payments, function(payment){
 			      if( $scope.isTransferOrDeposit(payment) ){
