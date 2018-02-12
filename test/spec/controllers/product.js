@@ -17,7 +17,9 @@ describe('Controller: ProductCtrl', function () {
     });
   }));
 
+  /*
   it('should attach a list of awesomeThings to the scope', function () {
     expect(ProductCtrl.awesomeThings.length).toBe(3);
   });
+  */
 });

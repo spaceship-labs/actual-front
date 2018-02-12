@@ -8,7 +8,13 @@ module.exports = {
     },
     "globals": {
         "moment": true,
-        "angular": true
+        "angular": true,
+        "describe": true,
+        "beforeEach": true,
+        "it": true,
+        "inject": true,
+        "expect": true,
+        "module": true
     },
     "rules":{
         "no-console": 0

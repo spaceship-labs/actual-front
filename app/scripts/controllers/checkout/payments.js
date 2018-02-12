@@ -38,6 +38,8 @@ function CheckoutPaymentsCtrl(
     isActiveGroup: checkoutService.isActivePaymentGroup,
     isActiveMethod: checkoutService.isActiveMethod,
     isMinimumPaid: checkoutService.isMinimumPaid,
+    isValidQuotationAddress: isValidQuotationAddress,
+    isPaymentModeActive: isPaymentModeActive,
     intervalProgress: false,
     customFullscreen: $mdMedia('xs') || $mdMedia('sm'),
     singlePayment: true,
@@ -95,7 +97,7 @@ function CheckoutPaymentsCtrl(
           $location.path('/quotations/edit/' + vm.quotation.id);
         }        
 
-        if(!validateQuotationAddress(vm.quotation)){
+        if(!isValidQuotationAddress(vm.quotation)){
           console.log('No address');
           $location.path('/quotations/edit/' + vm.quotation.id)
             .search({missingAddress:true});
@@ -128,7 +130,7 @@ function CheckoutPaymentsCtrl(
       });
   }
 
-  function validateQuotationAddress(quotation){
+  function isValidQuotationAddress(quotation){
     if(quotation.immediateDelivery || quotation.Address){
       return true;
     }
@@ -250,13 +252,13 @@ function CheckoutPaymentsCtrl(
       });
   }
 
-  function isQuotationUnpaid(payment){
-    return ( (payment.ammount > 0) && (vm.quotation.ammountPaid < vm.quotation.total) )
+  function isPaymentModeActive(payment, quotation){
+    return ( (payment.ammount > 0) && (quotation.ammountPaid < quotation.total) )
     || payment.ammount < 0;    
   }
 
   function addPayment(payment){
-    if(isQuotationUnpaid(payment)){
+    if(isPaymentModeActive(payment, vm.quotation)){
       vm.isLoadingPayments = true;
       vm.isLoading = true;
       paymentService.addPayment(vm.quotation.id, payment)
@@ -288,7 +290,6 @@ function CheckoutPaymentsCtrl(
           if(payment.type === CLIENT_BALANCE_TYPE){
             paymentService.updateQuotationClientBalance(vm.quotation, vm.paymentMethodsGroups);
           }
-
         })
         .catch(function(err){
           console.log(err);
@@ -357,8 +358,8 @@ function CheckoutPaymentsCtrl(
     }
   }
 
-  function calculateRemaining(ammount){
-    return ammount - vm.quotation.ammountPaid;
+  function calculateRemaining(ammount, quotation){
+    return ammount - quotation.ammountPaid;
   }
 
   function createOrder(){

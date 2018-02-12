@@ -57,6 +57,7 @@
       getMethodAvailableBalance: getMethodAvailableBalance,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getPaymentTypeString: getPaymentTypeString,
+      getClientBalanceDescription: getClientBalanceDescription,
       updateQuotationClientBalance: updateQuotationClientBalance,
       types: types,
       currencyTypes: currencyTypes,
@@ -186,7 +187,7 @@
         .then(function(res){
           console.log('res', res);
           var balance = res.data || 0;
-          var description = getClientBalanceDescription(balance);;
+          var description = getClientBalanceDescription(balance);
           if(balancePaymentMethod){
             balancePaymentMethod.description = description;
           }

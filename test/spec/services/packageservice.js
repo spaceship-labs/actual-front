@@ -11,8 +11,4 @@ describe('Service: packageService', function () {
     packageService = _packageService_;
   }));
 
-  it('should do something', function () {
-    expect(!!packageService).toBe(true);
-  });
-
 });
