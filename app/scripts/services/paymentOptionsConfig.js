@@ -21,7 +21,7 @@
       //MASTER CARD(International)
       {
         card: {label:'Master Card', value:'master-card'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         isInternational: true,
         terminal: {label:'Banamex', value:'banamex'}
@@ -30,7 +30,7 @@
       //VISA(International)
       {
         card: {label:'Visa', value:'visa'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         isInternational: true,
         terminal: {label:'Banamex', value:'banamex'}
@@ -40,7 +40,7 @@
       //AMERICAN EXPRESS (International)
       {
         card: {label:'American Express', value:'american-express'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         isInternational: true,
         terminal: {label:'American Express', value:'american-express'}
@@ -49,7 +49,7 @@
       //AMERICAN EXPRESS
       {
         card: {label:'American Express', value:'american-express'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/,'3-msi','6-msi','9-msi','12-msi'/*,'18-msi'*/],
+        paymentTypes: ['credit-card','debit-card','3-msi','6-msi','9-msi','12-msi'/*,'18-msi'*/],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'American Express', value:'american-express'}
       },
@@ -57,7 +57,7 @@
       //BANAMEX
       {
         card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },
@@ -73,7 +73,7 @@
       //SANTANDER
       {
         card:{label:'Santander', value:'santander'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },         
@@ -88,7 +88,7 @@
       //BANCOMER
       {
         card:{label:'Bancomer', value:'bancomer'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },
@@ -103,7 +103,7 @@
       //BANORTE
       {
         card:{label:'Banorte', value:'banorte'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -117,7 +117,7 @@
       //AFIRME
       {
         card:{label:'Afirme', value:'afirme'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -133,7 +133,7 @@
       //BANBAJIO
       {
         card:{label:'Banbajio', value:'banbajio'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -147,7 +147,7 @@
       //BANCAMIFEL
       {
         card:{label:'Bancamifel', value:'bancamifel'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -164,7 +164,7 @@
       // BANCO AHORRO FAMSA
       {
         card:{label:'Banco Ahorro Famsa', value:'banco-ahorro-famsa'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -178,7 +178,7 @@
       //BANJERCITO
       {
         card:{label:'Banjercito', value:'banjercito'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -194,7 +194,7 @@
       //BANREGIO
       {
         card:{label:'Banregio', value:'banregio'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -208,7 +208,7 @@
       //HSBC
       {
         card: {label:'HSBC', value:'hsbc'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}
       },
@@ -223,7 +223,7 @@
    		//INBURSA
       {
         card:{label:'Inbursa', value:'inbursa'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -237,7 +237,7 @@
       //INVEX
       {
         card:{label:'Invex Banco', value:'invex-banco'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -252,7 +252,7 @@
 			//ITAUCARD
       {
         card:{label:'Itaucard', value:'itaucard'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -266,7 +266,7 @@
       //IXE
       {
         card:{label:'IXE', value:'ixe'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -280,7 +280,7 @@
       //LIVERPOOL
       {
         card:{label:'Liverpool Premium Card', value:'liverpool-premium-card'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    
@@ -294,7 +294,7 @@
       //SCOTIABANK
       {
         card:{label:'ScotiaBank', value:'scotiabank'},
-        paymentTypes: ['credit-card','debit-card'/*'single-payment-terminal'*/],
+        paymentTypes: ['credit-card','debit-card'],
         storesTypes:['home','studio','proyectos'],
         terminal: {label:'Banamex', value:'banamex'}        
       },                    

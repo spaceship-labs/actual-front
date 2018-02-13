@@ -66,7 +66,8 @@
       isSinglePlaymentTerminal: isSinglePlaymentTerminal,
       isDepositPayment: isDepositPayment,
       isTransferPayment: isTransferPayment,
-      isCardPayment: isCardPayment
+      isCardPayment: isCardPayment,
+      isCardCreditOrDebitPayment: isCardCreditOrDebitPayment
     };
 
     function getAmountMXN(amount, exchangeRate){
@@ -76,6 +77,10 @@
     function isCardPayment(payment){
       return payment.msi || payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD || 
       payment.type === types.SINGLE_PAYMENT_TERMINAL;
+    }
+
+    function isCardCreditOrDebitPayment(payment){
+      return payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD;
     }
 
     function isUsdPayment(payment){

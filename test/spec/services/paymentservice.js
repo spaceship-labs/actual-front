@@ -62,5 +62,16 @@ describe('Service: paymentService', function () {
     expect(description).toMatch(/100/)
   });
 
+  it('should get return true when payment has a debit or credit card type', function(){
+    var payment = {type: 'debit-card'};
+    var result = paymentService.isCardCreditOrDebitPayment(payment);
+    expect(result).toBe(true);
+
+    var payment2 = {type: 'credit-card'};
+    var result2 = paymentService.isCardCreditOrDebitPayment(payment2);
+    expect(result2).toBe(true);
+
+  });
+
 
 });
