@@ -443,6 +443,9 @@ select{
   /*z-index: 999;*/
   z-index: 9999999;
 }
+.header-top-bar.sandbox-mode{
+  background: #f1ac47;
+}
 
 
 .header-top-bar-menu{
