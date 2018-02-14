@@ -10,9 +10,19 @@
     <div class="input-element">
       <label class="rfc-label"><strong>Registro Federal de Contribuyente (RFC) <span class="ast">*</span></strong></label>
       <div class="input-element-inner">
-        <input type="text" ng-model="vm.client.LicTradNum">
+        <input 
+          type="text" 
+          ng-model="vm.client.LicTradNum"
+        />
       </div>
+      <br/>
+      <label ng-show="!vm.isValidRFC" class="generic-error-msg">
+        <strong>
+          La estructura del RFC no es valida, puedes verificar en el sitio oficial del RFC <a href="https://portalsat.plataforma.sat.gob.mx/ConsultaRFC/">https://portalsat.plataforma.sat.gob.mx/ConsultaRFC/</a>
+        </strong>
+      </label>
     </div>
+
 
     <div
       class="client-item-info"

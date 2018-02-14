@@ -7,6 +7,8 @@
 
     /** @ngInject */
     function clientService($http, $q, $rootScope, api){
+      var GENERIC_RFC = 'XAXX010101000';
+      var RFC_VALIDATION_REGEX = /^([A-Z,Ñ,&]{3,4}([0-3][0-9])(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$/;
 
       var service = {
         buildAddressStringByContact:buildAddressStringByContact,
@@ -30,6 +32,9 @@
         syncClientsCredit: syncClientsCredit,
         getCFDIUseList: getCFDIUseList,
         mapCFDIuseCode: mapCFDIuseCode,
+        validateRfc: validateRfc,
+        GENERIC_RFC: GENERIC_RFC,
+        RFC_VALIDATION_REGEX: RFC_VALIDATION_REGEX,
 
         fiscalAddressConstraints:{
           companyName:{max:50},
@@ -132,7 +137,14 @@
 
       function isClientFiscalDataValid(client){
         if(client && client.FiscalAddress){
-          return client.LicTradNum && client.FiscalAddress.companyName && client.FiscalAddress.companyName != '';
+          if(client.LicTradNum === GENERIC_RFC){
+            return true;
+          }
+         
+          return validateRfc(client.LicTradNum) && 
+            client.LicTradNum && 
+            client.FiscalAddress.companyName && 
+            client.FiscalAddress.companyName != '';
         }
         return false;
       }
@@ -187,6 +199,19 @@
         var list = getCFDIUseList();
         cfdiUse = _.findWhere(list, {code: code});
         return cfdiUse || {};
+      }
+
+      function validateRfc(rfc, genericRFC, rfcValidationRegex){
+        genericRFC = genericRFC || GENERIC_RFC;
+        rfcValidationRegex = rfcValidationRegex || RFC_VALIDATION_REGEX
+        if(rfc === genericRFC){ 
+          return true;
+        }
+        var result = (rfc || "").match(rfcValidationRegex);
+        if(_.isArray(result)){
+          return true
+        }
+        return false;
       }
 
       function getCFDIUseList(){

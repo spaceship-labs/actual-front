@@ -74,7 +74,8 @@ function ClientProfileCtrl(
     personalDataAction: personalDataAction,
     isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
-    showNewAddressForm: showNewAddressForm
+    showNewAddressForm: showNewAddressForm,
+    validateRfcStructure: clientService.validateRfc
   });
 
   function init(){
@@ -342,8 +343,13 @@ function ClientProfileCtrl(
       vm.isLoading = false;
       dialogService.showDialog('Campos incompletos');
     }
-
   }
+
+  $scope.$watch('vm.client.LicTradNum', function(newVal, oldVal){
+    if(newVal != oldVal){
+      vm.isValidRFC = vm.validateRfcStructure(newVal);
+    }
+  });  
 
   init();
 }

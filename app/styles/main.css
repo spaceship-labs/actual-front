@@ -62,6 +62,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 
 #main{min-height: 700px;}
 
+.generic-error-msg{color:#C82828}
 .normal-anchor{color: #000;text-decoration: underline;}
 .loading-circle{min-height: 250px;}
 .loading-circle-small{min-height: 60px;}
@@ -2800,6 +2801,10 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 .form-section-content .copy-data a{
   color: #000;
   text-decoration: underline;
+}
+.form-section-content .generic-error-msg{
+  font-size: 14px!important;
+  text-transform: none!important;
 }
 
 .form-view .action-links a{color: #000;}

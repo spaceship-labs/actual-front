@@ -123,6 +123,13 @@ function CheckoutPaymentsCtrl(
         if(vm.quotation.Order){
           $location.path('/checkout/order/' + vm.quotation.Order.id);
         }
+
+        if( !clientService.validateRfc(vm.quotation.Client.LicTradNum) ){
+          console.log('invalid rfc');
+          $location.path('/checkout/client/' + vm.quotation.id);
+          return;
+        }            
+
         vm.quotation.ammountPaid = vm.quotation.ammountPaid || 0;
 
         vm.isLoading = false;

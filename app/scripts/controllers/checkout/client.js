@@ -66,6 +66,10 @@ function CheckoutClientCtrl(
               vm.client = res.data;
               vm.isLoadingClient = false;
 
+              if( !vm.isClientFiscalDataValid(vm.client)){
+                dialogService.showDialog('Los datos fiscales estan incompletos o no son validos');
+              }          
+
               vm.contacts = vm.client.Contacts.map(function(contact){
                 contact.completeAdrress = clientService.buildAddressStringByContact(contact);
                 return contact;
@@ -128,6 +132,11 @@ function CheckoutClientCtrl(
   function continueProcess(){
     if(!vm.quotation.Details || vm.quotation.Details.length === 0){
       dialogService.showDialog('No hay artículos en esta cotización');
+      return;
+    }
+
+    if( !vm.isClientFiscalDataValid(vm.client)){
+      dialogService.showDialog('Los datos fiscales estan incompletos o no son validos');
       return;
     }
 
