@@ -10,9 +10,4 @@ describe('Service: cartService', function () {
   beforeEach(inject(function (_cartService_) {
     cartService = _cartService_;
   }));
-
-  it('should do something', function () {
-    expect(!!cartService).toBe(true);
-  });
-
 });

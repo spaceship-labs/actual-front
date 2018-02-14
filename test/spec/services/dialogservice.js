@@ -11,8 +11,4 @@ describe('Service: dialogService', function () {
     dialogService = _dialogService_;
   }));
 
-  it('should do something', function () {
-    expect(!!dialogService).toBe(true);
-  });
-
 });

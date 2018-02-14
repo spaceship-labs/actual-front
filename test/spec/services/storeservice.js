@@ -11,8 +11,4 @@ describe('Service: storeService', function () {
     storeService = _storeService_;
   }));
 
-  it('should do something', function () {
-    expect(!!storeService).toBe(true);
-  });
-
 });

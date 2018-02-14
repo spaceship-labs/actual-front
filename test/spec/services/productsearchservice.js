@@ -11,8 +11,4 @@ describe('Service: productSearchService', function () {
     productSearchService = _productSearchService_;
   }));
 
-  it('should do something', function () {
-    expect(!!productSearchService).toBe(true);
-  });
-
 });

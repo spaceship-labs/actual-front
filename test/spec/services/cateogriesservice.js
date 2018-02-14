@@ -10,9 +10,4 @@ describe('Service: cateogriesService', function () {
   beforeEach(inject(function (_cateogriesService_) {
     cateogriesService = _cateogriesService_;
   }));
-
-  it('should do something', function () {
-    expect(!!cateogriesService).toBe(true);
-  });
-
 });
