@@ -18,12 +18,14 @@ function SearchCtrl(
   var vm = this;
 
   angular.extend(vm, {
+    SEARCH_ITEMS: productSearchService.SEARCH_ITEMS,
+    OFFSET_TIME_RENDERING: 1000,
     totalResults:0,
     isLoading: true,
     filters: [],
     searchValues: [],
     syncProcessActive: false,
-    enableSortOptions: true,  
+    enableSortOptions: true, 
     activeStore: activeStore,  
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
@@ -42,7 +44,8 @@ function SearchCtrl(
     removeSelectedSocietyFilter: removeSelectedSocietyFilter,
     removeMinPrice: removeMinPrice,
     removeMaxPrice: removeMaxPrice,
-    setActiveSortOption: setActiveSortOption
+    setActiveSortOption: setActiveSortOption,
+    isDisabledScrolling: isDisabledScrolling 
   });
 
   init();
@@ -64,8 +67,8 @@ function SearchCtrl(
       }
       vm.search = {
         keywords: keywords,
-        items: 10,
-        page: 1
+        items: vm.SEARCH_ITEMS,
+        page: $routeParams.page || 1
       };
       vm.isLoading = true;
       doInitialSearch();
@@ -78,21 +81,40 @@ function SearchCtrl(
   }
 
   function doInitialSearch(){
+    var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
+
     vm.search.sortOption = vm.activeSortOption;
-    /*
-    if(vm.search.sortOption.key === 'slowMovement'){
-      vm.search.slowMovement = true;
-    }else{
-      vm.search.slowMovement = false;
-    }
-    */
-    productService.searchByFilters(vm.search).then(function(res){
+    vm.search.page = urlPage;
+
+    var initialSearchParams = _.extend(vm.search, {
+      items: vm.SEARCH_ITEMS * urlPage,
+      page: 1 //Loading a single first page with the needed items
+    });
+
+    productService.searchByFilters(initialSearchParams).then(function(res){
       vm.totalResults = res.data.total;
       vm.isLoading = false;
       return productService.formatProducts(res.data.products);
     })
     .then(function(fProducts){
       vm.products = fProducts;
+      if(vm.products.length >= initialSearchParams.items){
+        var OFFSET_TIME_SCROLLING = 2000;
+
+        var lastGroupProductIndex = vm.products.length - vm.SEARCH_ITEMS;
+        var referenceProduct = vm.products[lastGroupProductIndex];
+        var referenceProductId = (referenceProduct || {}).id;
+
+        $timeout(function(){
+          vm.isLoading  = false;
+          vm.isScrollingToItem = true;
+          vm.scrollTo('search-result-item-'+ referenceProductId, 210);
+          $timeout(function(){
+            vm.isScrollingToItem = false;
+          },OFFSET_TIME_SCROLLING);
+
+        },vm.OFFSET_TIME_RENDERING);
+      }
     })
     .catch(function(err){
       console.log(err);
@@ -170,7 +192,6 @@ function SearchCtrl(
     productService.getCustomBrands()
       .then(function(res){
         vm.customBrands = res.data;
-        console.log('customBrands', vm.customBrands);
       })
       .catch(function(err){
         console.log('err', err);
@@ -332,7 +353,6 @@ function SearchCtrl(
       return society.code;
     });
 
-
     var params = {
       ids: searchValuesIds,
       brandsIds: brandSearchValuesIds,
@@ -346,12 +366,6 @@ function SearchCtrl(
       sortOption: vm.activeSortOption
     };
 
-    /*
-    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
-      params.slowMovement = true;      
-    }
-    */
-
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;
       return productService.formatProducts(res.data.products);
@@ -360,11 +374,15 @@ function SearchCtrl(
       if(options && options.isLoadingMore){
         var productsAux = angular.copy(vm.products);
         vm.products = productsAux.concat(fProducts);
+        $location.path('/search', false).search({page:vm.search.page});      
+        $timeout(function(){
+          vm.isLoading = false;
+        }, vm.OFFSET_TIME_RENDERING);
       }else{
         vm.products = fProducts;
         vm.scrollTo('search-page');
+        vm.isLoading = false;
       }
-      vm.isLoading = false;
     });
   }
 
@@ -394,15 +412,20 @@ function SearchCtrl(
   }
 
   function loadMore(){
-    vm.search.page++;
+    vm.search.page++;    
     vm.searchByFilters({isLoadingMore: true});
   }
 
-  function scrollTo(target){
+  function isDisabledScrolling(){
+    return vm.isLoading || vm.isScrollingToItem;
+  }
+
+  function scrollTo(target, extraOffset){
+    extraOffset = extraOffset || 100;
     $timeout(
         function(){
           $('html, body').animate({
-            scrollTop: $('#' + target).offset().top - 100
+            scrollTop: $('#' + target).offset().top - extraOffset
           }, 600);
         },
         300
