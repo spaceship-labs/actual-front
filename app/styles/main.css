@@ -3566,6 +3566,39 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   background: url(../images/arrow-down.png) right -10px no-repeat;
 }
 
+/*----------------/
+  #SEARCH-PAGINATION
+/*----------------*/
+.search-pagination ul{
+  list-style: none;
+  padding-left: 0;
+}
+.search-pagination ul li{
+  display: inline-block;  
+}
+
+.search-pagination a {
+  color: #fff;
+  background-color: #000;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 4px;
+  border-radius: 2px;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 6px 10px;
+}
+
+.search-pagination a:hover,
+.search-pagination .active a{
+  background: #C82828;
+  color: #fff;
+}
+
+.search-pagination a:hover,
+.search-pagination .active a{
+  color: #fff;
+
 
 /*--------------/
   #DASHBOARD-VIEW

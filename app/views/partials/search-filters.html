@@ -18,13 +18,13 @@
   <md-content>
 
     <section class="filters">
-      <h3 class="filters-head"><!--<i class="icon-pointer"></i>--> FILTRAR RESULTADOS</h3>
+      <h3 class="filters-head">FILTRAR RESULTADOS</h3>
       <div class="filters-inner">
         <div class="filter-block filter-block-prices">
           <h4><strong>PRECIO:</strong></h4>
           
 
-          <form class="filter-block-inner" ng-submit="vm.searchByFilters()">
+          <form class="filter-block-inner" ng-submit="vm.searchByFilters({resetPagination:true})">
             <div layout="row" layout-align="space-between center">
               <div flex class="input-element input-element-from">
                 <div class="input-element-inner">
@@ -57,7 +57,7 @@
               <md-checkbox
                 ng-repeat="society in vm.societyFilters"
                 ng-model="society.selected"
-                ng-change="vm.searchByFilters()"
+                ng-change="vm.searchByFilters({resetPagination:true})"
                 aria-label="Checkbox Indeterminate">
                 {{society.label}}
               </md-checkbox>
@@ -78,7 +78,7 @@
               <md-checkbox
                 ng-repeat="brand in vm.customBrands | orderBy:'Name' "
                 ng-model="brand.selected"
-                ng-change="vm.searchByFilters()"
+                ng-change="vm.searchByFilters({resetPagination:true})"
                 aria-label="Checkbox Indeterminate">
                 {{brand.Name}}
               </md-checkbox>
@@ -99,7 +99,7 @@
               <md-checkbox
                 ng-repeat="stock in vm.stockFilters"
                 ng-model="stock.selected"
-                ng-change="vm.searchByFilters()"
+                ng-change="vm.searchByFilters({resetPagination:true})"
                 aria-label="Checkbox Indeterminate">
                 {{stock.label}}
               </md-checkbox>
@@ -120,7 +120,7 @@
               <md-checkbox
                 ng-repeat="discount in vm.discountFilters"
                 ng-model="discount.selected"
-                ng-change="vm.searchByFilters()"
+                ng-change="vm.searchByFilters({resetPagination:true})"
                 aria-label="Checkbox Indeterminate">
                 {{discount.label}}
               </md-checkbox>
@@ -142,7 +142,7 @@
               <md-checkbox
                 ng-repeat="value in filter.Values | orderBy:filter.orderBy"
                 ng-model="value.selected"
-                ng-change="vm.searchByFilters()"
+                ng-change="vm.searchByFilters({resetPagination:true})"
                 aria-label="Checkbox Indeterminate">
                 {{value.Name}}
               </md-checkbox>

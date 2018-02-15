@@ -24,6 +24,7 @@ function SearchCtrl(
     isLoading: true,
     filters: [],
     searchValues: [],
+    customBrands: [],
     syncProcessActive: false,
     enableSortOptions: true, 
     activeStore: activeStore,  
@@ -31,7 +32,6 @@ function SearchCtrl(
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     societyFilters: productSearchService.SOCIETY_OPTIONS,
     sortOptions: productSearchService.SORT_OPTIONS,
-    loadMore: loadMore,
     getFilterById: getFilterById,
     searchByFilters: searchByFilters,
     toggleColorFilter: toggleColorFilter,
@@ -45,7 +45,8 @@ function SearchCtrl(
     removeMinPrice: removeMinPrice,
     removeMaxPrice: removeMaxPrice,
     setActiveSortOption: setActiveSortOption,
-    isDisabledScrolling: isDisabledScrolling 
+    isDisabledScrolling: isDisabledScrolling,
+    onPageChanged: onPageChanged
   });
 
   init();
@@ -65,14 +66,15 @@ function SearchCtrl(
       if($routeParams.term){
         keywords = $routeParams.term.split(' ');
       }
+      var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
       vm.search = {
         keywords: keywords,
         items: vm.SEARCH_ITEMS,
-        page: $routeParams.page || 1
-      };
+        page: urlPage,
+        sortOption: vm.activeSortOption
+      };        
       vm.isLoading = true;
-      doInitialSearch();
-
+      searchByFilters();
     }
 
     loadFilters();
@@ -80,48 +82,15 @@ function SearchCtrl(
 
   }
 
-  function doInitialSearch(){
-    var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
+  $scope.$watch('vm.search.page', function(newVal, oldVal){
+    if(newVal !== oldVal) {
+      $location.path('/search', false).search({page: vm.search.page});
+    }
+  });
 
-    vm.search.sortOption = vm.activeSortOption;
-    vm.search.page = urlPage;
-
-    var initialSearchParams = _.extend(vm.search, {
-      items: vm.SEARCH_ITEMS * urlPage,
-      page: 1 //Loading a single first page with the needed items
-    });
-
-    productService.searchByFilters(initialSearchParams).then(function(res){
-      vm.totalResults = res.data.total;
-      vm.isLoading = false;
-      return productService.formatProducts(res.data.products);
-    })
-    .then(function(fProducts){
-      vm.products = fProducts;
-      if(vm.products.length >= initialSearchParams.items){
-        var OFFSET_TIME_SCROLLING = 2000;
-
-        var lastGroupProductIndex = vm.products.length - vm.SEARCH_ITEMS;
-        var referenceProduct = vm.products[lastGroupProductIndex];
-        var referenceProductId = (referenceProduct || {}).id;
-
-        $timeout(function(){
-          vm.isLoading  = false;
-          vm.isScrollingToItem = true;
-          vm.scrollTo('search-result-item-'+ referenceProductId, 210);
-          $timeout(function(){
-            vm.isScrollingToItem = false;
-          },OFFSET_TIME_SCROLLING);
-
-        },vm.OFFSET_TIME_RENDERING);
-      }
-    })
-    .catch(function(err){
-      console.log(err);
-      var error = err.data || err;
-      error = error ? error.toString() : '';
-      dialogService.showDialog('Hubo un error: ' + error );           
-    });    
+  function onPageChanged(newPageNumber){
+    vm.search.page = newPageNumber;
+    searchByFilters();
   }
 
   function syncProduct(itemcode){
@@ -237,8 +206,7 @@ function SearchCtrl(
         }
       });
     });
-
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeBrandSearchValue(value){
@@ -266,7 +234,7 @@ function SearchCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
 
   }
 
@@ -281,7 +249,7 @@ function SearchCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
 
   }  
 
@@ -295,26 +263,26 @@ function SearchCtrl(
         stockFilters.selected = false;
       }
     });
-
-    searchByFilters();
-
+    searchByFilters({resetPagination: true});
   }  
 
   function removeMinPrice(){
     delete vm.minPrice;
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeMaxPrice(){
     delete vm.maxPrice;
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
 
   function searchByFilters(options){
-    if(!options || !angular.isDefined(options.isLoadingMore)){
+    options = options || {};
+    if(options.resetPagination){
       vm.search.page = 1;
     }
+
     vm.isLoading = true;
     
     //SEARCH VALUES
@@ -368,21 +336,13 @@ function SearchCtrl(
 
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;
+      vm.totalPages = Math.ceil(res.data.total / vm.SEARCH_ITEMS)
       return productService.formatProducts(res.data.products);
     })
     .then(function(fProducts){
-      if(options && options.isLoadingMore){
-        var productsAux = angular.copy(vm.products);
-        vm.products = productsAux.concat(fProducts);
-        $location.path('/search', false).search({page:vm.search.page});      
-        $timeout(function(){
-          vm.isLoading = false;
-        }, vm.OFFSET_TIME_RENDERING);
-      }else{
-        vm.products = fProducts;
-        vm.scrollTo('search-page');
-        vm.isLoading = false;
-      }
+      vm.products = fProducts;
+      vm.scrollTo('search-page');
+      vm.isLoading = false;
     });
   }
 
@@ -408,12 +368,7 @@ function SearchCtrl(
 
   function toggleColorFilter(value, filter){
     value.selected = !value.selected;
-    vm.searchByFilters();
-  }
-
-  function loadMore(){
-    vm.search.page++;    
-    vm.searchByFilters({isLoadingMore: true});
+    vm.searchByFilters({resetPagination: true});
   }
 
   function isDisabledScrolling(){

@@ -39,19 +39,18 @@
 
           <h3 ng-if="!vm.isLoading">
             <i class="icon-search"></i> <span class="hl-text">{{vm.totalResults}}</span> Resultados
+            | Página {{vm.search.page}} de {{vm.totalPages}}
           </h3>
         </div>
-
 
         <ng-include src="'views/partials/search-options.html'"></ng-include>
 
         <!--RESULTS-->
-        <div
-          class="results"
-          infinite-scroll="vm.loadMore()"
-          infinite-scroll-disabled="vm.isDisabledScrolling()"
-          infinite-scroll-distance="1"
-        >
+        <div ng-show="vm.isLoading" layout="row" layout-align="center center" class="loading-circle">
+          <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
+        </div>
+        
+        <div ng-show="!vm.isLoading" class="results">
           <div
             class="products-list"
             layout="row"
@@ -60,29 +59,20 @@
             <div 
               flex="33" 
               class="listing-product-wrap" 
-              ng-repeat="product in vm.products track by product.ItemCode"
-              id="search-result-item-{{product.id}}"
-            >
+              dir-paginate="product in vm.products | itemsPerPage: vm.SEARCH_ITEMS"
+              total-items="vm.totalResults"
+              current-page="vm.search.page"
+              >
               <listing-product product="product"></listing-product>
             </div>
           </div>
-
-        </div>
-        <!--END RESULTS-->
-
-        <div ng-if="vm.isLoading" layout="row" layout-align="center center" class="loading-circle">
-          <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
         </div>
 
-<!--
-        <a
-          href="#" class="action-btn action-btn-sm"
-          ng-if="vm.totalResults > vm.products.length && !vm.isLoading && vm.products.length > 0"
-          ng-click="vm.loadMore()"
-        >
-          Cargar más
-        </a>
--->
+        <dir-pagination-controls  
+          ng-show="!vm.isLoading"          
+          on-page-change="vm.onPageChanged(newPageNumber)"
+          class="search-pagination"
+        />
 
       </div>
     </div>
