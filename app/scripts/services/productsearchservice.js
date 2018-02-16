@@ -5,7 +5,7 @@
 		.module('actualApp')
 		.factory('productSearchService', productSearchService);
     /** @ngInject */
-    function productSearchService(){
+    function productSearchService($location){
 			var SORT_OPTIONS = [
 				{
 					label:'Lo más vendido',
@@ -82,10 +82,18 @@
 				return searchValuesIds;
 			}
 
+			function persistParamsOnUrl(params){
+				var currentPath = $location.path();
+				var currentParams = $location.search();
+				currentParams = _.extend(currentParams, params);
+				$location.path(currentPath, false).search(currentParams);						
+			}
+
 
 			var service = {
 				getSearchValuesByFilters: getSearchValuesByFilters,
 				getSearchValuesIds: getSearchValuesIds,
+				persistParamsOnUrl: persistParamsOnUrl,
 				DISCOUNTS_SEARCH_OPTIONS:DISCOUNTS_SEARCH_OPTIONS,
 				STOCK_SEARCH_OPTIONS: STOCK_SEARCH_OPTIONS,
 				SORT_OPTIONS: SORT_OPTIONS,

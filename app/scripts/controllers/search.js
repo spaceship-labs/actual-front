@@ -54,7 +54,14 @@ function SearchCtrl(
   function init(){
     var keywords = [''];
     var activeSortOptionKey = 'slowMovement';
-    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
+    var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
+    var urlSortDirection = $routeParams.sortDirection;
+    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: urlSortKey});
+
+    //Overriding default sort option direction with url
+    if(vm.activeSortOption && urlSortDirection && (urlSortDirection === 'ASC' || urlSortDirection === 'DESC') ){
+      vm.activeSortOption.direction = urlSortDirection;
+    }
 
     if($routeParams.itemcode) {
       vm.isLoading = true;
@@ -67,6 +74,12 @@ function SearchCtrl(
         keywords = $routeParams.term.split(' ');
       }
       var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
+      var urlMinPrice = (!isNaN($routeParams.minPrice)) ? parseFloat($routeParams.minPrice) : false;
+      var urlMaxPrice = (!isNaN($routeParams.maxPrice)) ? parseFloat($routeParams.maxPrice) : false;
+
+      if(urlMinPrice) vm.minPrice = urlMinPrice;
+      if(urlMaxPrice) vm.maxPrice = urlMaxPrice;
+
       vm.search = {
         keywords: keywords,
         items: vm.SEARCH_ITEMS,
@@ -84,7 +97,7 @@ function SearchCtrl(
 
   $scope.$watch('vm.search.page', function(newVal, oldVal){
     if(newVal !== oldVal) {
-      $location.path('/search', false).search({page: vm.search.page});
+      productSearchService.persistParamsOnUrl({page: newVal});
     }
   });
 
@@ -220,7 +233,7 @@ function SearchCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeSelectedDiscountFilter(discount){
@@ -334,6 +347,13 @@ function SearchCtrl(
       sortOption: vm.activeSortOption
     };
 
+    productSearchService.persistParamsOnUrl({
+      sortKey: vm.activeSortOption.key,
+      sortDirection: vm.activeSortOption.direction,
+      minPrice: vm.minPrice,
+      maxPrice: vm.maxPrice
+    });
+
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;
       vm.totalPages = Math.ceil(res.data.total / vm.SEARCH_ITEMS)
@@ -347,8 +367,8 @@ function SearchCtrl(
   }
 
   function setActiveSortOption(sortOption){
-
     if(vm.activeSortOption.key  === sortOption.key){
+      //Toggling if the pick the same sort option key
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
     }
     else if(sortOption.key === 'salesCount' || sortOption.key === 'slowMovement'){
@@ -359,7 +379,8 @@ function SearchCtrl(
     }
 
     vm.activeSortOption = sortOption;
-    searchByFilters();
+    
+    searchByFilters({resetPagination: true});
   }
 
   function getFilterById(filterId){
