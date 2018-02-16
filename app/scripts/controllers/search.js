@@ -53,15 +53,6 @@ function SearchCtrl(
 
   function init(){
     var keywords = [''];
-    var activeSortOptionKey = 'slowMovement';
-    var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
-    var urlSortDirection = $routeParams.sortDirection;
-    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: urlSortKey});
-
-    //Overriding default sort option direction with url
-    if(vm.activeSortOption && urlSortDirection && (urlSortDirection === 'ASC' || urlSortDirection === 'DESC') ){
-      vm.activeSortOption.direction = urlSortDirection;
-    }
 
     if($routeParams.itemcode) {
       vm.isLoading = true;
@@ -79,6 +70,16 @@ function SearchCtrl(
 
       if(urlMinPrice) vm.minPrice = urlMinPrice;
       if(urlMaxPrice) vm.maxPrice = urlMaxPrice;
+
+      var activeSortOptionKey = 'slowMovement';
+      var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
+      var urlSortDirection = $routeParams.sortDirection;
+      vm.activeSortOption = _.findWhere(vm.sortOptions,{key: urlSortKey});
+  
+      //Overriding default sort option direction with url
+      if(vm.activeSortOption && urlSortDirection && (urlSortDirection === 'ASC' || urlSortDirection === 'DESC') ){
+        vm.activeSortOption.direction = urlSortDirection;
+      }  
 
       vm.search = {
         keywords: keywords,

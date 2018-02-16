@@ -51,10 +51,23 @@ function CategoryCtrl(
   }
 
   function init(){
-    var activeSortOptionKey = 'slowMovement';
     var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
-    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
-    
+    var urlMinPrice = (!isNaN($routeParams.minPrice)) ? parseFloat($routeParams.minPrice) : false;
+    var urlMaxPrice = (!isNaN($routeParams.maxPrice)) ? parseFloat($routeParams.maxPrice) : false;
+
+    if(urlMinPrice) vm.minPrice = urlMinPrice;
+    if(urlMaxPrice) vm.maxPrice = urlMaxPrice;
+  
+    var activeSortOptionKey = 'slowMovement';
+    var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
+    var urlSortDirection = $routeParams.sortDirection;
+    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: urlSortKey});
+
+    //Overriding default sort option direction with url
+    if(vm.activeSortOption && urlSortDirection && (urlSortDirection === 'ASC' || urlSortDirection === 'DESC') ){
+      vm.activeSortOption.direction = urlSortDirection;
+    }  
+  
     vm.search = {
       items: vm.SEARCH_ITEMS,
       page: urlPage,
@@ -64,14 +77,12 @@ function CategoryCtrl(
 
     loadCustomBrands();
     loadCategories();
-    searchByFilters();
+    searchByFilters({initialSearch:true});
   }
 
   $scope.$watch('vm.search.page', function(newVal, oldVal){
     if(newVal !== oldVal) {
-      console.log('path', $location.path())
-      var currentPath = $location.path();
-      $location.path(currentPath, false).search({page: vm.search.page});
+      productSearchService.persistParamsOnUrl({page: newVal});
     }
   });  
 
@@ -206,6 +217,13 @@ function CategoryCtrl(
       page: vm.search.page,
     };
 
+    productSearchService.persistParamsOnUrl({
+      sortKey: vm.activeSortOption.key,
+      sortDirection: vm.activeSortOption.direction,
+      minPrice: vm.minPrice,
+      maxPrice: vm.maxPrice
+    });
+    
     productService.searchCategoryByFilters(params)
       .then(function(res){
         var products = res.data.products || [];
@@ -215,7 +233,9 @@ function CategoryCtrl(
       })
       .then(function(productsFormatted){
         vm.products = productsFormatted;
-        vm.scrollTo('products-results');
+        if(!options.initialSearch){
+          vm.scrollTo('products-results');
+        }
         vm.isLoadingProducts = false;
       })
       .catch(function(err){
