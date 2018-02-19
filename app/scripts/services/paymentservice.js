@@ -5,7 +5,16 @@
     .module('actualApp')
     .factory('paymentService', paymentService);
 
-  function paymentService(api, $filter, $http, commonService, clientService, ewalletService){
+  function paymentService(
+    api, 
+    $filter, 
+    $http, 
+    commonService, 
+    clientService, 
+    ewalletService,
+    paymentOptionsConfig
+  ){
+    var paymentOptions = paymentOptionsConfig.getAll();
     var CLIENT_BALANCE_GROUP_INDEX = 0;
     var CLIENT_BALANCE_TYPE = 'client-balance';
 
@@ -22,6 +31,8 @@
       DEPOSIT: 'deposit',
       TRANSFER: 'transfer',
       TRANSFER_USD: 'transfer-usd',
+      CREDIT_CARD: 'credit-card',
+      DEBIT_CARD: 'debit-card',
       SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
       MSI_3: '3-msi',
       MSI_6: '6-msi',
@@ -40,370 +51,89 @@
     var service = {
       addPayment: addPayment,
       cancelPayment: cancelPayment,
+      getAmountMXN: getAmountMXN,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentWebMethodsGroups: getPaymentWebMethodsGroups,
       getMethodAvailableBalance: getMethodAvailableBalance,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
       getPaymentTypeString: getPaymentTypeString,
-      getRefundsOptions: getRefundsOptions,
+      getClientBalanceDescription: getClientBalanceDescription,
       updateQuotationClientBalance: updateQuotationClientBalance,
-      clientBalanceType: CLIENT_BALANCE_TYPE,
       types: types,
       currencyTypes: currencyTypes,
       isUsdPayment: isUsdPayment,
       isTransferOrDeposit: isTransferOrDeposit,
-      isSinglePlaymentTerminal: isSinglePlaymentTerminal
+      isSinglePlaymentTerminal: isSinglePlaymentTerminal,
+      isDepositPayment: isDepositPayment,
+      isTransferPayment: isTransferPayment,
+      isCardPayment: isCardPayment,
+      isCardCreditOrDebitPayment: isCardCreditOrDebitPayment
     };
+
+    function getAmountMXN(amount, exchangeRate){
+      return amount * exchangeRate;      
+    }
+
+    function isCardPayment(payment){
+      return payment.msi || payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD || 
+      payment.type === types.SINGLE_PAYMENT_TERMINAL;
+    }
+
+    function isCardCreditOrDebitPayment(payment){
+      return payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD;
+    }
 
     function isUsdPayment(payment){
       return payment.currency === currencyTypes.USD;
     }
 
+    function isDepositPayment(payment){
+      return payment.type === types.DEPOSIT;
+    }
+
+    function isTransferPayment(payment){
+      return payment.type === types.TRANSFER || 
+        payment.type === types.TRANSFER_USD 
+    }
+  
     function isTransferOrDeposit(payment){
-      return payment.type === types.TRANSFER || payment.type === types.TRANSFER_USD || payment.type === types.DEPOSIT;
+      return payment.type === types.TRANSFER || 
+        payment.type === types.TRANSFER_USD || 
+        payment.type === types.DEPOSIT;
     }
 
     function isSinglePlaymentTerminal(payment){
-      return payment.type === types.SINGLE_PAYMENT_TERMINAL;
+      return payment.type === types.SINGLE_PAYMENT_TERMINAL || 
+        payment.type === types.DEBIT_CARD || 
+        payment.type === types.CREDIT_CARD;
     }
-
-    var refundsOptions = [
-      {
-        name:'Reembolso a cuenta de cliente',
-        label: 'Reembolso a cuenta de cliente',
-        description: 'Descripción',
-        type:'refund-to-account',
-        currency: 'mxn'
-      },
-      {
-        name: 'Reembolso en efectivo',
-        label: 'Reembolso en efectivo',
-        description: 'Descripción',
-        type: 'cash-refund',
-        currency: 'mxn'
-      }
-    ];
-
-   	var paymentsOptions = [
-      //MASTER CARD(International)
-      {
-        card: {label:'Master Card', value:'master-card'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        isInternational: true,
-        terminal: {label:'Banamex', value:'banamex'}
-      },
-
-      //VISA(International)
-      {
-        card: {label:'Visa', value:'visa'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        isInternational: true,
-        terminal: {label:'Banamex', value:'banamex'}
-      },
-
-
-      //AMERICAN EXPRESS (International)
-      {
-        card: {label:'American Express', value:'american-express'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        isInternational: true,
-        terminal: {label:'American Express', value:'american-express'}
-      },
-
-      //AMERICAN EXPRESS
-      {
-        card: {label:'American Express', value:'american-express'},
-        paymentTypes: ['single-payment-terminal','3-msi','6-msi','9-msi','12-msi'/*,'18-msi'*/],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'American Express', value:'american-express'}
-      },
-
-      //BANAMEX
-      {
-        card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}
-      },
-
-      {
-        card:{label:'Banamex', value:'banamex'},
-        paymentTypes: ['3-msi-banamex','6-msi-banamex','9-msi-banamex', '12-msi-banamex','13-msi'/*,'18-msi'*/],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}
-      },
-
-
-      //SANTANDER
-      {
-        card:{label:'Santander', value:'santander'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}
-      },         
-
-      {
-        card:{label:'Santander', value:'santander'},
-        paymentTypes: ['3-msi','6-msi','9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}
-      },  
-
-      //BANCOMER
-      {
-        card:{label:'Bancomer', value:'bancomer'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}
-      },
-
-      {
-        card:{label:'Bancomer', value:'bancomer'},
-        paymentTypes: ['3-msi','6-msi','9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Bancomer', value:'bancomer'}        
-      },
-
-      //BANORTE
-      {
-        card:{label:'Banorte', value:'banorte'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Banorte', value:'banorte'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },      
-
-      //AFIRME
-      {
-        card:{label:'Afirme', value:'afirme'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Afirme', value:'afirme'},
-        paymentTypes: ['3-msi','6-msi','9-msi', '12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      }, 
-
-
-
-      //BANBAJIO
-      {
-        card:{label:'Banbajio', value:'banbajio'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Banbajio', value:'banbajio'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },      
-
-      //BANCAMIFEL
-      {
-        card:{label:'Bancamifel', value:'bancamifel'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Bancamifel', value:'bancamifel'},
-        paymentTypes: ['3-msi','6-msi','9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      }, 
-
-
-
-
-      // BANCO AHORRO FAMSA
-      {
-        card:{label:'Banco Ahorro Famsa', value:'banco-ahorro-famsa'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Banco Ahorro Famsa', value:'banco-ahorro-famsa'},
-        paymentTypes: ['3-msi','6-msi','9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },
-
-      //BANJERCITO
-      {
-        card:{label:'Banjercito', value:'banjercito'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Banjercito', value:'banjercito'},
-        paymentTypes: ['3-msi','6-msi','9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },
-
-
-
-      //BANREGIO
-      {
-        card:{label:'Banregio', value:'banregio'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Banregio', value:'banregio'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },
-
-      //HSBC
-      {
-        card: {label:'HSBC', value:'hsbc'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}
-      },
-
-      {
-        card: {label:'HSBC', value:'hsbc'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}
-      },
-   		
-   		//INBURSA
-      {
-        card:{label:'Inbursa', value:'inbursa'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Inbursa', value:'inbursa'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },            
- 		
-      //INVEX
-      {
-        card:{label:'Invex Banco', value:'invex-banco'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Invex Banco', value:'invex-banco'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },            
-
-
-			//ITAUCARD
-      {
-        card:{label:'Itaucard', value:'itaucard'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Itaucard', value:'itaucard'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },      
-
-      //IXE
-      {
-        card:{label:'IXE', value:'ixe'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'IXE', value:'ixe'},
-        paymentTypes: ['3-msi','6-msi','9-msi', '12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      },  
-
-      //LIVERPOOL
-      {
-        card:{label:'Liverpool Premium Card', value:'liverpool-premium-card'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'Liverpool Premium Card', value:'liverpool-premium-card'},
-        paymentTypes: ['3-msi','6-msi','9-msi', '12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      }, 
-
-    
-
-      //SCOTIABANK
-      {
-        card:{label:'ScotiaBank', value:'scotiabank'},
-        paymentTypes: ['single-payment-terminal'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banamex', value:'banamex'}        
-      },                    
-      {
-        card:{label:'ScotiaBank', value:'scotiabank'},
-        paymentTypes: ['3-msi','6-msi', '9-msi','12-msi'],
-        storesTypes:['home','studio','proyectos'],
-        terminal: {label:'Banorte', value:'banorte'}        
-      }, 
-
-   	];
-		
-
-   	function getPaymentOptionsByMethod(method){
-
-   		var options = _.filter(paymentsOptions, function(option){
-   			var hasPaymentType = false;
-   			var hasStore = false;
+	
+    function getPaymentOptionsByMethod(method){
+      var options = _.filter(paymentOptions, function(option){
+        var hasPaymentType = false;
+        var hasStore = false;
         option.isInternational = !_.isUndefined(option.isInternational) ? option.isInternational : false;
         method.isInternational = !_.isUndefined(method.isInternational) ? method.isInternational : false;
- 			 	
+        
         if(option.paymentTypes.indexOf(method.type) > -1){
- 			 		hasPaymentType = true;
- 			 	}
+          hasPaymentType = true;
+        }
 
- 			 	if(option.storesTypes.indexOf(method.storeType) > -1 ){
- 			 		hasStore = true;
- 			 	}
+        if(option.storesTypes.indexOf(method.storeType) > -1 ){
+          hasStore = true;
+        }
 
- 			 	if(hasStore && 
+        if(hasStore && 
           hasPaymentType &&
           method.isInternational === option.isInternational
         ){
- 			 		return true;
- 			 	}
- 			 	
+          return true;
+        }
+        
         return false;
-   		});
-   		return options;
-   	}
+      });
+      return options;
+    }
 
     function getPaymentMethodsGroups(params){
       var url = '/paymentgroups';
@@ -413,10 +143,6 @@
     function getPaymentWebMethodsGroups(params){
       var url = '/paymentwebgroups';
       return api.$http.post(url, params);
-    }
-
-    function getRefundsOptions(){
-      return refundsOptions;
     }
 
     function addPayment(quotationId, params){
@@ -431,24 +157,29 @@
 
     function getPaymentTypeString(payment){
       var type = '1 sola exhibición';
-      if(payment.type === 'cash' || payment.type === 'cash-usd'){
-        type = 'Pago de contado';
-      }
-      else if(payment.msi){
+      if(payment.msi){
         type = payment.msi + ' meses sin intereses';
+        return type;
       }
-      else if(payment.type === 'transfer' || payment.type === 'transfer-usd'){
+      else if(isTransferPayment(payment)){
         type = 'Transferencia';
       }
-      else if(payment.type === 'deposit'){
+      else if(isDepositPayment(payment)){
         type = 'Deposito en ventanilla';
       }
-      else if(payment.type === 'ewallet'){
-        type = 'Monedero electrónico';
-      }
-      else if(payment.type === 'client-balance'){
-        type = 'Saldo a favor cliente';
-      }
+
+      switch(payment.type){
+        case types.CASH:
+        case types.CASH_USD:
+          type = 'Pago de contado';
+          break;
+        case types.EWALLET_TYPE:
+          type = 'Monedero electrónico';
+          break;
+        case types.CLIENT_BALANCE:
+          type = 'Saldo a favor cliente';
+          break;
+      } 
       return type;
     }
 
@@ -461,7 +192,7 @@
         .then(function(res){
           console.log('res', res);
           var balance = res.data || 0;
-          var description = getClientBalanceDescription(balance);;
+          var description = getClientBalanceDescription(balance);
           if(balancePaymentMethod){
             balancePaymentMethod.description = description;
           }

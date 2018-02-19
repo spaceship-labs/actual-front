@@ -67,7 +67,6 @@ angular
             if(!authService.isUserSignedIn()){
               return $q.resolve(false);
             }
-
             if($rootScope.activeStore){
               return $q.resolve($rootScope.activeStore);
             }else{
@@ -187,7 +186,31 @@ angular
       .when('/checkout/paymentmethod/:id', {
         templateUrl: 'views/checkout/payments.html',
         controller: 'CheckoutPaymentsCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          activeStore: function($rootScope, $q){
+            if($rootScope.activeStore){
+              return $q.resolve($rootScope.activeStore);
+            }else{
+              var deferred = $q.defer();
+              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+                deferred.resolve(_activeStore);
+              });
+              return deferred.promise;
+            }
+          },          
+          activeQuotation: function($rootScope, $q){
+            if($rootScope.activeQuotation){
+              return $q.resolve($rootScope.activeQuotation);
+            }else{
+              var deferred = $q.defer();
+              $rootScope.$on('activeQuotationAssigned', function(ev, _activeQuotation){
+                deferred.resolve(_activeQuotation);
+              });
+              return deferred.promise;
+            }
+          }
+        }        
       })
       .when('/continuequotation', {
         templateUrl: 'views/continuequotation.html',

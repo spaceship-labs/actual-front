@@ -56,7 +56,8 @@ angular.module('actualApp')
 			    getTotalByMethod: getTotalByMethod,
 			    getTotalByMethodUSD: getTotalByMethodUSD,
 			    isAdmin: authService.isAdmin,
-			    isSinglePlaymentTerminal : paymentService.isSinglePlaymentTerminal,
+					isSinglePlaymentTerminal : paymentService.isSinglePlaymentTerminal,
+					isCardCreditOrDebitPayment: paymentService.isCardCreditOrDebitPayment,
 			    isStoreManager: authService.isStoreManager,
 			    isTransferOrDeposit: paymentService.isTransferOrDeposit,
 			    isUsdPayment: paymentService.isUsdPayment,
@@ -107,7 +108,10 @@ angular.module('actualApp')
 
 			    if( $scope.isGeneralReport ){
 			      promises = [
-			        paymentService.getPaymentMethodsGroups({readCreditPayments:true}),
+			        paymentService.getPaymentMethodsGroups({
+								readLegacyMethods:true,
+								readCreditMethod: true
+							}),
 			        storeService.getStoresCashReport(params),
 			        siteService.getSitesCashReport(params),
 			        paymentService.getPaymentWebMethodsGroups()
@@ -115,7 +119,10 @@ angular.module('actualApp')
 			    }
 			    else if( $scope.isManagerReport ){
 			      promises = [
-			        paymentService.getPaymentMethodsGroups({readCreditPayments:true}),      
+			        paymentService.getPaymentMethodsGroups({
+								readLegacyMethods:true,
+								readCreditMethod: true
+							}),      
 			        storeService.getManagerCashReport(params),
 			        paymentService.getPaymentWebMethodsGroups()
 			      ];
@@ -241,8 +248,6 @@ angular.module('actualApp')
 
 
 			  function mapMethodGroupsWithPayments(payments, methodGroups){
-			  	console.log('methodGroups', methodGroups);
-
 			    var groups = [];
 			    var auxGroups = _.groupBy(payments, function(payment){
 			      if( $scope.isTransferOrDeposit(payment) ){
@@ -250,7 +255,8 @@ angular.module('actualApp')
 			      }
 
 			      return payment.type + '#' + payment.terminal;
-			    });
+					});
+					console.log('auxGroups', auxGroups);
 			    var methods = _.map(auxGroups, function(group){
 			      var method = {
 			        type: group[0].type,
