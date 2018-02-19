@@ -24,7 +24,6 @@
         addRecord: addRecord,
         addMultipleProducts: addMultipleProducts,
         closeQuotation: closeQuotation,
-        createDetailObjectFromParams: createDetailObjectFromParams,
         create: create,
         isValidStock: isValidStock,
         getActiveQuotation: getActiveQuotation,
@@ -224,6 +223,10 @@
           var quotation = res.data;
           if(quotation){
             setActiveQuotation(quotation.id);
+            /*
+            if(options.goToSearch){
+              $location.path('/').search({startQuotation:true});
+            }*/
             if(options.createClient){
               $location.path('/clients/create')
                 .search({
@@ -239,7 +242,7 @@
         });
       }
 
-      function createDetailObjectFromParams(productId, params, quotationId){
+      function createDetailFromParams(productId, params, quotationId){
         var detail = {
           Product: productId,
           quantity: params.quantity,
@@ -253,12 +256,15 @@
           PurchaseAfter: params.PurchaseAfter,
           PurchaseDocument: params.PurchaseDocument
         };
+        if(quotationId){
+          detail.Quotation = quotationId;
+        }
         return detail;
       }
 
       function addProduct(productId, params){
         var quotationId = localStorageService.get('quotation');
-        var detail = createDetailObjectFromParams(productId, params, quotationId);
+        var detail = createDetailFromParams(productId, params, quotationId);
         if( quotationId ){
           //Agregar al carrito
           addDetail(quotationId, detail)
@@ -294,7 +300,7 @@
         var quotationId = localStorageService.get('quotation');
         if( quotationId ){
           var detailsParams = products.map(function(product){
-            return createDetailObjectFromParams(product.id, product, quotationId);
+            return createDetailFromParams(product.id, product, quotationId);
           });
 
           addMultipleDetails(quotationId, {Details: detailsParams})
@@ -311,7 +317,7 @@
           //Crear cotizacion con producto agregado
           var createParams = {
             Details: products.map(function(product){
-              var detail = createDetailObjectFromParams(product.id, product);
+              var detail = createDetailFromParams(product.id, product);
               return detail;
             })
           };
@@ -416,7 +422,7 @@
 
 
       function mapDetailsStock(details, detailsStock){
-        details = details.map(function(detail){
+        var details = details.map(function(detail){
           var detailStock = _.findWhere(detailsStock, {id:detail.id});
           if(detailsStock){
             detail.validStock = detailStock.validStock;
@@ -427,9 +433,12 @@
       }
 
       function isValidStock(detailsStock){
-        return _.every(detailsStock, function(detail){
-          return detail.validStock;
-        });
+        for(var i=0;i<detailsStock.length; i++){
+          if(!detailsStock[i].validStock){
+            return false;
+          }
+        }
+        return true;
       }
 
       function validateQuotationStockById(id){
@@ -639,6 +648,27 @@
               {label:'Otro / No recuerda', value:'otro'}
             ]
           },
+          /*
+          {
+            label: 'Otro',
+            value: 'Otro',
+          }
+          */
+
+          /*
+          {
+            label: 'Recomendado',
+            value:'recomendado',
+            childs:[
+              {label:'Cancún', value:'cancun'},
+              {label:'Playa del Carmen', value:'playa-del-carmen'},
+              {label:'Mérida', value:'merida'},
+              {label:'Chetumal', value:'chetumal'},
+              {label:'Puerto Morelos', value:'puerto-morelos'},
+              {label:'Otro / No recuerda', value:'otro'}
+            ]
+          }
+          */
         ];
         return sources;
       }

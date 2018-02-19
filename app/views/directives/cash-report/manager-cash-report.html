@@ -67,12 +67,7 @@
                 class="method-group" 
                 ng-repeat="method in group.methods track by $index"
               >
-                <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi">
-                  <strong class="normalize-text" ng-if="isCardCreditOrDebitPayment(method)">
-                    {{method.name}} | 
-                  </strong>
-                  <strong>TPV {{ mapTerminalCode(method.terminal) }}</strong>
-                </h3>
+                <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV {{ mapTerminalCode(method.terminal) }}</strong></h3>
 
                 <h3 ng-if="!isSinglePlaymentTerminal(method) && !method.msi">
                   <strong>{{method.name}}</strong>

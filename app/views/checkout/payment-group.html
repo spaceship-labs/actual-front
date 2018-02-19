@@ -23,7 +23,7 @@
           </strong>
         </md-radio-button>
         <span
-          ng-if="!method.msi && method.type != 'single-payment-terminal' && method.type != 'credit-card' && method.type != 'debit-card' "
+          ng-if="!method.msi && method.type != 'single-payment-terminal' "
           class="method-text"
         >
           {{method.description}}
@@ -63,7 +63,7 @@
     ng-show="!vm.areMethodsDisabled(paymentGroup.methods, vm.quotation)"
   >
     <h2 class="price-now" ng-class="{'price-hl' : $index == 0 }">
-      <span class="currency-label">MXN</span> {{ vm.calculateRemaining(paymentGroup.total, vm.quotation) | roundCurrency }}
+      <span class="currency-label">MXN</span> {{ vm.calculateRemaining(paymentGroup.total) | roundCurrency }}
     </h2>
     <p>Impuestos incluidos</p>
   </div>

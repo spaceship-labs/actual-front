@@ -445,9 +445,6 @@ select{
   /*z-index: 999;*/
   z-index: 9999999;
 }
-.header-top-bar.sandbox-mode{
-  background: #f1ac47;
-}
 
 
 .header-top-bar-menu{
@@ -4279,12 +4276,6 @@ padding-left: 16px;
   font-weight: 400;
   text-transform: capitalize;
 }
-/*
-.cash-report h3 .normalize-text{text-transform: lowercase}
-.cash-report h3 .normalize-text:first-letter{
-  text-transform: uppercase;
-}
-*/
 .cash-report .seller-item{
   border: 1px solid #000;
   padding: 10px;

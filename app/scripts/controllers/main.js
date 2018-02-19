@@ -56,8 +56,7 @@
       handleSearch: handleSearch,
       getFirstPointerSourceValue: getFirstPointerSourceValue,
       setPointerSourceType: setPointerSourceType,
-      adminUrl: ENV.adminUrl,
-      ENV: ENV
+      adminUrl: ENV.adminUrl
     });
     $rootScope.loadActiveQuotation = loadActiveQuotation;
     $rootScope.pointersSources = vm.pointersSources;
