@@ -30,9 +30,9 @@
             },
         ];
 
-    	var discountOptions = [
-    		10, 15, 20, 25, 30, 35
-    	];
+        var discountOptions = [
+            10, 15, 20, 25, 30, 35
+        ];
 
         var stockRanges = [
             [1, 10],
@@ -42,12 +42,12 @@
             [271, Infinity]
         ];
 
-    	var DISCOUNTS_SEARCH_OPTIONS = discountOptions.map(function(option){
-    		return {
-    			label: option + '%',
-    			value: option
-    		};
-    	});
+        var DISCOUNTS_SEARCH_OPTIONS = discountOptions.map(function(option){
+            return {
+                label: option + '%',
+                value: option
+            };
+        });
 
 
         var STOCK_SEARCH_OPTIONS = stockRanges.map(function(range){
