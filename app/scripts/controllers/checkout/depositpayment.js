@@ -9,46 +9,30 @@ function DepositController(
   paymentService,
   payment
 ) {
+  $scope.getAmmountMXN = paymentService.getAmountMXN;
+  $scope.isDepositPayment = paymentService.isDepositPayment;
+  $scope.isTransferPayment = paymentService.isTransferPayment;
+  $scope.isCardPayment = paymentService.isCardPayment;
 
   $scope.init = function(){
     $scope.payment = payment;
-    $scope.needsVerification = payment.needsVerification;
     $scope.maxAmmount = (payment.maxAmmount >= 0) ? payment.maxAmmount : false;
 
     if($scope.payment.currency === 'usd'){
       $scope.payment.ammount = $scope.payment.ammount / $scope.payment.exchangeRate;
-      $scope.payment.ammountMXN = $scope.getAmmountMXN($scope.payment.ammount);
+      $scope.payment.ammountMXN = $scope.getAmmountMXN($scope.payment.ammount, $scope.payment.exchangeRate);
     
       if($scope.maxAmmount){
         $scope.payment.maxAmmount = $scope.maxAmmount / $scope.payment.exchangeRate;
         $scope.maxAmmount = $scope.payment.maxAmmount;
       }
     }
-
     //ROUNDING
     if(payment.type !== ewalletService.ewalletType){ 
       $scope.payment.remaining = commonService.roundCurrency($scope.payment.remaining); 
       $scope.payment.ammount = commonService.roundCurrency($scope.payment.ammount);
       $scope.maxAmmount = commonService.roundCurrency($scope.maxAmmount);
     }
-
-  };
-
-  $scope.getAmmountMXN = function(ammount){
-    return ammount * $scope.payment.exchangeRate;
-  };
-
-  $scope.isCardPayment = function(payment){
-    return ( payment.terminals && !$scope.isTransferPayment(payment) && !$scope.isDepositPayment(payment))  
-      || payment.type === 'single-payment-terminal';
-  };  
-
-  $scope.isTransferPayment = function(payment){
-    return payment.type === 'transfer' || payment.type === 'transfer-usd';
-  };
-
-  $scope.isDepositPayment = function(payment){
-    return payment.type === 'deposit';
   };
 
   $scope.isValidPayment = function(){

@@ -63,28 +63,6 @@
 
         </md-radio-group>
 
-        
-        <!--
-        <md-radio-group 
-          ng-model="vm.refundOption"
-        >
-          <h3 class="refunds-link">
-            <a href="#" ng-click="vm.showRefunds = !vm.showRefunds">
-              <strong>Reembolsos</strong>
-            </a>
-          </h3>
-          <div ng-show="vm.showRefunds" class="pay-method-wrap" >
-            <ul flex="75">              
-              <ng-include
-                ng-repeat="option in vm.quotation.Payments track by $index"
-                src="'views/checkout/refund-option.html'">
-              </ng-include>                
-            </ul>
-
-          </div>
-        </md-radio-group>
-        -->
-        
         <div 
           ng-show="vm.quotation.Payments && vm.quotation.Payments.length > 0" 
           class="second-step-payment"

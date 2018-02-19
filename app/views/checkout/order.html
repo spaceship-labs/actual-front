@@ -47,13 +47,6 @@
       <p>Estimado <strong>{{vm.order.Client.CardName}}</strong></p>
       <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico <strong>{{vm.order.Client.E_Mail}}</strong> <!--<strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>-->.</p>
       <br/>
-      
-      <!--
-      <p>
-        <a class="refunds-link" ng-href="/refunds/payments/{{vm.order.id}}">Generar reembolsos</a>
-      </p>
-      -->
-
     </div>
 
     <!--ORDER ITEMS-->
@@ -222,29 +215,6 @@
 
     </div>
     <!--END ORDER PAYMENTS-->
-
-    <!--MONEDERO-->
-    <!--
-    <div class="order-block">
-      <h3><strong><i class="icon-monedero"></i> MONEDERO ELECTRÓNICO</strong></h3>
-      <div layout="row" class="order-monedero order-block-inner">
-        <div flex="60"></div>
-        <div flex="20">
-          <p>Saldo anterior:</p>
-          <p>Abonos:</p>
-          <p>Retiros:</p>
-          <p><strong>Saldo actual:</strong></p>
-        </div>
-        <div flex="20">
-          <p>{{vm.ewallet.before | currency}} MXN<p>
-          <p>{{vm.ewallet.positive | currency}} MXN<p>
-          <p>{{vm.ewallet.negative | currency}} MXN<p>
-          <p><strong>{{vm.ewallet.current | currency}} MXN</strong><p>
-        </div>
-      </div>
-    </div>
-    -->
-    <!--END MONEDERO-->
 
     <!--ENVIO-->
     <div class="order-block delivery-block order-block-info">

@@ -73,7 +73,12 @@
             <div 
               ng-if="isSinglePlaymentTerminal(method) || method.msi" 
               class="payment-item-cell pull-left" 
-              flex>TPV {{ mapTerminalCode(method.terminal) }}</div>
+              flex>
+              <strong ng-if="isCardCreditOrDebitPayment(method)">
+                {{method.name}} | 
+              </strong>
+              TPV {{ mapTerminalCode(method.terminal) }}
+            </div>
 
             <div 
               ng-if="!isSinglePlaymentTerminal(method) && !method.msi" 
