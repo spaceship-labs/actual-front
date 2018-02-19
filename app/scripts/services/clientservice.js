@@ -8,7 +8,7 @@
     /** @ngInject */
     function clientService($http, $q, $rootScope, api){
       var GENERIC_RFC = 'XAXX010101000';
-      var DATE_REGEX = "((0[1-9]|[12]\\d|3[01])(01|03|05|07|08|10|12)|(0[1-9]|[12]\\d)02|(0[1-9]|[12]\\d|30)(04|06|09|11))(\\d{2})";
+      var DATE_REGEX = "(\\d{2}((01|03|05|07|08|10|12)(0[1-9]|[12]\\d|3[01])|02(0[1-9]|[12]\\d)|(04|06|09|11)(0[1-9]|[12]\\d|30)))";
       var RFC_VALIDATION_REGEX = new RegExp("^(([A-Z]{3,4})"+DATE_REGEX+"([A-Z|\\d]{3}))$");      
 
       var service = {
