@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:CheckoutClientCtrl
- * @description
- * # CheckoutClientCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('CheckoutClientCtrl', CheckoutClientCtrl);
 

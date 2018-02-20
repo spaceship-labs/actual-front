@@ -15,15 +15,13 @@ function CheckoutPaymentsCtrl(
     formatService,
     orderService,
     quotationService,
-    siteService,
     authService,
     paymentService,
     ewalletService,
     checkoutService,
     $interval,
     api,
-    activeStore,
-    activeQuotation
+    activeStore
   ){
   var vm = this;
 
@@ -63,12 +61,6 @@ function CheckoutPaymentsCtrl(
     vm.isLoading = true;
 
     var forceLatestData = true;
-    if(activeQuotation){
-      if($routeParams.id === activeQuotation.id){
-        forceLatestData = false;
-      }
-    }
-
     var getParams = {
       payments:true,
       forceLatestData: forceLatestData

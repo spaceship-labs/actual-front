@@ -198,17 +198,6 @@ angular
               });
               return deferred.promise;
             }
-          },          
-          activeQuotation: function($rootScope, $q){
-            if($rootScope.activeQuotation){
-              return $q.resolve($rootScope.activeQuotation);
-            }else{
-              var deferred = $q.defer();
-              $rootScope.$on('activeQuotationAssigned', function(ev, _activeQuotation){
-                deferred.resolve(_activeQuotation);
-              });
-              return deferred.promise;
-            }
           }
         }        
       })
