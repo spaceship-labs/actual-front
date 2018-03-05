@@ -1,12 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name actualApp.controller:CheckoutClientCtrl
- * @description
- * # CheckoutClientCtrl
- * Controller of the actualApp
- */
 angular.module('actualApp')
   .controller('CheckoutClientCtrl', CheckoutClientCtrl);
 
@@ -65,6 +57,10 @@ function CheckoutClientCtrl(
             .then(function(res){
               vm.client = res.data;
               vm.isLoadingClient = false;
+
+              if( !vm.isClientFiscalDataValid(vm.client)){
+                dialogService.showDialog('Los datos fiscales estan incompletos o no son validos');
+              }              
 
               vm.contacts = vm.client.Contacts.map(function(contact){
                 contact.completeAdrress = clientService.buildAddressStringByContact(contact);
@@ -128,6 +124,11 @@ function CheckoutClientCtrl(
   function continueProcess(){
     if(!vm.quotation.Details || vm.quotation.Details.length === 0){
       dialogService.showDialog('No hay artículos en esta cotización');
+      return;
+    }
+
+    if( !vm.isClientFiscalDataValid(vm.client)){
+      dialogService.showDialog('Los datos fiscales estan incompletos o no son validos');
       return;
     }
 

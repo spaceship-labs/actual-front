@@ -15,15 +15,14 @@ function CheckoutPaymentsCtrl(
     formatService,
     orderService,
     quotationService,
-    siteService,
     authService,
     paymentService,
     ewalletService,
     checkoutService,
+    clientService,
     $interval,
     api,
-    activeStore,
-    activeQuotation
+    activeStore
   ){
   var vm = this;
 
@@ -63,12 +62,6 @@ function CheckoutPaymentsCtrl(
     vm.isLoading = true;
 
     var forceLatestData = true;
-    if(activeQuotation){
-      if($routeParams.id === activeQuotation.id){
-        forceLatestData = false;
-      }
-    }
-
     var getParams = {
       payments:true,
       forceLatestData: forceLatestData
@@ -106,6 +99,13 @@ function CheckoutPaymentsCtrl(
         if(vm.quotation.Order){
           $location.path('/checkout/order/' + vm.quotation.Order.id);
         }
+
+        if( !clientService.validateRfc(vm.quotation.Client.LicTradNum) ){
+          console.log('invalid rfc');
+          $location.path('/checkout/client/' + vm.quotation.id);
+          return;
+        }    
+        
         vm.quotation.ammountPaid = vm.quotation.ammountPaid || 0;
 
         vm.isLoading = false;
