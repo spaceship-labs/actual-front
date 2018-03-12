@@ -18,9 +18,9 @@
       <div class="ammount-input" layout="row" layout-align="start center">
         <div class="input-element" flex="60">
           <div class="input-element-inner">
-            <input ng-if="maxAmmount && maxAmmount >=0" type="text" max="{{maxAmmount}}" ng-model="payment.ammount" class="with-maxammount"
+            <input ng-if="maxAmount && maxAmount >=0" type="text" max="{{maxAmount}}" ng-model="payment.ammount" class="with-maxammount"
               ng-currency ng-disabled="isConfirmationActive">
-            <input ng-if="!maxAmmount" type="text" ng-currency ng-disabled="isConfirmationActive" ng-model="payment.ammount">
+            <input ng-if="!maxAmount" type="text" ng-currency ng-disabled="isConfirmationActive" ng-model="payment.ammount">
 
           </div>
         </div>

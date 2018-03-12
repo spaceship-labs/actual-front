@@ -3,8 +3,7 @@
     <li ng-repeat="method in paymentGroup.methods" ng-show="vm.isActiveMethod(method, vm.quotation)" layout="row" layout-align="space-between center">
       <div ng-attr-flex="{{method.cardsImages && '40' || '100' }}">
 
-        <md-radio-button ng-click="vm.chooseMethodAndGroup(method , paymentGroup.group, vm.quotation)" ng-model="method" ng-value="method"
-          class="md-primary">
+        <md-radio-button ng-click="vm.choosePaymentMethod(method, vm.quotation)" ng-model="method" ng-value="method" class="md-primary">
 
           <strong ng-class="{'remark': method.type === vm.CLIENT_BALANCE_TYPE}">
             {{method.label}}

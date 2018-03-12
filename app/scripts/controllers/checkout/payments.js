@@ -33,7 +33,7 @@ function CheckoutPaymentsCtrl(
     areMethodsDisabled: checkoutService.areMethodsDisabled,
     calculateRemaining: calculateRemaining,
     createOrder: createOrder,
-    chooseMethodAndGroup: chooseMethodAndGroup,
+    choosePaymentMethod: choosePaymentMethod,
     getPaidPercentage: checkoutService.getPaidPercentage,
     isActiveGroup: checkoutService.isActivePaymentGroup,
     isActiveMethod: checkoutService.isActiveMethod,
@@ -51,7 +51,12 @@ function CheckoutPaymentsCtrl(
     CLIENT_BALANCE_TYPE: paymentService.types.CLIENT_BALANCE,
     roundCurrency: commonService.roundCurrency,
     isPaymentCanceled: paymentService.isCanceled,
-    openCancelPaymentConfirmDialog: openCancelPaymentConfirmDialog
+    openCancelPaymentConfirmDialog: openCancelPaymentConfirmDialog,
+    //EXPOSED FOR TESTING PURPOSES
+    setupActiveMethod: setupActiveMethod,
+    resetActiveMethod: resetActiveMethod,
+    setQuotationTotalsByGroup: setQuotationTotalsByGroup,
+    updateVMQuotation: updateVMQuotation
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
@@ -148,9 +153,7 @@ function CheckoutPaymentsCtrl(
           vm.paymentMethodsGroups
         );
 
-        if (vm.quotation.Payments && vm.quotation.Payments.length > 0) {
-          vm.quotation = setQuotationTotalsByGroup(vm.quotation);
-        }
+        vm.quotation = setQuotationTotalsByGroup(vm.quotation);
         deferred.resolve();
       })
       .catch(function(err) {
@@ -161,35 +164,36 @@ function CheckoutPaymentsCtrl(
     return deferred.promise;
   }
 
-  function setMethodAndGroup(method, group, quotation) {
-    method.storeType = activeStore.group;
-    method.group = _.clone(group);
-
+  function setupActiveMethod(method, quotation) {
     quotation.total = _.clone(method.total);
     quotation.subtotal = _.clone(method.subtotal);
     quotation.discount = _.clone(method.discount);
+
+    var remaining = calculateRemaining(quotation.total, quotation);
+
+    method = _.extend(method, {
+      storeType: activeStore.group,
+      remaining: remaining,
+      maxAmount: remaining
+    });
+
+    if (method.type === EWALLET_TYPE || method.type === CLIENT_BALANCE_TYPE) {
+      var balanceAvailable = paymentService.getMethodAvailableBalance(
+        method,
+        quotation
+      );
+      method.maxAmount = balanceAvailable;
+    }
+
     return method;
   }
 
-  function chooseMethodAndGroup(method, group, quotation) {
-    vm.activeMethod = setMethodAndGroup(method, group, quotation);
-    var remaining = vm.quotation.total - vm.quotation.ammountPaid;
-    vm.activeMethod.remaining = remaining;
-    vm.activeMethod.maxAmmount = remaining;
-
-    if (method.type === EWALLET_TYPE || method.type === CLIENT_BALANCE_TYPE) {
-      var balance = paymentService.getMethodAvailableBalance(
-        method,
-        vm.quotation
-      );
-      vm.activeMethod.maxAmmount = balance;
-      if (balance <= remaining) {
-        remaining = balance;
-      }
-    }
+  function choosePaymentMethod(method, quotation) {
+    vm.activeMethod = setupActiveMethod(method, quotation);
+    console.log('vm.activeMethod', vm.activeMethod);
 
     if (
-      vm.activeMethod.maxAmmount < 0.01 &&
+      vm.activeMethod.maxAmount < 0.01 &&
       paymentService.isClientBalanceOrEwalletPayment(method)
     ) {
       dialogService.showDialog('Fondos insuficientes');
@@ -197,9 +201,9 @@ function CheckoutPaymentsCtrl(
     }
 
     if (
-      vm.quotation.Client &&
+      quotation.Client &&
       vm.activeMethod.currency === paymentService.currencyTypes.USD &&
-      vm.quotation.Client.Currency === 'MXP'
+      quotation.Client.Currency === 'MXP'
     ) {
       dialogService.showDialog(
         'Pagos en dolares no disponibles para este cliente por configuración en SAP'
@@ -207,21 +211,16 @@ function CheckoutPaymentsCtrl(
       return false;
     }
 
-    return openAddPaymentDialog(null, vm.activeMethod, remaining);
+    return openAddPaymentDialog(vm.activeMethod, vm.activeMethod.remaining);
   }
 
-  function clearActiveMethod(quotation) {
+  function resetActiveMethod(quotation) {
     delete vm.activeMethod;
-    var group;
 
-    if (!quotation.Payments || quotation.Payments.length === 0) {
-      group = vm.paymentMethodsGroups[0];
-      return setMethodAndGroup(group.methods[0], group, quotation);
-    } else {
-      var groupIndex = quotation.paymentGroup - 1;
-      group = vm.paymentMethodsGroups[groupIndex];
-      return setMethodAndGroup(group.methods[0], group, quotation);
-    }
+    var groupIndex = quotation.paymentGroup - 1;
+    var group = vm.paymentMethodsGroups[groupIndex];
+    var firstMethodInGroup = group.methods[0];
+    return setupActiveMethod(firstMethodInGroup, quotation);
   }
 
   function setQuotationTotalsByGroup(quotation) {
@@ -237,9 +236,9 @@ function CheckoutPaymentsCtrl(
     return quotation;
   }
 
-  function updateVMQuoatation(newQuotation) {
-    vm.quotation.ammountPaid = newQuotation.ammountPaid;
-    vm.quotation.paymentGroup = newQuotation.paymentGroup;
+  function updateVMQuotation(source) {
+    vm.quotation.ammountPaid = source.ammountPaid;
+    vm.quotation.paymentGroup = source.paymentGroup;
     vm.quotation = setQuotationTotalsByGroup(vm.quotation);
   }
 
@@ -282,7 +281,7 @@ function CheckoutPaymentsCtrl(
             var updatedQuotation = res.data;
             vm.quotation.Payments.push(createdPayment);
             console.log('vm.quotation before updatevm', vm.quotation);
-            updateVMQuoatation(updatedQuotation);
+            updateVMQuotation(updatedQuotation);
             delete vm.activeMethod;
             loadPayments();
             return loadPaymentMethods();
@@ -320,7 +319,7 @@ function CheckoutPaymentsCtrl(
     }
   }
 
-  function openAddPaymentDialog(ev, method, ammount) {
+  function openAddPaymentDialog(method, ammount) {
     if (method) {
       var templateUrl = 'views/checkout/payment-cash-dialog.html';
       var controller = DepositController;
@@ -353,7 +352,7 @@ function CheckoutPaymentsCtrl(
         ],
         templateUrl: templateUrl,
         parent: angular.element(document.body),
-        targetEvent: ev,
+        targetEvent: null,
         clickOutsideToClose: true,
         fullscreen: useFullScreen,
         locals: {
@@ -361,20 +360,20 @@ function CheckoutPaymentsCtrl(
         }
       };
 
-      $mdDialog
+      return $mdDialog
         .show(dialogConfig)
         .then(function(payment) {
           addPayment(payment);
         })
         .catch(function(err) {
-          clearActiveMethod(vm.quotation);
+          resetActiveMethod(vm.quotation);
         });
     } else {
-      commonService.showDialog('Revisa los datos, e intenta de nuevo');
+      return commonService.showDialog('Revisa los datos, e intenta de nuevo');
     }
   }
 
-  function openCancelPaymentConfirmDialog(ev, payment) {
+  function openCancelPaymentConfirmDialog(payment) {
     console.log('payment en ctrl', payment);
     var templateUrl = 'views/cancellations/cancel-payment.html';
     var controller = CancelPaymentController;
@@ -390,7 +389,7 @@ function CheckoutPaymentsCtrl(
       ],
       templateUrl: templateUrl,
       parent: angular.element(document.body),
-      targetEvent: ev,
+      targetEvent: null,
       clickOutsideToClose: true,
       fullscreen: useFullScreen,
       locals: {
@@ -415,7 +414,7 @@ function CheckoutPaymentsCtrl(
       .then(function(res) {
         if (res.data) {
           var updatedQuotation = res.data;
-          updateVMQuoatation(updatedQuotation);
+          updateVMQuotation(updatedQuotation);
           delete vm.activeMethod;
           loadPayments();
           return loadPaymentMethods();
@@ -442,8 +441,8 @@ function CheckoutPaymentsCtrl(
       });
   }
 
-  function calculateRemaining(ammount, quotation) {
-    return ammount - quotation.ammountPaid;
+  function calculateRemaining(amount, quotation) {
+    return amount - quotation.ammountPaid;
   }
 
   function createOrder() {

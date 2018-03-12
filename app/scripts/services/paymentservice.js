@@ -225,7 +225,7 @@
       clientService
         .getBalanceById(quotation.Client.id)
         .then(function(res) {
-          console.log('res', res);
+          console.log('res client balance', res);
           var balance = res.data || 0;
           var description = getClientBalanceDescription(balance);
           if (balancePaymentMethod) {
@@ -243,6 +243,11 @@
         });
     }
 
+    /*
+    @params 
+    method {Object}
+    quotation {Quotation Object} populated with Client{ Client Object}
+    */
     function getMethodAvailableBalance(method, quotation) {
       var EWALLET_TYPE = ewalletService.ewalletType;
       var balance = 0;
