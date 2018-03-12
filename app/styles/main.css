@@ -3961,62 +3961,67 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
 }
 
 /*------------/
-  #DEPOSIT-DIALOG
+  #FORM-DIALOG
 /*------------*/
-.deposit-dialog .deposit-dialog-inner{
+.form-dialog .form-dialog-inner{
   padding: 15px 20px;
   max-width: 600px;
 }
-.deposit-dialog h2{
+.form-dialog h2{
   font-weight: 400;
   font-size: 18px;
   margin: 4px 0;
 }
-.deposit-dialog hr{
+.form-dialog hr{
   height: 2px;
   background: #000;
   border:0;
   margin: 10px 0;
 }
-.deposit-dialog h2 i{
+.form-dialog h2 i{
   color: #33BA2C;
   font-size: 24px;
   vertical-align: middle;
   margin-right: 3px;
 }
-.deposit-dialog h3{
+.form-dialog h3{
   font-size: 22px;
   font-weight: 400;
   margin: 4px 0;
 }
-.deposit-dialog .deposit-type{
+.form-dialog .deposit-type{
   margin:0 0 10px;
 }
-.deposit-dialog p{margin: 0;}
-.deposit-dialog .action-btn-save{margin: 0}
-.deposit-dialog .action-btn-disabled{background: gray}
-.deposit-dialog small{
+.form-dialog p{margin: 0;}
+.form-dialog .action-btn-save{margin: 0}
+.form-dialog .action-btn-disabled{background: gray}
+.form-dialog small{
   font-size: 12px;
   font-style: italic;
 }
-.deposit-dialog .dialog-block:first-child,
-.deposit-dialog .dialog-block:first-of-type{margin-top: 0}
-.deposit-dialog .main-dialog-block{margin-top:0!important;}
-.deposit-dialog .dialog-block{margin: 12px 0;}
-.deposit-dialog .dialog-block md-select{margin: 0;}
-.deposit-dialog .dialog-block .error-msg{
+.form-dialog .dialog-block:first-child,
+.form-dialog .dialog-block:first-of-type{margin-top: 0}
+.form-dialog .main-dialog-block{margin-top:0!important;}
+.form-dialog .dialog-block{margin: 12px 0;}
+.form-dialog .dialog-block md-select{margin: 0;}
+.form-dialog .dialog-block .error-msg{
   color: red;
   margin: 6px 0;
   font-size: 12px;
 }
-.deposit-dialog .dialog-block .ammount-input{margin-top: 10px;}
-.deposit-dialog .dialog-block .price-sign{margin-right: 10px;}
-.deposit-dialog .dialog-block .currency-label{margin-left: 10px;}
-.deposit-dialog .verification-code{
+.form-dialog .dialog-block .ammount-input{margin-top: 10px;}
+.form-dialog .dialog-block .price-sign{margin-right: 10px;}
+.form-dialog .dialog-block .currency-label{margin-left: 10px;}
+.form-dialog .verification-code{
   margin: 6px 0 0;
   max-width: 300px;
 }
-.deposit-dialog .confirm-section{margin-top: 20px;}
+.form-dialog .confirm-section{margin-top: 20px;}
+
+/*---------------
+  #CANCEL-PAYMENT-DIALOG
+/*--------------*/
+.cancel-payment-dialog{min-width: 600px;}
 
 
 /*---------------/
