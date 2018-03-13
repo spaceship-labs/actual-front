@@ -127,7 +127,9 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         quotation
       );
 
-      var expectedRemaining = method.total - quotation.ammountPaid;
+      //Remaining should be method.total - quotation.ammountPaid;
+      //var expectedRemaining = method.total - quotation.ammountPaid;
+      var expectedRemaining = quotation.Client.Balance;
       var expectedMaxAmount = quotation.Client.Balance;
 
       expect(activeMethod.remaining).toBe(expectedRemaining);

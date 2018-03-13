@@ -55,6 +55,7 @@
       addPayment: addPayment,
       cancel: cancel,
       getAmountMXN: getAmountMXN,
+      getAmountUSD: getAmountUSD,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentWebMethodsGroups: getPaymentWebMethodsGroups,
       getMethodAvailableBalance: getMethodAvailableBalance,
@@ -76,8 +77,12 @@
       isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment
     };
 
-    function getAmountMXN(amount, exchangeRate) {
-      return amount * exchangeRate;
+    function getAmountMXN(usdAmount, exchangeRate) {
+      return usdAmount * exchangeRate;
+    }
+
+    function getAmountUSD(mxnAmount, exchangeRate) {
+      return mxnAmount / exchangeRate;
     }
 
     function isClientBalanceOrEwalletPayment(payment) {

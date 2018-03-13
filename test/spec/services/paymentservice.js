@@ -12,6 +12,16 @@ describe('Service: paymentService', function() {
     })
   );
 
+  describe('getAmountUSD', function() {
+    it('should get the correct USD amount ', function() {
+      var amountUSD = 120;
+      var exchangeRate = 18.4;
+      var expected = amountUSD / exchangeRate;
+      var result = paymentService.getAmountUSD(amountUSD, exchangeRate);
+      expect(result).toBe(expected);
+    });
+  });
+
   it('should get the MXN amount from a usd payment', function() {
     var payment = { ammount: 10, exchangeRate: 18.5 };
     var amountMXN = paymentService.getAmountMXN(

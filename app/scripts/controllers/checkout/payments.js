@@ -173,8 +173,8 @@ function CheckoutPaymentsCtrl(
 
     method = _.extend(method, {
       storeType: activeStore.group,
-      remaining: remaining,
-      maxAmount: remaining
+      remaining: _.clone(remaining),
+      maxAmount: _.clone(remaining)
     });
 
     if (method.type === EWALLET_TYPE || method.type === CLIENT_BALANCE_TYPE) {
@@ -183,6 +183,11 @@ function CheckoutPaymentsCtrl(
         quotation
       );
       method.maxAmount = balanceAvailable;
+
+      //TODO: Revisar esta operacion.
+      if (balanceAvailable <= remaining) {
+        method.remaining = balanceAvailable;
+      }
     }
 
     return method;
@@ -190,7 +195,6 @@ function CheckoutPaymentsCtrl(
 
   function choosePaymentMethod(method, quotation) {
     vm.activeMethod = setupActiveMethod(method, quotation);
-    console.log('vm.activeMethod', vm.activeMethod);
 
     if (
       vm.activeMethod.maxAmount < 0.01 &&
@@ -211,7 +215,10 @@ function CheckoutPaymentsCtrl(
       return false;
     }
 
-    return openAddPaymentDialog(vm.activeMethod, vm.activeMethod.remaining);
+    return openAddPaymentDialog(
+      vm.activeMethod,
+      _.clone(vm.activeMethod.remaining)
+    );
   }
 
   function resetActiveMethod(quotation) {
@@ -273,14 +280,12 @@ function CheckoutPaymentsCtrl(
         .addPayment(vm.quotation.id, payment)
         .then(function(_createdPayment) {
           createdPayment = _createdPayment;
-          console.log('createdPayment', createdPayment);
           return quotationService.getById($routeParams.id);
         })
         .then(function(res) {
           if (res.data) {
             var updatedQuotation = res.data;
             vm.quotation.Payments.push(createdPayment);
-            console.log('vm.quotation before updatevm', vm.quotation);
             updateVMQuotation(updatedQuotation);
             delete vm.activeMethod;
             loadPayments();
@@ -319,17 +324,17 @@ function CheckoutPaymentsCtrl(
     }
   }
 
-  function openAddPaymentDialog(method, ammount) {
-    if (method) {
+  function openAddPaymentDialog(activeMethod, amount) {
+    if (activeMethod) {
       var templateUrl = 'views/checkout/payment-cash-dialog.html';
       var controller = DepositController;
 
-      method.currency = method.currency || 'MXP';
-      method.ammount = ammount;
-      var paymentOpts = _.clone(method);
-      paymentOpts.ammount = ammount;
+      var paymentConfig = _.extend(activeMethod, {
+        currency: activeMethod.currency || paymentService.currencyTypes.MXN,
+        ammount: _.clone(amount)
+      });
 
-      if (method.terminals) {
+      if (paymentConfig.terminals) {
         templateUrl = 'views/checkout/payment-dialog.html';
         controller = TerminalController;
       }
@@ -356,7 +361,7 @@ function CheckoutPaymentsCtrl(
         clickOutsideToClose: true,
         fullscreen: useFullScreen,
         locals: {
-          payment: paymentOpts
+          payment: paymentConfig
         }
       };
 
@@ -374,7 +379,6 @@ function CheckoutPaymentsCtrl(
   }
 
   function openCancelPaymentConfirmDialog(payment) {
-    console.log('payment en ctrl', payment);
     var templateUrl = 'views/cancellations/cancel-payment.html';
     var controller = CancelPaymentController;
     var useFullScreen =
@@ -408,7 +412,6 @@ function CheckoutPaymentsCtrl(
     paymentService
       .cancel(payment.id)
       .then(function(canceledPayment) {
-        console.log('canceledPayment', canceledPayment);
         return quotationService.getById($routeParams.id);
       })
       .then(function(res) {
@@ -454,12 +457,12 @@ function CheckoutPaymentsCtrl(
     if (checkoutService.isMinimumPaid(vm.quotation)) {
       vm.isLoadingProgress = true;
       vm.loadingEstimate = 0;
-      var params = {
-        paymentGroup: vm.quotation.paymentGroup || 1
+      var createParams = {
+        quotationId: vm.quotation.id
       };
       animateProgress();
       orderService
-        .createFromQuotation(vm.quotation.id, params)
+        .create(createParams)
         .then(function(res) {
           vm.isLoadingProgress = false;
           vm.order = res.data;

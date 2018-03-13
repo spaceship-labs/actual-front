@@ -27,8 +27,10 @@ function DepositController(
       );
 
       if ($scope.maxAmount) {
-        $scope.payment.maxAmount =
-          $scope.maxAmount / $scope.payment.exchangeRate;
+        $scope.payment.maxAmount = paymentService.getAmountUSD(
+          $scope.maxAmount,
+          $scope.payment.exchangeRate
+        );
         $scope.maxAmount = $scope.payment.maxAmount;
       }
     }
