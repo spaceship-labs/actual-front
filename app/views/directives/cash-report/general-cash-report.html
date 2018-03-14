@@ -1,18 +1,20 @@
 <section class="cash-report-wrapper">
-  
+
   <h1>Corte de caja</h1>
 
   <div class="cash-report-header" layout="row">
     <div flex>
 
-      <h3><strong>Vista regional - por tiendas</strong></h3>
-      <h3><strong>Usuario:</strong>
-         {{user.firstName + ' ' + user.lastName}}
+      <h3>
+        <strong>Vista regional - por tiendas</strong>
+      </h3>
+      <h3>
+        <strong>Usuario:</strong>
+        {{user.firstName + ' ' + user.lastName}}
       </h3>
       <h3>
         <strong>Período:</strong>
-        {{startDate | date:'dd/MM/yyyy h:mm a'}} |
-        {{endDate | date:'dd/MM/yyyy h:mm a'}}
+        {{startDate | date:'dd/MM/yyyy h:mm a'}} | {{endDate | date:'dd/MM/yyyy h:mm a'}}
       </h3>
       <h3>
         <strong>Total global ventas:</strong> {{ getAllStoresTotal() | currency }} MXN
@@ -20,11 +22,10 @@
     </div>
 
     <div flex="25" class="input-element select-element-wrapper">
-      <label><strong>Tienda:</strong></label>
-      <md-select 
-        ng-model="storeFilter" 
-        class="select-element"
-        required>
+      <label>
+        <strong>Tienda:</strong>
+      </label>
+      <md-select ng-model="storeFilter" class="select-element" required>
         <md-option ng-value="'all'">
           Todas las tiendas
         </md-option>
@@ -32,16 +33,14 @@
           {{store.name}}
         </md-option>
       </md-select>
-    </div>      
+    </div>
 
 
   </div>
 
 
 
-  <section 
-    ng-repeat="store in filterStores(stores, storeFilter)" 
-    class="cash-report-inner seller-item">
+  <section ng-repeat="store in filterStores(stores, storeFilter)" class="cash-report-inner seller-item">
 
     <h2>
       <strong>Tienda:</strong> {{store.name}}
@@ -57,34 +56,30 @@
       <h2 class="payment-group-title" ng-if="group.msi">{{group.msi}} meses sin intereses</h2>
 
       <div layout="row">
-        <div class="payment-item-header pull-left" flex><strong>Tipo de pago</strong></div>
-        <div class="payment-item-header" flex><strong>Movimientos(cantidad)</strong></div>
-        <div class="payment-item-header" flex><strong>Total</strong></div>
+        <div class="payment-item-header pull-left" flex>
+          <strong>Tipo de pago</strong>
+        </div>
+        <div class="payment-item-header" flex>
+          <strong>Movimientos(cantidad)</strong>
+        </div>
+        <div class="payment-item-header" flex>
+          <strong>Total</strong>
+        </div>
       </div>
 
-      <div 
-        class="method-group" 
-        ng-repeat="method in group.methods track by $index"
-      >
-        
+      <div class="method-group" ng-repeat="method in group.methods track by $index">
+
         <div ng-if="!isWebStore(store)">
           <div layout="row" class="payment-item">
-            
-            <div 
-              ng-if="isSinglePlaymentTerminal(method) || method.msi" 
-              class="payment-item-cell pull-left" 
-              flex>
+
+            <div ng-if="isSinglePaymentTerminal(method) || method.msi" class="payment-item-cell pull-left" flex>
               <strong ng-if="isCardCreditOrDebitPayment(method)">
-                {{method.name}} | 
+                {{method.name}} |
               </strong>
               TPV {{ mapTerminalCode(method.terminal) }}
             </div>
 
-            <div 
-              ng-if="!isSinglePlaymentTerminal(method) && !method.msi" 
-              class="payment-item-cell pull-left" 
-              flex
-            >
+            <div ng-if="!isSinglePaymentTerminal(method) && !method.msi" class="payment-item-cell pull-left" flex>
               {{method.name}}
             </div>
 
@@ -95,12 +90,10 @@
 
         <div ng-if="isWebStore(store)">
           <div layout="row" class="payment-item">
-            
-            <div 
-              class="payment-item-cell pull-left" 
-              flex
-            >
-              {{method.name}} <span ng-if="method.card">| {{method.card}}</span>
+
+            <div class="payment-item-cell pull-left" flex>
+              {{method.name}}
+              <span ng-if="method.card">| {{method.card}}</span>
             </div>
 
             <div class="payment-item-cell" flex>{{method.payments.length}}</div>
@@ -117,7 +110,7 @@
 
       <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
         <strong>Total General {{group.msi}} MSI MXN: {{getTotalByGroup(group) | currency}}</strong>
-      </h2>    
+      </h2>
 
     </section>
 
@@ -126,11 +119,7 @@
 
 
   <div layout="row" layout-align="center center" class="form-view-btns no-margin">
-    <button
-      ng-click="print()"
-      flex="50"
-      class="form-view-btn form-view-btn-primary print-btn"
-    >
+    <button ng-click="print()" flex="50" class="form-view-btn form-view-btn-primary print-btn">
       Imprimir reporte
     </button>
   </div>

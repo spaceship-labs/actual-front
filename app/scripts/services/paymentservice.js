@@ -68,7 +68,7 @@
       currencyTypes: currencyTypes,
       isUsdPayment: isUsdPayment,
       isTransferOrDeposit: isTransferOrDeposit,
-      isSinglePlaymentTerminal: isSinglePlaymentTerminal,
+      isSinglePaymentTerminal: isSinglePaymentTerminal,
       isDepositPayment: isDepositPayment,
       isTransferPayment: isTransferPayment,
       isCardPayment: isCardPayment,
@@ -132,7 +132,7 @@
       );
     }
 
-    function isSinglePlaymentTerminal(payment) {
+    function isSinglePaymentTerminal(payment) {
       return (
         payment.type === types.SINGLE_PAYMENT_TERMINAL ||
         payment.type === types.DEBIT_CARD ||

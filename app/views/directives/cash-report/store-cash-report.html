@@ -1,25 +1,26 @@
 <section class="cash-report-wrapper">
-  
+
   <h1>Corte de caja</h1>
   <h2>Gerente de tienda</h2>
 
   <div class="store-report-header" layout="row" layout-align="space-between start">
     <div class="store-report-header-col">
-      <h3><strong>Usuario:</strong> {{user.firstName + ' ' + user.lastName}}</h3>
-      <h3><strong>Tienda:</strong> {{user.mainStore.name}}</h3>      
+      <h3>
+        <strong>Usuario:</strong> {{user.firstName + ' ' + user.lastName}}</h3>
+      <h3>
+        <strong>Tienda:</strong> {{user.mainStore.name}}</h3>
     </div>
 
     <div class="store-report-header-col">
       <h3>
         <strong>Período:</strong>
-        {{startDate | date:'dd/MM/yyyy h:mm a'}} |
-        {{endDate | date:'dd/MM/yyyy h:mm a'}}
+        {{startDate | date:'dd/MM/yyyy h:mm a'}} | {{endDate | date:'dd/MM/yyyy h:mm a'}}
       </h3>
       <h3>
         <strong>Total Global Ventas:</strong> {{ getSellersTotal(sellers) | currency }} MXN
-      </h3>      
+      </h3>
     </div>
-    
+
   </div>
 
 
@@ -30,23 +31,22 @@
         <strong>Interiorista:</strong> {{seller.firstName + ' ' + seller.lastName}}
       </h2>
       <h2>
-        <strong>Total General Ventas MXN: </strong> {{ getSellerTotal(seller) | currency }} 
+        <strong>Total General Ventas MXN: </strong> {{ getSellerTotal(seller) | currency }}
       </h2>
     </div>
 
 
     <section class="payment-group" ng-repeat="group in seller.paymentsGroups">
-      
+
       <h2 class="payment-group-title" ng-if="group.groupNumber == 1">Un solo pago</h2>
       <h2 class="payment-group-title" ng-if="group.msi">{{group.msi}} meses sin intereses</h2>
 
-      <div 
-        class="method-group" 
-        ng-repeat="method in group.methods track by $index"
-      >
-        <h3 ng-if="isSinglePlaymentTerminal(method) || method.msi"><strong>TPV {{ mapTerminalCode(method.terminal) }}</strong></h3>
+      <div class="method-group" ng-repeat="method in group.methods track by $index">
+        <h3 ng-if="isSinglePaymentTerminal(method) || method.msi">
+          <strong>TPV {{ mapTerminalCode(method.terminal) }}</strong>
+        </h3>
 
-        <h3 ng-if="!isSinglePlaymentTerminal(method) && !method.msi">
+        <h3 ng-if="!isSinglePaymentTerminal(method) && !method.msi">
           <strong>{{method.name}}</strong>
         </h3>
 
@@ -55,21 +55,30 @@
 
           <!--START METHOD HEADER-->
           <thead>
-            <th class="payment-item-header"><strong>Folio</strong></th>
-            <th class="payment-item-header"><strong>No. aut.</strong></th>
-            <th 
-              ng-if="requiresBankColumn(method)"
-              class="payment-item-header"
-              >
+            <th class="payment-item-header">
+              <strong>Folio</strong>
+            </th>
+            <th class="payment-item-header">
+              <strong>No. aut.</strong>
+            </th>
+            <th ng-if="requiresBankColumn(method)" class="payment-item-header">
               <strong>Banco</strong>
             </th>
             <th class="payment-item-header">
               <strong>Fecha/Hora</strong>
             </th>
-            <th class="payment-item-header"><strong>Pedido</strong></th>
-            <th class="payment-item-header"><strong>Tipo de cambio</strong></th>            
-            <th class="payment-item-header"><strong>Moneda</strong></th>
-            <th class="payment-item-header"><strong>Cantidad</strong></th>
+            <th class="payment-item-header">
+              <strong>Pedido</strong>
+            </th>
+            <th class="payment-item-header">
+              <strong>Tipo de cambio</strong>
+            </th>
+            <th class="payment-item-header">
+              <strong>Moneda</strong>
+            </th>
+            <th class="payment-item-header">
+              <strong>Cantidad</strong>
+            </th>
           </thead>
           <!--END METHOD HEADER-->
 
@@ -77,17 +86,11 @@
             <!--START METHOD ROWS-->
             <tr ng-repeat="payment in method.payments" class="payment-item">
               <td class="payment-item-cell">{{payment.folio}}</td>
-              <td class="payment-item-cell" >{{payment.verificationCode}}</td>
-              <td 
-                ng-if="payment.card && !isTransferOrDeposit(payment) "
-                class="payment-item-cell" 
-                >
+              <td class="payment-item-cell">{{payment.verificationCode}}</td>
+              <td ng-if="payment.card && !isTransferOrDeposit(payment) " class="payment-item-cell">
                 {{payment.card}}
               </td>
-              <td 
-                ng-if="payment.terminal && isTransferOrDeposit(payment) "
-                class="payment-item-cell" 
-                >
+              <td ng-if="payment.terminal && isTransferOrDeposit(payment) " class="payment-item-cell">
                 {{payment.terminal}}
               </td>
               <td class="payment-item-cell">
@@ -97,19 +100,13 @@
                 <span ng-if="payment.Order.folio">#{{payment.Order.folio}}</span>
                 <span ng-if="!payment.Order.folio">-</span>
               </td>
-              <td 
-                class="payment-item-cell" 
-                ng-if="isUsdPayment(method)"            
-              >
+              <td class="payment-item-cell" ng-if="isUsdPayment(method)">
                 {{payment.exchangeRate | currency}}
               </td>
               <td class="payment-item-cell to-upper">
                 {{payment.currency}}
-              </td>              
-              <td 
-                class="payment-item-cell" 
-                ng-if="!isUsdPayment(method)"            
-              >
+              </td>
+              <td class="payment-item-cell" ng-if="!isUsdPayment(method)">
                 -
               </td>
 
@@ -120,36 +117,31 @@
         </table>
         <!--END METHOD ROWS-->
 
-        <p 
-          class="pull-right total-method" 
-          ng-if="isUsdPayment(method)"
-        >
+        <p class="pull-right total-method" ng-if="isUsdPayment(method)">
           <strong>Total {{method.name}} USD:</strong> {{getTotalByMethodUSD(method) | currency}}
         </p>
 
         <p class="pull-right total-method">
-          <strong 
-            ng-if="(isSinglePlaymentTerminal(method) || method.msi) && !isUsdPayment(method) ">
+          <strong ng-if="(isSinglePaymentTerminal(method) || method.msi) && !isUsdPayment(method) ">
             Total TPV {{ mapTerminalCode(method.terminal) }} MXN:
           </strong>
 
 
-          <strong 
-            ng-if="!isSinglePlaymentTerminal(method) && !method.msi && !isUsdPayment(method) ">
+          <strong ng-if="!isSinglePaymentTerminal(method) && !method.msi && !isUsdPayment(method) ">
             Total {{method.name}} MXN:
           </strong>
-          
-          
+
+
           <strong ng-if="isUsdPayment(method)">
             Total Moneda MXN:
-          </strong>    
-          
+          </strong>
+
           {{getTotalByMethod(method) | currency}}
         </p>
 
 
       </div>
-      
+
       <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
         <strong>Gran Total General USP MXN: {{getTotalByGroup(group) | currency}}</strong>
       </h2>
@@ -166,11 +158,7 @@
 
 
   <div layout="row" layout-align="center center" class="form-view-btns no-margin">
-    <button
-      ng-click="print()"
-      flex="50"
-      class="form-view-btn form-view-btn-primary print-btn"
-    >
+    <button ng-click="print()" flex="50" class="form-view-btn form-view-btn-primary print-btn">
       Imprimir reporte
     </button>
   </div>
