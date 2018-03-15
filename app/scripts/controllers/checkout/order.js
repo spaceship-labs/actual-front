@@ -27,6 +27,7 @@ function CheckoutOrderCtrl(
     isLoading: false,
     api: api,
     generateInvoice: generateInvoice,
+    cancel: cancel,
     getPaymentTypeString: paymentService.getPaymentTypeString,
     getSerieByDetailId: getSerieByDetailId,
     showInvoiceErrorIfNeeded: showInvoiceErrorIfNeeded,
@@ -42,6 +43,8 @@ function CheckoutOrderCtrl(
     mapTerminalCode: commonService.mapTerminalCode,
     calculateBalance: orderService.calculateBalance,
     isUserAdmin: authService.isAdmin($rootScope.user),
+    isStoreManager: authService.isStoreManager($rootScope.user),
+    isCanceled: orderService.isCanceled,
     isPaymentCanceled: paymentService.isCanceled
   });
 
@@ -308,6 +311,24 @@ function CheckoutOrderCtrl(
         vm.isLoading = false;
         dialogService.showDialog('Factura enviada exitosamente');
         console.log('factura sent response', res);
+      })
+      .catch(function(err) {
+        vm.isLoading = false;
+        var error = err.data;
+        dialogService.showDialog(error);
+      });
+  }
+
+  function cancel() {
+    vm.isLoading = true;
+    orderService
+      .cancel(vm.order.id)
+      .then(function(res) {
+        if (res.data && res.data.id) {
+          dialogService.showDialog('Orden cancelada');
+          vm.order.status = res.data.status;
+        }
+        vm.isLoading = false;
       })
       .catch(function(err) {
         vm.isLoading = false;

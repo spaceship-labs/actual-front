@@ -5,23 +5,47 @@
 
   /** @ngInject */
   function orderService($http, $q, $rootScope, api) {
+    var statusTypes = {
+      CANCELED: 'canceled'
+    };
+
     var service = {
       calculateBalance: calculateBalance,
       create: create,
+      cancel: cancel,
       addPayment: addPayment,
       getEwalletAmmount: getEwalletAmmount,
       getList: getList,
       getById: getById,
       getTotalsByUser: getTotalsByUser,
       getCountByUser: getCountByUser,
-      formatAddress: formatAddress
+      formatAddress: formatAddress,
+      isCanceled: isCanceled,
+      mapStatusType: mapStatusType,
+      statusTypes: statusTypes
     };
 
     return service;
 
+    function mapStatusType(status) {
+      var mapper = {};
+      mapper[statusTypes.CANCELED] = 'Cancelado';
+
+      return mapper[status] || status;
+    }
+
+    function isCanceled(order) {
+      return order.status === statusTypes.CANCELED;
+    }
+
     function create(params) {
       var url = '/order';
       return api.$http.post(url, params);
+    }
+
+    function cancel(id) {
+      var url = '/order/' + id + '/cancel';
+      return api.$http.post(url);
     }
 
     function addPayment(orderId, params) {

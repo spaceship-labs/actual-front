@@ -52,6 +52,9 @@
       <h3>
         <strong>¡GRACIAS POR SU COMPRA!</strong>
       </h3>
+      <p ng-if="vm.isCanceled(vm.order)">
+        <strong>Estatus: Cancelado</strong>
+      </p>
       <p>Estimado
         <strong>{{vm.order.Client.CardName}}</strong>
       </p>
@@ -362,6 +365,9 @@
           </a>
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
             <strong>ENVIAR FACTURA</strong>
+          </a>
+          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isStoreManager || vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
+            <strong>CANCELAR PEDIDO</strong>
           </a>
         </div>
       </div>
