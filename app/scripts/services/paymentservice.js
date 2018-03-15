@@ -82,7 +82,7 @@
       var mapper = {};
       mapper[statusTypes.CANCELED] = 'Cancelado';
 
-      return mapper[status];
+      return mapper[status] || status;
     }
 
     function getAmountMXN(usdAmount, exchangeRate) {

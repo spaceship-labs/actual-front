@@ -97,4 +97,18 @@ describe('Service: paymentService', function() {
       expect(paymentService.isCanceled(payment)).toBe(false);
     });
   });
+
+  describe('mapStatusType', function() {
+    it('should return the correct label for canceled status type', function() {
+      var payment = { status: 'canceled' };
+      expect(paymentService.mapStatusType(payment.status)).toBe('Cancelado');
+    });
+
+    it('should return the same status as label when it is not recognized', function() {
+      var payment = { status: 'not.recognized' };
+      expect(paymentService.mapStatusType(payment.status)).toBe(
+        'not.recognized'
+      );
+    });
+  });
 });
