@@ -107,6 +107,8 @@ angular
             var promise;
             if ($scope.isManagerReport) {
               promise = storeService.getManagerCashReport(params);
+            } else if ($scope.isGeneralReport) {
+              promise = storeService.getGlobalStoresCashReport(params);
             }
             /*
             if ($scope.isGeneralReport) {
