@@ -61,6 +61,9 @@
           <strong>Movimientos(cantidad)</strong>
         </div>
         <div class="payment-item-header" flex>
+          <strong>Movimientos cancelados(cantidad)</strong>
+        </div>
+        <div class="payment-item-header" flex>
           <strong>Total</strong>
         </div>
       </div>
@@ -73,6 +76,7 @@
             </div>
 
             <div class="payment-item-cell" flex>{{subdivision.payments.length}}</div>
+            <div class="payment-item-cell" flex>{{ getPaymentsCanceledQuantity(subdivision.payments) }}</div>
             <div class="payment-item-cell" flex>{{ subdivision.total | currency}} MXN</div>
           </div>
         </div>

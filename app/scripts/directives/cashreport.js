@@ -62,7 +62,9 @@ angular
             paymentRequiresBankColumn: paymentRequiresBankColumn,
             requiresBankColumn: requiresBankColumn,
             isWebStore: isWebStore,
-            getCashReport: getCashReport
+            getCashReport: getCashReport,
+            mapStatusType: paymentService.mapStatusType,
+            getPaymentsCanceledQuantity: getPaymentsCanceledQuantity
           });
 
           $scope.init();
@@ -110,28 +112,6 @@ angular
             } else if ($scope.isGeneralReport) {
               promise = storeService.getGlobalStoresCashReport(params);
             }
-            /*
-            if ($scope.isGeneralReport) {
-              promises = [
-                paymentService.getPaymentMethodsGroups({
-                  readLegacyMethods: true,
-                  readCreditMethod: true
-                }),
-                storeService.getStoresCashReport(params),
-                siteService.getSitesCashReport(params),
-                paymentService.getPaymentWebMethodsGroups()
-              ];
-            } else if ($scope.isManagerReport) {
-              promises = [
-                paymentService.getPaymentMethodsGroups({
-                  readLegacyMethods: true,
-                  readCreditMethod: true
-                }),
-                storeService.getManagerCashReport(params),
-                paymentService.getPaymentWebMethodsGroups()
-              ];
-            }
-            */
 
             $scope.isLoadingReport = true;
             promise
@@ -183,6 +163,15 @@ angular
                 return store.id === storeFilter;
               });
             }
+          }
+
+          function getPaymentsCanceledQuantity(payments) {
+            return payments.reduce(function(acum, payment) {
+              if (paymentService.isCanceled(payment)) {
+                acum++;
+              }
+              return acum;
+            }, 0);
           }
         }
       ]

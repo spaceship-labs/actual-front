@@ -74,8 +74,16 @@
       isCardPayment: isCardPayment,
       isCardCreditOrDebitPayment: isCardCreditOrDebitPayment,
       isCanceled: isCanceled,
-      isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment
+      isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment,
+      mapStatusType: mapStatusType
     };
+
+    function mapStatusType(status) {
+      var mapper = {};
+      mapper[statusTypes.CANCELED] = 'Cancelado';
+
+      return mapper[status];
+    }
 
     function getAmountMXN(usdAmount, exchangeRate) {
       return usdAmount * exchangeRate;

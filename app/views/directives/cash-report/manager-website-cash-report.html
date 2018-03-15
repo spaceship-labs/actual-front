@@ -29,6 +29,9 @@
             <strong>Tipo de cambio</strong>
           </th>
           <th class="payment-item-header">
+            <strong>Estatus</strong>
+          </th>
+          <th class="payment-item-header">
             <strong>Moneda</strong>
           </th>
           <th class="payment-item-header">
@@ -68,6 +71,10 @@
               {{ 0 | currency }}
             </td>
             <!--END EXCHANGE RATE-->
+
+            <td class="payment-item-cell to-upper">
+              {{ mapStatusType(payment.status) }}
+            </td>
 
             <td class="payment-item-cell to-upper">
               {{payment.currency}}
