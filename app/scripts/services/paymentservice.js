@@ -119,6 +119,7 @@
 
     function getPaymentOptionsByMethod(method) {
       console.log("method", method);
+      var STUDIO_MALECON_CODE = "actual_studio_malecon";
       var options = _.filter(paymentOptions, function(option) {
         var hasPaymentType = false;
         var hasStore = false;
@@ -137,7 +138,11 @@
           hasStore = true;
         }
 
-        if (method.storeCode) {
+        if (
+          method.storeCode &&
+          method.storeCode === STUDIO_MALECON_CODE &&
+          method.group === 1
+        ) {
           return (
             hasStore &&
             hasPaymentType &&
