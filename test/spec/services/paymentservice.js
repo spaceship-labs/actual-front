@@ -36,7 +36,8 @@ describe("Service: paymentService", function() {
     var method = {
       type: "credit-card",
       storeCode: "actual_studio_malecon",
-      storeType: "studio"
+      storeType: "studio",
+      group: 1
     };
     var options = paymentService.getPaymentOptionsByMethod(method);
     expect(options).toBeDefined();
