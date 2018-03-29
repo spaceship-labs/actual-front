@@ -3213,6 +3213,13 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   color:#000;
   text-decoration: underline;
 }
+
+.quotation-view .signature-section{
+  display: none;
+  text-align: center
+}
+.quotation-view .signature-block{margin: 80px 0}
+
 .quotation-view .payments-options-totals {}
 .quotation-view .payments-options-totals .bottom-note{
   text-align: right;
@@ -4528,6 +4535,9 @@ padding-left: 16px;
   .only-show-print,
   .order-view .reduction p{font-size: 11px;}
   .order-view .price-reduction p{font-size: 12px;}
+  
+  .quotation-view .signature-section,
+  .quotation-view .signature-section .signature-line,
   .order-view .signature-section,
   .order-view .signature-section .signature-line,
   .show-print{display: block;}
@@ -4535,6 +4545,8 @@ padding-left: 16px;
   .order-view .signature-section-flex{display: flex;}
 
   .cash-report h1{font-size: 16px;}
+
+  .quotation-view .client-signature,
   .order-view .client-signature{
     display: block;
   }
