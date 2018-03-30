@@ -63,6 +63,15 @@
       terminal: { label: "American Express", value: "american-express" }
     },
 
+    {
+      card: { label: "American Express", value: "american-express" },
+      paymentTypes: ["credit-card", "debit-card"],
+      storesTypes: ["home", "studio", "proyectos"],
+      storeCodes: ["actual_studio_malecon"],
+      isInternational: true,
+      terminal: { label: "American Express", value: "american-express" }
+    },
+
     //AMERICAN EXPRESS
     {
       card: { label: "American Express", value: "american-express" },
@@ -75,6 +84,14 @@
         "12-msi" /*,'18-msi'*/
       ],
       storesTypes: ["home", "studio", "proyectos"],
+      terminal: { label: "American Express", value: "american-express" }
+    },
+
+    {
+      card: { label: "American Express", value: "american-express" },
+      paymentTypes: ["credit-card", "debit-card"],
+      storesTypes: ["studio"],
+      storeCodes: ["actual_studio_malecon"],
       terminal: { label: "American Express", value: "american-express" }
     },
 
