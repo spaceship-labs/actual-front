@@ -6,7 +6,8 @@
   /** @ngInject */
   function orderService($http, $q, $rootScope, api) {
     var statusTypes = {
-      CANCELED: 'canceled'
+      CANCELED: 'canceled',
+      PAID: 'paid'
     };
 
     var service = {
@@ -22,15 +23,21 @@
       formatAddress: formatAddress,
       isCanceled: isCanceled,
       mapStatusType: mapStatusType,
-      statusTypes: statusTypes
+      statusTypes: statusTypes,
+      getStatusMap: getStatusMap
     };
 
     return service;
 
-    function mapStatusType(status) {
+    function getStatusMap() {
       var mapper = {};
       mapper[statusTypes.CANCELED] = 'Cancelado';
+      mapper[statusTypes.PAID] = 'Pagado';
+      return mapper;
+    }
 
+    function mapStatusType(status) {
+      var mapper = getStatusMap();
       return mapper[status] || status;
     }
 
