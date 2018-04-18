@@ -138,24 +138,11 @@
           hasStore = true;
         }
 
-        if (
-          method.storeCode &&
-          method.storeCode === STUDIO_MALECON_CODE &&
-          method.group === 1
-        ) {
-          return (
-            hasStore &&
-            hasPaymentType &&
-            method.isInternational === option.isInternational &&
-            (option.storeCodes || []).indexOf(method.storeCode) > -1
-          );
-        } else {
-          return (
-            hasStore &&
-            hasPaymentType &&
-            method.isInternational === option.isInternational
-          );
-        }
+        return (
+          hasStore &&
+          hasPaymentType &&
+          method.isInternational === option.isInternational
+        );
       });
       return options;
     }
