@@ -49,7 +49,7 @@
 
         </div>
 
-        <div ng-if="!vm.isPaymentCanceled(payment)" flex="20" class="payment-icon-wrap">
+        <div ng-if="!vm.isPaymentCanceled(payment) && vm.isStoreManager" flex="20" class="payment-icon-wrap">
           <a href="#" ng-click="vm.openCancelPaymentConfirmDialog(payment)" class="action-btn">Cancelar</a>
         </div>
       </div>

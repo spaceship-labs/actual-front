@@ -172,7 +172,7 @@
       var storeManagerForbiddenPaths = [
         '/addquotation',
         '/dashboard',
-        '/checkout/client',
+        //'/checkout/client',
         //'/checkout/paymentmethod',
         '/continuequotation'
       ];

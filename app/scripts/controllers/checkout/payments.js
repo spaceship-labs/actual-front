@@ -4,6 +4,7 @@ angular
   .controller('CheckoutPaymentsCtrl', CheckoutPaymentsCtrl);
 
 function CheckoutPaymentsCtrl(
+  $rootScope,
   $routeParams,
   $scope,
   $q,
@@ -56,7 +57,8 @@ function CheckoutPaymentsCtrl(
     setupActiveMethod: setupActiveMethod,
     resetActiveMethod: resetActiveMethod,
     setQuotationTotalsByGroup: setQuotationTotalsByGroup,
-    updateVMQuotation: updateVMQuotation
+    updateVMQuotation: updateVMQuotation,
+    isStoreManager: authService.isStoreManager($rootScope.user)
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
