@@ -558,6 +558,7 @@
           childs: [
             { label: 'Valla Móvil', value: 'valla-movil' },
             { label: 'Pantalla Digital', value: 'pantalla-digital' },
+            { label: 'Evento mensual kids', value: 'evento-mensual-kids' },
             { label: 'Otro / No recuerda', value: 'otro' },
           ],
         },
