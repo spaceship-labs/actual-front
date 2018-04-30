@@ -513,6 +513,10 @@
             { label: 'Radiofórmula Cancún', value: 'radioformula-cancun' },
             { label: 'Pirata', value: 'pirata' },
             { label: 'Kiss Mérida', value: 'kiss-merida' },
+            {
+              label: '104.3 Qfm / Rock by the sea',
+              value: '104.3qfm_rock-by-the-sea',
+            },
             { label: 'Otro / No recuerda', value: 'otro' },
           ],
         },
