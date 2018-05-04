@@ -15,7 +15,7 @@
         </tr>
       </thead>
 
-      <tbody ng-if="vm.quotationStore.group === 'studio' ">
+      <tbody ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida'">
         <tr>
           <td>Pesos</td>
           <td>Banamex</td>
@@ -58,7 +58,7 @@
         </tr>
       </tbody>
 
-      <tbody ng-if="vm.quotationStore.group !== 'studio' ">
+      <tbody ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida'">
         <tr>
           <td>Pesos</td>
           <td>Banamex</td>
