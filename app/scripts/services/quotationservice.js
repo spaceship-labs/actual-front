@@ -238,6 +238,7 @@
         quantity: params.quantity,
         Quotation: quotationId,
         shipDate: params.shipDate,
+        immediateDelivery: params.immediateDelivery,
         originalShipDate: params.originalShipDate,
         productDate: params.productDate,
         shipCompany: params.shipCompany,
