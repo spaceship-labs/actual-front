@@ -44,6 +44,7 @@ function CheckoutOrderCtrl(
     calculateBalance: orderService.calculateBalance,
     isUserAdmin: authService.isAdmin($rootScope.user),
     isStoreManager: authService.isStoreManager($rootScope.user),
+    isAccountingUser: authService.isAccountingUser($rootScope.user),
     isCanceled: orderService.isCanceled,
     isPaymentCanceled: paymentService.isCanceled
   });
