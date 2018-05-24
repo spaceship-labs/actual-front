@@ -653,6 +653,18 @@
             { label: 'Otro / No recuerda', value: 'otro' },
           ],
         },
+        {
+          label: 'Recomendado Tulum',
+          value: 'recomendado-tulum',
+          childs: [
+            {label: 'Flora & fauna', value: 'flora-and-fauna'},
+            {label: 'Panoramic', value: 'panoramic'},
+            {label: 'Sanctuary', value: 'sanctuary'},
+            {label: 'Manor', value: 'manor'},
+            {label: 'Anah', value: 'anah'},
+            {label: 'Casa', value: 'casa'},
+         ]
+        }
       ];
       return sources;
     }
