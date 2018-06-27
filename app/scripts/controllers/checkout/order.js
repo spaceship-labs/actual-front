@@ -49,9 +49,16 @@ function CheckoutOrderCtrl(
     invoiceLogLoadCounter: 0,
     invoiceLogLoadLimit: 5,  
     mapTerminalCode: commonService.mapTerminalCode,  
-    calculateBalance: orderService.calculateBalance,
+    calculateBalance: calculateBalance,
     isUserAdmin: authService.isAdmin($rootScope.user)
   });
+ 
+  function calculateBalance(paid, total){
+    return orderService.calculateBalance(
+      commonService.roundCurrency(paid),
+      commonService.roundCurrency(total)
+    );
+  }
 
   function showImmediateDeliveryDialog(order){
     if(order.Details){
