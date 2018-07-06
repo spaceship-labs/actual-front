@@ -80,12 +80,12 @@
           <strong>RESUMEN</strong>
         </h1>
 
-        <h1 class="cart-title-ewallet">
-          <i class="icon-scaner-asociar"></i>
+        <h1 class="cart-title-ewallet" ng-click="vm.asociateEwallet()">
+          <i class="icon-scaner-asociar "></i>
           <strong>ASOCIAR MONEDERO</strong>
         </h1>
 
-        <div class="cart-summary">
+        <div class="cart-summary ">
           <table>
             <tr>
               <td>
@@ -99,7 +99,7 @@
               <td>Descuento:</td>
               <td>
                 <strong>MXN
-                  <span ng-show="vm.quotation.discount > 0">-</span>{{ vm.quotation.discount | currency }}</strong>
+                  <span ng-show="vm.quotation.discount> 0">-</span>{{ vm.quotation.discount | currency }}</strong>
               </td>
             </tr>
           </table>

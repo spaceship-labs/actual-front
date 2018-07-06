@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 angular
-  .module("actualApp")
-  .controller("CheckoutPaymentsCtrl", CheckoutPaymentsCtrl);
+  .module('actualApp')
+  .controller('CheckoutPaymentsCtrl', CheckoutPaymentsCtrl);
 
 function CheckoutPaymentsCtrl(
   $routeParams,
@@ -41,7 +41,7 @@ function CheckoutPaymentsCtrl(
     isValidQuotationAddress: isValidQuotationAddress,
     isPaymentModeActive: isPaymentModeActive,
     intervalProgress: false,
-    customFullscreen: $mdMedia("xs") || $mdMedia("sm"),
+    customFullscreen: $mdMedia('xs') || $mdMedia('sm'),
     singlePayment: true,
     multiplePayment: false,
     isLoading: true,
@@ -49,8 +49,9 @@ function CheckoutPaymentsCtrl(
     payments: [],
     sapLogs: [],
     paymentMethodsGroups: [],
+    asociateEwallet: asociateEwallet,
     CLIENT_BALANCE_TYPE: paymentService.types.CLIENT_BALANCE,
-    roundCurrency: commonService.roundCurrency
+    roundCurrency: commonService.roundCurrency,
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
@@ -65,7 +66,7 @@ function CheckoutPaymentsCtrl(
     var forceLatestData = true;
     var getParams = {
       payments: true,
-      forceLatestData: forceLatestData
+      forceLatestData: forceLatestData,
     };
 
     quotationService
@@ -76,37 +77,37 @@ function CheckoutPaymentsCtrl(
 
         return $q.all([
           quotationService.validateQuotationStockById(vm.quotation.id),
-          loadPaymentMethods()
+          loadPaymentMethods(),
         ]);
       })
       .then(function(result) {
         var isValidStock = result[0];
 
         if (!isValidStock) {
-          console.log("Out of stock");
+          console.log('Out of stock');
           $location
-            .path("/quotations/edit/" + vm.quotation.id)
+            .path('/quotations/edit/' + vm.quotation.id)
             .search({ stockAlert: true });
         }
 
         if (!vm.quotation.Details || vm.quotation.Details.length === 0) {
-          $location.path("/quotations/edit/" + vm.quotation.id);
+          $location.path('/quotations/edit/' + vm.quotation.id);
         }
 
         if (!isValidQuotationAddress(vm.quotation)) {
-          console.log("No address");
+          console.log('No address');
           $location
-            .path("/quotations/edit/" + vm.quotation.id)
+            .path('/quotations/edit/' + vm.quotation.id)
             .search({ missingAddress: true });
         }
 
         if (vm.quotation.Order) {
-          $location.path("/checkout/order/" + vm.quotation.Order.id);
+          $location.path('/checkout/order/' + vm.quotation.Order.id);
         }
 
         if (!clientService.validateRfc(vm.quotation.Client.LicTradNum)) {
-          console.log("invalid rfc");
-          $location.path("/checkout/client/" + vm.quotation.id);
+          console.log('invalid rfc');
+          $location.path('/checkout/client/' + vm.quotation.id);
           return;
         }
 
@@ -115,9 +116,26 @@ function CheckoutPaymentsCtrl(
         vm.isLoading = false;
       })
       .catch(function(err) {
-        console.log("err", err);
-        dialogService.showDialog("Error: \n" + err.data);
+        console.log('err', err);
+        dialogService.showDialog('Error: \n' + err.data);
       });
+  }
+
+  function showAsociateEwalletDialog() {
+    var controller = EwalletDialogController;
+    var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+    return $mdDialog.show({
+      controller: ['$scope', '$mdDialog', '$location', controller],
+      templateUrl: 'views/checkout/ewallet-dialog.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen,
+    });
+  }
+
+  function asociateEwallet() {
+    console.log('entra ne');
+    return showAsociateEwalletDialog();
   }
 
   function loadSapLogs(quotationId) {
@@ -129,7 +147,7 @@ function CheckoutPaymentsCtrl(
         vm.isLoadingSapLogs = false;
       })
       .catch(function(err) {
-        console.log("err", err);
+        console.log('err', err);
         vm.isLoadingSapLogs = false;
       });
   }
@@ -144,7 +162,7 @@ function CheckoutPaymentsCtrl(
   function loadPaymentMethods() {
     var deferred = $q.defer();
     var params = {
-      financingTotals: true
+      financingTotals: true,
     };
     quotationService
       .getPaymentOptions(vm.quotation.id, params)
@@ -164,7 +182,7 @@ function CheckoutPaymentsCtrl(
         deferred.resolve();
       })
       .catch(function(err) {
-        console.log("err", err);
+        console.log('err', err);
         deferred.reject(err);
       });
 
@@ -204,17 +222,17 @@ function CheckoutPaymentsCtrl(
       vm.activeMethod.maxAmmount < 0.01 &&
       (method.type === CLIENT_BALANCE_TYPE || method.type === EWALLET_TYPE)
     ) {
-      dialogService.showDialog("Fondos insuficientes");
+      dialogService.showDialog('Fondos insuficientes');
       return false;
     }
 
     if (vm.quotation.Client) {
       if (
-        vm.activeMethod.currency === "usd" &&
-        vm.quotation.Client.Currency === "MXP"
+        vm.activeMethod.currency === 'usd' &&
+        vm.quotation.Client.Currency === 'MXP'
       ) {
         dialogService.showDialog(
-          "Pagos en dolares no disponibles para este cliente por configuración en SAP"
+          'Pagos en dolares no disponibles para este cliente por configuración en SAP'
         );
         return false;
       }
@@ -242,7 +260,7 @@ function CheckoutPaymentsCtrl(
   function setQuotationTotalsByGroup(quotation) {
     var paymentGroup = checkoutService.getGroupByQuotation(quotation);
     var currentGroup = _.findWhere(vm.paymentMethodsGroups, {
-      group: paymentGroup
+      group: paymentGroup,
     });
     var firstMethod = currentGroup.methods[0];
     quotation.paymentGroup = paymentGroup;
@@ -268,8 +286,8 @@ function CheckoutPaymentsCtrl(
         vm.isLoadingPayments = false;
       })
       .catch(function(err) {
-        console.log("err", err);
-        dialogService.showDialog("Hubo un error, recarga la página");
+        console.log('err', err);
+        dialogService.showDialog('Hubo un error, recarga la página');
         vm.isLoadingPayments = false;
       });
   }
@@ -295,7 +313,7 @@ function CheckoutPaymentsCtrl(
             loadPayments();
             return loadPaymentMethods();
           } else {
-            return $q.reject("Hubo un error");
+            return $q.reject('Hubo un error');
           }
         })
         .then(function() {
@@ -304,7 +322,7 @@ function CheckoutPaymentsCtrl(
           if (vm.quotation.ammountPaid >= vm.quotation.total) {
             createOrder();
           } else {
-            dialogService.showDialog("Pago aplicado");
+            dialogService.showDialog('Pago aplicado');
           }
 
           if (payment.type === EWALLET_TYPE) {
@@ -325,8 +343,8 @@ function CheckoutPaymentsCtrl(
           vm.isLoadingPayments = false;
           vm.isLoading = false;
           var error = err.data || err;
-          error = error ? error.toString() : "";
-          dialogService.showDialog("Hubo un error: " + error);
+          error = error ? error.toString() : '';
+          dialogService.showDialog('Hubo un error: ' + error);
           //
           //dialogService.showDialog('Error: \n' + (err.data || err) );
         });
@@ -338,31 +356,31 @@ function CheckoutPaymentsCtrl(
 
   function applyTransaction(ev, method, ammount) {
     if (method) {
-      var templateUrl = "views/checkout/payment-cash-dialog.html";
-      method.currency = method.currency || "MXP";
+      var templateUrl = 'views/checkout/payment-cash-dialog.html';
+      method.currency = method.currency || 'MXP';
       method.ammount = ammount;
       var paymentOpts = _.clone(method);
       var controller = DepositController;
       if (method.terminals) {
-        templateUrl = "views/checkout/payment-dialog.html";
+        templateUrl = 'views/checkout/payment-dialog.html';
         controller = TerminalController;
       }
       paymentOpts.ammount = ammount;
       var useFullScreen =
-        ($mdMedia("sm") || $mdMedia("xs")) && vm.customFullscreen;
+        ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
       $mdDialog
         .show({
           controller: [
-            "$scope",
-            "$mdDialog",
-            "$filter",
-            "formatService",
-            "commonService",
-            "ewalletService",
-            "dialogService",
-            "paymentService",
-            "payment",
-            controller
+            '$scope',
+            '$mdDialog',
+            '$filter',
+            'formatService',
+            'commonService',
+            'ewalletService',
+            'dialogService',
+            'paymentService',
+            'payment',
+            controller,
           ],
           templateUrl: templateUrl,
           parent: angular.element(document.body),
@@ -370,8 +388,8 @@ function CheckoutPaymentsCtrl(
           clickOutsideToClose: true,
           fullscreen: useFullScreen,
           locals: {
-            payment: paymentOpts
-          }
+            payment: paymentOpts,
+          },
         })
         .then(
           function(payment) {
@@ -382,7 +400,7 @@ function CheckoutPaymentsCtrl(
           }
         );
     } else {
-      commonService.showDialog("Revisa los datos, e intenta de nuevo");
+      commonService.showDialog('Revisa los datos, e intenta de nuevo');
     }
   }
 
@@ -392,7 +410,7 @@ function CheckoutPaymentsCtrl(
 
   function createOrder() {
     if (!vm.quotation.Details || vm.quotation.Details.length === 0) {
-      dialogService.showDialog("No hay artículos en esta cotización");
+      dialogService.showDialog('No hay artículos en esta cotización');
       return;
     }
 
@@ -400,7 +418,7 @@ function CheckoutPaymentsCtrl(
       vm.isLoadingProgress = true;
       vm.loadingEstimate = 0;
       var params = {
-        paymentGroup: vm.quotation.paymentGroup || 1
+        paymentGroup: vm.quotation.paymentGroup || 1,
       };
       animateProgress();
       orderService
@@ -411,18 +429,18 @@ function CheckoutPaymentsCtrl(
           if (vm.order.id) {
             quotationService.removeCurrentQuotation();
             $location
-              .path("/checkout/order/" + vm.order.id)
+              .path('/checkout/order/' + vm.order.id)
               .search({ orderCreated: true });
           }
         })
         .catch(function(err) {
-          console.log("err", err);
-          var errMsg = "";
+          console.log('err', err);
+          var errMsg = '';
           if (err) {
             errMsg = err.data || err;
-            errMsg = errMsg ? errMsg.toString() : "";
+            errMsg = errMsg ? errMsg.toString() : '';
             dialogService.showDialog(
-              "Hubo un error, recarga la página \n" + errMsg
+              'Hubo un error, recarga la página \n' + errMsg
             );
           }
           loadSapLogs(vm.quotation.id);
@@ -440,7 +458,7 @@ function CheckoutPaymentsCtrl(
     }, 1000);
   }
 
-  $scope.$on("$destroy", function() {
+  $scope.$on('$destroy', function() {
     $mdDialog.cancel();
     if (vm.intervalProgress) {
       $interval.cancel(vm.intervalProgress);
