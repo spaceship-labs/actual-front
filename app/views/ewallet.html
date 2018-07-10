@@ -1,11 +1,11 @@
 <section class="form-view container container-xlg">
   <h1>
     <i class="icon-monedero"></i>
-    <strong>MONEDERO #12345678901234</strong>
+    <strong>MONEDERO #{{ vm.ewallet.cardNumber }}</strong>
   </h1>
 
   <hr/>
-  <div layout="row" layout-align="space-between end" class="form-view-filters">
+  <div ng-show="vm.ewallet" layout="row" layout-align="space-between end" class="form-view-filters">
     <div flex="50" class="date-filters ewallet-actual-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
@@ -16,14 +16,14 @@
     <div flex="50" class="date-filters ewallet-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
-          $1,560.00 MXN
+          ${{ vm.ewallet.amount }}
         </strong>
       </p>
     </div>
   </div>
 
 
-  <div layout="row" layout-align="space-between end" class="form-view-filters-ewallet">
+  <div ng-show="!vm.ewallet" layout="row" layout-align="space-between end" class="form-view-filters-ewallet">
     <div flex="100" class="date-filters-ewallet ewallet-actual-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
@@ -35,7 +35,10 @@
         <i class="icon-scaner"></i>
       </p>
       <p class="enter-code">Ingresa el código de tu monedero:</p>
-      <input type="text">
+      <form ng-submit="vm.getEwallet()">
+        <input type="text" ng-model="vm.cardNumber">
+        <button type="submit">Submit</button>
+      </form>
     </div>
   </div>
 

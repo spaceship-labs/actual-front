@@ -134,7 +134,6 @@ function CheckoutPaymentsCtrl(
   }
 
   function asociateEwallet() {
-    console.log('entra ne');
     return showAsociateEwalletDialog();
   }
 

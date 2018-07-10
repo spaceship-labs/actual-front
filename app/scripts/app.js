@@ -128,11 +128,6 @@ angular
         controller: 'AddquotationCtrl',
         controllerAs: 'vm',
       })
-      .when('/ewallet', {
-        templateUrl: 'views/ewallet.html',
-        controller: 'EwalletCtrl',
-        controllerAs: 'vm',
-      })
       .when('/clients/create', {
         templateUrl: 'views/clients/create.html',
         controller: 'ClientCreateCtrl',
@@ -335,7 +330,7 @@ angular
       .when('/ewallet', {
         templateUrl: 'views/ewallet.html',
         controller: 'EwalletCtrl',
-        controllerAs: 'ewallet',
+        controllerAs: 'vm',
       })
       .otherwise({
         redirectTo: '/',
