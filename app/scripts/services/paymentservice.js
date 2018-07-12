@@ -1,7 +1,13 @@
 (function() {
+<<<<<<< HEAD
   "use strict";
 
   angular.module("actualApp").factory("paymentService", paymentService);
+=======
+  'use strict';
+
+  angular.module('actualApp').factory('paymentService', paymentService);
+>>>>>>> feature/3
 
   function paymentService(
     api,
@@ -16,12 +22,17 @@
     var CLIENT_BALANCE_GROUP_INDEX = 0;
     var CLIENT_BALANCE_TYPE = "client-balance";
 
+    var statusTypes = {
+      CANCELED: 'canceled'
+    };
+
     var currencyTypes = {
       USD: "usd",
       MXN: "mxn"
     };
 
     var types = {
+<<<<<<< HEAD
       CLIENT_BALANCE: "client-balance",
       CASH: "cash",
       CASH_USD: "cash-usd",
@@ -44,12 +55,38 @@
 
       MSI_13: "13-msi",
       MSI_18: "18-msi"
+=======
+      CLIENT_BALANCE: 'client-balance',
+      CASH: 'cash',
+      CASH_USD: 'cash-usd',
+      CHEQUE: 'cheque',
+      DEPOSIT: 'deposit',
+      TRANSFER: 'transfer',
+      TRANSFER_USD: 'transfer-usd',
+      CREDIT_CARD: 'credit-card',
+      DEBIT_CARD: 'debit-card',
+      EWALLET: 'ewallet',
+      SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
+      MSI_3: '3-msi',
+      MSI_6: '6-msi',
+      MSI_9: '9-msi',
+      MSI_12: '12-msi',
+
+      MSI_3_BANAMEX: '3-msi-banamex',
+      MSI_6_BANAMEX: '6-msi-banamex',
+      MSI_9_BANAMEX: '9-msi-banamex',
+      MSI_12_BANAMEX: '12-msi-banamex',
+
+      MSI_13: '13-msi',
+      MSI_18: '18-msi'
+>>>>>>> feature/3
     };
 
     var service = {
       addPayment: addPayment,
-      cancelPayment: cancelPayment,
+      cancel: cancel,
       getAmountMXN: getAmountMXN,
+      getAmountUSD: getAmountUSD,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentWebMethodsGroups: getPaymentWebMethodsGroups,
       getMethodAvailableBalance: getMethodAvailableBalance,
@@ -58,16 +95,21 @@
       getClientBalanceDescription: getClientBalanceDescription,
       updateQuotationClientBalance: updateQuotationClientBalance,
       types: types,
+      statusTypes: statusTypes,
       currencyTypes: currencyTypes,
       isUsdPayment: isUsdPayment,
       isTransferOrDeposit: isTransferOrDeposit,
-      isSinglePlaymentTerminal: isSinglePlaymentTerminal,
+      isSinglePaymentTerminal: isSinglePaymentTerminal,
       isDepositPayment: isDepositPayment,
       isTransferPayment: isTransferPayment,
       isCardPayment: isCardPayment,
-      isCardCreditOrDebitPayment: isCardCreditOrDebitPayment
+      isCardCreditOrDebitPayment: isCardCreditOrDebitPayment,
+      isCanceled: isCanceled,
+      isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment,
+      mapStatusType: mapStatusType
     };
 
+<<<<<<< HEAD
     function getAmountMXN(amount, exchangeRate) {
       return amount * exchangeRate;
     }
@@ -87,6 +129,48 @@
       );
     }
 
+=======
+    function mapStatusType(status) {
+      var mapper = {};
+      mapper[statusTypes.CANCELED] = 'Cancelado';
+
+      return mapper[status] || status;
+    }
+
+    function getAmountMXN(usdAmount, exchangeRate) {
+      return usdAmount * exchangeRate;
+    }
+
+    function getAmountUSD(mxnAmount, exchangeRate) {
+      return mxnAmount / exchangeRate;
+    }
+
+    function isClientBalanceOrEwalletPayment(payment) {
+      return (
+        payment.type === types.CLIENT_BALANCE || payment.type === types.EWALLET
+      );
+    }
+
+    function isCanceled(payment) {
+      return payment.status === statusTypes.CANCELED;
+    }
+
+    function isCardPayment(payment) {
+      return (
+        payment.msi ||
+        payment.type === types.CREDIT_CARD ||
+        payment.type === types.DEBIT_CARD ||
+        payment.type === types.SINGLE_PAYMENT_TERMINAL
+      );
+    }
+
+    function isCardCreditOrDebitPayment(payment) {
+      return (
+        payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD
+      );
+    }
+
+>>>>>>> feature/3
     function isUsdPayment(payment) {
       return payment.currency === currencyTypes.USD;
     }
@@ -109,7 +193,11 @@
       );
     }
 
+<<<<<<< HEAD
     function isSinglePlaymentTerminal(payment) {
+=======
+    function isSinglePaymentTerminal(payment) {
+>>>>>>> feature/3
       return (
         payment.type === types.SINGLE_PAYMENT_TERMINAL ||
         payment.type === types.DEBIT_CARD ||
@@ -118,8 +206,11 @@
     }
 
     function getPaymentOptionsByMethod(method) {
+<<<<<<< HEAD
       console.log("method", method);
       var STUDIO_MALECON_CODE = "actual_studio_malecon";
+=======
+>>>>>>> feature/3
       var options = _.filter(paymentOptions, function(option) {
         var hasPaymentType = false;
         var hasStore = false;
@@ -138,36 +229,66 @@
           hasStore = true;
         }
 
+<<<<<<< HEAD
         return (
           hasStore &&
           hasPaymentType &&
           method.isInternational === option.isInternational
         );
+=======
+        if (
+          hasStore &&
+          hasPaymentType &&
+          method.isInternational === option.isInternational
+        ) {
+          return true;
+        }
+
+        return false;
+>>>>>>> feature/3
       });
       return options;
     }
 
     function getPaymentMethodsGroups(params) {
+<<<<<<< HEAD
       var url = "/paymentgroups";
+=======
+      var url = '/paymentgroups';
+>>>>>>> feature/3
       return api.$http.post(url, params);
     }
 
     function getPaymentWebMethodsGroups(params) {
+<<<<<<< HEAD
       var url = "/paymentwebgroups";
+=======
+      var url = '/paymentwebgroups';
+>>>>>>> feature/3
       return api.$http.post(url, params);
     }
 
     function addPayment(quotationId, params) {
+<<<<<<< HEAD
       var url = "/payment/add/" + quotationId;
       return api.$http.post(url, params);
     }
 
     function cancelPayment(quotationId, paymentId) {
       var url = "/payment/cancel/" + quotationId + "/" + paymentId;
+=======
+      var url = '/quotation/' + quotationId + '/payments';
+      return api.$http.post(url, params);
+    }
+
+    function cancel(paymentId) {
+      var url = '/payment/' + paymentId + '/cancel';
+>>>>>>> feature/3
       return api.$http.post(url);
     }
 
     function getPaymentTypeString(payment) {
+<<<<<<< HEAD
       var type = "1 sola exhibición";
       if (payment.msi) {
         type = payment.msi + " meses sin intereses";
@@ -176,6 +297,16 @@
         type = "Transferencia";
       } else if (isDepositPayment(payment)) {
         type = "Deposito en ventanilla";
+=======
+      var type = '1 sola exhibición';
+      if (payment.msi) {
+        type = payment.msi + ' meses sin intereses';
+        return type;
+      } else if (isTransferPayment(payment)) {
+        type = 'Transferencia';
+      } else if (isDepositPayment(payment)) {
+        type = 'Deposito en ventanilla';
+>>>>>>> feature/3
       }
 
       switch (payment.type) {
@@ -205,7 +336,11 @@
       clientService
         .getBalanceById(quotation.Client.id)
         .then(function(res) {
+<<<<<<< HEAD
           console.log("res", res);
+=======
+          console.log('res client balance', res);
+>>>>>>> feature/3
           var balance = res.data || 0;
           var description = getClientBalanceDescription(balance);
           if (balancePaymentMethod) {
@@ -223,6 +358,14 @@
         });
     }
 
+<<<<<<< HEAD
+=======
+    /*
+    @params 
+    method {Object}
+    quotation {Quotation Object} populated with Client{ Client Object}
+    */
+>>>>>>> feature/3
     function getMethodAvailableBalance(method, quotation) {
       var EWALLET_TYPE = ewalletService.ewalletType;
       var balance = 0;
@@ -238,10 +381,17 @@
     }
 
     function getClientBalanceDescription(balance) {
+<<<<<<< HEAD
       var description = "";
       var balanceRounded = commonService.roundCurrency(balance, { up: false });
       var balanceStr = $filter("currency")(balanceRounded);
       description = "Saldo disponible: " + balanceStr + " MXN";
+=======
+      var description = '';
+      var balanceRounded = commonService.roundCurrency(balance, { up: false });
+      var balanceStr = $filter('currency')(balanceRounded);
+      description = 'Saldo disponible: ' + balanceStr + ' MXN';
+>>>>>>> feature/3
       return description;
     }
 

@@ -289,8 +289,6 @@
 
     //$rootScope.$on("$locationChangeStart",function(event, next, current){
     $scope.$on('$routeChangeStart', function(event, next, current) {
-      console.log('current', current);
-
       if (current) {
         authService.runPolicies();
 

@@ -52,6 +52,9 @@
       <h3>
         <strong>¡GRACIAS POR SU COMPRA!</strong>
       </h3>
+      <p ng-if="vm.isCanceled(vm.order)">
+        <strong>Estatus: Cancelado</strong>
+      </p>
       <p>Estimado
         <strong>{{vm.order.Client.CardName}}</strong>
       </p>
@@ -222,6 +225,7 @@
           <div flex class="order-payment-item-data">
             <span ng-if="payment.currency !== 'usd'">{{payment.ammount | currency}} MXN</span>
             <span ng-if="payment.currency === 'usd'">{{payment.ammount | currency}} USD.</span>
+            <span ng-if="vm.isPaymentCanceled(payment)">(Cancelado)</span>
           </div>
         </div>
       </div>
@@ -364,6 +368,9 @@
           </a>
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
             <strong>ENVIAR FACTURA</strong>
+          </a>
+          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isStoreManager || vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
+            <strong>CANCELAR PEDIDO</strong>
           </a>
         </div>
       </div>

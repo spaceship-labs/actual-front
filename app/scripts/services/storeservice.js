@@ -46,6 +46,16 @@
       return api.$http.post(url, params);
     }
 
+    function getPromosByStore(id) {
+      var url = '/store/' + id + '/promotions';
+      return api.$http.post(url);
+    }
+
+    function getManagerCashReport(params) {
+      var url = '/me/managercashreport';
+      return api.$http.post(url, params);
+    }
+
     function getSellersByStore(id) {
       var url = '/store/' + id + '/sellers';
       return api.$http.post(url);

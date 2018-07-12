@@ -56,6 +56,7 @@
       updateSource: updateSource,
       updateBroker: updateBroker,
       validateQuotationStockById: validateQuotationStockById,
+      isValidQuotationAddress: isValidQuotationAddress,
     };
 
     return service;
@@ -145,6 +146,10 @@
     function getSapOrderConnectionLogs(id) {
       var url = '/quotation/' + id + '/saporderconnectionlogs';
       return api.$http.post(url);
+    }
+
+    function isValidQuotationAddress(quotation) {
+      return quotation.immediateDelivery || quotation.Address ? true : false;
     }
 
     function populateDetailsWithProducts(quotation, options) {
@@ -657,14 +662,14 @@
           label: 'Recomendado Tulum',
           value: 'recomendado-tulum',
           childs: [
-            {label: 'Flora & fauna', value: 'flora-and-fauna'},
-            {label: 'Panoramic', value: 'panoramic'},
-            {label: 'Sanctuary', value: 'sanctuary'},
-            {label: 'Manor', value: 'manor'},
-            {label: 'Anah', value: 'anah'},
-            {label: 'Casa', value: 'casa'},
-         ]
-        }
+            { label: 'Flora & fauna', value: 'flora-and-fauna' },
+            { label: 'Panoramic', value: 'panoramic' },
+            { label: 'Sanctuary', value: 'sanctuary' },
+            { label: 'Manor', value: 'manor' },
+            { label: 'Anah', value: 'anah' },
+            { label: 'Casa', value: 'casa' },
+          ],
+        },
       ];
       return sources;
     }

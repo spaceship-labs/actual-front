@@ -17,6 +17,8 @@
 
     return service;
 
+    //@param quotation - Object quotation populated with Payments and Client
+
     function getEwallet(cardNumber) {
       var url = '/ewallet/' + cardNumber;
       return api.$http.get(url).then(function(response) {
@@ -24,7 +26,6 @@
       });
     }
 
-    //@param quotation - Object quotation populated with Payments and Client
     function updateQuotationEwalletBalance(quotation, paymentMethodsGroups) {
       var group = paymentMethodsGroups[EWALLET_GROUP_INDEX];
       var ewalletPaymentMethod = _.findWhere(group.methods, {
