@@ -127,19 +127,43 @@ function CheckoutPaymentsCtrl(
   }
 
   function showAsociateEwalletDialog() {
+    console.log(
+      'paymentMethodsGroupsLOL: ',
+      vm.paymentMethodsGroups[0].methods[6].description
+    );
     var controller = EwalletDialogController;
-    var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+    var useFullScreen =
+      ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
     return $mdDialog.show({
-      controller: ['$scope', '$mdDialog', '$location', controller],
+      controller: [
+        '$scope',
+        '$mdDialog',
+        '$location',
+        'ewalletService',
+        controller,
+      ],
       templateUrl: 'views/checkout/ewallet-dialog.html',
       parent: angular.element(document.body),
       clickOutsideToClose: true,
       fullscreen: useFullScreen,
+      // locals: {
+      //   description: vm.paymentMethodsGroups[0].methods[6].description,
+      // },
     });
   }
 
   function asociateEwallet() {
-    return showAsociateEwalletDialog();
+    return showAsociateEwalletDialog()
+      .then(function(ewallet) {
+        console.log('LA EWALLET: ', ewallet);
+        vm.ewallet = ewallet;
+        var ewalletAmount = vm.ewallet.amount;
+        vm.paymentMethodsGroups[0].methods[6].description =
+          'Saldo disponible: $' + ewalletAmount + ' MXN';
+      })
+      .catch(function(err) {
+        console.log('err', err);
+      });
   }
 
   function loadSapLogs(quotationId) {
