@@ -7,7 +7,7 @@
   function orderService($http, $q, $rootScope, api) {
     var statusTypes = {
       CANCELED: 'canceled',
-      PAID: 'paid'
+      PAID: 'paid',
     };
 
     var service = {
@@ -24,7 +24,7 @@
       isCanceled: isCanceled,
       mapStatusType: mapStatusType,
       statusTypes: statusTypes,
-      getStatusMap: getStatusMap
+      getStatusMap: getStatusMap,
     };
 
     return service;

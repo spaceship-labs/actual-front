@@ -127,10 +127,6 @@ function CheckoutPaymentsCtrl(
   }
 
   function showAsociateEwalletDialog() {
-    console.log(
-      'paymentMethodsGroupsLOL: ',
-      vm.paymentMethodsGroups[0].methods[6].description
-    );
     var controller = EwalletDialogController;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
@@ -146,16 +142,12 @@ function CheckoutPaymentsCtrl(
       parent: angular.element(document.body),
       clickOutsideToClose: true,
       fullscreen: useFullScreen,
-      // locals: {
-      //   description: vm.paymentMethodsGroups[0].methods[6].description,
-      // },
     });
   }
 
   function asociateEwallet() {
     return showAsociateEwalletDialog()
       .then(function(ewallet) {
-        console.log('LA EWALLET: ', ewallet);
         vm.ewallet = ewallet;
         var ewalletAmount = vm.ewallet.amount;
         vm.paymentMethodsGroups[0].methods[6].description =
@@ -507,9 +499,14 @@ function CheckoutPaymentsCtrl(
     if (checkoutService.isMinimumPaid(vm.quotation)) {
       vm.isLoadingProgress = true;
       vm.loadingEstimate = 0;
-      var createParams = {
-        quotationId: vm.quotation.id,
-      };
+      var createParams = vm.ewallet
+        ? {
+            quotationId: vm.quotation.id,
+            ewallet: vm.ewallet.id,
+          }
+        : {
+            quotationId: vm.quotation.id,
+          };
       animateProgress();
       orderService
         .create(createParams)
