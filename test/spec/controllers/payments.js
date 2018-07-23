@@ -7,25 +7,23 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
   var CheckoutPaymentsCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(
-    inject(function($controller, $rootScope) {
-      scope = $rootScope.$new();
-      CheckoutPaymentsCtrl = $controller('CheckoutPaymentsCtrl', {
-        $scope: scope,
-        activeStore: {
-          group: 'studio'
-        },
-        activeQuotation: {}
-        // place here mocked dependencies
-      });
-    })
-  );
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();
+    CheckoutPaymentsCtrl = $controller('CheckoutPaymentsCtrl', {
+      $scope: scope,
+      activeStore: {
+        group: 'studio',
+      },
+      activeQuotation: {},
+      // place here mocked dependencies
+    });
+  }));
 
   describe('isPaymentModeActive', function() {
     it('should return true on isPaymentModeActive validation when quotation amount paid is not 100%', function() {
       var quotation = {
         ammountPaid: 50,
-        total: 100
+        total: 100,
       };
       var payment = { ammount: 20 };
       var result = CheckoutPaymentsCtrl.isPaymentModeActive(payment, quotation);
@@ -35,7 +33,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
     it('should return false on isPaymentModeActive validation when quotation amount paid is 100%', function() {
       var quotation = {
         ammountPaid: 100,
-        total: 100
+        total: 100,
       };
       var payment = { ammount: 20 };
       var result = CheckoutPaymentsCtrl.isPaymentModeActive(payment, quotation);
@@ -55,17 +53,18 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
   describe('setupActiveMethod', function() {
     it('should set and return the activemethod', function() {
       var method = {
+        type: '3-msi',
         total: 3200,
         subtotal: 4000,
         discount: 1600,
-        group: 2
+        group: 2,
       };
       var quotation = {
         total: 2000,
         subtotal: 4000,
         discount: 2000,
         paymentGroup: 1,
-        ammountPaid: 0
+        ammountPaid: 0,
       };
 
       var activeMethod = CheckoutPaymentsCtrl.setupActiveMethod(
@@ -84,14 +83,14 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         total: 3200,
         subtotal: 4000,
         discount: 1600,
-        group: 2
+        group: 2,
       };
       var quotation = {
         total: 2000,
         subtotal: 4000,
         discount: 2000,
         paymentGroup: 1,
-        ammountPaid: 200
+        ammountPaid: 200,
       };
 
       var activeMethod = CheckoutPaymentsCtrl.setupActiveMethod(
@@ -111,7 +110,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         subtotal: 4000,
         discount: 1600,
         group: 1,
-        type: 'client-balance'
+        type: 'client-balance',
       };
       var quotation = {
         total: 3200,
@@ -119,7 +118,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         discount: 800,
         paymentGroup: 1,
         ammountPaid: 0,
-        Client: { Balance: 150 }
+        Client: { Balance: 150 },
       };
 
       var activeMethod = CheckoutPaymentsCtrl.setupActiveMethod(
@@ -144,7 +143,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         subtotal: 4000,
         discount: 1600,
         group: 1,
-        type: 'cash'
+        type: 'cash',
       };
       var quotation = {
         total: 3200,
@@ -152,7 +151,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         discount: 800,
         paymentGroup: 1,
         ammountPaid: 0,
-        Client: { Balance: 150 }
+        Client: { Balance: 150 },
       };
 
       var result = CheckoutPaymentsCtrl.choosePaymentMethod(method, quotation);
@@ -167,7 +166,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         subtotal: 4000,
         discount: 1600,
         group: 1,
-        type: 'client-balance'
+        type: 'client-balance',
       };
       var quotation = {
         total: 3200,
@@ -175,7 +174,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         discount: 800,
         paymentGroup: 1,
         ammountPaid: 0,
-        Client: { Balance: 0 }
+        Client: { Balance: 0 },
       };
 
       var result = CheckoutPaymentsCtrl.choosePaymentMethod(method, quotation);
@@ -189,7 +188,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         discount: 1600,
         group: 1,
         currency: 'usd',
-        type: 'cash-usd'
+        type: 'cash-usd',
       };
       var quotation = {
         total: 3200,
@@ -197,7 +196,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         discount: 800,
         paymentGroup: 1,
         ammountPaid: 0,
-        Client: { Balance: 0, Currency: 'MXP' }
+        Client: { Balance: 0, Currency: 'MXP' },
       };
 
       var result = CheckoutPaymentsCtrl.choosePaymentMethod(method, quotation);
@@ -214,26 +213,26 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         paymentGroup: 3,
         ammountPaid: 0,
         Client: { Balance: 0, Currency: 'MXP' },
-        Payments: [{ ammount: 200, type: '6-msi', group: 2 }]
+        Payments: [{ ammount: 200, type: '6-msi', group: 2 }],
       };
 
       var paymentMethodsGroups = [
         {
           group: 1,
-          methods: [{ type: 'cash' }, { type: 'cash-usd' }]
+          methods: [{ type: 'cash' }, { type: 'cash-usd' }],
         },
         {
           group: 2,
-          methods: [{ type: '3-msi' }]
+          methods: [{ type: '3-msi' }],
         },
         {
           group: 3,
           methods: [
             { type: '3-msi-banamex' },
             { type: '6-msi' },
-            { type: '9-msi' }
-          ]
-        }
+            { type: '9-msi' },
+          ],
+        },
       ];
 
       CheckoutPaymentsCtrl.paymentMethodsGroups = paymentMethodsGroups;
@@ -249,21 +248,21 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
           group: 1,
           methods: [
             { type: 'cash', total: 12749, subtotal: 16999 },
-            { type: 'cash-usd', total: 12749, subtotal: 16999 }
-          ]
+            { type: 'cash-usd', total: 12749, subtotal: 16999 },
+          ],
         },
         {
           group: 2,
-          methods: [{ type: '3-msi', total: 13599, subtotal: 16999 }]
+          methods: [{ type: '3-msi', total: 13599, subtotal: 16999 }],
         },
         {
           group: 3,
           methods: [
             { type: '3-msi-banamex', total: 14449.15, subtotal: 16999 },
             { type: '6-msi', total: 14449.15, subtotal: 16999 },
-            { type: '9-msi', total: 14449.15, subtotal: 16999 }
-          ]
-        }
+            { type: '9-msi', total: 14449.15, subtotal: 16999 },
+          ],
+        },
       ];
       CheckoutPaymentsCtrl.paymentMethodsGroups = paymentMethodsGroups;
 
@@ -274,7 +273,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         paymentGroup: 3,
         ammountPaid: 0,
         Client: { Balance: 0, Currency: 'MXP' },
-        Payments: [{ ammount: 200, type: '6-msi', group: 2 }]
+        Payments: [{ ammount: 200, type: '6-msi', group: 2 }],
       };
 
       var result = CheckoutPaymentsCtrl.setQuotationTotalsByGroup(quotation);
@@ -289,21 +288,21 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
           group: 1,
           methods: [
             { type: 'cash', total: 12749, subtotal: 16999 },
-            { type: 'cash-usd', total: 12749, subtotal: 16999 }
-          ]
+            { type: 'cash-usd', total: 12749, subtotal: 16999 },
+          ],
         },
         {
           group: 2,
-          methods: [{ type: '3-msi', total: 13599, subtotal: 16999 }]
+          methods: [{ type: '3-msi', total: 13599, subtotal: 16999 }],
         },
         {
           group: 3,
           methods: [
             { type: '3-msi-banamex', total: 14449.15, subtotal: 16999 },
             { type: '6-msi', total: 14449.15, subtotal: 16999 },
-            { type: '9-msi', total: 14449.15, subtotal: 16999 }
-          ]
-        }
+            { type: '9-msi', total: 14449.15, subtotal: 16999 },
+          ],
+        },
       ];
 
       var quotation = {
@@ -313,7 +312,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
         paymentGroup: 3,
         ammountPaid: 0,
         Client: { Balance: 0, Currency: 'MXP' },
-        Payments: [{ ammount: 600, type: '6-msi', group: 3 }]
+        Payments: [{ ammount: 600, type: '6-msi', group: 3 }],
       };
 
       CheckoutPaymentsCtrl.paymentMethodsGroups = paymentMethodsGroups;
@@ -321,7 +320,7 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
 
       var updateParams = {
         ammountPaid: 1400,
-        paymentGroup: 3
+        paymentGroup: 3,
       };
 
       CheckoutPaymentsCtrl.updateVMQuotation(updateParams);
@@ -341,11 +340,11 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
     it('should return true when payments are missing to apply', function() {
       var quotation = {
         ammountPaid: 900,
-        total: 1200
+        total: 1200,
       };
       var payment = {
         type: 'cash',
-        ammount: 200
+        ammount: 200,
       };
       var result = CheckoutPaymentsCtrl.isPaymentModeActive(payment, quotation);
       expect(result).toBe(true);
@@ -354,11 +353,11 @@ describe('Controller: CheckoutPaymentsCtrl', function() {
     it('should return false when quotation total is already paid', function() {
       var quotation = {
         ammountPaid: 1200,
-        total: 1200
+        total: 1200,
       };
       var payment = {
         type: 'cash',
-        ammount: 200
+        ammount: 200,
       };
       var result = CheckoutPaymentsCtrl.isPaymentModeActive(payment, quotation);
       expect(result).toBe(false);

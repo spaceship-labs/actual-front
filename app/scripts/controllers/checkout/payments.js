@@ -224,7 +224,8 @@ function CheckoutPaymentsCtrl(
         method,
         quotation
       );
-      method.maxAmount = balanceAvailable;
+      method.maxAmount =
+        method.type === EWALLET_TYPE ? vm.ewallet.amount : balanceAvailable;
 
       //TODO: Revisar esta operacion.
       if (balanceAvailable <= remaining) {
@@ -410,6 +411,9 @@ function CheckoutPaymentsCtrl(
       return $mdDialog
         .show(dialogConfig)
         .then(function(payment) {
+          if (vm.ewallet) {
+            payment.ewallet = vm.ewallet.id;
+          }
           addPayment(payment);
         })
         .catch(function(err) {
