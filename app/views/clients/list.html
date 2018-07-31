@@ -2,7 +2,10 @@
 
   <div layout="row" layout-align="space-between center" class="action-links">
     <div flex="">
-      <h1><i class="icon-login"></i> <strong>CLIENTES</strong></h1>
+      <h1>
+        <i class="icon-login"></i>
+        <strong>CLIENTES</strong>
+      </h1>
     </div>
     <div flex="25">
       <h4 class="pull-right">
@@ -19,9 +22,9 @@
   <div layout="row" layout-align="end end" class="form-view-filters">
     <div flex="30" class="input-element select-element-wrapper">
       <label><strong>Buscar sobre:</strong></label>
-      <select 
+      <select
         ng-options="option.value as option.label for option in vm.filterOptions"
-        ng-model="vm.filters.SlpCode" 
+        ng-model="vm.filters.SlpCode"
         class="select-element"
       >
       </select>
