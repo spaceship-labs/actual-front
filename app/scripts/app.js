@@ -337,6 +337,11 @@ angular
         controller: 'EventwishlistEventwishlistCtrl',
         controllerAs: 'vm',
       })
+      .when('/eventwishlist/create', {
+        templateUrl: 'views/eventwishlist/create.html',
+        controller: 'EventwishlistCreateCtrl',
+        controllerAs: 'eventwishlist/create'
+      })
       .otherwise({
         redirectTo: '/',
       });
