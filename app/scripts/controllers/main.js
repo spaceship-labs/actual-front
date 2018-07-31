@@ -349,6 +349,8 @@
         activeModule = 'addquotation';
       } else if (path.indexOf('ewallet') >= 0) {
         activeModule = 'ewallet';
+      } else if (path.indexOf('eventWishlist') >= 0) {
+        activeModule = 'eventWishlist';
       } else if (path.indexOf('clients') >= 0) {
         activeModule = 'clients';
       } else if (path.indexOf('quotations') >= 0) {

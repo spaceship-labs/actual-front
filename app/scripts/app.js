@@ -332,6 +332,11 @@ angular
         controller: 'EwalletCtrl',
         controllerAs: 'vm',
       })
+      .when('/eventwishlist/list', {
+        templateUrl: 'views/eventwishlist/list.html',
+        controller: 'EventwishlistEventwishlistCtrl',
+        controllerAs: 'vm',
+      })
       .otherwise({
         redirectTo: '/',
       });
