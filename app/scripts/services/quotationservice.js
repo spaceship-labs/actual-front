@@ -593,7 +593,7 @@
             { label: 'Allure', value: 'allure' },
             { label: 'Riva', value: 'riva' },
             { label: 'Marea', value: 'marea' },
-
+            { label: 'Palmar Residencial', value: 'palmar-residencial' },
             { label: 'Otro / No recuerda', value: 'otro' },
           ],
         },
@@ -657,14 +657,14 @@
           label: 'Recomendado Tulum',
           value: 'recomendado-tulum',
           childs: [
-            {label: 'Flora & fauna', value: 'flora-and-fauna'},
-            {label: 'Panoramic', value: 'panoramic'},
-            {label: 'Sanctuary', value: 'sanctuary'},
-            {label: 'Manor', value: 'manor'},
-            {label: 'Anah', value: 'anah'},
-            {label: 'Casa', value: 'casa'},
-         ]
-        }
+            { label: 'Flora & fauna', value: 'flora-and-fauna' },
+            { label: 'Panoramic', value: 'panoramic' },
+            { label: 'Sanctuary', value: 'sanctuary' },
+            { label: 'Manor', value: 'manor' },
+            { label: 'Anah', value: 'anah' },
+            { label: 'Casa', value: 'casa' },
+          ],
+        },
       ];
       return sources;
     }
