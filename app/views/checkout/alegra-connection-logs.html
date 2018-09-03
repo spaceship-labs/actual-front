@@ -1,22 +1,19 @@
 <div class="sap-connection-logs">
-  <div ng-if="vm.isLoadingAlegraLogs" layout="row" layout-align="center center" class="loading-circle">
-    <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
-  </div>
   <section>
     <p>
       <a href="#" ng-click="vm.showAlegraLogs = !vm.showAlegraLogs">
         Mostrar logs de conexiones a Alegra
-        </a>
+      </a>
     </p>
 
-    <p ng-if="vm.showInvoiceErrorIfNeeded(vm.alegraLogs)">
+    <p ng-if="vm.showInvoiceErrorIfNeeded(vm.invoiceLogs)">
       <strong>Hubo un error en la generación de factura</strong>
     </p>
-    
-    <div ng-show="vm.showAlegraLogs && !vm.isLoadingAlegraLogs">
+
+    <div ng-show="vm.showAlegraLogs">
       <h3><strong>Logs de conexiones de Alegra</strong></h3>
       <ul>
-        <li ng-repeat="log in vm.alegraLogs track by $index">
+        <li ng-repeat="log in vm.invoiceLogs track by $index">
           <strong>{{ log.createdAt | date:'h:mm:ss a d/MMM/yyyy' }}</strong>
           <p ng-if="log.isError"><strong>Error</strong></p>
           <p>URL: {{log.url}}</p>

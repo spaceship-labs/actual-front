@@ -39,7 +39,7 @@
           <strong>IMPRIMIR RECIBO</strong>
         </a>
 
-        <p ng-if="!vm.invoiceExists && !vm.showInvoiceErrorIfNeeded(vm.alegraLogs)">
+        <p ng-if="!vm.invoiceExists && !vm.showInvoiceErrorIfNeeded(vm.invoiceLogs)">
           <strong>Generación/Lectura de factura en proceso</strong>
         </p>
 
@@ -57,7 +57,8 @@
       </p>
       <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico
         <strong>{{vm.order.Client.E_Mail}}</strong>
-        <!--<strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>-->.</p>
+        <!--<strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>-->.
+      </p>
 
       <p>
         <strong>Tienda:</strong> {{vm.order.Store.name}}</p>
