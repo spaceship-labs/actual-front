@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?3tv4bm');
-  src: url('../fonts/icomoon.eot?3tv4bm#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?3tv4bm') format('truetype'),
-    url('../fonts/icomoon.woff?3tv4bm') format('woff'),
-    url('../fonts/icomoon.svg?3tv4bm#icomoon') format('svg');
+  src: url('../fonts/icomoon.eot?nw1hfw');
+  src: url('../fonts/icomoon.eot?nw1hfw#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?nw1hfw') format('truetype'),
+    url('../fonts/icomoon.woff?nw1hfw') format('woff'),
+    url('../fonts/icomoon.svg?nw1hfw#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +25,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-editar:before {
+  content: '\e937';
+}
+.icon-mesa-de-regalos:before {
+  content: '\e938';
+}
+.icon-ver:before {
+  content: '\e939';
+}
 .icon-alert:before {
   content: '\e900';
 }
