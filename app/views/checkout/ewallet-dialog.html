@@ -10,11 +10,12 @@
             ESCANEAR MONEDERO
           </strong>
         </p>
-        <hr/>
+        <hr />
         <p class="scanner-align">
           <i class="icon-scaner"></i>
         </p>
         <p class="enter-code">Ingresa el código de tu monedero:</p>
+        <p ng-if="err">{{err}}</p>
 
         <input type="text" ng-model="cardNumber">
       </div>

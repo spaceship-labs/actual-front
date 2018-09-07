@@ -136,12 +136,17 @@ function CheckoutPaymentsCtrl(
         '$mdDialog',
         '$location',
         'ewalletService',
+        'dialogService',
+        'client',
         controller,
       ],
       templateUrl: 'views/checkout/ewallet-dialog.html',
       parent: angular.element(document.body),
       clickOutsideToClose: true,
       fullscreen: useFullScreen,
+      locals: {
+        client: vm.quotation.Client.id,
+      },
     });
   }
 
