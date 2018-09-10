@@ -429,8 +429,8 @@
                   </p>
 
                   <div class="record-item-block-attach">
-                    <a ng-repeat="file in record.files" ng-href="{{vm.api.baseUrl + '/uploads/records/gallery/' + file.filename }}" target="_blank">
-                      <img ng-src="{{vm.api.baseUrl + '/uploads/records/gallery/300x300' + file.filename }}" alt="">
+                    <a ng-repeat="file in record.files" ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}" target="_blank">
+                      <img ng-src="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename + '?d=300x300' }}" alt="">
                     </a>
                   </div>
 

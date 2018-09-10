@@ -6,100 +6,112 @@
  * @description
  * # productGallery
  */
-angular.module('actualApp')
-  .directive('productGallery',['api','productService', '$q', '$timeout' ,
-  function (api, productService, $q, $timeout) {
+angular.module('actualApp').directive('productGallery', [
+  'api',
+  'productService',
+  '$q',
+  '$timeout',
+  function(api, productService, $q, $timeout) {
     return {
-      scope:{
-        product:'='
+      scope: {
+        product: '=',
       },
       templateUrl: 'views/directives/product-gallery.html',
       restrict: 'E',
       link: function postLink(scope) {
         scope.galleryImages = [];
         scope.opts = {
-          index:0,
+          index: 0,
           history: false,
           hideAnimationDuration: 0,
           showAnimationDuration: 0,
-          shareEl: false
+          shareEl: false,
         };
 
         scope.closeGallery = function() {
           scope.open = false;
         };
 
-        scope.setupGallery = function(){
+        scope.setupGallery = function() {
           setupImages(scope.product);
-          $timeout(function(){
-            scope.gallery = $("#slick-gallery");
+          $timeout(function() {
+            scope.gallery = $('#slick-gallery');
             scope.galleryReel = $('#slick-thumbs');
-            scope.gallery.on('afterChange',function(e, slick, currentSlide){
-              $timeout(function(){
-                scope.galleryReel.slick('slickGoTo',currentSlide);
+            scope.gallery.on('afterChange', function(e, slick, currentSlide) {
+              $timeout(function() {
+                scope.galleryReel.slick('slickGoTo', currentSlide);
                 scope.selectedSlideIndex = currentSlide;
-              },0);
+              }, 0);
             });
             getImageSizes();
-          }, 1000);    
+          }, 1000);
         };
 
-
-        function setupImages(){
+        function setupImages() {
           var imageSizeIndexGallery = 2;
           scope.selectedSlideIndex = 0;
           scope.areImagesLoaded = true;
           var imageSize = api.imageSizes.gallery[imageSizeIndexGallery];
-          scope.product.files = productService.sortProductImages(scope.product) || scope.product.files; 
-          
+          scope.product.files =
+            productService.sortProductImages(scope.product) ||
+            scope.product.files;
+
           //Default image services sr
-          if(scope.product.icons.length >= 0 && scope.product.Service === 'Y'){
-            if(!scope.product.icons[0].url){
-              scope.product.icons[0].url = api.baseUrl + '/wallpaper-installation.jpg';
+          if (
+            scope.product.icons.length >= 0 &&
+            scope.product.Service === 'Y'
+          ) {
+            if (!scope.product.icons[0].url) {
+              scope.product.icons[0].url =
+                api.baseUrl + '/wallpaper-installation.jpg';
             }
           }
 
-          
-          if(scope.product.icons.length >= 0){
+          if (scope.product.icons.length >= 0) {
             var img = {
               src: scope.product.icons[0].url,
-              w:500,
-              h:500
+              w: 500,
+              h: 500,
             };
             scope.galleryImages.push(img);
           }
-          if(scope.product.files){
+          if (scope.product.files) {
             //TEMPORAL
             imageSize = '';
-            scope.product.files.forEach(function(img){
+            scope.product.files.forEach(function(img) {
               scope.galleryImages.push({
-                src: api.baseUrl + '/uploads/products/gallery/' + imageSize + img.filename,
+                src:
+                  api.baseUrl +
+                  '/uploads/products/gallery/' +
+                  img.filename +
+                  '?d=' +
+                  scope.imageSize,
                 w: 500,
-                h: 500
+                h: 500,
               });
             });
           }
         }
 
-        scope.setGalleryIndex = function(index){
+        scope.setGalleryIndex = function(index) {
           scope.selectedSlideIndex = index;
-          scope.gallery.slick('slickGoTo',index);
-        };    
+          scope.gallery.slick('slickGoTo', index);
+        };
 
-        scope.showGallery =  function(i) {
-          if(scope.loadedSizes){
-            if(angular.isDefined(i)) {
+        scope.showGallery = function(i) {
+          if (scope.loadedSizes) {
+            if (angular.isDefined(i)) {
               scope.opts.index = i;
             }
             scope.open = true;
           }
-        };  
+        };
 
-        function getImageSize(galleryImg){
+        function getImageSize(galleryImg) {
           var deferred = $q.defer();
           var img = new Image();
           img.src = galleryImg.src;
-          img.onload = function(){
+          img.onload = function() {
             galleryImg.w = this.width;
             galleryImg.h = this.height;
             scope.$apply();
@@ -108,22 +120,22 @@ angular.module('actualApp')
           return deferred.promise;
         }
 
-        function getImageSizes(){
+        function getImageSizes() {
           var promises = [];
-          for(var i=0;i<scope.galleryImages.length;i++){
-            promises.push( getImageSize(scope.galleryImages[i]) );
+          for (var i = 0; i < scope.galleryImages.length; i++) {
+            promises.push(getImageSize(scope.galleryImages[i]));
           }
           $q.all(promises)
-            .then(function(){
+            .then(function() {
               scope.loadedSizes = true;
             })
-            .catch(function(err){
+            .catch(function(err) {
               console.log(err);
             });
         }
 
-        scope.setupGallery();                 
-
-      }
+        scope.setupGallery();
+      },
     };
-  }]);
+  },
+]);
