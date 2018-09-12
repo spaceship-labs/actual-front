@@ -31,6 +31,7 @@ function EwalletCtrl(
       .then(function(ewallet) {
         console.log('EWALLET', ewallet);
         vm.ewallet = ewallet;
+        vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
       })
       .catch(function(err) {
         console.log('err monedero', err);
