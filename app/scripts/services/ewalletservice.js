@@ -13,6 +13,7 @@
       ewalletGroupIndex: EWALLET_GROUP_INDEX,
       updateQuotationEwalletBalance: updateQuotationEwalletBalance,
       getEwallet: getEwallet,
+      getEwalletSingle: getEwalletSingle,
     };
 
     return service;
@@ -21,6 +22,13 @@
 
     function getEwallet(cardNumber, client) {
       var url = '/ewallet/' + cardNumber + '/' + client;
+      return api.$http.get(url).then(function(response) {
+        return response.data;
+      });
+    }
+
+    function getEwalletSingle(cardNumber) {
+      var url = '/ewallet/' + cardNumber;
       return api.$http.get(url).then(function(response) {
         return response.data;
       });
