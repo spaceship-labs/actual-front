@@ -14,6 +14,7 @@
       updateQuotationEwalletBalance: updateQuotationEwalletBalance,
       getEwallet: getEwallet,
       getEwalletSingle: getEwalletSingle,
+      getEwalletExchangeRate: getEwalletExchangeRate,
     };
 
     return service;
@@ -29,6 +30,13 @@
 
     function getEwalletSingle(cardNumber) {
       var url = '/ewallet/' + cardNumber;
+      return api.$http.get(url).then(function(response) {
+        return response.data;
+      });
+    }
+
+    function getEwalletExchangeRate() {
+      var url = '/ewalletconfiguration';
       return api.$http.get(url).then(function(response) {
         return response.data;
       });

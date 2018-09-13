@@ -76,6 +76,7 @@
       isCanceled: isCanceled,
       isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment,
       mapStatusType: mapStatusType,
+      pointsToMXN: pointsToMXN,
     };
 
     function mapStatusType(status) {
@@ -220,6 +221,10 @@
           break;
       }
       return type;
+    }
+
+    function pointsToMXN(amount, exchangeRate) {
+      return amount / exchangeRate;
     }
 
     //@param quotation - Object quotation populated with Payments and Client

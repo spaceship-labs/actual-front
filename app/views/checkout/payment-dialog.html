@@ -43,7 +43,8 @@
         </div>
 
         <div class="input-element select-element-wrapper">
-          <md-select ng-model="payment.isInternational" ng-change="onChangePaymentNation(payment)" class="select-element" required>
+          <md-select ng-model="payment.isInternational" ng-change="onChangePaymentNation(payment)" class="select-element"
+            required>
             <md-option ng-selected="true" ng-value="false">
               Nacional
             </md-option>
@@ -70,16 +71,16 @@
         <div class="input-element select-element-wrapper">
 
           <!--NATIONAL OPTIONS-->
-          <md-select ng-if="payment.options.length > 0 && !payment.isInternational" ng-model="payment.card" required ng-change="onChangeCard(payment.card)"
-            class="select-element">
+          <md-select ng-if="payment.options.length > 0 && !payment.isInternational" ng-model="payment.card" required
+            ng-change="onChangeCard(payment.card)" class="select-element">
             <md-option ng-repeat="option in payment.options track by $index" ng-selected="$index==0" ng-value="option.card.value">
               {{option.card.label}}
             </md-option>
           </md-select>
 
           <!--INTERNATIONAL OPTIONS-->
-          <md-select ng-if="payment.options.length > 0 && payment.isInternational" ng-model="payment.card" required ng-change="onChangeCard(payment.card)"
-            class="select-element" ng-disabled="isConfirmationActive">
+          <md-select ng-if="payment.options.length > 0 && payment.isInternational" ng-model="payment.card" required
+            ng-change="onChangeCard(payment.card)" class="select-element" ng-disabled="isConfirmationActive">
             <md-option ng-repeat="option in payment.options track by $index" ng-selected="$index==0" ng-value="option.card.value">
               {{option.card.label}}
             </md-option>
@@ -100,7 +101,8 @@
     <div class="dialog-block">
       <p>
         <strong>Cantidad:</strong>
-        <small>Se muestra el saldo total pendiente por cobrar. Puedes cobrar cualquier monto menor, pero después debes aplicar otro
+        <small>Se muestra el saldo total pendiente por cobrar. Puedes cobrar cualquier monto menor, pero después debes
+          aplicar otro
           cobro para saldar esta venta.</small>
       </p>
       <p class="error-msg" ng-if="errMsg">{{errMsg}}</p>
@@ -108,15 +110,16 @@
       <div class="ammount-input" layout="row" layout-align="start center">
         <div class="input-element" flex="60">
           <div class="input-element-inner">
-            <input ng-if="maxAmmount && maxAmmount >=0" type="text" max="{{maxAmmount}}" ng-model="payment.ammount" class="with-maxammount"
-              ng-currency ng-disabled="isConfirmationActive">
+            <input ng-if="maxAmmount && maxAmmount >=0" type="text" max="{{maxAmmount}}" ng-model="payment.ammount"
+              class="with-maxammount" ng-currency ng-disabled="isConfirmationActive">
             <input ng-if="!maxAmmount" type="text" ng-currency ng-disabled="isConfirmationActive" ng-model="payment.ammount">
 
           </div>
         </div>
         <div class="currency-label">
           <span ng-if="payment.currency != 'usd'">MXN</span>
-          <span ng-if="payment.currency == 'usd'">USD ({{ getAmmountMXN(payment.ammount, payment.exchangeRate) | currency}} MXN)</span>
+          <span ng-if="payment.currency == 'usd'">USD ({{ getAmmountMXN(payment.ammount, payment.exchangeRate) |
+            currency}} MXN)</span>
         </div>
       </div>
       <p ng-if="payment.currency == 'usd'">
@@ -132,13 +135,14 @@
         </p>
         <div class="input-element verification-code">
           <div class="input-element-inner">
-            <input type="text" ng-model="payment.verificationCode" required max="27" ng-maxlength="27" maxlength="27" ng-disabled="isConfirmationActive">
+            <input type="text" ng-model="payment.verificationCode" required max="27" ng-maxlength="27" maxlength="27"
+              ng-disabled="isConfirmationActive">
           </div>
         </div>
       </div>
       <div flex="30" ng-if="!needsVerification"></div>
-      <a ng-show="!isConfirmationActive" ng-click="openConfirmation()" ng-class="{'action-btn-disabled': !isValidPayment() }" class="action-btn action-btn-save"
-        href="#" flex="25">
+      <a ng-show="!isConfirmationActive" ng-click="openConfirmation()" ng-class="{'action-btn-disabled': !isValidPayment() }"
+        class="action-btn action-btn-save" href="#" flex="25">
         <strong>GUARDAR</strong>
       </a>
     </div>
@@ -148,7 +152,8 @@
         <strong>Favor de confirmar que el monto ingresado es el correcto.</strong>
       </p>
       <div layout="row" layout-align="space-between center">
-        <a ng-click="save()" ng-class="{'action-btn-disabled': !isValidPayment() }" class="action-btn action-btn-save" href="#" flex="45">
+        <a ng-click="save()" ng-class="{'action-btn-disabled': !isValidPayment() }" class="action-btn action-btn-save"
+          href="#" flex="45">
           <strong>CONFIRMAR</strong>
         </a>
 

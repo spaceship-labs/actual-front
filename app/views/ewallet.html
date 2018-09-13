@@ -4,7 +4,7 @@
     <strong>MONEDERO #{{ vm.ewallet.cardNumber }}</strong>
   </h1>
 
-  <hr/>
+  <hr />
   <div ng-show="vm.ewallet" layout="row" layout-align="space-between end" class="form-view-filters">
     <div flex="50" class="date-filters ewallet-actual-amount">
       <p>
@@ -16,7 +16,7 @@
     <div flex="50" class="date-filters ewallet-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
-          ${{ vm.ewallet.amount }}
+          {{ vm.ewallet.amount }} puntos
         </strong>
       </p>
     </div>
@@ -30,7 +30,7 @@
           ESCANEAR MONEDERO
         </strong>
       </p>
-      <hr/>
+      <hr />
       <p class="scanner-align">
         <i class="icon-scaner"></i>
       </p>

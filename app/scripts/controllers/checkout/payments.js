@@ -156,7 +156,9 @@ function CheckoutPaymentsCtrl(
         vm.ewallet = ewallet;
         var ewalletAmount = vm.ewallet.amount;
         vm.paymentMethodsGroups[0].methods[6].description =
-          'Saldo disponible: $' + ewalletAmount + ' MXN';
+          'Saldo disponible: ' +
+          parseFloat(ewalletAmount.toFixed(2)) +
+          ' puntos';
       })
       .catch(function(err) {
         console.log('err', err);

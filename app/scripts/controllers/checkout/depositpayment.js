@@ -13,6 +13,8 @@ function DepositController(
   $scope.isDepositPayment = paymentService.isDepositPayment;
   $scope.isTransferPayment = paymentService.isTransferPayment;
   $scope.isCardPayment = paymentService.isCardPayment;
+  $scope.pointsToMXN = paymentService.pointsToMXN;
+  $scope.getEwalletExchangeRate = ewalletService.getEwalletExchangeRate;
 
   $scope.init = function() {
     $scope.payment = payment;
@@ -43,6 +45,15 @@ function DepositController(
         $scope.payment.ammount
       );
       $scope.maxAmount = commonService.roundCurrency($scope.maxAmount);
+    }
+
+    if (payment.type === 'ewallet') {
+      $scope.payment.maxAmount = parseFloat(
+        $scope.payment.maxAmount.toFixed(2)
+      );
+      $scope.getEwalletExchangeRate().then(function(response) {
+        $scope.payment.exchangeRate = response[0].exchangeRate;
+      });
     }
   };
 
