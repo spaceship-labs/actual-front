@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="currency-label">
-          <span ng-if="payment.currency != 'usd'">MXN</span>
+          <span ng-if="payment.currency != 'usd' && payment.type != 'ewallet'">MXN</span>
           <span ng-if="payment.currency == 'usd'">
             USD ({{ getAmmountMXN(payment.ammount, payment.exchangeRate) | currency}} MXN)
           </span>
