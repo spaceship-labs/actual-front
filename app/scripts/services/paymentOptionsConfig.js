@@ -87,11 +87,27 @@
       terminal: { label: 'American Express', value: 'american-express' },
     },
 
+    //For studio cumbres
+    {
+      card: { label: 'American Express', value: 'american-express' },
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi' /*,'18-msi'*/,
+      ],
+      storesTypes: ['studio'],
+      storeCodes: ['actual_studio_cumbres'],
+      terminal: { label: 'American Express', value: 'american-express' },
+    },
+
     {
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: ['credit-card', 'debit-card'],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_malecon'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'American Express', value: 'american-express' },
     },
 
