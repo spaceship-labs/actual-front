@@ -33,6 +33,7 @@ angular
     'localytics.directives',
     'ng-currency',
     'angular-google-analytics',
+    'angularUtils.directives.dirPagination',
     'envconfig'
   ])
 

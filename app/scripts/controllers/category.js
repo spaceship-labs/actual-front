@@ -3,6 +3,8 @@ angular.module('actualApp')
   .controller('CategoryCtrl', CategoryCtrl);
 
 function CategoryCtrl(
+  $scope,
+  $location,
   $routeParams, 
   $mdSidenav, 
   $timeout,
@@ -13,7 +15,9 @@ function CategoryCtrl(
   var vm     = this;
 
   angular.extend(vm,{
+    SEARCH_ITEMS: productSearchService.SEARCH_ITEMS,
     filters: [],
+    customBrands: [],
     subnavIndex: 0,
     showLevel2: false,
     showLevel3: false,
@@ -27,7 +31,6 @@ function CategoryCtrl(
     setSubnavIndex: setSubnavIndex,
     searchByFilters: searchByFilters,
     toggleSearchSidenav: toggleSearchSidenav,
-    loadMore: loadMore,
     scrollTo: scrollTo,
     removeSearchValue: removeSearchValue,
     removeMinPrice: removeMinPrice,
@@ -38,7 +41,8 @@ function CategoryCtrl(
     removeSelectedSocietyFilter: removeSelectedSocietyFilter,
     toggleColorFilter: toggleColorFilter,
     setActiveSortOption: setActiveSortOption,
-    getFilterById: getFilterById
+    getFilterById: getFilterById,
+    onPageChanged: onPageChanged
   });
 
 
@@ -47,19 +51,44 @@ function CategoryCtrl(
   }
 
   function init(){
+    var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
+    var urlMinPrice = (!isNaN($routeParams.minPrice)) ? parseFloat($routeParams.minPrice) : false;
+    var urlMaxPrice = (!isNaN($routeParams.maxPrice)) ? parseFloat($routeParams.maxPrice) : false;
+
+    if(urlMinPrice) vm.minPrice = urlMinPrice;
+    if(urlMaxPrice) vm.maxPrice = urlMaxPrice;
+  
     var activeSortOptionKey = 'slowMovement';
-    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
-        
+    var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
+    var urlSortDirection = $routeParams.sortDirection;
+    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: urlSortKey});
+
+    //Overriding default sort option direction with url
+    if(vm.activeSortOption && urlSortDirection && (urlSortDirection === 'ASC' || urlSortDirection === 'DESC') ){
+      vm.activeSortOption.direction = urlSortDirection;
+    }  
+  
     vm.search = {
-      items: 10,
-      page: 1,
+      items: vm.SEARCH_ITEMS,
+      page: urlPage,
       category: $routeParams.category,
       sortOption: vm.activeSortOption
     };
 
     loadCustomBrands();
     loadCategories();
-    doInitialProductsSearch();
+    searchByFilters({initialSearch:true});
+  }
+
+  $scope.$watch('vm.search.page', function(newVal, oldVal){
+    if(newVal !== oldVal) {
+      productSearchService.persistParamsOnUrl({page: newVal});
+    }
+  });  
+
+  function onPageChanged(newPageNumber){
+    vm.search.page = newPageNumber;
+    searchByFilters();
   }
 
   function loadCategories() {
@@ -121,41 +150,16 @@ function CategoryCtrl(
     productService.getCustomBrands()
       .then(function(res){
         vm.customBrands = res.data;
-        console.log('customBrands', vm.customBrands);
       })
       .catch(function(err){
         console.log('err', err);
       });    
   }
 
-  function doInitialProductsSearch(){
-    vm.isLoadingProducts = true;
-    /*
-    if(vm.search.sortOption.key === 'slowMovement' && vm.enableSortOptions){
-      vm.search.slowMovement = true;
-    }else{
-      vm.search.slowMovement = false;
-    } 
-    */   
-    productService.searchCategoryByFilters(vm.search)
-      .then(function(res){
-        console.log('res', res);
-        var products = res.data.products || [];
-        vm.totalProducts = res.data.total;
-        vm.isLoadingProducts = false;
-        return productService.formatProducts(products);
-      })
-      .then(function(productsFormatted){
-        vm.products = productsFormatted;
-        console.log('vm.products', vm.products);
-      })
-      .catch(function(err){
-        console.log('err', err);
-      });
-  }  
 
   function searchByFilters(options){
-    if(!options || !angular.isDefined(options.isLoadingMore)){
+    options = options || {};
+    if(options.resetPagination){
       vm.search.page = 1;
     }
 
@@ -213,27 +217,25 @@ function CategoryCtrl(
       page: vm.search.page,
     };
 
-    /*
-    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement' && vm.enableSortOptions){
-      params.slowMovement = true;      
-    }
-    */
-
+    productSearchService.persistParamsOnUrl({
+      sortKey: vm.activeSortOption.key,
+      sortDirection: vm.activeSortOption.direction,
+      minPrice: vm.minPrice,
+      maxPrice: vm.maxPrice
+    });
+    
     productService.searchCategoryByFilters(params)
       .then(function(res){
         var products = res.data.products || [];
         vm.totalProducts = res.data.total;
+        vm.totalPages = Math.ceil(res.data.total / vm.search.items);        
         return productService.formatProducts(products);
       })
       .then(function(productsFormatted){
-        if(options && options.isLoadingMore){
-          var productsAux = angular.copy(vm.products);
-          vm.products = productsAux.concat(productsFormatted);
-        }else{
-          vm.products = productsFormatted;
-          vm.scrollTo('category-page');
+        vm.products = productsFormatted;
+        if(!options.initialSearch){
+          vm.scrollTo('products-results');
         }
-
         vm.isLoadingProducts = false;
       })
       .catch(function(err){
@@ -254,7 +256,7 @@ function CategoryCtrl(
       });
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeBrandSearchValue(value){
@@ -268,7 +270,7 @@ function CategoryCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeSelectedDiscountFilter(discount){
@@ -282,7 +284,7 @@ function CategoryCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
 
   }
 
@@ -297,7 +299,7 @@ function CategoryCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }  
 
   function removeSelectedSocietyFilter(society){
@@ -311,18 +313,18 @@ function CategoryCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   } 
 
 
   function removeMinPrice(){
     delete vm.minPrice;
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeMaxPrice(){
     delete vm.maxPrice;
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }  
 
   function scrollTo(target){
@@ -336,14 +338,9 @@ function CategoryCtrl(
     );
   }  
 
-  function loadMore(){
-    vm.search.page++;
-    vm.searchByFilters({isLoadingMore: true});
-  }
-
   function toggleColorFilter(value, filter){
     value.selected = !value.selected;
-    vm.searchByFilters();
+    vm.searchByFilters({resetPagination: true});
   }
 
   function toggleSearchSidenav(filterHandleToOpen){
@@ -373,9 +370,7 @@ function CategoryCtrl(
     }
   }
 
-
   function setActiveSortOption(sortOption){
-
     if(vm.activeSortOption.key  === sortOption.key){
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
     }
@@ -394,11 +389,12 @@ function CategoryCtrl(
     return _.findWhere(vm.filters, {id: filterId});
   }
 
-
   init();
 }
 
 CategoryCtrl.$inject = [
+  '$scope',
+  '$location',
   '$routeParams',
   '$mdSidenav',
   '$timeout',

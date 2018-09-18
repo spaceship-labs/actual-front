@@ -18,18 +18,20 @@ function SearchCtrl(
   var vm = this;
 
   angular.extend(vm, {
+    SEARCH_ITEMS: productSearchService.SEARCH_ITEMS,
+    OFFSET_TIME_RENDERING: 1000,
     totalResults:0,
     isLoading: true,
     filters: [],
     searchValues: [],
+    customBrands: [],
     syncProcessActive: false,
-    enableSortOptions: true,  
+    enableSortOptions: true, 
     activeStore: activeStore,  
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     societyFilters: productSearchService.SOCIETY_OPTIONS,
     sortOptions: productSearchService.SORT_OPTIONS,
-    loadMore: loadMore,
     getFilterById: getFilterById,
     searchByFilters: searchByFilters,
     toggleColorFilter: toggleColorFilter,
@@ -42,15 +44,15 @@ function SearchCtrl(
     removeSelectedSocietyFilter: removeSelectedSocietyFilter,
     removeMinPrice: removeMinPrice,
     removeMaxPrice: removeMaxPrice,
-    setActiveSortOption: setActiveSortOption
+    setActiveSortOption: setActiveSortOption,
+    isDisabledScrolling: isDisabledScrolling,
+    onPageChanged: onPageChanged
   });
 
   init();
 
   function init(){
     var keywords = [''];
-    var activeSortOptionKey = 'slowMovement';
-    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
 
     if($routeParams.itemcode) {
       vm.isLoading = true;
@@ -62,14 +64,31 @@ function SearchCtrl(
       if($routeParams.term){
         keywords = $routeParams.term.split(' ');
       }
+      var urlPage = (!isNaN($routeParams.page)) ? parseInt($routeParams.page) : 1;
+      var urlMinPrice = (!isNaN($routeParams.minPrice)) ? parseFloat($routeParams.minPrice) : false;
+      var urlMaxPrice = (!isNaN($routeParams.maxPrice)) ? parseFloat($routeParams.maxPrice) : false;
+
+      if(urlMinPrice) vm.minPrice = urlMinPrice;
+      if(urlMaxPrice) vm.maxPrice = urlMaxPrice;
+
+      var activeSortOptionKey = 'slowMovement';
+      var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
+      var urlSortDirection = $routeParams.sortDirection;
+      vm.activeSortOption = _.findWhere(vm.sortOptions,{key: urlSortKey});
+  
+      //Overriding default sort option direction with url
+      if(vm.activeSortOption && urlSortDirection && (urlSortDirection === 'ASC' || urlSortDirection === 'DESC') ){
+        vm.activeSortOption.direction = urlSortDirection;
+      }  
+
       vm.search = {
         keywords: keywords,
-        items: 10,
-        page: 1
-      };
+        items: vm.SEARCH_ITEMS,
+        page: urlPage,
+        sortOption: vm.activeSortOption
+      };        
       vm.isLoading = true;
-      doInitialSearch();
-
+      searchByFilters();
     }
 
     loadFilters();
@@ -77,29 +96,15 @@ function SearchCtrl(
 
   }
 
-  function doInitialSearch(){
-    vm.search.sortOption = vm.activeSortOption;
-    /*
-    if(vm.search.sortOption.key === 'slowMovement'){
-      vm.search.slowMovement = true;
-    }else{
-      vm.search.slowMovement = false;
+  $scope.$watch('vm.search.page', function(newVal, oldVal){
+    if(newVal !== oldVal) {
+      productSearchService.persistParamsOnUrl({page: newVal});
     }
-    */
-    productService.searchByFilters(vm.search).then(function(res){
-      vm.totalResults = res.data.total;
-      vm.isLoading = false;
-      return productService.formatProducts(res.data.products);
-    })
-    .then(function(fProducts){
-      vm.products = fProducts;
-    })
-    .catch(function(err){
-      console.log(err);
-      var error = err.data || err;
-      error = error ? error.toString() : '';
-      dialogService.showDialog('Hubo un error: ' + error );           
-    });    
+  });
+
+  function onPageChanged(newPageNumber){
+    vm.search.page = newPageNumber;
+    searchByFilters();
   }
 
   function syncProduct(itemcode){
@@ -170,7 +175,6 @@ function SearchCtrl(
     productService.getCustomBrands()
       .then(function(res){
         vm.customBrands = res.data;
-        console.log('customBrands', vm.customBrands);
       })
       .catch(function(err){
         console.log('err', err);
@@ -216,8 +220,7 @@ function SearchCtrl(
         }
       });
     });
-
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeBrandSearchValue(value){
@@ -231,7 +234,7 @@ function SearchCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeSelectedDiscountFilter(discount){
@@ -245,7 +248,7 @@ function SearchCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
 
   }
 
@@ -260,7 +263,7 @@ function SearchCtrl(
       }
     });
 
-    searchByFilters();
+    searchByFilters({resetPagination: true});
 
   }  
 
@@ -274,26 +277,26 @@ function SearchCtrl(
         stockFilters.selected = false;
       }
     });
-
-    searchByFilters();
-
+    searchByFilters({resetPagination: true});
   }  
 
   function removeMinPrice(){
     delete vm.minPrice;
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
   function removeMaxPrice(){
     delete vm.maxPrice;
-    searchByFilters();
+    searchByFilters({resetPagination: true});
   }
 
 
   function searchByFilters(options){
-    if(!options || !angular.isDefined(options.isLoadingMore)){
+    options = options || {};
+    if(options.resetPagination){
       vm.search.page = 1;
     }
+
     vm.isLoading = true;
     
     //SEARCH VALUES
@@ -332,7 +335,6 @@ function SearchCtrl(
       return society.code;
     });
 
-
     var params = {
       ids: searchValuesIds,
       brandsIds: brandSearchValuesIds,
@@ -346,31 +348,28 @@ function SearchCtrl(
       sortOption: vm.activeSortOption
     };
 
-    /*
-    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
-      params.slowMovement = true;      
-    }
-    */
+    productSearchService.persistParamsOnUrl({
+      sortKey: vm.activeSortOption.key,
+      sortDirection: vm.activeSortOption.direction,
+      minPrice: vm.minPrice,
+      maxPrice: vm.maxPrice
+    });
 
     productService.searchByFilters(params).then(function(res){
       vm.totalResults = res.data.total;
+      vm.totalPages = Math.ceil(res.data.total / vm.SEARCH_ITEMS)
       return productService.formatProducts(res.data.products);
     })
     .then(function(fProducts){
-      if(options && options.isLoadingMore){
-        var productsAux = angular.copy(vm.products);
-        vm.products = productsAux.concat(fProducts);
-      }else{
-        vm.products = fProducts;
-        vm.scrollTo('search-page');
-      }
+      vm.products = fProducts;
+      vm.scrollTo('search-page');
       vm.isLoading = false;
     });
   }
 
   function setActiveSortOption(sortOption){
-
     if(vm.activeSortOption.key  === sortOption.key){
+      //Toggling if the pick the same sort option key
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
     }
     else if(sortOption.key === 'salesCount' || sortOption.key === 'slowMovement'){
@@ -381,7 +380,8 @@ function SearchCtrl(
     }
 
     vm.activeSortOption = sortOption;
-    searchByFilters();
+    
+    searchByFilters({resetPagination: true});
   }
 
   function getFilterById(filterId){
@@ -390,19 +390,19 @@ function SearchCtrl(
 
   function toggleColorFilter(value, filter){
     value.selected = !value.selected;
-    vm.searchByFilters();
+    vm.searchByFilters({resetPagination: true});
   }
 
-  function loadMore(){
-    vm.search.page++;
-    vm.searchByFilters({isLoadingMore: true});
+  function isDisabledScrolling(){
+    return vm.isLoading || vm.isScrollingToItem;
   }
 
-  function scrollTo(target){
+  function scrollTo(target, extraOffset){
+    extraOffset = extraOffset || 100;
     $timeout(
         function(){
           $('html, body').animate({
-            scrollTop: $('#' + target).offset().top - 100
+            scrollTop: $('#' + target).offset().top - extraOffset
           }, 600);
         },
         300
