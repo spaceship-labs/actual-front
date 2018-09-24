@@ -135,6 +135,7 @@ function CheckoutPaymentsCtrl(
         '$scope',
         '$mdDialog',
         '$location',
+        '$timeout',
         'ewalletService',
         'dialogService',
         'client',

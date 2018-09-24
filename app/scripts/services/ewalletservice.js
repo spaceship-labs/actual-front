@@ -15,6 +15,7 @@
       getEwallet: getEwallet,
       getEwalletSingle: getEwalletSingle,
       getEwalletExchangeRate: getEwalletExchangeRate,
+      initScan: initScan,
     };
 
     return service;
@@ -74,6 +75,36 @@
       var balanceStr = $filter('currency')(balanceRounded);
       description = 'Saldo disponible: ' + balanceStr + ' MXN';
       return description;
+    }
+
+    function initScan() {
+      console.log('Query selector: ', document.getElementById('interactive'));
+      Quagga.CameraAccess.enumerateVideoDevices().then(function(devices) {
+        console.log('DEVICES: ', devices);
+        devices.forEach(function(device) {
+          $('#devices').append('<li>' + device.label + '</li>');
+        });
+      });
+      Quagga.init(
+        {
+          inputStream: {
+            name: 'Live',
+            type: 'LiveStream',
+            target: document.querySelector('#interactive'), // Or '#yourElement' (optional)
+          },
+          decoder: {
+            readers: ['upc_reader'],
+          },
+        },
+        function(err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log('Initialization finished. Ready to start');
+          Quagga.start();
+        }
+      );
     }
   }
 })();
