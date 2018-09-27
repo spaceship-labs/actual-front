@@ -23,7 +23,7 @@
   </div>
 
 
-  <div ng-show="!vm.ewallet" layout="row" layout-align="space-between end" class="form-view-filters-ewallet">
+  <div layout="row" layout-align="space-between end" class="form-view-filters-ewallet">
     <div flex="100" class="date-filters-ewallet ewallet-actual-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
@@ -31,14 +31,10 @@
         </strong>
       </p>
       <hr />
-      <p class="scanner-align">
+      <!-- <p class="scanner-align">
         <i class="icon-scaner"></i>
-      </p>
-      <p class="enter-code">Ingresa el código de tu monedero:</p>
-      <form ng-submit="vm.getEwallet()">
-        <input type="text" ng-model="vm.cardNumber">
-        <button type="submit">Buscar</button>
-      </form>
+      </p> -->
+      <div id="interactive" class="viewport"></div>
     </div>
   </div>
 

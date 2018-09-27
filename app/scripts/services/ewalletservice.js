@@ -152,11 +152,6 @@
       };
 
       App.init();
-
-      Quagga.onDetected(function(result) {
-        var code = result.codeResult.code;
-        console.log('CODE RESULT: ', code);
-      });
     }
   }
 })();
