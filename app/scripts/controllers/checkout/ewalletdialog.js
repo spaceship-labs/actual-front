@@ -11,7 +11,24 @@ function EwalletDialogController(
   $scope.showDialog = dialogService.showDialog;
   $scope.initScan = ewalletService.initScan;
 
-  $timeout($scope.initScan, 1000);
+  $scope.scanEwallet = function() {
+    $scope.initScan();
+    Quagga.onDetected(function(result) {
+      var code = result.codeResult.code;
+      console.log('CODE RESULT: ', code);
+      $scope
+        .getEwallet(code, client)
+        .then(function(ewallet) {
+          $mdDialog.hide(ewallet);
+        })
+        .catch(function(err) {
+          console.log('err', err);
+          $scope.err = err.data;
+        });
+    });
+  };
+
+  $timeout($scope.scanEwallet, 1000);
 
   $scope.cancel = function() {
     $mdDialog.cancel();

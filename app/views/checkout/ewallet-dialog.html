@@ -14,18 +14,9 @@
         <!-- <p class="scanner-align">
           <i class="icon-scaner"></i>
         </p> -->
-        <div id="interactive" class="viewport"></div>
-
-        <p class="enter-code">Ingresa el código de tu monedero:</p>
         <p ng-if="err">{{err}}</p>
-
-        <input type="text" ng-model="cardNumber">
+        <div id="interactive" class="viewport"></div>
       </div>
-    </div>
-    <div layout="row" layout-align="space-between end">
-      <a ng-click="save()" class="action-btn action-btn-save ewallet-asociate-btn" href="#" flex="25">
-        <strong>ASOCIAR</strong>
-      </a>
     </div>
   </div>
 </md-dialog>
