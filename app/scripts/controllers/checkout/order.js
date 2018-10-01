@@ -45,7 +45,7 @@ function CheckoutOrderCtrl(
     isUserAdmin: authService.isAdmin($rootScope.user),
     isStoreManager: authService.isStoreManager($rootScope.user),
     isCanceled: orderService.isCanceled,
-    isPaymentCanceled: paymentService.isCanceled
+    isPaymentCanceled: paymentService.isCanceled,
   });
 
   function showImmediateDeliveryDialog(order) {
@@ -74,7 +74,20 @@ function CheckoutOrderCtrl(
       .getById($routeParams.id)
       .then(function(res) {
         vm.order = res.data;
-
+        var ewalletAmounts = vm.order.EwalletRecords.map(function(
+          ewalletRecord
+        ) {
+          if (ewalletRecord.movement === 'increase') {
+            return ewalletRecord.amount;
+          } else {
+            return 0;
+          }
+        });
+        vm.order.ewalletAmount = ewalletAmounts.reduce(function(total, amount) {
+          return total + amount;
+        }, 0);
+        vm.order.ewalletAmount = parseFloat(vm.order.ewalletAmount.toFixed(2));
+        console.log('ORDER EWALLET RECORDS: ', vm.order.ewalletAmount);
         if ($location.search().orderCreated) {
           showImmediateDeliveryDialog(vm.order);
         }
@@ -216,7 +229,7 @@ function CheckoutOrderCtrl(
       negative: orderService.getEwalletAmmount(
         order.EwalletRecords,
         EWALLET_NEGATIVE
-      )
+      ),
     };
     vm.ewallet.before =
       order.Client.ewallet + vm.ewallet.negative - vm.ewallet.positive;
