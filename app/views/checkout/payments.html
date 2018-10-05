@@ -80,10 +80,15 @@
           <strong>RESUMEN</strong>
         </h1>
 
-        <h1 class="cart-title-ewallet" ng-click="vm.asociateEwallet()">
+        <h1 ng-if="!vm.ewallet" class="cart-title-ewallet" ng-click="vm.asociateEwallet()">
           <i class="icon-scaner-asociar "></i>
           <strong>ASOCIAR MONEDERO</strong>
         </h1>
+
+        <h1 ng-if="vm.ewallet" class="cart-title-ewallet">
+          <strong>Se ha asociado un monedero a la compra</strong>
+        </h1>
+
 
         <div class="cart-summary ">
           <table>
@@ -162,7 +167,8 @@
 
           <hr>
 
-          <input type="submit" value="CONTINUAR" class="cart-view-btn" ng-disabled="!vm.isMinimumPaid(vm.quotation)" ng-class="{'cart-view-btn-disabled' : !vm.isMinimumPaid(vm.quotation) }">
+          <input type="submit" value="CONTINUAR" class="cart-view-btn" ng-disabled="!vm.isMinimumPaid(vm.quotation)"
+            ng-class="{'cart-view-btn-disabled' : !vm.isMinimumPaid(vm.quotation) }">
 
           <p ng-if="vm.isMinimumPaid(vm.quotation)" class="cart-summary-note">
             *Hacer click para generar el folio de la venta.
