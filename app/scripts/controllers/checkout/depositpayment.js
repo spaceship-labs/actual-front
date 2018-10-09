@@ -7,7 +7,8 @@ function DepositController(
   ewalletService,
   dialogService,
   paymentService,
-  payment
+  payment,
+  quotationTotal
 ) {
   $scope.getAmmountMXN = paymentService.getAmountMXN;
   $scope.isDepositPayment = paymentService.isDepositPayment;
@@ -19,6 +20,7 @@ function DepositController(
 
   $scope.init = function() {
     $scope.payment = payment;
+    $scope.quotationTotal = quotationTotal;
     $scope.maxAmount = payment.maxAmount >= 0 ? payment.maxAmount : false;
 
     if ($scope.payment.currency === paymentService.currencyTypes.USD) {
@@ -49,6 +51,7 @@ function DepositController(
     }
 
     if (payment.type === 'ewallet') {
+      console.log('I am the quotation.total: ', $scope.quotationTotal);
       $scope.payment.maxAmount = parseFloat(
         $scope.payment.maxAmount.toFixed(2)
       );
@@ -72,6 +75,24 @@ function DepositController(
         }
       });
     }
+  };
+
+  $scope.exceededAmount = function() {
+    $scope.warningMsg = '';
+    $scope.getEwalletExchangeRate().then(function(response) {
+      $scope.payment.exchangeRate = response[0].exchangeRate;
+      $scope.maxPercentage = response[0].maximumPercentageToGeneratePoints;
+      var amountToGeneratePoints =
+        $scope.quotationTotal * ($scope.maxPercentage / 100);
+      var inputPoints = $scope.pointsToMXN(
+        $scope.payment.ammount,
+        $scope.payment.exchangeRate
+      );
+      if (inputPoints > amountToGeneratePoints) {
+        $scope.warningMsg =
+          'La cantidad ingresada supera el porcentaje para generar puntos';
+      }
+    });
   };
 
   $scope.isValidPayment = function() {

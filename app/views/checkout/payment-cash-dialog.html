@@ -15,6 +15,7 @@
           cobro para saldar esta venta.</small>
       </p>
       <p class="error-msg" ng-if="errMsg">{{errMsg}}</p>
+      <p class="error-msg" ng-if="warningMsg">{{warningMsg}}</p>
 
       <div class="ammount-input" layout="row" layout-align="start center">
         <div class="input-element" flex="60">
@@ -40,7 +41,7 @@
         <small>Tipo de cambio: {{payment.exchangeRate | currency}} MXN</small>
       </p>
       <p ng-if="payment.type == 'ewallet'">
-        <small>Puntos disponibles: {{payment.maxAmount}}</small>
+        <small>Puntos disponibles: {{payment.maxAmount}} {{ quotation.total }}</small>
       </p>
     </div>
 

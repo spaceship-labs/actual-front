@@ -268,7 +268,8 @@ function CheckoutPaymentsCtrl(
 
     return openAddPaymentDialog(
       vm.activeMethod,
-      _.clone(vm.activeMethod.remaining)
+      _.clone(vm.activeMethod.remaining),
+      quotation.total
     );
   }
 
@@ -375,7 +376,7 @@ function CheckoutPaymentsCtrl(
     }
   }
 
-  function openAddPaymentDialog(activeMethod, amount) {
+  function openAddPaymentDialog(activeMethod, amount, quotationTotal) {
     if (activeMethod) {
       var templateUrl = 'views/checkout/payment-cash-dialog.html';
       var controller = DepositController;
@@ -404,6 +405,7 @@ function CheckoutPaymentsCtrl(
           'dialogService',
           'paymentService',
           'payment',
+          'quotationTotal',
           controller,
         ],
         templateUrl: templateUrl,
@@ -413,6 +415,7 @@ function CheckoutPaymentsCtrl(
         fullscreen: useFullScreen,
         locals: {
           payment: paymentConfig,
+          quotationTotal: quotationTotal,
         },
       };
 
