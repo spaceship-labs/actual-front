@@ -77,6 +77,7 @@
       isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment,
       mapStatusType: mapStatusType,
       pointsToMXN: pointsToMXN,
+      MXNToPoints: MXNToPoints,
     };
 
     function mapStatusType(status) {
@@ -225,6 +226,10 @@
 
     function pointsToMXN(amount, exchangeRate) {
       return amount / exchangeRate;
+    }
+
+    function MXNToPoints(amount, exchangeRate) {
+      return amount * exchangeRate;
     }
 
     //@param quotation - Object quotation populated with Payments and Client

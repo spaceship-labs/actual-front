@@ -14,6 +14,7 @@ function DepositController(
   $scope.isTransferPayment = paymentService.isTransferPayment;
   $scope.isCardPayment = paymentService.isCardPayment;
   $scope.pointsToMXN = paymentService.pointsToMXN;
+  $scope.MXNToPoints = paymentService.MXNToPoints;
   $scope.getEwalletExchangeRate = ewalletService.getEwalletExchangeRate;
 
   $scope.init = function() {
@@ -53,6 +54,22 @@ function DepositController(
       );
       $scope.getEwalletExchangeRate().then(function(response) {
         $scope.payment.exchangeRate = response[0].exchangeRate;
+        var totalPointsToMXN = $scope.pointsToMXN(
+          $scope.payment.maxAmount,
+          $scope.payment.exchangeRate
+        );
+        var maxAmountWithEwallet = $scope.MXNToPoints(
+          $scope.payment.ammount,
+          $scope.payment.exchangeRate
+        );
+        if (totalPointsToMXN <= $scope.payment.ammount) {
+          $scope.payment.ammount = $scope.payment.maxAmount;
+          $scope.maxAmount = maxAmountWithEwallet;
+        }
+        if (totalPointsToMXN > $scope.payment.ammount) {
+          $scope.payment.ammount = maxAmountWithEwallet;
+          $scope.maxAmount = maxAmountWithEwallet;
+        }
       });
     }
   };
