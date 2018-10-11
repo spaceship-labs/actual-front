@@ -33,6 +33,7 @@ function ProductCtrl(
     toggleVariants: true,
     variants: [],
     applyDiscount: applyDiscount,
+    calculatePoints: calculatePoints,
     addToCart: addToCart,
     getQtyArray: getQtyArray,
     getWarehouseName: getWarehouseName,
@@ -186,8 +187,18 @@ function ProductCtrl(
 
   function applyDiscount(discount, price) {
     var result = price;
-    result = price - price / 100 * discount;
+    result = price - (price / 100) * discount;
     return result;
+  }
+
+  function calculatePoints(amount, price, type) {
+    if (type === 'ammount') {
+      return amount;
+    } else if (type === 'percentage') {
+      var result = price * (amount / 100);
+      result = parseFloat(result.toFixed(2));
+      return result;
+    }
   }
 
   function trustAsHtml(string) {
