@@ -1,123 +1,91 @@
 <section class="cash-report-wrapper">
-  
+
   <h1>Corte de caja</h1>
 
   <div class="cash-report-header" layout="row">
     <div flex>
 
-      <h3><strong>Vista regional - por tiendas</strong></h3>
-      <h3><strong>Usuario:</strong>
-         {{user.firstName + ' ' + user.lastName}}
+      <h3>
+        <strong>Vista regional - por tiendas</strong>
+      </h3>
+      <h3>
+        <strong>Usuario:</strong>
+        {{user.firstName + ' ' + user.lastName}}
       </h3>
       <h3>
         <strong>Período:</strong>
-        {{startDate | date:'dd/MM/yyyy h:mm a'}} |
-        {{endDate | date:'dd/MM/yyyy h:mm a'}}
+        {{startDate | date:'dd/MM/yyyy h:mm a'}} | {{endDate | date:'dd/MM/yyyy h:mm a'}}
       </h3>
       <h3>
-        <strong>Total global ventas:</strong> {{ getAllStoresTotal() | currency }} MXN
+        <strong>Total global ventas:</strong> {{ report.total | currency }} MXN
       </h3>
     </div>
 
     <div flex="25" class="input-element select-element-wrapper">
-      <label><strong>Tienda:</strong></label>
-      <md-select 
-        ng-model="storeFilter" 
-        class="select-element"
-        required>
+      <label>
+        <strong>Tienda:</strong>
+      </label>
+      <md-select ng-model="storeFilter" class="select-element" required>
         <md-option ng-value="'all'">
           Todas las tiendas
         </md-option>
-        <md-option ng-repeat="store in stores" ng-value="store.id">
+        <md-option ng-repeat="store in report.stores" ng-value="store.id">
           {{store.name}}
         </md-option>
       </md-select>
-    </div>      
+    </div>
 
 
   </div>
 
 
 
-  <section 
-    ng-repeat="store in filterStores(stores, storeFilter)" 
-    class="cash-report-inner seller-item">
+  <section ng-repeat="store in filterStores(report.stores, storeFilter)" class="cash-report-inner seller-item">
 
     <h2>
       <strong>Tienda:</strong> {{store.name}}
     </h2>
     <h2>
-      <strong>Total general ventas: </strong> {{ getStoreTotal(store) | currency }} MXN
+      <strong>Total general ventas: </strong> {{ store.total | currency }} MXN
     </h2>
 
 
-    <section class="payment-group" ng-repeat="group in store.paymentsGroups">
-
-      <h2 class="payment-group-title" ng-if="group.groupNumber == 1">Un solo pago</h2>
-      <h2 class="payment-group-title" ng-if="group.msi">{{group.msi}} meses sin intereses</h2>
+    <section class="payment-group" ng-repeat="division in store.divisions">
+      <h2 class="payment-group-title">{{division.name}}</h2>
 
       <div layout="row">
-        <div class="payment-item-header pull-left" flex><strong>Tipo de pago</strong></div>
-        <div class="payment-item-header" flex><strong>Movimientos(cantidad)</strong></div>
-        <div class="payment-item-header" flex><strong>Total</strong></div>
+        <div class="payment-item-header pull-left" flex>
+          <strong>Tipo de pago</strong>
+        </div>
+        <div class="payment-item-header" flex>
+          <strong>Movimientos(cantidad)</strong>
+        </div>
+        <div class="payment-item-header" flex>
+          <strong>Movimientos cancelados(cantidad)</strong>
+        </div>
+        <div class="payment-item-header" flex>
+          <strong>Total</strong>
+        </div>
       </div>
 
-      <div 
-        class="method-group" 
-        ng-repeat="method in group.methods track by $index"
-      >
-        
-        <div ng-if="!isWebStore(store)">
+      <div class="method-group" ng-repeat="subdivision in division.subdivisions track by $index">
+        <div>
           <div layout="row" class="payment-item">
-            
-            <div 
-              ng-if="isSinglePlaymentTerminal(method) || method.msi" 
-              class="payment-item-cell pull-left" 
-              flex>
-              <strong ng-if="isCardCreditOrDebitPayment(method)">
-                {{method.name}} | 
-              </strong>
-              TPV {{ mapTerminalCode(method.terminal) }}
+            <div class="payment-item-cell pull-left" flex>
+              {{subdivision.name}}
             </div>
 
-            <div 
-              ng-if="!isSinglePlaymentTerminal(method) && !method.msi" 
-              class="payment-item-cell pull-left" 
-              flex
-            >
-              {{method.name}}
-            </div>
-
-            <div class="payment-item-cell" flex>{{method.payments.length}}</div>
-            <div class="payment-item-cell" flex>{{getTotalByMethod(method) | currency}} MXN</div>
-          </div>
-        </div>
-
-        <div ng-if="isWebStore(store)">
-          <div layout="row" class="payment-item">
-            
-            <div 
-              class="payment-item-cell pull-left" 
-              flex
-            >
-              {{method.name}} <span ng-if="method.card">| {{method.card}}</span>
-            </div>
-
-            <div class="payment-item-cell" flex>{{method.payments.length}}</div>
-            <div class="payment-item-cell" flex>{{getTotalByMethod(method) | currency}} MXN</div>
+            <div class="payment-item-cell" flex>{{subdivision.payments.length}}</div>
+            <div class="payment-item-cell" flex>{{ getPaymentsCanceledQuantity(subdivision.payments) }}</div>
+            <div class="payment-item-cell" flex>{{ subdivision.total | currency}} MXN</div>
           </div>
         </div>
 
       </div>
 
-      <h2 class="pull-right total-group" ng-if="group.groupNumber == 1">
-        <strong>Gran Total General USP MXN: {{getTotalByGroup(group) | currency}}</strong>
+      <h2 class="pull-right total-group">
+        <strong>Total General {{division.name}} MXN: {{ division.total | currency}}</strong>
       </h2>
-
-
-      <h2 class="pull-right total-group" ng-if="group.groupNumber != 1">
-        <strong>Total General {{group.msi}} MSI MXN: {{getTotalByGroup(group) | currency}}</strong>
-      </h2>    
 
     </section>
 
@@ -126,11 +94,7 @@
 
 
   <div layout="row" layout-align="center center" class="form-view-btns no-margin">
-    <button
-      ng-click="print()"
-      flex="50"
-      class="form-view-btn form-view-btn-primary print-btn"
-    >
+    <button ng-click="print()" flex="50" class="form-view-btn form-view-btn-primary print-btn">
       Imprimir reporte
     </button>
   </div>

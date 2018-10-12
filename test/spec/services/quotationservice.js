@@ -22,7 +22,7 @@ describe('Service: quotationService', function() {
       promotionPackage: 'promotionPackage.id',
       PurchaseAfter: 'purchaseAfter',
       PurchaseDocument: 'PurchaseDocument.example',
-      immediateDelivery: false,
+      immediateDelivery: false
     };
     var productId = 'product.id';
     var quotationId = 'quotation.id';
@@ -43,7 +43,7 @@ describe('Service: quotationService', function() {
       PromotionPackage: params.promotionPackage,
       PurchaseAfter: params.PurchaseAfter,
       PurchaseDocument: params.PurchaseDocument,
-      immediateDelivery: false,
+      immediateDelivery: false
     };
 
     //console.log('result', result);
@@ -57,12 +57,12 @@ describe('Service: quotationService', function() {
     var details = [{ id: 'detail1.id' }, { id: 'detail2.id' }];
     var detailsStockArray = [
       { id: 'detail1.id', validStock: true },
-      { id: 'detail2.id', validStock: false },
+      { id: 'detail2.id', validStock: false }
     ];
     var result = quotationService.mapDetailsStock(details, detailsStockArray);
     var mutatedDetails = [
       { id: 'detail1.id', validStock: true },
-      { id: 'detail2.id', validStock: false },
+      { id: 'detail2.id', validStock: false }
     ];
     expect(result).toEqual(mutatedDetails);
   });
@@ -70,7 +70,7 @@ describe('Service: quotationService', function() {
   it('should validate correctly the details stock', function() {
     var details = [
       { id: 'detail1.id', validStock: true },
-      { id: 'detail2.id', validStock: true },
+      { id: 'detail2.id', validStock: true }
     ];
     var result = quotationService.isValidStock(details);
     expect(result).toBe(true);
@@ -79,9 +79,29 @@ describe('Service: quotationService', function() {
   it('should validate correctly the details stock when not valid', function() {
     var details = [
       { id: 'detail1.id', validStock: true },
-      { id: 'detail2.id', validStock: false },
+      { id: 'detail2.id', validStock: false }
     ];
     var result = quotationService.isValidStock(details);
     expect(result).toBe(false);
+  });
+
+  describe('isValidQuotationAddress', function() {
+    it('should validate to true the quotation address when it has immediate delivery', function() {
+      var quotation = { immediateDelivery: true };
+      var result = quotationService.isValidQuotationAddress(quotation);
+      expect(result).toBe(true);
+    });
+
+    it('should validate to true the quotation address when it has an address', function() {
+      var quotation = { Address: {} };
+      var result = quotationService.isValidQuotationAddress(quotation);
+      expect(result).toBe(true);
+    });
+
+    it('should validate to false when the quotation doesnt have an address neither an immediateDelivery', function() {
+      var quotation = {};
+      var result = quotationService.isValidQuotationAddress(quotation);
+      expect(result).toBe(false);
+    });
   });
 });

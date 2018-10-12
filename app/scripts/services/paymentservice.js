@@ -16,9 +16,13 @@
     var CLIENT_BALANCE_GROUP_INDEX = 0;
     var CLIENT_BALANCE_TYPE = 'client-balance';
 
+    var statusTypes = {
+      CANCELED: 'canceled'
+    };
+
     var currencyTypes = {
       USD: 'usd',
-      MXN: 'mxn',
+      MXN: 'mxn'
     };
 
     var types = {
@@ -31,6 +35,7 @@
       TRANSFER_USD: 'transfer-usd',
       CREDIT_CARD: 'credit-card',
       DEBIT_CARD: 'debit-card',
+      EWALLET: 'ewallet',
       SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
       MSI_3: '3-msi',
       MSI_6: '6-msi',
@@ -43,13 +48,14 @@
       MSI_12_BANAMEX: '12-msi-banamex',
 
       MSI_13: '13-msi',
-      MSI_18: '18-msi',
+      MSI_18: '18-msi'
     };
 
     var service = {
       addPayment: addPayment,
-      cancelPayment: cancelPayment,
+      cancel: cancel,
       getAmountMXN: getAmountMXN,
+      getAmountUSD: getAmountUSD,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
       getPaymentWebMethodsGroups: getPaymentWebMethodsGroups,
       getMethodAvailableBalance: getMethodAvailableBalance,
@@ -58,18 +64,43 @@
       getClientBalanceDescription: getClientBalanceDescription,
       updateQuotationClientBalance: updateQuotationClientBalance,
       types: types,
+      statusTypes: statusTypes,
       currencyTypes: currencyTypes,
       isUsdPayment: isUsdPayment,
       isTransferOrDeposit: isTransferOrDeposit,
-      isSinglePlaymentTerminal: isSinglePlaymentTerminal,
+      isSinglePaymentTerminal: isSinglePaymentTerminal,
       isDepositPayment: isDepositPayment,
       isTransferPayment: isTransferPayment,
       isCardPayment: isCardPayment,
       isCardCreditOrDebitPayment: isCardCreditOrDebitPayment,
+      isCanceled: isCanceled,
+      isClientBalanceOrEwalletPayment: isClientBalanceOrEwalletPayment,
+      mapStatusType: mapStatusType
     };
 
-    function getAmountMXN(amount, exchangeRate) {
-      return amount * exchangeRate;
+    function mapStatusType(status) {
+      var mapper = {};
+      mapper[statusTypes.CANCELED] = 'Cancelado';
+
+      return mapper[status] || status;
+    }
+
+    function getAmountMXN(usdAmount, exchangeRate) {
+      return usdAmount * exchangeRate;
+    }
+
+    function getAmountUSD(mxnAmount, exchangeRate) {
+      return mxnAmount / exchangeRate;
+    }
+
+    function isClientBalanceOrEwalletPayment(payment) {
+      return (
+        payment.type === types.CLIENT_BALANCE || payment.type === types.EWALLET
+      );
+    }
+
+    function isCanceled(payment) {
+      return payment.status === statusTypes.CANCELED;
     }
 
     function isCardPayment(payment) {
@@ -109,7 +140,7 @@
       );
     }
 
-    function isSinglePlaymentTerminal(payment) {
+    function isSinglePaymentTerminal(payment) {
       return (
         payment.type === types.SINGLE_PAYMENT_TERMINAL ||
         payment.type === types.DEBIT_CARD ||
@@ -171,12 +202,12 @@
     }
 
     function addPayment(quotationId, params) {
-      var url = '/payment/add/' + quotationId;
+      var url = '/quotation/' + quotationId + '/payments';
       return api.$http.post(url, params);
     }
 
-    function cancelPayment(quotationId, paymentId) {
-      var url = '/payment/cancel/' + quotationId + '/' + paymentId;
+    function cancel(paymentId) {
+      var url = '/payment/' + paymentId + '/cancel';
       return api.$http.post(url);
     }
 
@@ -210,15 +241,15 @@
     function updateQuotationClientBalance(quotation, paymentMethodsGroups) {
       var group = paymentMethodsGroups[CLIENT_BALANCE_GROUP_INDEX];
       var balancePaymentMethod = _.findWhere(group.methods, {
-        type: CLIENT_BALANCE_TYPE,
+        type: CLIENT_BALANCE_TYPE
       });
       var balancePayments = _.where(quotation.Payments, {
-        type: CLIENT_BALANCE_TYPE,
+        type: CLIENT_BALANCE_TYPE
       });
       clientService
         .getBalanceById(quotation.Client.id)
         .then(function(res) {
-          console.log('res', res);
+          console.log('res client balance', res);
           var balance = res.data || 0;
           var description = getClientBalanceDescription(balance);
           if (balancePaymentMethod) {
@@ -236,6 +267,11 @@
         });
     }
 
+    /*
+    @params 
+    method {Object}
+    quotation {Quotation Object} populated with Client{ Client Object}
+    */
     function getMethodAvailableBalance(method, quotation) {
       var EWALLET_TYPE = ewalletService.ewalletType;
       var balance = 0;
