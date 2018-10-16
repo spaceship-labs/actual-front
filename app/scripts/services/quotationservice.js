@@ -493,6 +493,7 @@
           value: 'periodico-revista',
           childs: [
             { label: 'ALTTA', value: 'altta' },
+            { label: 'Cancunissimo', value: 'cancunissimo' },
             { label: 'Diario de Yucatán', value: 'diario-de-yucatan' },
             { label: 'The playa times', value: 'the-playa-times' },
             { label: 'Ambientes', value: 'ambientes' },
