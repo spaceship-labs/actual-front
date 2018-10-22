@@ -24,7 +24,7 @@
               ng-model="payment.ammount" class="with-maxammount" ng-currency ng-disabled="isConfirmationActive">
             <input ng-if="!maxAmount" type="text" ng-currency ng-disabled="isConfirmationActive" ng-model="payment.ammount">
             <input ng-if="maxAmount && maxAmount >=0 && payment.type == 'ewallet'" type="text" max="maxAmount" ng-model="payment.ammount"
-              class="with-maxammount" ng-disabled="isConfirmationActive">
+              class="with-maxammount" coma-mask ng-disabled="isConfirmationActive" ng-change="exceededAmount()">
           </div>
         </div>
         <div class="currency-label">

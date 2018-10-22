@@ -32,7 +32,8 @@
     "angular-chosen-localytics": "~1.5.0",
     "ng-currency": "~1.1.4",
     "angular-google-analytics": "^1.1.9",
-    "quagga": "^0.12.1"
+    "quagga": "^0.12.1",
+    "ngCurrencyMask": "ng-currency-mask#^1.0.61"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
@@ -40,7 +41,7 @@
   "appPath": "app",
   "moduleName": "actualApp",
   "resolutions": {
-    "angular": "^1.6.3",
+    "angular": "1.6.9",
     "angular-material": "master",
     "ngInfiniteScroll": "1.0.0",
     "angular-animate": "^1.6.3",

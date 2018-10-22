@@ -32,6 +32,7 @@ angular
     'ui.utils.masks',
     'localytics.directives',
     'ng-currency',
+    'ngCurrencyMask',
     'angular-google-analytics',
     'envconfig',
   ])
