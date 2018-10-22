@@ -40,7 +40,7 @@
   "appPath": "app",
   "moduleName": "actualApp",
   "resolutions": {
-    "angular": "1.6.9",
+    "angular": "^1.6.3",
     "angular-material": "master",
     "ngInfiniteScroll": "1.0.0",
     "angular-animate": "^1.6.3",
