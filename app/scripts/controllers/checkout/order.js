@@ -33,6 +33,7 @@ function CheckoutOrderCtrl(
     showInvoiceErrorIfNeeded: showInvoiceErrorIfNeeded,
     sendInvoice: sendInvoice,
     print: print,
+    order: {},
     invoices: [],
     invoicesInterval: false,
     invoiceLoadCounter: 0,

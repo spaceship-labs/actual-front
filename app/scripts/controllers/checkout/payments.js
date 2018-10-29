@@ -235,6 +235,8 @@ function CheckoutPaymentsCtrl(
 
   function setQuotationTotalsByGroup(quotation) {
     var paymentGroupNumber = quotation.paymentGroup;
+    console.log('paymentGroupNumber', paymentGroupNumber);
+    console.log('vm.paymentMethodsGrous', vm.paymentMethodsGroups);
     var currentGroup = _.findWhere(vm.paymentMethodsGroups, {
       group: paymentGroupNumber
     });
