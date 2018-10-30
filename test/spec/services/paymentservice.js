@@ -23,7 +23,7 @@ describe('Service: paymentService', function() {
   it('should get an array of payment options for credit card payment method', function() {
     var method = {
       type: 'credit-card',
-      storeType: 'home',
+      storeType: 'home'
     };
     var options = paymentService.getPaymentOptionsByMethod(method);
     expect(options).toBeDefined();
@@ -40,8 +40,8 @@ describe('Service: paymentService', function() {
     var quotation = {
       Client: {
         Balance: 100,
-        ewallet: 50,
-      },
+        ewallet: 50
+      }
     };
     var method = { type: 'client-balance' };
     var balance = paymentService.getMethodAvailableBalance(method, quotation);
@@ -52,8 +52,8 @@ describe('Service: paymentService', function() {
     var quotation = {
       Client: {
         Balance: 100,
-        ewallet: 50,
-      },
+        ewallet: 50
+      }
     };
     var method = { type: 'ewallet' };
     var balance = paymentService.getMethodAvailableBalance(method, quotation);
@@ -82,7 +82,7 @@ describe('Service: paymentService', function() {
       type: 'credit-card',
       storeCode: 'actual_studio_cumbres',
       storeType: 'studio',
-      group: 1,
+      group: 1
     };
     var options = paymentService.getPaymentOptionsByMethod(method);
     expect(options).toBeDefined();
@@ -94,5 +94,31 @@ describe('Service: paymentService', function() {
       return option.terminal.value === 'banorte';
     });
     expect(everyOptionHasBanorteAsTerminal).toBe(true);
+  });
+
+  describe('isCanceledPayment', function() {
+    it('should return true if payment is canceled', function() {
+      var payment = { status: 'canceled' };
+      expect(paymentService.isCanceled(payment)).toBe(true);
+    });
+
+    it('should return false if payment is not canceled', function() {
+      var payment = { status: 'processed' };
+      expect(paymentService.isCanceled(payment)).toBe(false);
+    });
+  });
+
+  describe('mapStatusType', function() {
+    it('should return the correct label for canceled status type', function() {
+      var payment = { status: 'canceled' };
+      expect(paymentService.mapStatusType(payment.status)).toBe('Cancelado');
+    });
+
+    it('should return the same status as label when it is not recognized', function() {
+      var payment = { status: 'not.recognized' };
+      expect(paymentService.mapStatusType(payment.status)).toBe(
+        'not.recognized'
+      );
+    });
   });
 });

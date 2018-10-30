@@ -52,6 +52,9 @@
       <h3>
         <strong>¡GRACIAS POR SU COMPRA!</strong>
       </h3>
+      <p ng-if="vm.isCanceled(vm.order)">
+        <strong>Estatus: Cancelado</strong>
+      </p>
       <p>Estimado
         <strong>{{vm.order.Client.CardName}}</strong>
       </p>
@@ -61,7 +64,7 @@
 
       <p>
         <strong>Tienda:</strong> {{vm.order.Store.name}}</p>
-      <br/>
+      <br />
     </div>
 
     <!--ORDER ITEMS-->
@@ -222,6 +225,7 @@
           <div flex class="order-payment-item-data">
             <span ng-if="payment.currency !== 'usd'">{{payment.ammount | currency}} MXN</span>
             <span ng-if="payment.currency === 'usd'">{{payment.ammount | currency}} USD.</span>
+            <span ng-if="vm.isPaymentCanceled(payment)">(Cancelado)</span>
           </div>
         </div>
       </div>
@@ -247,7 +251,7 @@
             <strong>SALDO:</strong>
           </p>
 
-          <br/>
+          <br />
           <p>
             <strong>SALDO CLIENTE:</strong>
           </p>
@@ -274,7 +278,7 @@
             <strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | currency }} MXN</strong>
           </p>
 
-          <br/>
+          <br />
           <p>
             <strong>{{(vm.order.Client.Balance) | currency}}</strong>
           </p>
@@ -330,7 +334,8 @@
         <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
         <ul>
           <li>
-            <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la compra.</li>
+            <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
+            compra.</li>
           <li>
             <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
           <li>
@@ -365,6 +370,9 @@
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
             <strong>ENVIAR FACTURA</strong>
           </a>
+          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
+            <strong>CANCELAR PEDIDO</strong>
+          </a>
         </div>
       </div>
     </div>
@@ -372,7 +380,7 @@
 
   </div>
 
-  <hr/>
+  <hr />
 
   <ng-include src="'views/checkout/order-policies.html'"></ng-include>
 
@@ -429,7 +437,8 @@
                   </p>
 
                   <div class="record-item-block-attach">
-                    <a ng-repeat="file in record.files" ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}" target="_blank">
+                    <a ng-repeat="file in record.files" ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}"
+                      target="_blank">
                       <img ng-src="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename + '?d=300x300' }}" alt="">
                     </a>
                   </div>
@@ -445,7 +454,7 @@
 
   </section>
 
-  <hr/>
+  <hr />
 
   <section ng-show="vm.order.OrdersSap && vm.order.OrdersSap.length > 0" class="sap-docs only-hide-print">
     <h3>
@@ -512,7 +521,8 @@
   </div>
 
   <hr class="only-show-print" />
-  <p class="only-show-print show-print" style="font-size: 19px">Favor de solicitar su factura antes de realizar el pago, ya que no hay refacturación</p>
+  <p class="only-show-print show-print" style="font-size: 19px">Favor de solicitar su factura antes de realizar el
+    pago, ya que no hay refacturación</p>
   <!--END SELLER-->
 
 </section>

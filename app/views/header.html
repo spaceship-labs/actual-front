@@ -1,6 +1,6 @@
 <div id="header">
   <!--START TOP BAR-->
-  <div class="header-top-bar" fixed-element  top="70" ng-class="{
+  <div class="header-top-bar" fixed-element top="70" ng-class="{
     'fixed-head': scrolled,
     'sandbox-mode': main.ENV.name === 'sandbox' || main.ENV.name === 'dev'
   }">
@@ -9,7 +9,7 @@
       <!--ON SCROLL-->
 
       <div flex="30" class="logo" layout-align="center center">
-        <a href="/" >
+        <a href="/">
           <img src="images/logo.png" alt="Actual Group">
         </a>
       </div>
@@ -17,121 +17,69 @@
       <!--END ONLY ON SCROLL-->
 
 
-      <form 
-        ng-submit="main.handleSearch()" 
-        class="searcher-wrapper" 
-        layout="row"
-      >
+      <form ng-submit="main.handleSearch()" class="searcher-wrapper" layout="row">
         <div class="searcher">
           <div class="searcher-inner">
             <i class="icon-search"></i>
-            <input
-              type="text"
-              name="term"
-              ng-disabled="main.isLoadingSync"
-              ng-model="main.searchValue"
-              ng-attr-name="{{main.isItemCodeSearch && 'itemcode' || 'term' }}"
-              >
+            <input type="text" name="term" ng-disabled="main.isLoadingSync" ng-model="main.searchValue" ng-attr-name="{{main.isItemCodeSearch && 'itemcode' || 'term' }}">
           </div>
         </div>
 
-        <input 
-          type="submit" 
-          value="BUSCAR"
-          ng-if="main.searchType === 'search'" 
-          ng-disabled="main.isLoadingSync"
-          class="searcher-btn" 
+        <input type="submit" value="BUSCAR" ng-if="main.searchType === 'search'" ng-disabled="main.isLoadingSync" class="searcher-btn"
         />
 
-        <input 
-          type="submit" 
-          value="SINCRONIZAR"
-          ng-if="main.searchType !== 'search'" 
-          ng-disabled="main.isLoadingSync"
-          class="searcher-btn" 
+        <input type="submit" value="SINCRONIZAR" ng-if="main.searchType !== 'search'" ng-disabled="main.isLoadingSync" class="searcher-btn"
         />
 
 
-        <!--<div flex class="searcher-checkbox">-->
         <div ng-if="main.user" flex="30" class="sync-actions">
-            
-            <select 
-              ng-model="main.searchType" id="#"
-              ng-if="!main.isLoadingSync"
-            >
-              <option value="search">Búsqueda</option>
-              <option value="itemcode">Código</option>
-              <option value="clientsDiscount">DescEsp</option>
-              <option value="clientsCredit">Crédito</option>
-              <option value="clientSync">Cliente</option>
 
-            </select>
+          <select ng-model="main.searchType" id="#" ng-if="!main.isLoadingSync">
+            <option value="search">Búsqueda</option>
+            <option value="itemcode">Código</option>
+            <option value="clientsDiscount">DescEsp</option>
+            <option value="clientsCredit">Crédito</option>
+            <option value="clientSync">Cliente</option>
 
-          <label 
-            ng-if="main.isLoadingSync"
-            class="searcher-checkbox-label loading-label"
-          >
-              Sincronizando...
-          </label>          
+          </select>
+
+          <label ng-if="main.isLoadingSync" class="searcher-checkbox-label loading-label">
+            Sincronizando...
+          </label>
 
         </div>
         <!--</div>-->
       </form>
 
-      <div 
-        class="header-top-bar-menu" 
-        layout="row" 
-        layout-align="center center"
-      >
+      <div class="header-top-bar-menu" layout="row" layout-align="center center">
 
         <!--IF ACTIVE QUOTATION-->
-        <a
-          ng-if="main.user && main.activeQuotation"
-          flex
-          ng-href="/quotations/edit/{{main.activeQuotation.id}}"
-          class="header-top-bar-menu-item"
-        >
+        <a ng-if="main.user && main.activeQuotation" flex ng-href="/quotations/edit/{{main.activeQuotation.id}}" class="header-top-bar-menu-item">
           <span class="cart-n-items" ng-class="{'cart-active' : main.activeQuotation}">{{main.activeQuotation.totalProducts}}</span>
           <i class="icon-carro" ng-class="{'cart-active' : main.activeQuotation}"></i>
         </a>
 
         <!--IF NOT ACTIVE QUOTATION-->
-        <a
-          ng-if="main.user && !main.activeQuotation"
-          flex
-          href="/"
-          class="header-top-bar-menu-item"
-        >
+        <a ng-if="main.user && !main.activeQuotation" flex href="/" class="header-top-bar-menu-item">
           <i class="icon-carro"></i>
           <ng-include ng-if="main.user && main.isActiveCart" src="'views/partials/cart-header.html'"></ng-include>
         </a>
 
 
-        <div
-          ng-if="!main.user"
-          flex
-          id="login-header-trigger"
-          class="header-top-bar-menu-item">
+        <div ng-if="!main.user" flex id="login-header-trigger" class="header-top-bar-menu-item">
           <i class="icon-login" ng-click="main.toggleLoginModal()"></i>
           <ng-include ng-if="!main.user && main.isActiveLogin" src="'views/partials/login-header.html'"></ng-include>
         </div>
 
         <!--IF logged in-->
-        <div
-          ng-if="main.user"
-          flex
-          href="#"
-          id="profile-header-trigger"
-          ng-click="main.toggleProfileModal()"
-          class="header-top-bar-menu-item header-top-bar-menu-item-name"
-        >
-          <a href="#" >
+        <div ng-if="main.user" flex href="#" id="profile-header-trigger" ng-click="main.toggleProfileModal()" class="header-top-bar-menu-item header-top-bar-menu-item-name">
+          <a href="#">
             <i class="icon-login"></i>
-            <span >Bienvenido <strong>{{main.user.firstName}}</strong></span>
+            <span>Bienvenido
+              <strong>{{main.user.firstName}}</strong>
+            </span>
           </a>
-          <ng-include 
-            ng-if="main.isActiveProfileHeader" 
-            src="'views/partials/profile-header.html'"></ng-include>
+          <ng-include ng-if="main.isActiveProfileHeader" src="'views/partials/profile-header.html'"></ng-include>
         </div>
 
 
@@ -151,8 +99,7 @@
   <!--END TOP BAR-->
 
   <!--START MENU-->
-    <ng-include src="'views/partials/header-menu-miactual.html'"></ng-include>
+  <ng-include src="'views/partials/header-menu-miactual.html'"></ng-include>
   <!--END MENU-->
 
 </div>
-

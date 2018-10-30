@@ -56,6 +56,7 @@
       updateSource: updateSource,
       updateBroker: updateBroker,
       validateQuotationStockById: validateQuotationStockById,
+      isValidQuotationAddress: isValidQuotationAddress
     };
 
     return service;
@@ -147,6 +148,10 @@
       return api.$http.post(url);
     }
 
+    function isValidQuotationAddress(quotation) {
+      return quotation.immediateDelivery || quotation.Address ? true : false;
+    }
+
     function populateDetailsWithProducts(quotation, options) {
       options = options || {};
       var deferred = $q.defer();
@@ -157,7 +162,7 @@
 
         var params = {
           ids: productsIds,
-          populate_fields: options.populate || [],
+          populate_fields: options.populate || []
         };
 
         productService
@@ -170,7 +175,7 @@
             //Match detail - product
             quotation.Details = quotation.Details.map(function(detail) {
               detail.Product = _.findWhere(formattedProducts, {
-                id: detail.Product,
+                id: detail.Product
               });
               return detail;
             });
@@ -221,7 +226,7 @@
           if (options.createClient) {
             $location.path('/clients/create').search({
               checkoutProcess: quotation.id,
-              startQuotation: true,
+              startQuotation: true
             });
           } else {
             $location
@@ -245,7 +250,7 @@
         shipCompanyFrom: params.shipCompanyFrom,
         PromotionPackage: params.promotionPackage || null,
         PurchaseAfter: params.PurchaseAfter,
-        PurchaseDocument: params.PurchaseDocument,
+        PurchaseDocument: params.PurchaseDocument
       };
       return detail;
     }
@@ -306,7 +311,7 @@
           Details: products.map(function(product) {
             var detail = createDetailObjectFromParams(product.id, product);
             return detail;
-          }),
+          })
         };
 
         create(createParams)
@@ -402,7 +407,7 @@
 
     function setEstimatedCloseDate(id, estimatedCloseDate) {
       var params = {
-        estimatedCloseDate: estimatedCloseDate,
+        estimatedCloseDate: estimatedCloseDate
       };
       var url = '/quotation/' + id + '/estimatedclosedate';
       return api.$http.post(url, params);
@@ -459,7 +464,7 @@
         'Los precios son altos',
         'Las fechas de entrega son tardadas',
         'No vendemos el articulo solicitado',
-        'Otra razón (especificar)',
+        'Otra razón (especificar)'
       ];
       return closingReasons;
     }
@@ -482,11 +487,11 @@
             { label: 'Instagram', value: 'Instagram' },
             {
               label: 'Diario de Yucatán Online',
-              value: 'diario-de-yucatan-online',
+              value: 'diario-de-yucatan-online'
             },
             { label: 'Foursquare', value: 'foursquare' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Periódico o Revista',
@@ -503,8 +508,8 @@
             { label: 'Vive', value: 'vive' },
             { label: 'Ya la hice', value: 'ya-la-hice' },
             { label: 'Playacar', value: 'playacar' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Radio',
@@ -517,10 +522,10 @@
             { label: 'Kiss Mérida', value: 'kiss-merida' },
             {
               label: '104.3 Qfm / Rock by the sea',
-              value: '104.3qfm_rock-by-the-sea',
+              value: '104.3qfm_rock-by-the-sea'
             },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Volanteo',
@@ -529,8 +534,8 @@
             { label: 'En calle', value: 'calle' },
             { label: 'En plaza', value: 'plaza' },
             { label: 'En evento', value: 'evento' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Espectacular',
@@ -538,25 +543,25 @@
           childs: [
             {
               label: 'Carr. Playa del Carmen - Cáncun',
-              value: 'carretera-playa-del-carmen-cancun',
+              value: 'carretera-playa-del-carmen-cancun'
             },
             {
               label: 'Cancún - Distribuidor Vial',
-              value: 'cancun-distribuidor-vial',
+              value: 'cancun-distribuidor-vial'
             },
             {
               label: 'Cancún - Entrada Pto. Cancun (Bonampak)',
-              value: 'cancun-entrada-pto-cancun-bonampak',
+              value: 'cancun-entrada-pto-cancun-bonampak'
             },
             { label: 'Mérida - El country', value: 'merida-el-country' },
             { label: 'Tulum', value: 'tulum' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Ubicación',
           value: 'ubicacion',
-          childs: [{ label: 'Tienda', value: 'tienda' }],
+          childs: [{ label: 'Tienda', value: 'tienda' }]
         },
         {
           label: 'Activaciones Especiales',
@@ -565,8 +570,8 @@
             { label: 'Valla Móvil', value: 'valla-movil' },
             { label: 'Pantalla Digital', value: 'pantalla-digital' },
             { label: 'Evento mensual kids', value: 'evento-mensual-kids' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Recomendado Cancún',
@@ -595,8 +600,8 @@
             { label: 'Riva', value: 'riva' },
             { label: 'Marea', value: 'marea' },
             { label: 'Palmar Residencial', value: 'palmar-residencial' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Recomendado Playa del Carmen',
@@ -620,8 +625,8 @@
             { label: 'The Shore', value: 'the-shore' },
             { label: 'Central Park', value: 'central-park' },
             { label: 'iPlaya', value: 'iplaya' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Recomendado Mérida',
@@ -634,8 +639,8 @@
             { label: 'Anthea', value: 'anthea' },
             { label: 'La Vista', value: 'la-vista' },
             { label: 'Floresta', value: 'floresta' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Recomendado Chetumal',
@@ -643,16 +648,16 @@
           childs: [
             { label: 'La conquista', value: 'la-conquista' },
             { label: 'Andara', value: 'andara' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Recomendado Puerto Morelos',
           value: 'recomendado-puerto-morelos',
           childs: [
             { label: 'Palma Real', value: 'palma-real' },
-            { label: 'Otro / No recuerda', value: 'otro' },
-          ],
+            { label: 'Otro / No recuerda', value: 'otro' }
+          ]
         },
         {
           label: 'Recomendado Tulum',
@@ -663,9 +668,9 @@
             { label: 'Sanctuary', value: 'sanctuary' },
             { label: 'Manor', value: 'manor' },
             { label: 'Anah', value: 'anah' },
-            { label: 'Casa', value: 'casa' },
-          ],
-        },
+            { label: 'Casa', value: 'casa' }
+          ]
+        }
       ];
       return sources;
     }
