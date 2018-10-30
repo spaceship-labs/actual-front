@@ -370,7 +370,7 @@
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
             <strong>ENVIAR FACTURA</strong>
           </a>
-          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isAccountingUser)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
+          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
             <strong>CANCELAR PEDIDO</strong>
           </a>
         </div>

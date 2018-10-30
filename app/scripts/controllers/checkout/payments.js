@@ -58,6 +58,7 @@ function CheckoutPaymentsCtrl(
     resetActiveMethod: resetActiveMethod,
     setQuotationTotalsByGroup: setQuotationTotalsByGroup,
     updateVMQuotation: updateVMQuotation,
+    isUserAdmin: authService.isAdmin($rootScope.user),
     isStoreManager: authService.isStoreManager($rootScope.user)
   });
 
