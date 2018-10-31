@@ -332,6 +332,11 @@ angular
         controller: 'EwalletCtrl',
         controllerAs: 'vm',
       })
+      .when('/cancellations', {
+        templateUrl: 'views/cancellations.html',
+        controller: 'CancellationsCtrl',
+        controllerAs: 'vm',
+      })
       .otherwise({
         redirectTo: '/',
       });

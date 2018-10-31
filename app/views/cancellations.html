@@ -1,0 +1,210 @@
+<div ng-if="vm.isLoading" layout-fill layout="row" layout-sm="column" layout-align="center center" class="loading-circle">
+    <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
+</div>
+
+
+
+<section ng-show="!vm.isLoading" class="form-view cart-view checkout-view order-view container container-xxlg">
+
+    <div class="solicitud-bar">
+        <div class="solicitud-bar-item" layout="row">
+            <div> <img src="../../design/svgs/trash.svg" style="width:30px; margin-top:0px;"></div>
+            <div flex=50 style="padding-left:10px;" layout="row" layout-align="center center">
+                <span style=" font-weight: bold;">Solicitud de las
+                    cancelaciones</span>
+                <span style="font-size:18px; font-weight: lighter; padding:2px 0 0 10px">Ninguna solicitud pendiente</span>
+            </div>
+            <div flex style="" layout="row" layout-align="end center">
+                <a href="#" ng-click="" class="action-btn-print" style="width:auto; padding:0px 10px">
+                    <strong style="font-size:12px;">Autorizar todo</strong>
+                </a>
+                <a href="#" ng-click="" class="action-btn-cancel" style="width:auto; padding:0px 10px; margin-left: 10px; margin-right:10px;">
+                    <strong style="font-size:12px;">Rechazar todo</strong>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="order-text-block">
+        <h3 style="text-transform:uppercase; margin-bottom: 20px;">
+            <strong>Motivo de la cancelación:</strong>
+        </h3>
+        <p style="text-align:justify;">
+            <strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                in culpa qui officia deserunt mollit anim id est laborum.</strong></p>
+        <br />
+    </div>
+
+    <!--ORDER ITEMS-->
+    <div class="order-block">
+        <h3>
+            <strong>
+                <i class="icon-checkout-ticket"></i> ARTÍCULOS ADQUIRIDOS</strong>
+        </h3>
+        <div class="order-items order-block-inner">
+
+            <div class="order-table-header" layout="row" layout-align="space-between start">
+                <div flex="35"></div>
+                <div flex="20">
+                    <strong>CANTIDAD</strong>
+                </div>
+                <div flex="20">
+                    <strong>ENTREGA APROXIMADA</strong>
+                </div>
+                <div flex="20">
+                    <strong>PRECIO</strong>
+                </div>
+                <div flex="20">
+                </div>
+            </div>
+
+            <div class="order-item" ng-repeat="detailGroup in vm.order.DetailsGroups track by $index">
+                <h3>
+                    <strong>{{detailGroup.Product.Name}}</strong>
+                </h3>
+
+                <div layout="row" layout-align="space-between start">
+                    <div flex="35" layout="row">
+                        <div class="order-item-img">
+                            <img src="{{detailGroup.Product.icons[0].url}}" alt="">
+                        </div>
+                        <div flex class="order-item-features">
+                            <ul>
+                                <li>
+                                    <strong>Código: </strong> {{detailGroup.Product.ItemCode}}</li>
+                                <li ng-repeat="filter in detailGroup.Product.Filters" ng-if="
+                                filter.Handle == 'codigo' ||
+                                filter.Handle == 'material' ||
+                                filter.Handle == 'garantia'
+                              ">
+                                    <strong>{{filter.Name}}: </strong>
+                                    <span ng-repeat="value in filter.Values track by $index">
+                                        <span ng-if="value.Handle != 'color-paleta'">{{value.Name}}</span>
+                                        <span ng-if="$index < (filter.Values.length-1)">,</span>
+                                    </span>
+                                </li>
+                                <li ng-if="detailGroup.Product.DetailedColor">
+                                    <strong>Color:</strong>
+                                    <span>{{detailGroup.Product.DetailedColor}}</span>
+                                </li>
+                                <li ng-show="detailGroup.hasSeries">
+                                    <strong>Series:</strong>
+                                    <span ng-repeat="detail in detailGroup.details track by $index">
+                                        <span ng-if="detail.productSerie">
+                                            <a class="comma-separated" ng-repeat="number in detail.productSerie.seriesNumbers">
+                                                {{number}}
+                                            </a>
+                                        </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div flex="20" class="order-item-data marginTop10">
+                        <span>{{detailGroup.quantity}}</span>
+                    </div>
+                    <div flex="20" class="order-item-data marginTop10">
+                        <span>
+                            {{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span>
+                        <span class="immediate-delivery-tag" ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService">
+                            Entrega en tienda
+                        </span>
+                    </div>
+                    <div flex="20" class="order-item-data marginTop10">
+                        <span>{{detailGroup.total | currency}} MXN</span>
+                    </div>
+                    <!--ESTADO INICIAL-->
+                    <div flex="20" layout="row">
+                        <div class="cancel-items" layout="column" layout-align="center center">
+                            <img src="../../design/svgs/autorizar.svg" style="width:20px; fill: #C82828;">
+                            <a href="#" ng-click="" class="" style="color:#2EC33A; padding: 0 36px;">
+                                <span>Autorizar cancelacion</span>
+                            </a>
+                        </div>
+                        <div class="cancel-items" layout="column" layout-align="center center">
+                            <img src="../../design/svgs/trash.svg" style="width:20px; fill: #C82828;">
+                            <a href="#" ng-click="" class="" style="color:#C82828; padding: 0 25px;">
+                                <span>No autorizar cancelacion</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--END ESTADO INICIAL-->
+                    <!--ESTADO SIGUIENTE-->
+                    <div flex="20" layout="column" ng-if="">
+                        <div class="cancel-items" layout="row" layout-align="center center">
+                            <img src="../../design/svgs/autorizar.svg" style="width:20px; fill: #C82828;">
+                            <a href="#" ng-click="" class="" style="color:#2EC33A; padding: 0 20px;">
+                                <span>Autorizado</span>
+                            </a>
+                        </div>
+                        <div class="cancel-items" layout="row" layout-align="center center">
+                            <img src="../../design/svgs/trash.svg" style="width:20px; fill: #C82828;">
+                            <a href="#" ng-click="" class="" style="color:#6B6B6B; padding: 0 25px;">
+                                <span>Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--END ESTADO SIGUIENTE-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--END ORDER ITEMS-->
+    <div class="cambios-bar">
+        <div class="status-bar-item" layout="row" layout-align="end center">
+            <a href="#" ng-click="" class="action-btn" style="width:auto; padding:0 20px; margin:0 10px 0 0;">
+                <strong>GUARDAR CAMBIOS</strong>
+            </a>
+        </div>
+    </div>
+    <!--POP-UP CANCELACIÓN-->
+    <div class="pop-cancelacion" ng-if="">
+        <div class="status-bar-item" layout="column" layout-align=" center center" style="padding:0 14%">
+            <span style="font-size:12px; color:black; line-height:normal; font-weight:bold;">
+                ¿Está seguro que desea realizar la siguiente operación?
+            </span>
+            <div style="height: 80px;" layout="row" layout-align="center center">
+                <a href="#" ng-click="" class="action-btn-cancel" style="width:auto; padding:0px 10px">
+                    <strong style="font-size:12px;">Cancelar</strong>
+                </a>
+                <a href="#" ng-click="" class="action-btn-print" style="width:auto; padding:0px 10px; margin-left: 10px; margin-right:10px;">
+                    <strong style="font-size:12px;">Aceptar</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--END POP-UP CANCELACIÓN-->
+    <!--POP-UP CANCELACIÓN 2-->
+    <div class="pop-cancelacion" ng-if="">
+        <div class="status-bar-item" layout="column" layout-align=" center center" style="padding:0 14%">
+            <div>
+                <span style="font-size:12px; color:black; line-height:normal; font-weight:bold;">
+                    DETALLE DE CANCELACIONES
+                </span>
+                <span style="font-size:12px; color:black; line-height:normal; font-weight:bold;">
+                    #{{vm.order.folio}}
+                </span>
+            </div>
+            <div style="color:black; width: 100%; border-bottom: solid black 1px" class="order-item" layout="row"
+                layout-align="space-between">
+                <div layout="column" layout-align="start">
+                    <span style="font-weight:bold; font-size: 12px; text-align: left;">SKU: <span style="font-weight:lighter;">3485886</span></span>
+                    <span style="font-weight:bold; font-size: 12px; text-align: left;">CANTIDAD: <span style="font-weight:lighter;">3485886</span></span>
+                </div>
+                <div layout="column" layout-align="center">
+                    <span style="text-decoration:underline;">Autorizado</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--END POP-UP CANCELACIÓN 2-->
+    <hr class="only-show-print" />
+    <!--END SELLER-->
+
+</section>

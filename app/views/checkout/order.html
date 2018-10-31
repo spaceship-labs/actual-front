@@ -2,9 +2,22 @@
   <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
 </div>
 
+
+
 <section ng-show="!vm.isLoading" class="form-view cart-view checkout-view order-view container container-xxlg">
 
-  <div class="steps-bar" layout="row">
+  <div class="status-bar">
+    <div class="status-bar-item">
+      <span style="font-weight: bold;">Estatus de las cancelaciones</span>
+      <a href="#" ng-click="" class="">
+        <span id="folius">#{{vm.order.folio}}</span>
+      </a>
+      <span style="font-size:12px; font-weight: lighter">*Haz click sobre la orden para ver los detalles</span>
+    </div>
+
+  </div>
+
+  <div class=" steps-bar" layout="row">
     <a flex="25" class="steps-bar-item">
       <span>
         <i class="icon-carro"></i> 1. Mi carrito</span>
@@ -38,7 +51,9 @@
         <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
           <strong>IMPRIMIR RECIBO</strong>
         </a>
-
+        <a href="#" ng-click="" class="action-btn-cancel">
+          <strong>Crear solicitud de cancelación</strong>
+        </a>
         <p ng-if="!vm.invoiceExists && !vm.showInvoiceErrorIfNeeded(vm.alegraLogs)">
           <strong>Generación/Lectura de factura en proceso</strong>
         </p>
@@ -67,6 +82,19 @@
       <br />
     </div>
 
+    <!--CANCEL ORDER-->
+    <div class="cancel-order" layout="row" layout-align="end">
+      <a href="#" ng-click="" class="" style="line-height:30px;">
+        <span>cancelar
+          toda
+          la
+          orden</span>
+      </a>
+      <img src="../../design/svgs/trash.svg" style="width:30px; height:30px; fill: #C82828;">
+      <i class="icon-send"></i>
+    </div>
+    <!--END CANCEL ORDER-->
+
     <!--ORDER ITEMS-->
     <div class="order-block">
       <h3>
@@ -85,6 +113,8 @@
           </div>
           <div flex="20">
             <strong>PRECIO</strong>
+          </div>
+          <div flex="20">
           </div>
         </div>
 
@@ -130,19 +160,35 @@
                 </ul>
               </div>
             </div>
-            <div flex="20" class="order-item-data">
+            <div flex="20" class="order-item-data marginTop10">
               <span>{{detailGroup.quantity}}</span>
             </div>
-            <div flex="20" class="order-item-data">
+            <div flex="20" class="order-item-data marginTop10">
               <span>
                 {{detailGroup.shipDate | date:'d/MMM/yyyy'}}</span>
               <span class="immediate-delivery-tag" ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService">
                 Entrega en tienda
               </span>
             </div>
-            <div flex="20" class="order-item-data">
+            <div flex="20" class="order-item-data marginTop10">
               <span>{{detailGroup.total | currency}} MXN</span>
             </div>
+            <div flex="20" layout="row">
+              <div class="cancel-items" layout="column" layout-align="center center">
+                <img src="../../design/svgs/trash.svg" style="width:20px; fill: #C82828;">
+                <a href="#" ng-click="" class="" style="color:#C82828; padding: 0 36px;">
+                  <span>Cancelar articulo</span>
+                </a>
+              </div>
+              <div class="cancel-items" layout="column" style="padding-top:4px;">
+                <form action="/action_page.php" style="margin-bottom:5px;">
+                  <input style="color:#C82828; text-align:center;" type="number" name="quantity" min="1" max="10">
+                </form>
+                <span>Piezas a cancelar</span>
+
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -151,6 +197,27 @@
     </div>
     <!--END ORDER ITEMS-->
 
+    <!--CANCELATION DETAILS-->
+    <div class="order-block" style="padding:10px 0" layout="column">
+      <h3>
+        <strong>Motivo de la cancelacion</strong>
+      </h3>
+      <div layout="row" style="height: auto;">
+        <div flex="80" style="background-color:white;">
+          <textarea style="width:99%; height:100px; max-height: 100px; max-width: 99%;  min-height: 100px; min-width: 99%;"></textarea>
+        </div>
+        <div flex="20" style="background-color:white;">
+          <div style="height:100%;" class="cancel-order" layout="column" layout-align="center center">
+            <img src="../../design/svgs/send.svg" style="width:50px; height:50px; fill: #C82828;">
+            <a href="#" ng-click="" class="" style="color:#2EC33A; padding: 0 15px; text-align: center;">
+              <span style="color:#2EC33A;">enviar solicitud de cancelacion</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--END CANCELATION DETAILS-->
 
     <!--ORDER PAYMENTS-->
     <div class="order-block">
