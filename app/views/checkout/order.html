@@ -51,7 +51,7 @@
         <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
           <strong>IMPRIMIR RECIBO</strong>
         </a>
-        <a href="#" ng-click="" class="action-btn-cancel">
+        <a href="#" ng-click="vm.startCancelation = !vm.startCancelation" ng-model="vm.startCancelation" class="action-btn-cancel">
           <strong>Crear solicitud de cancelación</strong>
         </a>
         <p ng-if="!vm.invoiceExists && !vm.showInvoiceErrorIfNeeded(vm.alegraLogs)">
@@ -83,7 +83,7 @@
     </div>
 
     <!--CANCEL ORDER-->
-    <div class="cancel-order" layout="row" layout-align="end">
+    <div class="cancel-order" layout="row" layout-align="end" ng-show="vm.startCancelation">
       <a href="#" ng-click="" class="" style="line-height:30px;">
         <span>cancelar
           toda
@@ -173,7 +173,7 @@
             <div flex="20" class="order-item-data marginTop10">
               <span>{{detailGroup.total | currency}} MXN</span>
             </div>
-            <div flex="20" layout="row">
+            <div flex="20" layout="row" ng-show="vm.startCancelation">
               <div class="cancel-items" layout="column" layout-align="center center">
                 <img src="../../design/svgs/trash.svg" style="width:20px; fill: #C82828;">
                 <a href="#" ng-click="" class="" style="color:#C82828; padding: 0 36px;">
@@ -198,7 +198,7 @@
     <!--END ORDER ITEMS-->
 
     <!--CANCELATION DETAILS-->
-    <div class="order-block" style="padding:10px 0" layout="column">
+    <div class="order-block" style="padding:10px 0" layout="column" ng-show="vm.startCancelation">
       <h3>
         <strong>Motivo de la cancelacion</strong>
       </h3>
