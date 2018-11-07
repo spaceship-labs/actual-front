@@ -1,11 +1,18 @@
 <section class="form-view container container-xlg">
-  <!-- <h1>
-    <i class="icon-monedero"></i>
-    <strong>MONEDERO #{{ vm.ewallet.cardNumber }}</strong>
-  </h1> -->
+  <!--
+    <h1>
+      <i class="icon-monedero"></i>
+      <strong>MONEDERO #{{ vm.ewallet.cardNumber }}</strong>
+    </h1>
+  -->
 
   <hr />
-  <div ng-show="vm.ewallet" layout="row" layout-align="space-between end" class="form-view-filters">
+  <div
+    ng-show="vm.ewallet"
+    layout="row"
+    layout-align="space-between end"
+    class="form-view-filters"
+  >
     <div flex="50" class="date-filters ewallet-actual-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
@@ -16,14 +23,20 @@
     <div flex="50" class="date-filters ewallet-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
-          {{ vm.ewallet.amount }} puntos ({{ vm.ewallet.mxnAmount | currency }} MXN)
+          {{ vm.ewallet.amount | numberwithcomma }} puntos ({{
+            vm.ewallet.mxnAmount | currency
+          }}
+          MXN)
         </strong>
       </p>
     </div>
   </div>
 
-
-  <div layout="row" layout-align="space-between end" class="form-view-filters-ewallet">
+  <div
+    layout="row"
+    layout-align="space-between end"
+    class="form-view-filters-ewallet"
+  >
     <div flex="100" class="date-filters-ewallet ewallet-actual-amount">
       <p>
         <strong id="trigger-start-date-orders" class="date-filter-trigger">
@@ -31,12 +44,12 @@
         </strong>
       </p>
       <hr />
-      <!-- <p class="scanner-align">
-        <i class="icon-scaner"></i>
-      </p> -->
+      <!--
+        <p class="scanner-align">
+          <i class="icon-scaner"></i>
+        </p>
+      -->
       <div id="interactive" class="viewport"></div>
     </div>
   </div>
-
-
 </section>
