@@ -6,7 +6,7 @@
 
 <section ng-show="!vm.isLoading" class="form-view cart-view checkout-view order-view container container-xxlg">
 
-  <div class="status-bar">
+  <div ng-if="vm.isStoreManager || vm.isUserAdmin" class="status-bar">
     <div class="status-bar-item">
       <span style="font-weight: bold;">Estatus de las cancelaciones</span>
       <a href="#" ng-click="" class="">
@@ -51,7 +51,8 @@
         <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
           <strong>IMPRIMIR RECIBO</strong>
         </a>
-        <a href="#" ng-click="vm.startCancelation = !vm.startCancelation" ng-model="vm.startCancelation" class="action-btn-cancel">
+        <a href="#" ng-if="vm.isStoreManager || vm.isUserAdmin" ng-click="vm.startCancelation = !vm.startCancelation"
+          ng-model="vm.startCancelation" class="action-btn-cancel">
           <strong>Crear solicitud de cancelación</strong>
         </a>
         <p ng-if="!vm.invoiceExists && !vm.showInvoiceErrorIfNeeded(vm.alegraLogs)">
