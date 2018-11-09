@@ -39,18 +39,21 @@
 
       </div>
 
-      <div flex="20" class="input-element">
+      <div flex="40" class="input-element">
         <label><strong>Monedero asignado</strong></label>
-        <!-- <div class="form-view-btn form-view-btn-100">
+        <label class="input-label"><i class="icon-arrow"></i></label>
+        <div layout="row">
+          <a href="#" ng-click="vm.print()">
+            <div layout="row">
+              <img src="../../design/svgs/printer.svg" class="printer">
+              <strong class="input-element-print">IMPRIMIR</strong>
 
-          <input ng-if="vm.personalEditEnabled" class="form-view-btn form-view-btn-100" type="submit" value="Editar Solicitud">
-        </div> -->
-        <!-- <div class="input-element-inner"> -->
-        <input ng-if="!vm.personalEditEnabled" class="form-view-btn form-view-btn-100" type="submit" value="Editar Solicitud"
-          disabled="disabled">
-        <input ng-if="vm.personalEditEnabled" class="form-view-btn form-view-btn-100" type="submit" value="Editar Solicitud">
-        <!-- </div> -->
-
+            </div>
+          </a>
+          <input ng-if="!vm.personalEditEnabled" class="form-view-btn form-view-btn-100" type="submit" value="Crear Solicitud"
+            disabled="disabled">
+          <input ng-if="vm.personalEditEnabled" class="form-view-btn form-view-btn-100" type="submit" value="Crear Solicitud">
+        </div>
       </div>
 
     </div>
@@ -124,18 +127,27 @@
     <div layout="row" class="form-view-btns" layout-align="center center">
       <input ng-if="!vm.personalEditEnabled" class="form-view-btn form-view-btn-primary" type="submit" value="Editar">
       <input ng-if="vm.personalEditEnabled" class="form-view-btn form-view-btn-primary" type="submit" value="Guardar">
+      <input class="form-view-btn print-btn" type="submit" value="Relacionar nuevo monedero">
     </div>
 
     <div class="pop-solicitud" ng-if="">
-      <div class="status-bar-item" layout="column" layout-align="center" style="padding:5% 10%; height: 100%;">
-        <h2 style="text-align: left; text-transform: uppercase; margin: 0px 0px 10px 0px;">
-          <strong>Motivo del cambio de monedero</strong>
+      <div class="solicitud-item" layout="column" layout-align="center">
+        <h2>
+          <strong>Solicitud de reemplazo de monedero</strong>
         </h2>
-        <div class="form-view-content" style="height: 100%;" layout="row" layout-align="center center">
-          <textarea class="textArea"></textarea>
+        <div class="form-view-content height100" layout="row" layout-align="center center">
+          <div class="pop-container">
+            <div class="pop-inner-container" layout="column" layout-align="center center">
+              <i class="icon-attachment attachment">
+              </i>
+              <form action="">
+                <input type="file" name="pdf" accept="application/pdf">
+              </form>
+            </div>
+          </div>
         </div>
-        <div style="margin:0 32%;">
-          <input style="width:100%;" class="form-view-btn form-view-btn-primary" type="submit" value="Guardar">
+        <div class="form-view-btn-margin">
+          <input class="form-view-btn form-view-btn-primary width100" type="submit" value="Editar">
         </div>
 
       </div>
