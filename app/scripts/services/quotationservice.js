@@ -600,6 +600,11 @@
             { label: 'Riva', value: 'riva' },
             { label: 'Marea', value: 'marea' },
             { label: 'Palmar Residencial', value: 'palmar-residencial' },
+            {
+              label: 'Marina Condos & Canal Homes',
+              value: 'marina-condos-and-canal-homes'
+            },
+            { label: 'Artila', value: 'artila' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -614,12 +619,13 @@
             { label: 'Mooh Ha', value: 'moon-ha' },
             { label: 'Menesse', value: 'menesse' },
             { label: 'Akab', value: 'akab' },
+            { label: 'Aleda', value: 'aleda' },
+            { label: 'Mara', value: 'mara' },
+            { label: 'Bamoa', value: 'bamoa' },
             { label: 'Nick Prince', value: 'nick-prince' },
-            { label: 'Bahía Príncipe', value: 'bahia-principe' },
             { label: 'Calle 38', value: 'calle-38' },
             { label: 'Terrazas', value: 'terrazas' },
             { label: 'Encanto', value: 'encanto' },
-            { label: 'Aldea Zama', value: 'aldea-zama' },
             { label: 'Los Olivos', value: 'los-olivos' },
             { label: 'La Joya', value: 'la-joya' },
             { label: 'The Shore', value: 'the-shore' },
@@ -663,12 +669,16 @@
           label: 'Recomendado Tulum',
           value: 'recomendado-tulum',
           childs: [
+            { label: 'Aldea Zama', value: 'aldea-zama' },
+            { label: 'Bahía Príncipe', value: 'bahia-principe' },
             { label: 'Flora & fauna', value: 'flora-and-fauna' },
             { label: 'Panoramic', value: 'panoramic' },
             { label: 'Sanctuary', value: 'sanctuary' },
             { label: 'Manor', value: 'manor' },
             { label: 'Anah', value: 'anah' },
-            { label: 'Casa', value: 'casa' }
+            { label: 'Casa', value: 'casa' },
+            { label: 'Carmela', value: 'carmela' },
+            { label: 'Otro / No recuerda', value: 'otro' }
           ]
         }
       ];
