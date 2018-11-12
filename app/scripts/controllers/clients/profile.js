@@ -27,6 +27,7 @@ function ClientProfileCtrl(
     genders: clientService.getGenders(),
     cfdiUseList: clientService.getCFDIUseList(),
     asociateEwallet: asociateEwallet,
+    replaceEwallet: replaceEwallet,
     states: [],
     countries: commonService.getCountries(),
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
@@ -147,6 +148,43 @@ function ClientProfileCtrl(
         console.log('err', err);
       });
   }
+
+  function showReplaceEwalletDialog() {
+    var controller = ClientsEwalletreplacementdialogCtrl;
+    var useFullScreen =
+      ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
+    return $mdDialog.show({
+      controller: [
+        '$scope',
+        '$mdDialog',
+        '$location',
+        '$timeout',
+        'ewalletService',
+        'dialogService',
+        'client',
+        controller,
+      ],
+      templateUrl: 'views/clients/ewallet-replacement-dialog.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen,
+      locals: {
+        client: vm.client.id,
+      },
+    });
+  }
+
+  function replaceEwallet() {
+    console.log('HOLA');
+    return showReplaceEwalletDialog()
+      .then(function(ewallet) {
+        vm.ewallet = ewallet;
+      })
+      .catch(function(err) {
+        console.log('err', err);
+      });
+  }
+
   function copyPersonalDataToContact(client, contact) {
     if (!contact.copyingPersonalData) {
       contact.FirstName = _.clone(client.FirstName);
