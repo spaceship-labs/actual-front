@@ -3929,15 +3929,17 @@ font-size: 20px;
 
 .pop-solicitud {
   background-color: #F8F8F8;
-  position: fixed;
+  /* position: fixed;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   bottom: 19%;
-  border: 1px solid;
   width: 62%;
-  height: 59%;
+  height: 59%; */
+  height: 100%;
+  width: 100vh;
+  border: 1px solid;
   z-index: 9;
 }
 
@@ -3961,6 +3963,7 @@ font-size: 20px;
 
 .pop-inner-container {
   background-color: white; 
+  padding:40px 50px;
   height: 100%; 
   width:100%; 
   border: black 1px dashed;
