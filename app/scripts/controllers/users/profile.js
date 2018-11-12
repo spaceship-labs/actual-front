@@ -2,11 +2,13 @@
 angular.module('actualApp').controller('UserProfileCtrl', UserProfileCtrl);
 
 function UserProfileCtrl(
+  $scope,
   $rootScope,
   $q,
   $window,
   $location,
   $mdDialog,
+  $timeout,
   commonService,
   userService,
   authService,
@@ -27,7 +29,7 @@ function UserProfileCtrl(
     isUserAdminOrManager: authService.isUserAdminOrManager,
     paymentTypes: paymentService.types,
     print: print,
-    update: update
+    update: update,
   });
 
   if (vm.user.role.name === authService.USER_ROLES.BROKER) {
