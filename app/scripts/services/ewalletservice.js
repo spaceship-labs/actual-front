@@ -4,7 +4,7 @@
   angular.module('actualApp').factory('ewalletService', ewalletService);
 
   /** @ngInject */
-  function ewalletService($filter, clientService, commonService, api) {
+  function ewalletService($filter, clientService, commonService, api, Upload) {
     var EWALLET_TYPE = 'ewallet';
     var EWALLET_GROUP_INDEX = 0;
 
@@ -15,6 +15,7 @@
       getEwallet: getEwallet,
       getEwalletSingle: getEwalletSingle,
       getEwalletExchangeRate: getEwalletExchangeRate,
+      addFile: addFile,
       initScan: initScan,
     };
 
@@ -23,7 +24,7 @@
     //@param quotation - Object quotation populated with Payments and Client
 
     function getEwallet(cardNumber, client) {
-      var url = '/ewallet/' + cardNumber + '/' + client;
+      var url = '/ewallet/' + client + '/' + cardNumber;
       return api.$http.get(url).then(function(response) {
         return response.data;
       });
@@ -41,6 +42,11 @@
       return api.$http.get(url).then(function(response) {
         return response.data;
       });
+    }
+
+    function addFile(clientId, params) {
+      var url = '/replacementupdate/' + clientId;
+      return Upload.upload({ url: api.baseUrl + url, data: params });
     }
 
     function updateQuotationEwalletBalance(quotation, paymentMethodsGroups) {

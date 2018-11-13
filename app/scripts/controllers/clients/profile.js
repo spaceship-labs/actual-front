@@ -28,6 +28,7 @@ function ClientProfileCtrl(
     cfdiUseList: clientService.getCFDIUseList(),
     asociateEwallet: asociateEwallet,
     replaceEwallet: replaceEwallet,
+
     states: [],
     countries: commonService.getCountries(),
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
@@ -175,7 +176,6 @@ function ClientProfileCtrl(
   }
 
   function replaceEwallet() {
-    console.log('HOLA');
     return showReplaceEwalletDialog()
       .then(function(ewallet) {
         vm.ewallet = ewallet;
