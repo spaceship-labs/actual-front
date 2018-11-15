@@ -177,6 +177,7 @@ function CheckoutPaymentsCtrl(
 
     method = _.extend(method, {
       storeType: activeStore.group,
+      storeCode: activeStore.code,
       remaining: _.clone(remaining),
       maxAmount: _.clone(remaining)
     });
