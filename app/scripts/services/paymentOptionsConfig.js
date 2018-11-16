@@ -81,7 +81,8 @@
         '3-msi',
         '6-msi',
         '9-msi',
-        '12-msi' /*,'18-msi'*/
+        '12-msi',
+        '18-msi'
       ],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'American Express', value: 'american-express' }
@@ -96,7 +97,8 @@
         '3-msi',
         '6-msi',
         '9-msi',
-        '12-msi' /*,'18-msi'*/
+        '12-msi',
+        '18-msi'
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
@@ -127,7 +129,8 @@
         '6-msi-banamex',
         '9-msi-banamex',
         '12-msi-banamex',
-        '13-msi' /*,'18-msi'*/
+        '13-msi',
+        '18-msi'
       ],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banamex', value: 'banamex' }
