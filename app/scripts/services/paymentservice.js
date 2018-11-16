@@ -151,6 +151,7 @@
     function getPaymentOptionsByMethod(method) {
       console.log('method', method);
       var STUDIO_CUMBRES_CODE = 'actual_studio_cumbres';
+      console.log('paymentOptions config', paymentOptions);
       var options = _.filter(paymentOptions, function(option) {
         var hasPaymentType = false;
         var hasStore = false;

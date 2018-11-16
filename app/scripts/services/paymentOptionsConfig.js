@@ -129,8 +129,7 @@
         '6-msi-banamex',
         '9-msi-banamex',
         '12-msi-banamex',
-        '13-msi',
-        '18-msi'
+        '13-msi' /*,'18-msi'*/
       ],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banamex', value: 'banamex' }
@@ -147,7 +146,15 @@
     //Santander for studio cumbres
     {
       card: { label: 'Santander', value: 'santander' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -155,7 +162,7 @@
 
     {
       card: { label: 'Santander', value: 'santander' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -171,7 +178,15 @@
     //Bancomer for studio cumbres
     {
       card: { label: 'Bancomer', value: 'bancomer' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -179,7 +194,7 @@
 
     {
       card: { label: 'Bancomer', value: 'bancomer' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Bancomer', value: 'bancomer' }
     },
@@ -195,7 +210,15 @@
     //Banorte for studio cumbres
     {
       card: { label: 'Banorte', value: 'banorte' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -203,7 +226,7 @@
 
     {
       card: { label: 'Banorte', value: 'banorte' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -219,7 +242,15 @@
     //Afirme for studio cumbres
     {
       card: { label: 'Afirme', value: 'afirme' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -227,7 +258,7 @@
 
     {
       card: { label: 'Afirme', value: 'afirme' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -243,7 +274,15 @@
     //Banbajio for studio cumbres
     {
       card: { label: 'Banbajio', value: 'banbajio' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -251,7 +290,7 @@
 
     {
       card: { label: 'Banbajio', value: 'banbajio' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -267,7 +306,15 @@
     //Bancamifel form studio cumbres
     {
       card: { label: 'Bancamifel', value: 'bancamifel' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -275,7 +322,7 @@
 
     {
       card: { label: 'Bancamifel', value: 'bancamifel' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -291,7 +338,15 @@
     //Banco ahorro famsa for studio cumbres
     {
       card: { label: 'Banco Ahorro Famsa', value: 'banco-ahorro-famsa' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -299,7 +354,7 @@
 
     {
       card: { label: 'Banco Ahorro Famsa', value: 'banco-ahorro-famsa' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -315,7 +370,15 @@
     //Banjercito for studio cumbres
     {
       card: { label: 'Banjercito', value: 'banjercito' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -323,7 +386,7 @@
 
     {
       card: { label: 'Banjercito', value: 'banjercito' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -339,7 +402,15 @@
     //Banregio for studio cumbres
     {
       card: { label: 'Banregio', value: 'banregio' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -347,7 +418,7 @@
 
     {
       card: { label: 'Banregio', value: 'banregio' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -363,7 +434,15 @@
     //HSBC for studio cumbres
     {
       card: { label: 'HSBC', value: 'hsbc' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -371,7 +450,7 @@
 
     {
       card: { label: 'HSBC', value: 'hsbc' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -387,7 +466,15 @@
     //Inbursa for studio cumbres
     {
       card: { label: 'Inbursa', value: 'inbursa' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -395,7 +482,7 @@
 
     {
       card: { label: 'Inbursa', value: 'inbursa' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -411,7 +498,15 @@
     //Invex for studio cumbres
     {
       card: { label: 'Invex Banco', value: 'invex-banco' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -419,7 +514,7 @@
 
     {
       card: { label: 'Invex Banco', value: 'invex-banco' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -435,7 +530,15 @@
     //Itaucard for studio cumbres
     {
       card: { label: 'Itaucard', value: 'itaucard' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -443,7 +546,7 @@
 
     {
       card: { label: 'Itaucard', value: 'itaucard' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -459,7 +562,15 @@
     //IXE for studio cumbres
     {
       card: { label: 'IXE', value: 'ixe' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -467,7 +578,7 @@
 
     {
       card: { label: 'IXE', value: 'ixe' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -489,7 +600,15 @@
         label: 'Liverpool Premium Card',
         value: 'liverpool-premium-card'
       },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -500,7 +619,7 @@
         label: 'Liverpool Premium Card',
         value: 'liverpool-premium-card'
       },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
@@ -516,7 +635,15 @@
     //Scotiabank for studio cumbres
     {
       card: { label: 'ScotiaBank', value: 'scotiabank' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: [
+        'credit-card',
+        'debit-card',
+        '3-msi',
+        '6-msi',
+        '9-msi',
+        '12-msi',
+        '18-msi'
+      ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
@@ -524,7 +651,7 @@
 
     {
       card: { label: 'ScotiaBank', value: 'scotiabank' },
-      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi'],
+      paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
     }
