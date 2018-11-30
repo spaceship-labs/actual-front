@@ -33,6 +33,7 @@ function CheckoutOrderCtrl(
     showInvoiceErrorIfNeeded: showInvoiceErrorIfNeeded,
     sendInvoice: sendInvoice,
     print: print,
+    order: {},
     invoices: [],
     invoicesInterval: false,
     invoiceLoadCounter: 0,
@@ -44,9 +45,17 @@ function CheckoutOrderCtrl(
     calculateBalance: orderService.calculateBalance,
     isUserAdmin: authService.isAdmin($rootScope.user),
     isStoreManager: authService.isStoreManager($rootScope.user),
+    isAccountingUser: authService.isAccountingUser($rootScope.user),
     isCanceled: orderService.isCanceled,
     isPaymentCanceled: paymentService.isCanceled,
   });
+
+  function calculateBalance(paid, total) {
+    return orderService.calculateBalance(
+      commonService.roundCurrency(paid),
+      commonService.roundCurrency(total)
+    );
+  }
 
   function showImmediateDeliveryDialog(order) {
     if (order.Details) {

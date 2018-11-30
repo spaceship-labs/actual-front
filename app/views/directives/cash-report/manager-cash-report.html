@@ -30,7 +30,8 @@
             <ng-include src="'views/directives/cash-report/manager-website-cash-report.html'"></ng-include>
           </section>
 
-          <section ng-if="!isWebStore(store)" ng-repeat="seller in store.sellers" class="cash-report-inner seller-item">
+          <section ng-if="!isWebStore(store) && seller.active || seller.total > 0" ng-repeat="seller in store.sellers"
+            class="cash-report-inner seller-item">
 
             <div layout="row" layout-align="space-between center">
               <h2>
@@ -142,7 +143,7 @@
               </div>
               <h2 class="pull-right total-group">TOTAL GENERAL {{division.name}} MXN: {{division.total | currency}}</h2>
             </section>
-            <hr/>
+            <hr />
           </section>
 
 

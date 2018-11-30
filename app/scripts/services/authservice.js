@@ -18,8 +18,49 @@
       ADMIN: 'admin',
       BROKER: 'broker',
       SELLER: 'seller',
-      STORE_MANAGER: 'store manager'
+      STORE_MANAGER: 'store manager',
+      ACCOUNTING: 'accounting'
     };
+
+    var PUBLIC_PATHS = [
+      '/',
+      '/forgot-password',
+      '/reset-password',
+      '/politicas-de-entrega',
+      '/politicas-de-garantia',
+      '/politicas-de-almacenaje',
+      '/politicas-de-instalacion-y-ensamble',
+      '/manual-de-cuidados-y-recomendaciones/pieles',
+      '/manual-de-cuidados-y-recomendaciones/aceros',
+      '/manual-de-cuidados-y-recomendaciones/aluminios',
+      '/manual-de-cuidados-y-recomendaciones/cristales',
+      '/manual-de-cuidados-y-recomendaciones/cromados',
+      '/manual-de-cuidados-y-recomendaciones',
+      '/manual-de-cuidados-y-recomendaciones/maderas',
+      '/manual-de-cuidados-y-recomendaciones/piezas-plasticas',
+      '/manual-de-cuidados-y-recomendaciones/textiles',
+      '/manual-de-cuidados-y-recomendaciones/viniles',
+      '/manual-de-cuidados-y-recomendaciones/vinilos',
+      '/manual-de-cuidados-y-recomendaciones/pintura-electrostatica'
+    ];
+
+    var STORE_MANAGER_FORBIDDEN_PATHS = [
+      '/addquotation',
+      '/dashboard',
+      //'/checkout/client',
+      //'/checkout/paymentmethod',
+      '/continuequotation'
+    ];
+
+    var BROKER_FORBIDDEN_PATHS = [
+      '/clients/list',
+      '/quotations/list',
+      '/dashboard',
+      '/checkout/client',
+      '/checkout/paymentmethod',
+      '/continuequotation',
+      '/addquotation'
+    ];
 
     var service = {
       authManager: authManager,
@@ -34,11 +75,15 @@
       isUserAdminOrManager: isUserAdminOrManager,
       isUserSellerOrAdmin: isUserSellerOrAdmin,
       isUserManager: isUserManager,
+      isAccountingUser: isAccountingUser,
       isSeller: isSeller,
       runPolicies: runPolicies,
       showUnauthorizedDialogIfNeeded: showUnauthorizedDialogIfNeeded,
       USER_ROLES: USER_ROLES,
-      isUserSignedIn: isUserSignedIn
+      isUserSignedIn: isUserSignedIn,
+      isPublicPath: isPublicPath,
+      isStoreManagerForbiddenPath: isStoreManagerForbiddenPath,
+      isBrokerForbiddenPath: isBrokerForbiddenPath
     };
 
     return service;
@@ -53,6 +98,26 @@
         dialogService.showDialog('Usuario no autorizado');
         return;
       }
+    }
+
+    function isPublicPath(path) {
+      return PUBLIC_PATHS.indexOf(path) > -1;
+    }
+
+    function isStoreManagerForbiddenPath(path) {
+      var result = _.some(STORE_MANAGER_FORBIDDEN_PATHS, function(
+        forbiddenPath
+      ) {
+        return path.search(forbiddenPath) > -1;
+      });
+      return result;
+    }
+
+    function isBrokerForbiddenPath(path) {
+      var result = _.some(BROKER_FORBIDDEN_PATHS, function(forbiddenPath) {
+        return path.search(forbiddenPath) > -1;
+      });
+      return result;
     }
 
     function signUp(data, success, error) {
@@ -123,6 +188,10 @@
       return user && user.role && user.role.name === USER_ROLES.SELLER;
     }
 
+    function isAccountingUser(user) {
+      return user && user.role && user.role.name === USER_ROLES.ACCOUNTING;
+    }
+
     function isUserAdminOrManager() {
       return (
         $rootScope.user.role &&
@@ -147,66 +216,6 @@
     }
 
     function runPolicies() {
-      var publicPaths = [
-        '/',
-        '/forgot-password',
-        '/reset-password',
-        '/politicas-de-entrega',
-        '/politicas-de-garantia',
-        '/politicas-de-almacenaje',
-        '/politicas-de-instalacion-y-ensamble',
-        '/manual-de-cuidados-y-recomendaciones/pieles',
-        '/manual-de-cuidados-y-recomendaciones/aceros',
-        '/manual-de-cuidados-y-recomendaciones/aluminios',
-        '/manual-de-cuidados-y-recomendaciones/cristales',
-        '/manual-de-cuidados-y-recomendaciones/cromados',
-        '/manual-de-cuidados-y-recomendaciones',
-        '/manual-de-cuidados-y-recomendaciones/maderas',
-        '/manual-de-cuidados-y-recomendaciones/piezas-plasticas',
-        '/manual-de-cuidados-y-recomendaciones/textiles',
-        '/manual-de-cuidados-y-recomendaciones/viniles',
-        '/manual-de-cuidados-y-recomendaciones/vinilos',
-        '/manual-de-cuidados-y-recomendaciones/pintura-electrostatica'
-      ];
-
-      var storeManagerForbiddenPaths = [
-        '/addquotation',
-        '/dashboard',
-        //'/checkout/client',
-        //'/checkout/paymentmethod',
-        '/continuequotation'
-      ];
-
-      var brokerForbiddenPaths = [
-        '/clients/list',
-        '/quotations/list',
-        '/dashboard',
-        '/checkout/client',
-        '/checkout/paymentmethod',
-        '/continuequotation',
-        '/addquotation'
-      ];
-
-      var isPublicPath = function(path) {
-        return publicPaths.indexOf(path) > -1;
-      };
-
-      var isStoreManagerForbiddenPath = function(path) {
-        var result = _.some(storeManagerForbiddenPaths, function(
-          forbiddenPath
-        ) {
-          return path.search(forbiddenPath) > -1;
-        });
-        return result;
-      };
-
-      var isBrokerForbiddenPath = function(path) {
-        var result = _.some(brokerForbiddenPaths, function(forbiddenPath) {
-          return path.search(forbiddenPath) > -1;
-        });
-        return result;
-      };
-
       var token = localStorageService.get('token') || false;
       var user = localStorageService.get('user') || false;
       var currentPath = $location.path();

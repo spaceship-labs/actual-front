@@ -69,13 +69,11 @@
 
           <ng-include src="'views/partials/search-options.html'"></ng-include>
 
-          <div 
-            ng-if="!vm.isLoadingProducts || vm.search.page > 1"
-            class="results"
-            infinite-scroll="vm.loadMore()"
-            infinite-scroll-disabled="!(vm.totalProducts > vm.products.length && !vm.isLoadingProducts && vm.products.length > 0)"
-            infinite-scroll-distance="1"
-          >
+          <div ng-show="vm.isLoadingProducts" layout="row" layout-align="center center" class="loading-circle">
+            <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
+          </div>            
+          
+          <div ng-show="!vm.isLoadingProducts" class="results">
             <h2 class="center-content">
               <strong>
                 <i class="icon-search"></i> <span class="hl-text">{{vm.totalProducts}}</span> Resultados
@@ -89,22 +87,26 @@
               layout-align="start center"
               ng-cloak
             >
-              <div
-                flex="33"
-                class="listing-product-wrap"
-                ng-repeat="product in vm.products track by product.ItemCode">
+              <div 
+                flex="33" 
+                class="listing-product-wrap" 
+                dir-paginate="product in vm.products | itemsPerPage: vm.search.items"
+                total-items="vm.totalProducts"
+                current-page="vm.search.page"
+                >
                 <listing-product product="product"></listing-product>
               </div>
             </div>
-
           </div>
 
+          <dir-pagination-controls  
+            ng-show="!vm.isLoadingProducts"          
+            on-page-change="vm.onPageChanged(newPageNumber)"
+            class="search-pagination"
+          />
+        
         </div>
         <!--END RESULTS-->
-
-        <div ng-if="vm.isLoadingProducts" layout="row" layout-align="center center" class="loading-circle">
-          <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
-        </div>
 
       </div>
     </div>

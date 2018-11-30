@@ -16,7 +16,7 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
-      "jasmine"
+      'jasmine',
       //"mocha",
       //"chai",
       //'sinon-chai'
@@ -76,18 +76,18 @@ module.exports = function(config) {
       'bower_components/ng-currency/dist/ng-currency.js',
       'bower_components/angular-google-analytics/dist/angular-google-analytics.min.js',
       'bower_components/quagga/dist/quagga.js',
+      'bower_components/angularUtils-pagination/dirPagination.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      "app/scripts/**/*.js",
-      "test/mock/**/*.js",
-      "test/spec/**/*.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js",
-      "https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"
+      'app/scripts/**/*.js',
+      'test/mock/**/*.js',
+      'test/spec/**/*.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js',
+      'https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js',
     ],
 
     // list of files / patterns to exclude
-    exclude: [
-    ],
+    exclude: [],
 
     // web server port
     port: 8080,
@@ -100,25 +100,23 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: [
-      "PhantomJS"
-    ],
+    browsers: ['PhantomJS'],
 
     // Code coverage report
     reporters: ['progress', 'coverage'],
     preprocessors: {
-      'app/scripts/**/*.js': ['coverage']
+      'app/scripts/**/*.js': ['coverage'],
     },
     coverageReporter: {
       type: 'lcov',
-      dir: 'coverage'
+      dir: 'coverage',
     },
 
     // Which plugins to enable
     plugins: [
-      "karma-jasmine",
-      'karma-coverage',      
-      "karma-phantomjs-launcher"
+      'karma-jasmine',
+      'karma-coverage',
+      'karma-phantomjs-launcher',
 
       /*
       'karma-mocha',

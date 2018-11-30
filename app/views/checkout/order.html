@@ -96,7 +96,7 @@
           <div layout="row" layout-align="space-between start">
             <div flex="35" layout="row">
               <div class="order-item-img">
-                <img src="{{detailGroup.Product.icons[0].url}}" alt="">
+                <img src="{{detailGroup.Product.icons[0].url}}?d=300x300" alt="">
               </div>
               <div flex class="order-item-features">
                 <ul>
@@ -272,7 +272,7 @@
           </p>
 
           <p>
-            <strong>{{vm.order.total | currency}} MXN</strong>
+            <strong>{{vm.order.total | roundCurrency}} MXN</strong>
           </p>
           <p>
             <strong>{{vm.order.ammountPaid | roundCurrency}} MXN</strong>
@@ -376,8 +376,7 @@
           <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
             <strong>ENVIAR FACTURA</strong>
           </a>
-          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isStoreManager || vm.isUserAdmin)" ng-click="vm.cancel()"
-            class="action-btn action-btn-save print-btn">
+          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
             <strong>CANCELAR PEDIDO</strong>
           </a>
         </div>
@@ -444,9 +443,9 @@
                   </p>
 
                   <div class="record-item-block-attach">
-                    <a ng-repeat="file in record.files" ng-href="{{vm.api.baseUrl + '/uploads/records/gallery/' + file.filename }}"
+                    <a ng-repeat="file in record.files" ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}"
                       target="_blank">
-                      <img ng-src="{{vm.api.baseUrl + '/uploads/records/gallery/300x300' + file.filename }}" alt="">
+                      <img ng-src="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename + '?d=300x300' }}" alt="">
                     </a>
                   </div>
 
@@ -518,14 +517,21 @@
           </p>
           <p>
             <span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span>
-            <p>
-              <p>Recibí las formas de pagos aplicadas en esta orden</p>
+          </p>
+          <p>Recibí las formas de pagos aplicadas en esta orden</p>
+          <p>Estimado cliente:
+            En nuestras tiendas tenemos muebles creados por verdaderos artistas y artesanos, estos productos de línea:</p>
+          <p>Son fabricados con maderas naturales y están tapizados a mano. Por ésta razón podrán contar con diferencias en
+            cuanto a tonos, nudos y poros. Así como diferencias de hasta 3cm en sus medidas.</p>
         </div>
       </div>
     </section>
 
   </div>
+
   <hr class="only-show-print" />
+  <p class="only-show-print show-print" style="font-size: 19px">Favor de solicitar su factura antes de realizar el
+    pago, ya que no hay refacturación</p>
   <!--END SELLER-->
 
 </section>

@@ -1,19 +1,22 @@
 'use strict';
-angular.module('actualApp')
-  .controller('CategoryCtrl', CategoryCtrl);
+angular.module('actualApp').controller('CategoryCtrl', CategoryCtrl);
 
 function CategoryCtrl(
-  $routeParams, 
-  $mdSidenav, 
+  $scope,
+  $location,
+  $routeParams,
+  $mdSidenav,
   $timeout,
-  categoriesService, 
+  categoriesService,
   productService,
   productSearchService
-){
-  var vm     = this;
+) {
+  var vm = this;
 
-  angular.extend(vm,{
+  angular.extend(vm, {
+    SEARCH_ITEMS: productSearchService.SEARCH_ITEMS,
     filters: [],
+    customBrands: [],
     subnavIndex: 0,
     showLevel2: false,
     showLevel3: false,
@@ -27,7 +30,6 @@ function CategoryCtrl(
     setSubnavIndex: setSubnavIndex,
     searchByFilters: searchByFilters,
     toggleSearchSidenav: toggleSearchSidenav,
-    loadMore: loadMore,
     scrollTo: scrollTo,
     removeSearchValue: removeSearchValue,
     removeMinPrice: removeMinPrice,
@@ -38,124 +40,132 @@ function CategoryCtrl(
     removeSelectedSocietyFilter: removeSelectedSocietyFilter,
     toggleColorFilter: toggleColorFilter,
     setActiveSortOption: setActiveSortOption,
-    getFilterById: getFilterById
+    getFilterById: getFilterById,
+    onPageChanged: onPageChanged
   });
 
-
-  function setSubnavIndex(index){
+  function setSubnavIndex(index) {
     vm.subnavIndex = index;
   }
 
-  function init(){
+  function init() {
+    var urlPage = !isNaN($routeParams.page) ? parseInt($routeParams.page) : 1;
+    var urlMinPrice = !isNaN($routeParams.minPrice)
+      ? parseFloat($routeParams.minPrice)
+      : false;
+    var urlMaxPrice = !isNaN($routeParams.maxPrice)
+      ? parseFloat($routeParams.maxPrice)
+      : false;
+
+    if (urlMinPrice) vm.minPrice = urlMinPrice;
+    if (urlMaxPrice) vm.maxPrice = urlMaxPrice;
+
     var activeSortOptionKey = 'slowMovement';
-    vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
-        
+    var urlSortKey = $routeParams.sortKey || activeSortOptionKey;
+    var urlSortDirection = $routeParams.sortDirection;
+    vm.activeSortOption = _.findWhere(vm.sortOptions, { key: urlSortKey });
+
+    //Overriding default sort option direction with url
+    if (
+      vm.activeSortOption &&
+      urlSortDirection &&
+      (urlSortDirection === 'ASC' || urlSortDirection === 'DESC')
+    ) {
+      vm.activeSortOption.direction = urlSortDirection;
+    }
+
     vm.search = {
-      items: 10,
-      page: 1,
+      items: vm.SEARCH_ITEMS,
+      page: urlPage,
       category: $routeParams.category,
       sortOption: vm.activeSortOption
     };
 
     loadCustomBrands();
     loadCategories();
-    doInitialProductsSearch();
+    searchByFilters({ initialSearch: true });
+  }
+
+  $scope.$watch('vm.search.page', function(newVal, oldVal) {
+    if (newVal !== oldVal) {
+      productSearchService.persistParamsOnUrl({ page: newVal });
+    }
+  });
+
+  function onPageChanged(newPageNumber) {
+    vm.search.page = newPageNumber;
+    searchByFilters();
   }
 
   function loadCategories() {
     vm.isLoading = true;
-    categoriesService.getCategoryByHandle($routeParams.category).then(function(res){
-      vm.category = res.data;
+    categoriesService
+      .getCategoryByHandle($routeParams.category)
+      .then(function(res) {
+        vm.category = res.data;
 
-      if(vm.category && vm.category.Childs.length === 0){
-      	vm.enableSortOptions = true;
-        vm.enableFiltersTrigger = true;
-      }
+        if (vm.category && vm.category.Childs.length === 0) {
+          vm.enableSortOptions = true;
+          vm.enableFiltersTrigger = true;
+        }
 
-      var hasLevel2Categories = false;
-      var filters = vm.category.Filters.map(function(filter){
-        return filter.id;
-      });
-      productService.getAllFilters({ids: filters}).then(function(res){
-        vm.filters = res.data;
-
-        vm.filters = vm.filters.map(function(filter){
-          filter.orderBy = filter.customOrder ? 'createdAt' : 'Name';
-          return filter;
+        var hasLevel2Categories = false;
+        var filters = vm.category.Filters.map(function(filter) {
+          return filter.id;
         });
+        productService.getAllFilters({ ids: filters }).then(function(res) {
+          vm.filters = res.data;
 
-        vm.filters = sortFiltersByList(vm.filters);
-        onCloseSidenav();
+          vm.filters = vm.filters.map(function(filter) {
+            filter.orderBy = filter.customOrder ? 'createdAt' : 'Name';
+            return filter;
+          });
 
+          vm.filters = sortFiltersByList(vm.filters);
+          onCloseSidenav();
+        });
+        hasLevel2Categories = !!vm.category.Childs.find(function(child) {
+          return child.CategoryLevel === 2;
+        });
+        vm.showLevel2 = hasLevel2Categories;
+        vm.showLevel3 = !hasLevel2Categories;
+        vm.isLoading = false;
       });
-      hasLevel2Categories = !!vm.category.Childs.find(function(child) {
-        return child.CategoryLevel === 2;
-      });
-      vm.showLevel2 = hasLevel2Categories;
-      vm.showLevel3 = !hasLevel2Categories;
-      vm.isLoading = false;
-    });
-
   }
 
-  function onCloseSidenav(){
-    $mdSidenav('searchFilters').onClose(function () {
-      for(var i = 0; i < vm.filters.length; i++){
+  function onCloseSidenav() {
+    $mdSidenav('searchFilters').onClose(function() {
+      for (var i = 0; i < vm.filters.length; i++) {
         vm.filters[i].active = false;
       }
       vm.isBrandFilterActive = false;
       vm.isDiscountFilterActive = false;
       vm.isStockFilterActive = false;
     });
-  }  
+  }
 
-  function sortFiltersByList(filters){
-    var sortList = ['estilo','material','color','forma'];
-    var sorted =  filters.sort(function(a,b){
+  function sortFiltersByList(filters) {
+    var sortList = ['estilo', 'material', 'color', 'forma'];
+    var sorted = filters.sort(function(a, b) {
       return sortList.indexOf(b.Handle) - sortList.indexOf(a.Handle);
     });
     return sorted;
   }
 
-  function loadCustomBrands(){
-    productService.getCustomBrands()
-      .then(function(res){
+  function loadCustomBrands() {
+    productService
+      .getCustomBrands()
+      .then(function(res) {
         vm.customBrands = res.data;
-        console.log('customBrands', vm.customBrands);
       })
-      .catch(function(err){
-        console.log('err', err);
-      });    
-  }
-
-  function doInitialProductsSearch(){
-    vm.isLoadingProducts = true;
-    /*
-    if(vm.search.sortOption.key === 'slowMovement' && vm.enableSortOptions){
-      vm.search.slowMovement = true;
-    }else{
-      vm.search.slowMovement = false;
-    } 
-    */   
-    productService.searchCategoryByFilters(vm.search)
-      .then(function(res){
-        console.log('res', res);
-        var products = res.data.products || [];
-        vm.totalProducts = res.data.total;
-        vm.isLoadingProducts = false;
-        return productService.formatProducts(products);
-      })
-      .then(function(productsFormatted){
-        vm.products = productsFormatted;
-        console.log('vm.products', vm.products);
-      })
-      .catch(function(err){
+      .catch(function(err) {
         console.log('err', err);
       });
-  }  
+  }
 
-  function searchByFilters(options){
-    if(!options || !angular.isDefined(options.isLoadingMore)){
+  function searchByFilters(options) {
+    options = options || {};
+    if (options.resetPagination) {
       vm.search.page = 1;
     }
 
@@ -163,40 +173,43 @@ function CategoryCtrl(
 
     //SEARCH VALUES
     vm.searchValues = productSearchService.getSearchValuesByFilters(vm.filters);
-    var searchValuesIds = productSearchService.getSearchValuesIds(vm.searchValues);
+    var searchValuesIds = productSearchService.getSearchValuesIds(
+      vm.searchValues
+    );
 
     //BRANDS
-    vm.brandSearchValues = vm.customBrands.filter(function(brand){
+    vm.brandSearchValues = vm.customBrands.filter(function(brand) {
       return brand.selected;
     });
-    var brandSearchValuesIds = vm.brandSearchValues.map(function(brand){
+    var brandSearchValuesIds = vm.brandSearchValues.map(function(brand) {
       return brand.id;
     });
 
     //DISCOUNTS
-    vm.discountFiltersSelected = vm.discountFilters.filter(function(discount){
+    vm.discountFiltersSelected = vm.discountFilters.filter(function(discount) {
       return discount.selected;
     });
-    var discountFiltersValues = vm.discountFiltersSelected.map(function(discount){
+    var discountFiltersValues = vm.discountFiltersSelected.map(function(
+      discount
+    ) {
       return discount.value;
     });
 
     //STOCK
-    vm.stockFiltersSelected = vm.stockFilters.filter(function(stock){
+    vm.stockFiltersSelected = vm.stockFilters.filter(function(stock) {
       return stock.selected;
     });
-    var stockFiltersValues = vm.stockFiltersSelected.map(function(stock){
+    var stockFiltersValues = vm.stockFiltersSelected.map(function(stock) {
       return stock.value;
     });
 
     //SOCIETIES
-    vm.societyFiltersSelected = vm.societyFilters.filter(function(society){
+    vm.societyFiltersSelected = vm.societyFilters.filter(function(society) {
       return society.selected;
     });
-    var societyFiltersValues = vm.societyFiltersSelected.map(function(society){
+    var societyFiltersValues = vm.societyFiltersSelected.map(function(society) {
       return society.code;
     });
-
 
     var params = {
       filtervalues: searchValuesIds,
@@ -210,155 +223,145 @@ function CategoryCtrl(
       minPrice: vm.minPrice,
       maxPrice: vm.maxPrice,
       category: $routeParams.category,
-      page: vm.search.page,
+      page: vm.search.page
     };
 
-    /*
-    if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement' && vm.enableSortOptions){
-      params.slowMovement = true;      
-    }
-    */
+    productSearchService.persistParamsOnUrl({
+      sortKey: vm.activeSortOption.key,
+      sortDirection: vm.activeSortOption.direction,
+      minPrice: vm.minPrice,
+      maxPrice: vm.maxPrice
+    });
 
-    productService.searchCategoryByFilters(params)
-      .then(function(res){
+    productService
+      .searchCategoryByFilters(params)
+      .then(function(res) {
         var products = res.data.products || [];
         vm.totalProducts = res.data.total;
+        vm.totalPages = Math.ceil(res.data.total / vm.search.items);
         return productService.formatProducts(products);
       })
-      .then(function(productsFormatted){
-        if(options && options.isLoadingMore){
-          var productsAux = angular.copy(vm.products);
-          vm.products = productsAux.concat(productsFormatted);
-        }else{
-          vm.products = productsFormatted;
-          vm.scrollTo('category-page');
+      .then(function(productsFormatted) {
+        vm.products = productsFormatted;
+        if (!options.initialSearch) {
+          vm.scrollTo('products-results');
         }
-
         vm.isLoadingProducts = false;
       })
-      .catch(function(err){
+      .catch(function(err) {
         console.log('err', err);
       });
   }
 
-  function removeSearchValue(value){
+  function removeSearchValue(value) {
     var removeIndex = vm.searchValues.indexOf(value);
-    if(removeIndex > -1){
+    if (removeIndex > -1) {
       vm.searchValues.splice(removeIndex, 1);
     }
-    vm.filters.forEach(function(filter){
-      filter.Values.forEach(function(val){
-        if(val.id === value.id){
+    vm.filters.forEach(function(filter) {
+      filter.Values.forEach(function(val) {
+        if (val.id === value.id) {
           val.selected = false;
         }
       });
     });
 
-    searchByFilters();
+    searchByFilters({ resetPagination: true });
   }
 
-  function removeBrandSearchValue(value){
+  function removeBrandSearchValue(value) {
     var removeIndex = vm.brandSearchValues.indexOf(value);
-    if(removeIndex > -1){
+    if (removeIndex > -1) {
       vm.brandSearchValues.splice(removeIndex, 1);
     }
-    vm.customBrands.forEach(function(brand){
-      if(brand.id === value.id){
+    vm.customBrands.forEach(function(brand) {
+      if (brand.id === value.id) {
         brand.selected = false;
       }
     });
 
-    searchByFilters();
+    searchByFilters({ resetPagination: true });
   }
 
-  function removeSelectedDiscountFilter(discount){
+  function removeSelectedDiscountFilter(discount) {
     var removeIndex = vm.discountFiltersSelected.indexOf(discount);
-    if(removeIndex > -1){
+    if (removeIndex > -1) {
       vm.discountFiltersSelected.splice(removeIndex, 1);
     }
-    vm.discountFilters.forEach(function(discountFilter){
-      if(discountFilter.value === discount.value){
+    vm.discountFilters.forEach(function(discountFilter) {
+      if (discountFilter.value === discount.value) {
         discountFilter.selected = false;
       }
     });
 
-    searchByFilters();
-
+    searchByFilters({ resetPagination: true });
   }
 
-  function removeSelectedStockFilter(stockRangeObject){
+  function removeSelectedStockFilter(stockRangeObject) {
     var removeIndex = vm.stockFiltersSelected.indexOf(stockRangeObject);
-    if(removeIndex > -1){
+    if (removeIndex > -1) {
       vm.stockFiltersSelected.splice(removeIndex, 1);
     }
-    vm.stockFilters.forEach(function(stockFilters){
-      if(stockFilters.id === stockRangeObject.id){
+    vm.stockFilters.forEach(function(stockFilters) {
+      if (stockFilters.id === stockRangeObject.id) {
         stockFilters.selected = false;
       }
     });
 
-    searchByFilters();
-  }  
+    searchByFilters({ resetPagination: true });
+  }
 
-  function removeSelectedSocietyFilter(society){
+  function removeSelectedSocietyFilter(society) {
     var removeIndex = vm.societyFiltersSelected.indexOf(society);
-    if(removeIndex > -1){
+    if (removeIndex > -1) {
       vm.societyFiltersSelected.splice(removeIndex, 1);
     }
-    vm.societyFilters.forEach(function(societyFilter){
-      if(societyFilter.code === society.code){
+    vm.societyFilters.forEach(function(societyFilter) {
+      if (societyFilter.code === society.code) {
         societyFilter.selected = false;
       }
     });
 
-    searchByFilters();
-  } 
+    searchByFilters({ resetPagination: true });
+  }
 
-
-  function removeMinPrice(){
+  function removeMinPrice() {
     delete vm.minPrice;
-    searchByFilters();
+    searchByFilters({ resetPagination: true });
   }
 
-  function removeMaxPrice(){
+  function removeMaxPrice() {
     delete vm.maxPrice;
-    searchByFilters();
-  }  
+    searchByFilters({ resetPagination: true });
+  }
 
-  function scrollTo(target){
-    $timeout(
-        function(){
-          $('html, body').animate({
-            scrollTop: $('#' + target).offset().top - 100
-          }, 600);
+  function scrollTo(target) {
+    $timeout(function() {
+      $('html, body').animate(
+        {
+          scrollTop: $('#' + target).offset().top - 100
         },
-        300
-    );
-  }  
-
-  function loadMore(){
-    vm.search.page++;
-    vm.searchByFilters({isLoadingMore: true});
+        600
+      );
+    }, 300);
   }
 
-  function toggleColorFilter(value, filter){
+  function toggleColorFilter(value, filter) {
     value.selected = !value.selected;
-    vm.searchByFilters();
+    vm.searchByFilters({ resetPagination: true });
   }
 
-  function toggleSearchSidenav(filterHandleToOpen){
+  function toggleSearchSidenav(filterHandleToOpen) {
     $mdSidenav('searchFilters').toggle();
-    
-    if(filterHandleToOpen){
-      var filterIndexToOpen = _.findIndex(vm.filters, function(filter){
+
+    if (filterHandleToOpen) {
+      var filterIndexToOpen = _.findIndex(vm.filters, function(filter) {
         return filter.Handle === filterHandleToOpen;
       });
-      if(filterIndexToOpen >= 0){
+      if (filterIndexToOpen >= 0) {
         vm.filters[filterIndexToOpen].active = true;
-      }
-      else{
-
-        switch(filterHandleToOpen){
+      } else {
+        switch (filterHandleToOpen) {
           case 'brand':
             vm.isBrandFilterActive = true;
             break;
@@ -373,16 +376,15 @@ function CategoryCtrl(
     }
   }
 
-
-  function setActiveSortOption(sortOption){
-
-    if(vm.activeSortOption.key  === sortOption.key){
+  function setActiveSortOption(sortOption) {
+    if (vm.activeSortOption.key === sortOption.key) {
       sortOption.direction = sortOption.direction === 'ASC' ? 'DESC' : 'ASC';
-    }
-    else if(sortOption.key === 'salesCount' || sortOption.key === 'slowMovement'){
+    } else if (
+      sortOption.key === 'salesCount' ||
+      sortOption.key === 'slowMovement'
+    ) {
       sortOption.direction = 'DESC';
-    }
-    else{
+    } else {
       sortOption.direction = 'ASC';
     }
 
@@ -390,15 +392,16 @@ function CategoryCtrl(
     searchByFilters();
   }
 
-  function getFilterById(filterId){
-    return _.findWhere(vm.filters, {id: filterId});
+  function getFilterById(filterId) {
+    return _.findWhere(vm.filters, { id: filterId });
   }
-
 
   init();
 }
 
 CategoryCtrl.$inject = [
+  '$scope',
+  '$location',
   '$routeParams',
   '$mdSidenav',
   '$timeout',

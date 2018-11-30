@@ -47,7 +47,7 @@ function ProductCtrl(
     trustAsHtml: trustAsHtml,
     sas: commonService.getSasHash(),
     ENV: ENV,
-    activeStore: activeStore,
+    activeStore: activeStore
   });
 
   init($routeParams.id);
@@ -79,7 +79,7 @@ function ProductCtrl(
           vm.product.Categories
         );
         vm.productCart = {
-          quantity: 1,
+          quantity: 1
         };
         if (reload) {
           $location
@@ -177,7 +177,7 @@ function ProductCtrl(
       .then(function(res) {
         vm.warehouses = res.data;
         activeStoreWarehouse = _.findWhere(vm.warehouses, {
-          id: activeStore.Warehouse,
+          id: activeStore.Warehouse
         });
       })
       .catch(function(err) {
@@ -279,7 +279,6 @@ function ProductCtrl(
   }
 
   function isImmediateDeliveryGroup(deliveryGroup) {
-    console.log('deliveryGroup in validation', deliveryGroup);
     return (
       isImmediateDelivery(deliveryGroup.date) && deliveryGroup.ImmediateDelivery
     );
@@ -312,5 +311,5 @@ ProductCtrl.$inject = [
   'categoriesService',
   'dialogService',
   'ENV',
-  'activeStore',
+  'activeStore'
 ];

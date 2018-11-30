@@ -59,6 +59,7 @@ function CheckoutPaymentsCtrl(
     resetActiveMethod: resetActiveMethod,
     setQuotationTotalsByGroup: setQuotationTotalsByGroup,
     updateVMQuotation: updateVMQuotation,
+    isUserAdmin: authService.isAdmin($rootScope.user),
     isStoreManager: authService.isStoreManager($rootScope.user),
   });
 
@@ -92,6 +93,7 @@ function CheckoutPaymentsCtrl(
         var isValidStock = result[0];
 
         if (!isValidStock) {
+          console.log('Out of stock');
           $location
             .path('/quotations/edit/' + vm.quotation.id)
             .search({ stockAlert: true });
@@ -223,6 +225,7 @@ function CheckoutPaymentsCtrl(
 
     method = _.extend(method, {
       storeType: activeStore.group,
+      storeCode: activeStore.code,
       remaining: _.clone(remaining),
       maxAmount: _.clone(remaining),
     });
@@ -284,6 +287,8 @@ function CheckoutPaymentsCtrl(
 
   function setQuotationTotalsByGroup(quotation) {
     var paymentGroupNumber = quotation.paymentGroup;
+    console.log('paymentGroupNumber', paymentGroupNumber);
+    console.log('vm.paymentMethodsGrous', vm.paymentMethodsGroups);
     var currentGroup = _.findWhere(vm.paymentMethodsGroups, {
       group: paymentGroupNumber,
     });
@@ -484,6 +489,7 @@ function CheckoutPaymentsCtrl(
       })
       .then(function() {
         vm.isLoading = false;
+        dialogService.showDialog('Pago cancelado');
         if (payment.type === CLIENT_BALANCE_TYPE) {
           paymentService.updateQuotationClientBalance(
             vm.quotation,

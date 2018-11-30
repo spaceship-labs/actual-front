@@ -6,11 +6,9 @@ describe('Service: quotationService', function() {
 
   // instantiate service
   var quotationService;
-  beforeEach(
-    inject(function(_quotationService_) {
-      quotationService = _quotationService_;
-    })
-  );
+  beforeEach(inject(function(_quotationService_) {
+    quotationService = _quotationService_;
+  }));
 
   it('should create detail from params', function() {
     var genericDate = new Date();
@@ -23,7 +21,8 @@ describe('Service: quotationService', function() {
       shipCompanyFrom: 'shipCompanyFrom.id',
       promotionPackage: 'promotionPackage.id',
       PurchaseAfter: 'purchaseAfter',
-      PurchaseDocument: 'PurchaseDocument.example'
+      PurchaseDocument: 'PurchaseDocument.example',
+      immediateDelivery: false
     };
     var productId = 'product.id';
     var quotationId = 'quotation.id';
@@ -43,8 +42,11 @@ describe('Service: quotationService', function() {
       shipCompanyFrom: params.shipCompanyFrom,
       PromotionPackage: params.promotionPackage,
       PurchaseAfter: params.PurchaseAfter,
-      PurchaseDocument: params.PurchaseDocument
+      PurchaseDocument: params.PurchaseDocument,
+      immediateDelivery: false
     };
+
+    //console.log('result', result);
     expect(result).toEqual(expected);
   });
 

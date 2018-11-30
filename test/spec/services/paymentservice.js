@@ -31,7 +31,10 @@ describe('Service: paymentService', function() {
   });
 
   it('should get an array of payment options for credit card payment method', function() {
-    var method = { type: 'credit-card', storeType: 'studio' };
+    var method = {
+      type: 'credit-card',
+      storeType: 'home',
+    };
     var options = paymentService.getPaymentOptionsByMethod(method);
     expect(options).toBeDefined();
     expect(options.length).toBeGreaterThan(0);
@@ -82,6 +85,25 @@ describe('Service: paymentService', function() {
     var payment2 = { type: 'credit-card' };
     var result2 = paymentService.isCardCreditOrDebitPayment(payment2);
     expect(result2).toBe(true);
+  });
+
+  it('should get an array of specific payment options (almost all with banorte terminal, except american-express) for credit/debit card payment method in studio cumbres', function() {
+    var method = {
+      type: 'credit-card',
+      storeCode: 'actual_studio_cumbres',
+      storeType: 'studio',
+      group: 1,
+    };
+    var options = paymentService.getPaymentOptionsByMethod(method);
+    expect(options).toBeDefined();
+    expect(options.length).toBeGreaterThan(0);
+    var optionsAux = options.filter(function(option) {
+      return option.terminal.value !== 'american-express';
+    });
+    var everyOptionHasBanorteAsTerminal = optionsAux.every(function(option) {
+      return option.terminal.value === 'banorte';
+    });
+    expect(everyOptionHasBanorteAsTerminal).toBe(true);
   });
 
   describe('isCanceledPayment', function() {
