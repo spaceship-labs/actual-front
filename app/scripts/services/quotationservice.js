@@ -577,6 +577,10 @@
           label: 'Recomendado Cancún',
           value: 'recomendado-cancun',
           childs: [
+            { label: 'Quinta Maretta', value: 'quinta-maretta' },
+            { label: 'Live Desarrollos', value: 'live-desarrollos' },
+            { label: 'Cumbres Towers', value: 'cumbres-towers' },
+            { label: 'Long Island', value: 'long-island' },
             { label: 'Sky', value: 'sky' },
             { label: 'Astoria', value: 'astoria' },
             { label: 'BeTowers', value: 'be-towers' },
