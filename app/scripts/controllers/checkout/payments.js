@@ -126,7 +126,7 @@ function CheckoutPaymentsCtrl(
       });
   }
 
-  function showAsociateEwalletDialog() {
+  function showAsociateEwalletDialog(ewallet) {
     var controller = EwalletDialogController;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
@@ -139,6 +139,7 @@ function CheckoutPaymentsCtrl(
         'ewalletService',
         'dialogService',
         'client',
+        'ewallet',
         controller,
       ],
       templateUrl: 'views/checkout/ewallet-dialog.html',
@@ -147,15 +148,14 @@ function CheckoutPaymentsCtrl(
       fullscreen: useFullScreen,
       locals: {
         client: vm.quotation.Client.id,
+        ewallet,
       },
     });
   }
 
   function asociateEwallet() {
-    if (vm.ewallet) {
-      return;
-    }
-    return showAsociateEwalletDialog()
+    vm.ewallet = null;
+    return showAsociateEwalletDialog(vm.ewallet)
       .then(function(ewallet) {
         vm.ewallet = ewallet;
         var ewalletAmount = vm.ewallet.amount;

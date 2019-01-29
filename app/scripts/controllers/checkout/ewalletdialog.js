@@ -5,13 +5,17 @@ function EwalletDialogController(
   $timeout,
   ewalletService,
   dialogService,
-  client
+  client,
+  ewallet
 ) {
   $scope.getEwallet = ewalletService.getEwallet;
   $scope.showDialog = dialogService.showDialog;
   $scope.initScan = ewalletService.initScan;
 
   $scope.scanEwallet = function() {
+    if (ewallet != null) {
+      return;
+    }
     $scope.initScan();
     Quagga.onDetected(function(result) {
       var code = result.codeResult.code;
