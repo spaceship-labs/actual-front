@@ -659,7 +659,7 @@ function QuotationsEditCtrl(
   }
 
   function getUnitPriceWithDiscount(unitPrice, discountPercent) {
-    var result = unitPrice - unitPrice / 100 * discountPercent;
+    var result = unitPrice - (unitPrice / 100) * discountPercent;
     return result;
   }
 
