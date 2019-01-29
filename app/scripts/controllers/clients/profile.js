@@ -140,7 +140,6 @@ function ClientProfileCtrl(
   }
 
   function asociateEwallet() {
-    console.log('HOLA');
     return showAsociateEwalletDialog()
       .then(function(ewallet) {
         vm.ewallet = ewallet;

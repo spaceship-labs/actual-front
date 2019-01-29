@@ -152,6 +152,9 @@ function CheckoutPaymentsCtrl(
   }
 
   function asociateEwallet() {
+    if (vm.ewallet) {
+      return;
+    }
     return showAsociateEwalletDialog()
       .then(function(ewallet) {
         vm.ewallet = ewallet;
