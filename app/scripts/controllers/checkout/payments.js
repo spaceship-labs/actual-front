@@ -148,7 +148,7 @@ function CheckoutPaymentsCtrl(
       fullscreen: useFullScreen,
       locals: {
         client: vm.quotation.Client.id,
-        ewallet,
+        ewallet: ewallet,
       },
     });
   }
