@@ -159,6 +159,7 @@ function CheckoutPaymentsCtrl(
       .then(function(ewallet) {
         vm.ewallet = ewallet;
         var ewalletAmount = vm.ewallet.amount;
+        console.log('ewalletAmount: ', ewalletAmount.toFixed(2));
         vm.paymentMethodsGroups[0].methods[6].description =
           'Saldo disponible: ' +
           parseFloat(ewalletAmount.toFixed(2)) +
