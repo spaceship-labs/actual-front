@@ -159,10 +159,9 @@ function CheckoutPaymentsCtrl(
       .then(function(ewallet) {
         vm.ewallet = ewallet;
         var ewalletAmount = vm.ewallet.amount;
-        console.log('ewalletAmount: ', ewalletAmount.toFixed(2));
         vm.paymentMethodsGroups[0].methods[6].description =
           'Saldo disponible: ' +
-          parseFloat((Math.floor(x * 100) / 100).toFixed(2)) +
+          parseFloat((Math.floor(ewalletAmount * 100) / 100).toFixed(2)) +
           ' puntos';
       })
       .catch(function(err) {

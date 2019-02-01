@@ -6,13 +6,15 @@ function EwalletDialogController(
   ewalletService,
   dialogService,
   client,
-  ewallet
+  ewallet,
+  type
 ) {
   $scope.getEwallet = ewalletService.getEwallet;
   $scope.showDialog = dialogService.showDialog;
   $scope.initScan = ewalletService.initScan;
 
   $scope.scanEwallet = function() {
+    console.log('TYPE: ', type);
     if (ewallet != null) {
       return;
     }
@@ -21,7 +23,7 @@ function EwalletDialogController(
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
       $scope
-        .getEwallet(code, client)
+        .getEwallet(code, client, type)
         .then(function(ewallet) {
           $mdDialog.hide(ewallet);
         })

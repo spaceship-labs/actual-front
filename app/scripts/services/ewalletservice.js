@@ -23,9 +23,9 @@
 
     //@param quotation - Object quotation populated with Payments and Client
 
-    function getEwallet(cardNumber, client) {
+    function getEwallet(cardNumber, client, type) {
       var url = '/ewallet/' + client + '/' + cardNumber;
-      return api.$http.get(url).then(function(response) {
+      return api.$http.get(url, { type: type }).then(function(response) {
         return response.data;
       });
     }

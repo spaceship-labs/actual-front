@@ -100,9 +100,7 @@ function ClientProfileCtrl(
       if ($location.search().activeTab && $location.search().activeTab < 4) {
         vm.activeTab = $location.search().activeTab;
       }
-
       vm.client = clientService.setClientDefaultData(vm.client);
-
       commonService
         .getStatesSap()
         .then(function(res) {
@@ -128,6 +126,8 @@ function ClientProfileCtrl(
         'ewalletService',
         'dialogService',
         'client',
+        'ewallet',
+        'type',
         controller,
       ],
       templateUrl: 'views/checkout/ewallet-dialog.html',
@@ -136,6 +136,8 @@ function ClientProfileCtrl(
       fullscreen: useFullScreen,
       locals: {
         client: vm.client.id,
+        ewallet: null,
+        type: 'show',
       },
     });
   }
@@ -149,6 +151,7 @@ function ClientProfileCtrl(
           vm.ewallet.amount,
           vm.ewallet.exchangeRate
         );
+        console.log('mxnAmount: ', vm.ewallet.mxnAmount);
       })
       .catch(function(err) {
         console.log('err', err);

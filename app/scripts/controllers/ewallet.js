@@ -59,7 +59,7 @@ function EwalletCtrl(
     ewalletService
       .getEwalletSingle(vm.cardNumber)
       .then(function(ewallet) {
-        console.log('EWALLET', ewallet);
+        console.log('EWALLET JIJI', ewallet);
         vm.ewallet = ewallet;
         vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
       })

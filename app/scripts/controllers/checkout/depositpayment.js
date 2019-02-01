@@ -51,7 +51,6 @@ function DepositController(
     }
 
     if (payment.type === 'ewallet') {
-      console.log('I am the quotation.total: ', $scope.quotationTotal);
       $scope.payment.maxAmount = parseFloat(
         $scope.payment.maxAmount.toFixed(2)
       );
