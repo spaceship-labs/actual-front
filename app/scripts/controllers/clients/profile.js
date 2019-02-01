@@ -16,7 +16,8 @@ function ClientProfileCtrl(
   checkoutService,
   orderService,
   ewalletService,
-  dialogService
+  dialogService,
+  paymentService
 ) {
   var vm = this;
 
@@ -143,6 +144,11 @@ function ClientProfileCtrl(
     return showAsociateEwalletDialog()
       .then(function(ewallet) {
         vm.ewallet = ewallet;
+        vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
+        vm.ewallet.mxnAmount = paymentService.pointsToMXN(
+          vm.ewallet.amount,
+          vm.ewallet.exchangeRate
+        );
       })
       .catch(function(err) {
         console.log('err', err);
