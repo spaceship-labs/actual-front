@@ -14,7 +14,6 @@ function EwalletDialogController(
   $scope.initScan = ewalletService.initScan;
 
   $scope.scanEwallet = function() {
-    console.log('TYPE: ', type);
     if (ewallet != null) {
       return;
     }
