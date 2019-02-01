@@ -34,9 +34,9 @@ function ClientsEwalletreplacementdialogCtrl(
       ewalletService
         .addFile(client, params)
         .then(function(res) {
-          $scope.isLoading = false;
           var record = res.data;
           if (record) {
+            $scope.isLoading = false;
             $scope.showDialog('Archivo guardado');
           }
         })
