@@ -1,35 +1,64 @@
 <div class="menu">
-  <div class="container container-xxlg" layout="row" layout-align="space-between center">
+  <div
+    class="container container-xxlg"
+    layout="row"
+    layout-align="space-between center"
+  >
     <div flex="15" class="logo" layout-align="center center">
-      <a href="/">
-        <img src="images/logo.png" alt="Actual Group">
-      </a>
+      <a href="/"> <img src="images/logo.png" alt="Actual Group" /> </a>
     </div>
     <nav flex="80" layout="row" class="nav-categories">
-      <a href="/dashboard" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'dashboard'}">
+      <a
+        href="/dashboard"
+        flex
+        class="nav-categories-item"
+        ng-class="{'nav-categories-item-active':main.activeModule == 'dashboard'}"
+      >
         <i class="icon-dashboard"></i>
         <span class="nav-categories-item-text" href="#">Mi muro</span>
       </a>
-      <a href="/addquotation" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'addquotation'}">
+      <a
+        href="/addquotation"
+        flex
+        class="nav-categories-item"
+        ng-class="{'nav-categories-item-active':main.activeModule == 'addquotation'}"
+      >
         <i class="icon-cotizar nav-categories-item-add"></i>
         <span class="nav-categories-item-text" href="#">Cotización</span>
       </a>
-      <a href="/clients/list" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'clients'}">
+      <a
+        href="/clients/list"
+        flex
+        class="nav-categories-item"
+        ng-class="{'nav-categories-item-active':main.activeModule == 'clients'}"
+      >
         <i class="icon-login"></i>
         <span class="nav-categories-item-text" href="#">Clientes</span>
       </a>
-      <a href="/quotations/list" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'quotations'}">
+      <a
+        href="/quotations/list"
+        flex
+        class="nav-categories-item"
+        ng-class="{'nav-categories-item-active':main.activeModule == 'quotations'}"
+      >
         <i class="icon-oportunidades"></i>
         <span class="nav-categories-item-text" href="#">Oportunidades</span>
       </a>
-      <a href="/orders/list" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'orders'}">
+      <a
+        href="/orders/list"
+        flex
+        class="nav-categories-item"
+        ng-class="{'nav-categories-item-active':main.activeModule == 'orders'}"
+      >
         <i class="icon-pedidos"></i>
         <span class="nav-categories-item-text" href="#">Pedidos</span>
       </a>
+      <!---
       <a href="/ewallet" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'ewallet'}">
         <i class="icon-monedero"></i>
         <span class="nav-categories-item-text" href="#">Monedero</span>
       </a>
+      --->
       <!--
         <a  href="/commissions/list" flex class="nav-categories-item" ng-class="{'nav-categories-item-active':main.activeModule == 'commissions'}">
           <i class="icon-comisiones"></i>
@@ -40,8 +69,6 @@
           <span class="nav-categories-item-text" href="#">Scorecard</span>
         </a>
         -->
-
     </nav>
   </div>
-
 </div>
