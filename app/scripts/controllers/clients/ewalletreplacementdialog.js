@@ -18,7 +18,9 @@ function ClientsEwalletreplacementdialogCtrl(
   $scope.showDialog = dialogService.showDialog;
 
   $scope.attachImage = function(file) {
+    console.log('whuuut: ', $scope.replacement);
     $scope.replacement = file;
+    console.log('whuuut x2: ', $scope.replacement);
   };
 
   $scope.addFile = function() {
@@ -28,9 +30,11 @@ function ClientsEwalletreplacementdialogCtrl(
       var params = {
         file: $scope.replacement,
       };
+      $scope.isLoading = true;
       ewalletService
         .addFile(client, params)
         .then(function(res) {
+          $scope.isLoading = false;
           var record = res.data;
           if (record) {
             $scope.showDialog('Archivo guardado');

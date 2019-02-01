@@ -2,13 +2,28 @@
   <div class="pop-solicitud">
     <div class="solicitud-item" layout="column" layout-align="center">
       <h2><strong>Solicitud de reemplazo de monedero</strong></h2>
+
       <div
         class="form-view-content height100 "
         layout="row"
         layout-align="center center"
       >
-        <div class="pop-container">
+        <div
+          ng-show="isLoading"
+          layout-fill
+          layout="row"
+          layout-sm="column"
+          layout-align="center center"
+          class="loading-circle"
+        >
+          <md-progress-circular
+            class="md-accent"
+            md-diameter="100px"
+          ></md-progress-circular>
+        </div>
+        <div class="pop-container" ng-show="!isLoading">
           <div
+            ng-if="!replacement"
             class="pop-inner-container"
             layout="column"
             layout-align="center center"
@@ -16,7 +31,16 @@
             style="cursor: pointer;"
           >
             <i class="icon-attachment attachment"> </i>
-            <a href="#"> <strong>ADJUNTAR IMÁGEN</strong> </a>
+            <a href="#"> <strong>ADJUNTAR DOCUMENTO</strong> </a>
+          </div>
+          <div
+            ng-if="replacement"
+            class="pop-inner-container"
+            layout="column"
+            layout-align="center center"
+          >
+            <i class="icon-attachment attachment"> </i>
+            <strong>DOCUMENTO ADJUNTO CORRECTAMENTE</strong>
           </div>
         </div>
       </div>
