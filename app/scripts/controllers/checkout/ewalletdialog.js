@@ -9,6 +9,10 @@ function EwalletDialogController(
   ewallet,
   type
 ) {
+  console.log('TYPE: ', type);
+  console.log('CLIENT: ', client);
+  console.log('EWALLET: ', ewallet);
+
   $scope.getEwallet = ewalletService.getEwallet;
   $scope.showDialog = dialogService.showDialog;
   $scope.initScan = ewalletService.initScan;

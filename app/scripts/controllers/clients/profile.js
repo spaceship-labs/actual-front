@@ -113,7 +113,7 @@ function ClientProfileCtrl(
     });
   }
 
-  function showAsociateEwalletDialog() {
+  function showAsociateEwalletDialog(type) {
     var controller = EwalletDialogController;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
@@ -137,13 +137,13 @@ function ClientProfileCtrl(
       locals: {
         client: vm.client.id,
         ewallet: null,
-        type: 'show',
+        type: type,
       },
     });
   }
 
-  function asociateEwallet() {
-    return showAsociateEwalletDialog()
+  function asociateEwallet(type) {
+    return showAsociateEwalletDialog(type)
       .then(function(ewallet) {
         vm.ewallet = ewallet;
         vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
