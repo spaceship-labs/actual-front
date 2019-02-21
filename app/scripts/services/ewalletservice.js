@@ -113,6 +113,8 @@
               App.initCameraSelection();
 
               Quagga.start();
+
+              console.log('start Quagga');
             });
           });
         },

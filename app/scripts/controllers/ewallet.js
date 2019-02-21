@@ -28,6 +28,7 @@ function EwalletCtrl(
   vm.scanEwallet = function() {
     ewalletService.initScan();
     Quagga.onDetected(function(result) {
+      console.log('ewallet detected');
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
       ewalletService
@@ -41,11 +42,16 @@ function EwalletCtrl(
             vm.ewallet.exchangeRate
           );
         })
+        .then(function() {
+          Quagga.offDetected();
+        })
+
         .catch(function(err) {
           console.log('err monedero', err);
           dialogService.showDialog(err.data);
         });
     });
+    Quagga.stop();
   };
 
   function init() {

@@ -338,12 +338,10 @@ function CheckoutPaymentsCtrl(
       paymentService
         .addPayment(vm.quotation.id, payment)
         .then(function(_createdPayment) {
-          console.log('1');
           createdPayment = _createdPayment;
           return quotationService.getById($routeParams.id);
         })
         .then(function(res) {
-          console.log('2');
           if (res.data) {
             var updatedQuotation = res.data;
             vm.quotation.Payments.push(createdPayment);
@@ -356,7 +354,6 @@ function CheckoutPaymentsCtrl(
           }
         })
         .then(function() {
-          console.log('3');
           vm.isLoading = false;
           if (vm.quotation.ammountPaid >= vm.quotation.total) {
             createOrder();

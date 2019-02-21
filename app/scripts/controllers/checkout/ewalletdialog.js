@@ -23,6 +23,7 @@ function EwalletDialogController(
     }
     $scope.initScan();
     Quagga.onDetected(function(result) {
+      console.log('dialog detected');
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
       $scope
@@ -30,7 +31,10 @@ function EwalletDialogController(
         .then(function(ewallet) {
           $mdDialog.hide(ewallet);
         })
-        .catch(function(err) {
+        .then(function() {
+          Quagga.offDetected();
+        }),
+        Quagga.offDetected().catch(function(err) {
           console.log('err', err);
           $scope.err = err.data;
         });
