@@ -327,11 +327,11 @@ angular
         controller: 'ResetPasswordCtrl',
         controllerAs: 'vm',
       })
-      .when('/ewallet', {
-        templateUrl: 'views/ewallet.html',
-        controller: 'EwalletCtrl',
-        controllerAs: 'vm',
-      })
+      // .when('/ewallet', {
+      //   templateUrl: 'views/ewallet.html',
+      //   controller: 'EwalletCtrl',
+      //   controllerAs: 'vm',
+      // })
       .otherwise({
         redirectTo: '/',
       });

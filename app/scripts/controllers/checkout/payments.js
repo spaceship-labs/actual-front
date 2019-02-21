@@ -60,6 +60,7 @@ function CheckoutPaymentsCtrl(
     setQuotationTotalsByGroup: setQuotationTotalsByGroup,
     updateVMQuotation: updateVMQuotation,
     isStoreManager: authService.isStoreManager($rootScope.user),
+    getEwallet: getEwallet,
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
@@ -329,6 +330,7 @@ function CheckoutPaymentsCtrl(
   }
 
   function addPayment(payment) {
+    console.log('add payment');
     if (isPaymentModeActive(payment, vm.quotation)) {
       vm.isLoadingPayments = true;
       vm.isLoading = true;
@@ -336,10 +338,12 @@ function CheckoutPaymentsCtrl(
       paymentService
         .addPayment(vm.quotation.id, payment)
         .then(function(_createdPayment) {
+          console.log('1');
           createdPayment = _createdPayment;
           return quotationService.getById($routeParams.id);
         })
         .then(function(res) {
+          console.log('2');
           if (res.data) {
             var updatedQuotation = res.data;
             vm.quotation.Payments.push(createdPayment);
@@ -352,6 +356,7 @@ function CheckoutPaymentsCtrl(
           }
         })
         .then(function() {
+          console.log('3');
           vm.isLoading = false;
           if (vm.quotation.ammountPaid >= vm.quotation.total) {
             createOrder();
@@ -364,6 +369,11 @@ function CheckoutPaymentsCtrl(
               vm.quotation,
               vm.paymentMethodsGroups
             );
+          }
+        })
+        .then(function() {
+          if (payment.type === EWALLET_TYPE) {
+            getEwallet();
           }
         })
         .catch(function(err) {
@@ -379,6 +389,23 @@ function CheckoutPaymentsCtrl(
     } else {
       createOrder();
     }
+  }
+
+  function getEwallet() {
+    console.log('get ewallet by id');
+    ewalletService
+      .getEwalletById(vm.ewallet.id)
+      .then(function(ewallet) {
+        vm.ewallet = ewallet;
+        var ewalletAmount = vm.ewallet.amount;
+        vm.paymentMethodsGroups[0].methods[6].description =
+          'Saldo disponible: ' +
+          parseFloat((Math.floor(ewalletAmount * 100) / 100).toFixed(2)) +
+          ' puntos';
+      })
+      .catch(function(err) {
+        console.log('err', err);
+      });
   }
 
   function openAddPaymentDialog(activeMethod, amount, quotationTotal) {
