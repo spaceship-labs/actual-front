@@ -19,6 +19,7 @@ function EwalletDialogController(
 
   $scope.scanEwallet = function() {
     if (ewallet != null) {
+      console.log('ewallet null');
       return;
     }
     $scope.initScan();
@@ -26,15 +27,14 @@ function EwalletDialogController(
       console.log('dialog detected');
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
+      if (type == 'show') Quagga.offDetected();
       $scope
         .getEwallet(code, client, type)
         .then(function(ewallet) {
+          if (type != 'show') Quagga.offDetected();
           $mdDialog.hide(ewallet);
         })
-        .then(function() {
-          Quagga.offDetected();
-        }),
-        Quagga.offDetected().catch(function(err) {
+        .catch(function(err) {
           console.log('err', err);
           $scope.err = err.data;
         });

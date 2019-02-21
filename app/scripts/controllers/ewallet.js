@@ -31,6 +31,7 @@ function EwalletCtrl(
       console.log('ewallet detected');
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
+      Quagga.offDetected();
       ewalletService
         .getEwalletSingle(code)
         .then(function(ewallet) {
@@ -42,10 +43,6 @@ function EwalletCtrl(
             vm.ewallet.exchangeRate
           );
         })
-        .then(function() {
-          Quagga.offDetected();
-        })
-
         .catch(function(err) {
           console.log('err monedero', err);
           dialogService.showDialog(err.data);
