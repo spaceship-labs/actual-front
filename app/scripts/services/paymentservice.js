@@ -151,6 +151,7 @@
     function getPaymentOptionsByMethod(method) {
       console.log('method', method);
       var STUDIO_CUMBRES_CODE = 'actual_studio_cumbres';
+      var STUDIO_PLAYA_CODE = 'actual_studio_playa_del_carmen';
       console.log('paymentOptions config', paymentOptions);
       var options = _.filter(paymentOptions, function(option) {
         var hasPaymentType = false;
@@ -172,7 +173,8 @@
 
         if (
           method.storeCode &&
-          method.storeCode === STUDIO_CUMBRES_CODE &&
+          (method.storeCode === STUDIO_CUMBRES_CODE ||
+            method.storeCode === STUDIO_PLAYA_CODE) &&
           method.group === 1
         ) {
           return (

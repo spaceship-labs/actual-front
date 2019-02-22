@@ -19,7 +19,7 @@
       activities: $resource(api.baseUrl + 'quick-panel/activities.json'),
       contacts: $resource(api.baseUrl + 'quick-panel/contacts.json'),
       events: $resource(api.baseUrl + 'quick-panel/events.json'),
-      notes: $resource(api.baseUrl + 'quick-panel/notes.json'),
+      notes: $resource(api.baseUrl + 'quick-panel/notes.json')
     };
 
     api.lead = {
@@ -27,24 +27,24 @@
         api.baseUrl + '/saleopportunity/find/:page',
         { page: '@page', params: '@params' },
         { get: { method: 'post', format: 'json', data: 'params' } }
-      ),
+      )
     };
 
     api.line = {
       find: $resource(api.baseUrl + '/line/get', {
-        get: { method: 'post', format: 'json' },
-      }),
+        get: { method: 'post', format: 'json' }
+      })
     };
 
     api.color = {
       find: $resource(api.baseUrl + '/color/get', {
-        get: { method: 'post', format: 'json' },
-      }),
+        get: { method: 'post', format: 'json' }
+      })
     };
 
     api.imageSizes = {
       avatar: ['300x300', '600x600' /*,'1000x1000'*/],
-      gallery: ['300x300', '600x600' /*,'1000x1000'*/],
+      gallery: ['300x300', '600x600' /*,'1000x1000'*/]
     };
 
     api.$http = function(req) {

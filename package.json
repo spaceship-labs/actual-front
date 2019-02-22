@@ -39,7 +39,7 @@
     "karma-phantomjs-launcher": "*",
     "karma-sinon-chai": "^1.2.0",
     "mocha": "^2.4.5",
-    "phantomjs-prebuilt": "^2.1.5",
+    "phantomjs-prebuilt": "^2.1.16",
     "time-grunt": "^1.0.0"
   },
   "engines": {
