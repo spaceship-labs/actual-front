@@ -145,13 +145,22 @@ function ClientProfileCtrl(
   function asociateEwallet(type) {
     return showAsociateEwalletDialog(type)
       .then(function(ewallet) {
-        vm.ewallet = ewallet;
-        vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
-        vm.ewallet.mxnAmount = paymentService.pointsToMXN(
-          vm.ewallet.amount,
-          vm.ewallet.exchangeRate
-        );
-        console.log('mxnAmount: ', vm.ewallet.mxnAmount);
+        if (vm.client.Ewallet) {
+          if (vm.client.id == ewallet.Client) {
+            vm.ewallet = ewallet;
+            vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
+            vm.ewallet.mxnAmount = paymentService.pointsToMXN(
+              vm.ewallet.amount,
+              vm.ewallet.exchangeRate
+            );
+          } else {
+            dialogService.showDialog('Monedero no corresponde al Cliente');
+          }
+        } else {
+          dialogService.showDialog(
+            'El cliente no cuenta con un monedero asignado'
+          );
+        }
       })
       .catch(function(err) {
         console.log('err', err);

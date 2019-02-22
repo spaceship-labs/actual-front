@@ -28,8 +28,10 @@ function EwalletCtrl(
   vm.scanEwallet = function() {
     ewalletService.initScan();
     Quagga.onDetected(function(result) {
+      console.log('ewallet detected');
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
+      Quagga.offDetected();
       ewalletService
         .getEwalletSingle(code)
         .then(function(ewallet) {
@@ -46,6 +48,7 @@ function EwalletCtrl(
           dialogService.showDialog(err.data);
         });
     });
+    Quagga.stop();
   };
 
   function init() {

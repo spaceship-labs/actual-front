@@ -60,6 +60,7 @@ function CheckoutPaymentsCtrl(
     setQuotationTotalsByGroup: setQuotationTotalsByGroup,
     updateVMQuotation: updateVMQuotation,
     isStoreManager: authService.isStoreManager($rootScope.user),
+    getEwallet: getEwallet,
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
@@ -329,6 +330,7 @@ function CheckoutPaymentsCtrl(
   }
 
   function addPayment(payment) {
+    console.log('add payment');
     if (isPaymentModeActive(payment, vm.quotation)) {
       vm.isLoadingPayments = true;
       vm.isLoading = true;
@@ -366,6 +368,11 @@ function CheckoutPaymentsCtrl(
             );
           }
         })
+        .then(function() {
+          if (payment.type === EWALLET_TYPE) {
+            getEwallet();
+          }
+        })
         .catch(function(err) {
           console.log(err);
           authService.showUnauthorizedDialogIfNeeded(err);
@@ -379,6 +386,23 @@ function CheckoutPaymentsCtrl(
     } else {
       createOrder();
     }
+  }
+
+  function getEwallet() {
+    console.log('get ewallet by id');
+    ewalletService
+      .getEwalletById(vm.ewallet.id)
+      .then(function(ewallet) {
+        vm.ewallet = ewallet;
+        var ewalletAmount = vm.ewallet.amount;
+        vm.paymentMethodsGroups[0].methods[6].description =
+          'Saldo disponible: ' +
+          parseFloat((Math.floor(ewalletAmount * 100) / 100).toFixed(2)) +
+          ' puntos';
+      })
+      .catch(function(err) {
+        console.log('err', err);
+      });
   }
 
   function openAddPaymentDialog(activeMethod, amount, quotationTotal) {
