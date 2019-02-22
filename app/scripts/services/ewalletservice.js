@@ -17,7 +17,7 @@
       getEwalletExchangeRate: getEwalletExchangeRate,
       addFile: addFile,
       initScan: initScan,
-      getEwalletById: getEwalletById,
+      getById: getById,
     };
 
     return service;
@@ -45,8 +45,8 @@
       });
     }
 
-    function getEwalletById(id) {
-      var url = '/ewalletById/' + id;
+    function getById(id) {
+      var url = '/ewallet/' + id + '/client';
       return api.$http.get(url).then(function(response) {
         return response.data;
       });
