@@ -491,6 +491,13 @@ select{
   position: relative;
 }
 
+.header-top-bar-menu .header-top-bar-menu-item.rcal-link{
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .header-top-bar-menu .cart-n-items{
   position: absolute;
   left: 5px;

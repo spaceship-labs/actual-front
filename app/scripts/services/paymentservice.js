@@ -151,6 +151,9 @@
     }
 
     function getPaymentOptionsByMethod(method) {
+      console.log('method', method);
+      var STUDIO_CUMBRES_CODE = 'actual_studio_cumbres';
+      console.log('paymentOptions config', paymentOptions);
       var options = _.filter(paymentOptions, function(option) {
         var hasPaymentType = false;
         var hasStore = false;
@@ -169,15 +172,28 @@
           hasStore = true;
         }
 
-        return (
-          hasStore &&
-          hasPaymentType &&
-          method.isInternational === option.isInternational
-        );
+        if (
+          method.storeCode &&
+          method.storeCode === STUDIO_CUMBRES_CODE &&
+          method.group === 1
+        ) {
+          return (
+            hasStore &&
+            hasPaymentType &&
+            method.isInternational === option.isInternational &&
+            (option.storeCodes || []).indexOf(method.storeCode) > -1
+          );
+        } else {
+          return (
+            hasStore &&
+            hasPaymentType &&
+            method.isInternational === option.isInternational &&
+            !option.storeCodes
+          );
+        }
       });
       return options;
     }
-
     function getPaymentMethodsGroups(params) {
       var url = '/paymentgroups';
       return api.$http.post(url, params);

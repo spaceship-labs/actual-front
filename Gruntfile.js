@@ -476,6 +476,7 @@ module.exports = function(grunt) {
           ENV: {
             name: 'demo',
             apiEndpoint: 'http://demo-actual-api.herokuapp.com',
+            cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://sandboxadmin.miactual.com',
             tokenPrefix: 'demo',
           },
@@ -488,7 +489,9 @@ module.exports = function(grunt) {
         constants: {
           ENV: {
             name: 'production',
-            apiEndpoint: 'http://166.78.47.146',
+            apiEndpoint: 'http://13.58.136.42:8082',
+            //apiEndpoint: 'http://api.miactual.com',
+            cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://admin.miactual.com',
             tokenPrefix: 'production',
           },
@@ -502,6 +505,7 @@ module.exports = function(grunt) {
           ENV: {
             name: 'dev',
             apiEndpoint: 'http://localhost:1337',
+            cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://localhost:3000',
             tokenPrefix: 'dev',
           },

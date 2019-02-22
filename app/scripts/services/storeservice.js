@@ -13,11 +13,17 @@
       getStoreCashReport: getStoreCashReport,
       getStoresCashReport: getStoresCashReport,
       getManagerCashReport: getManagerCashReport,
+      getGlobalStoresCashReport: getGlobalStoresCashReport,
       countSellers: countSellers,
       commissionables: commissionables,
     };
 
     return service;
+
+    function getGlobalStoresCashReport(params) {
+      var url = '/stores/globalcashreport';
+      return api.$http.post(url, params);
+    }
 
     function getById(id) {
       var url = '/stores/' + id;
