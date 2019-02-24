@@ -468,6 +468,19 @@ module.exports = function(grunt) {
           },
         },
       },
+      staged: {
+        options: {
+          dest: '<%= yeoman.app %>/scripts/envconfig.js',
+        },
+        constants: {
+          ENV: {
+            name: 'staged',
+            apiEndpoint: 'https://http://166.78.47.146:1339',
+            adminUrl: 'http://stagedadmin.miactual.com',
+            tokenPrefix: 'sandbox',
+          },
+        },
+      },
       demo: {
         options: {
           dest: '<%= yeoman.app %>/scripts/envconfig.js',
