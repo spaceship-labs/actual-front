@@ -602,6 +602,9 @@ function getEnvironmentTask(envOption) {
     case 'sandbox':
       task = 'ngconstant:sandbox';
       break;
+    case 'staged':
+      task = 'ngconstant:staged';
+      break;
     case 'demo':
       task = 'ngconstant:demo';
       break;
