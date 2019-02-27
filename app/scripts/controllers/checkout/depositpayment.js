@@ -48,12 +48,12 @@ function DepositController(
         $scope.payment.ammount
       );
       $scope.maxAmount = commonService.roundCurrency($scope.maxAmount);
-
-      console.log('diferente ewallet', $scope.maxAmount);
     }
 
     if (payment.type === 'ewallet') {
-      $scope.payment.maxAmount = Math.floor($scope.payment.maxAmount);
+      $scope.payment.maxAmount =
+        Math.floor($scope.payment.maxAmount * 100) / 100;
+
       $scope.getEwalletExchangeRate().then(function(response) {
         $scope.payment.exchangeRate = response[0].exchangeRate;
         var totalPointsToMXN = $scope.pointsToMXN(
@@ -67,13 +67,18 @@ function DepositController(
         if (totalPointsToMXN <= $scope.payment.ammount) {
           $scope.payment.ammount = $scope.payment.maxAmount;
           $scope.maxAmount = maxAmountWithEwallet;
+          $scope.payment.ammount = commonService.roundCurrency(
+            $scope.payment.ammount
+          );
         }
         if (totalPointsToMXN > $scope.payment.ammount) {
           $scope.payment.ammount = maxAmountWithEwallet;
           $scope.maxAmount = maxAmountWithEwallet;
+          $scope.payment.ammount = parseFloat(
+            $scope.payment.ammount.toFixed(2)
+          );
         }
       });
-      $scope.payment.ammount = parseFloat($scope.payment.ammount.toFixed(2));
     }
   };
 
@@ -100,8 +105,6 @@ function DepositController(
     $scope.maxAmount = parseFloat($scope.maxAmount.toFixed(2));
     $scope.payment.maxAmount = parseFloat($scope.payment.maxAmount.toFixed(2));
 
-    console.log('payment amount', $scope.payment.ammount);
-    console.log('amount', $scope.maxAmount);
     if ($scope.maxAmount) {
       if ($scope.payment.ammount <= $scope.maxAmount) {
         return true;
