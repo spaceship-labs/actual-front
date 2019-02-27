@@ -53,10 +53,7 @@ function DepositController(
     }
 
     if (payment.type === 'ewallet') {
-      $scope.payment.maxAmount = parseFloat(
-        $scope.payment.maxAmount.toFixed(2)
-      );
-      console.log('ewallet', $scope.payment.maxAmount);
+      $scope.payment.maxAmount = Math.floor($scope.payment.maxAmount);
       $scope.getEwalletExchangeRate().then(function(response) {
         $scope.payment.exchangeRate = response[0].exchangeRate;
         var totalPointsToMXN = $scope.pointsToMXN(
