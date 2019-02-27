@@ -27,35 +27,37 @@
 
     function getEwallet(cardNumber, client, type) {
       var url = '/ewallet/' + client + '/' + cardNumber;
-      return api.$http.get(url, { type: type }).then(function(response) {
-        return response.data;
-      });
+      return api.$http
+        .get(url, { cache: false }, { type: type })
+        .then(function(response) {
+          return response.data;
+        });
     }
 
     function getEwalletSingle(cardNumber) {
       var url = '/ewallet/' + cardNumber;
-      return api.$http.get(url).then(function(response) {
+      return api.$http.get(url, { cache: false }).then(function(response) {
         return response.data;
       });
     }
 
     function getEwalletExchangeRate() {
       var url = '/ewalletconfiguration';
-      return api.$http.get(url).then(function(response) {
+      return api.$http.get(url, { cache: false }).then(function(response) {
         return response.data;
       });
     }
 
     function getEwalletById(id) {
       var url = '/ewalletById/' + id;
-      return api.$http.get(url).then(function(response) {
+      return api.$http.get(url, { cache: false }).then(function(response) {
         return response.data;
       });
     }
 
     function getById(id) {
       var url = '/ewallet/' + id + '/client';
-      return api.$http.get(url).then(function(response) {
+      return api.$http.get(url, { cache: false }).then(function(response) {
         return response.data;
       });
     }
