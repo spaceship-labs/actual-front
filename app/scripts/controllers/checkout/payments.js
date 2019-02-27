@@ -395,7 +395,7 @@ function CheckoutPaymentsCtrl(
   function getEwallet() {
     console.log('get ewallet by id');
     ewalletService
-      .getById(vm.ewallet.id)
+      .getEwalletById(vm.ewallet.id)
       .then(function(ewallet) {
         vm.ewallet = ewallet;
         var ewalletAmount = vm.ewallet.amount;
