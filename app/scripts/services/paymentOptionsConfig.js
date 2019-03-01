@@ -32,7 +32,7 @@
       paymentTypes: ['credit-card', 'debit-card'],
       storesTypes: ['studio'],
       isInternational: true,
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -50,7 +50,7 @@
       paymentTypes: ['credit-card', 'debit-card'],
       storesTypes: ['studio'],
       isInternational: true,
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -67,7 +67,7 @@
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: ['credit-card', 'debit-card'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       isInternational: true,
       terminal: { label: 'American Express', value: 'american-express' }
     },
@@ -101,7 +101,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'American Express', value: 'american-express' }
     },
 
@@ -118,7 +118,7 @@
       card: { label: 'Banamex', value: 'banamex' },
       paymentTypes: ['credit-card', 'debit-card'],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -156,7 +156,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -188,7 +188,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -220,7 +220,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -252,7 +252,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -284,7 +284,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -316,7 +316,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -348,7 +348,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -380,7 +380,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -412,7 +412,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -444,7 +444,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -476,7 +476,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -508,7 +508,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -540,7 +540,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -572,7 +572,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -610,7 +610,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
@@ -645,7 +645,7 @@
         '18-msi'
       ],
       storesTypes: ['studio'],
-      storeCodes: ['actual_studio_cumbres', 'actual_studio_playa_del_carmen'],
+      storeCodes: ['actual_studio_cumbres'],
       terminal: { label: 'Banorte', value: 'banorte' }
     },
 
