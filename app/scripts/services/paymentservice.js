@@ -6,7 +6,6 @@
   function paymentService(
     api,
     $filter,
-    $http,
     commonService,
     clientService,
     ewalletService,
@@ -173,7 +172,7 @@
 
         if (
           method.storeCode &&
-          (method.storeCode === STUDIO_CUMBRES_CODE) &&
+          method.storeCode === STUDIO_CUMBRES_CODE &&
           method.group === 1
         ) {
           return (
