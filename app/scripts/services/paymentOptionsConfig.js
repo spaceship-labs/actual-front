@@ -88,7 +88,7 @@
       terminal: { label: 'American Express', value: 'american-express' }
     },
 
-    //For studio cumbres, and playa
+    //For studio cumbres
     {
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: [
@@ -113,7 +113,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Banamex for studio cumbres, and playa
+    //Banamex for studio cumbres
     {
       card: { label: 'Banamex', value: 'banamex' },
       paymentTypes: ['credit-card', 'debit-card'],
@@ -143,7 +143,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Santander for studio cumbres, and playa
+    //Santander for studio cumbres
     {
       card: { label: 'Santander', value: 'santander' },
       paymentTypes: [
@@ -175,7 +175,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Bancomer for studio cumbres, and playa
+    //Bancomer for studio cumbres
     {
       card: { label: 'Bancomer', value: 'bancomer' },
       paymentTypes: [
@@ -207,7 +207,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Banorte for studio cumbres, and playa
+    //Banorte for studio cumbres
     {
       card: { label: 'Banorte', value: 'banorte' },
       paymentTypes: [
@@ -239,7 +239,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Afirme for studio cumbres, and playa
+    //Afirme for studio cumbres
     {
       card: { label: 'Afirme', value: 'afirme' },
       paymentTypes: [
@@ -271,7 +271,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Banbajio for studio cumbres, and playa
+    //Banbajio for studio cumbres
     {
       card: { label: 'Banbajio', value: 'banbajio' },
       paymentTypes: [
@@ -303,7 +303,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Bancamifel form studio cumbres, and playa
+    //Bancamifel form studio cumbres
     {
       card: { label: 'Bancamifel', value: 'bancamifel' },
       paymentTypes: [
@@ -335,7 +335,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Banco ahorro famsa for studio cumbres, and playa
+    //Banco ahorro famsa for studio cumbres
     {
       card: { label: 'Banco Ahorro Famsa', value: 'banco-ahorro-famsa' },
       paymentTypes: [
@@ -367,7 +367,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Banjercito for studio cumbres, and playa
+    //Banjercito for studio cumbres
     {
       card: { label: 'Banjercito', value: 'banjercito' },
       paymentTypes: [
@@ -399,7 +399,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Banregio for studio cumbres, and playa
+    //Banregio for studio cumbres
     {
       card: { label: 'Banregio', value: 'banregio' },
       paymentTypes: [
@@ -431,7 +431,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //HSBC for studio cumbres, and playa
+    //HSBC for studio cumbres
     {
       card: { label: 'HSBC', value: 'hsbc' },
       paymentTypes: [
@@ -463,7 +463,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Inbursa for studio cumbres, and playa
+    //Inbursa for studio cumbres
     {
       card: { label: 'Inbursa', value: 'inbursa' },
       paymentTypes: [
@@ -495,7 +495,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Invex for studio cumbres, and playa
+    //Invex for studio cumbres
     {
       card: { label: 'Invex Banco', value: 'invex-banco' },
       paymentTypes: [
@@ -527,7 +527,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Itaucard for studio cumbres, and playa
+    //Itaucard for studio cumbres
     {
       card: { label: 'Itaucard', value: 'itaucard' },
       paymentTypes: [
@@ -559,7 +559,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //IXE for studio cumbres, and playa
+    //IXE for studio cumbres
     {
       card: { label: 'IXE', value: 'ixe' },
       paymentTypes: [
@@ -594,7 +594,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Liverpool for studio cumbres, and playa
+    //Liverpool for studio cumbres
     {
       card: {
         label: 'Liverpool Premium Card',
@@ -632,7 +632,7 @@
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
-    //Scotiabank for studio cumbres, and playa
+    //Scotiabank for studio cumbres
     {
       card: { label: 'ScotiaBank', value: 'scotiabank' },
       paymentTypes: [
