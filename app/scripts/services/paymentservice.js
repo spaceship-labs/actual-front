@@ -28,6 +28,7 @@
       CLIENT_BALANCE: 'client-balance',
       CASH: 'cash',
       CASH_USD: 'cash-usd',
+
       CHEQUE: 'cheque',
       DEPOSIT: 'deposit',
       TRANSFER: 'transfer',
