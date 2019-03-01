@@ -173,8 +173,7 @@
 
         if (
           method.storeCode &&
-          (method.storeCode === STUDIO_CUMBRES_CODE ||
-            method.storeCode === STUDIO_PLAYA_CODE) &&
+          (method.storeCode === STUDIO_CUMBRES_CODE) &&
           method.group === 1
         ) {
           return (
