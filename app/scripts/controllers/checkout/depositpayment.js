@@ -51,6 +51,7 @@ function DepositController(
     }
 
     if (payment.type === 'ewallet') {
+      console.log('payment maxamount', $scope.payment.maxAmount);
       $scope.payment.maxAmount =
         Math.floor($scope.payment.maxAmount * 100) / 100;
 
@@ -70,12 +71,52 @@ function DepositController(
           $scope.payment.ammount = commonService.roundCurrency(
             $scope.payment.ammount
           );
+          console.log(
+            'totalPointsToMXN <= $scope.payment.ammount',
+            'payment maxamount',
+            $scope.payment.maxAmount
+          );
+          console.log(
+            'totalPointsToMXN <= $scope.payment.ammount',
+            ' maxamount',
+            $scope.maxAmount
+          );
+          console.log(
+            'totalPointsToMXN <= $scope.payment.ammount',
+            'payment amount',
+            $scope.payment.ammount
+          );
+          console.log(
+            'totalPointsToMXN <= $scope.payment.ammount',
+            'payment amount',
+            $scope.payment.ammount
+          );
         }
         if (totalPointsToMXN > $scope.payment.ammount) {
+          console.log(
+            'totalPointsToMXN > $scope.payment.ammount',
+            'payment maxamount',
+            $scope.payment.maxAmount
+          );
+          console.log(
+            'totalPointsToMXN > $scope.payment.ammount',
+            ' maxamount',
+            $scope.maxAmount
+          );
+          console.log(
+            'totalPointsToMXN > $scope.payment.ammount',
+            'payment amount',
+            $scope.payment.ammount
+          );
           $scope.payment.ammount = maxAmountWithEwallet;
           $scope.maxAmount = maxAmountWithEwallet;
           $scope.payment.ammount = parseFloat(
             $scope.payment.ammount.toFixed(2)
+          );
+          console.log(
+            'totalPointsToMXN > $scope.payment.ammount',
+            'payment amount',
+            $scope.payment.ammount
           );
         }
       });
