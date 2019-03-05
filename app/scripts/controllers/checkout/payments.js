@@ -397,14 +397,14 @@ function CheckoutPaymentsCtrl(
     console.log('get ewallet by id');
     ewalletService
       .getEwalletById(vm.ewallet.id)
-      // .then(function(ewallet) {
-      //   vm.ewallet = ewallet;
-      //   var ewalletAmount = vm.ewallet.amount;
-      //   vm.paymentMethodsGroups[0].methods[6].description =
-      //     'Saldo disponible: ' +
-      //     parseFloat((Math.floor(ewalletAmount * 100) / 100).toFixed(2)) +
-      //     ' puntos';
-      // })
+      .then(function(ewallet) {
+        vm.ewallet = ewallet;
+        var ewalletAmount = vm.ewallet.amount;
+        vm.paymentMethodsGroups[0].methods[6].description =
+          'Saldo disponible: ' +
+          parseFloat((Math.floor(ewalletAmount * 100) / 100).toFixed(2)) +
+          ' puntos';
+      })
       .catch(function(err) {
         console.log('err', err);
       });
