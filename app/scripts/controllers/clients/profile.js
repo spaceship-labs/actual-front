@@ -97,7 +97,7 @@ function ClientProfileCtrl(
       vm.client = res.data;
       vm.client = formatClient(vm.client);
 
-      if (vm.client.ewalletStatus) {
+      if (vm.client.ewalletStatus || vm.client.Ewallet) {
         if (vm.client.ewalletStatus == 'pending') vm.asociateStatus = false;
       } else {
         vm.asociateStatus = true;
@@ -204,6 +204,9 @@ function ClientProfileCtrl(
     return showReplaceEwalletDialog()
       .then(function(ewallet) {
         vm.ewallet = ewallet;
+      })
+      .then(function() {
+        vm.ewalletStatus = 'Solicitud pendiente';
       })
       .catch(function(err) {
         console.log('err', err);
