@@ -96,7 +96,8 @@ function ClientProfileCtrl(
       vm.isLoading = false;
       vm.client = res.data;
       vm.client = formatClient(vm.client);
-
+      if (vm.client.Ewallet) vm.asociateEwalletStatus = true;
+      else vm.asociateEwalletStatus = false;
       if (vm.client.ewalletStatus || vm.client.Ewallet) {
         if (vm.client.ewalletStatus == 'pending') vm.asociateStatus = false;
       } else {
@@ -211,6 +212,7 @@ function ClientProfileCtrl(
         vm.ewallet = ewallet;
         vm.ewalletStatus = 'Solicitud pendiente';
         vm.asociateStatus = true;
+        vm.asociateEwalletStatus = true;
       })
       .catch(function(err) {
         console.log('err', err);
