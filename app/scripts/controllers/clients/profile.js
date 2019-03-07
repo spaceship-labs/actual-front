@@ -165,10 +165,12 @@ function ClientProfileCtrl(
             vm.ewallet.exchangeRate
           );
           vm.asociateStatus = false;
-          dialogService.showDialog('Monedenero relacionado satisfactoriamente');
         } else {
           dialogService.showDialog('Monedero no corresponde al Cliente');
         }
+      })
+      .then(function() {
+        dialogService.showDialog('Monedenero relacionado satisfactoriamente');
       })
       .catch(function(err) {
         console.log('err', err);
@@ -179,6 +181,7 @@ function ClientProfileCtrl(
     var controller = ClientsEwalletreplacementdialogCtrl;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
+    console.log('showReplaceEwalletDialog');
     return $mdDialog.show({
       controller: [
         '$scope',
@@ -201,11 +204,11 @@ function ClientProfileCtrl(
   }
 
   function replaceEwallet() {
+    console.log('replaceEwallet');
     return showReplaceEwalletDialog()
       .then(function(ewallet) {
+        console.log('promise');
         vm.ewallet = ewallet;
-      })
-      .then(function() {
         vm.ewalletStatus = 'Solicitud pendiente';
       })
       .catch(function(err) {
