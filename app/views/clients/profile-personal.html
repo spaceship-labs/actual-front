@@ -49,7 +49,7 @@
               <strong class="input-element-print">IMPRIMIR</strong>
             </div>
           </a>
-          <a ng-click="vm.replaceEwallet()" href="" class="form-view-btn form-view-btn-100">Crear Solicitud</a>
+          <a ng-click="vm.replaceEwallet()" href="" class="form-view-btn form-view-btn-100">{{vm.ewalletStatus}}</a>
         </div>
       </div>
 
@@ -124,7 +124,7 @@
     <div layout="row" class="form-view-btns" layout-align="center center">
       <input ng-if="!vm.personalEditEnabled" class="form-view-btn form-view-btn-primary" type="submit" value="Editar">
       <input ng-if="vm.personalEditEnabled" class="form-view-btn form-view-btn-primary" type="submit" value="Guardar">
-      <a ng-click="vm.asociateEwallet('asociate')" class="form-view-btn print-btn" href="">Relacionar nuevo monedero</a>
+      <a ng-click="vm.asociateEwallet('asociate')" class="form-view-btn print-btn" ng-if="vm.asociateStatus" href="">Relacionar nuevo monedero</a>
     </div>
 
 </section>

@@ -97,6 +97,17 @@ function ClientProfileCtrl(
       vm.client = res.data;
       vm.client = formatClient(vm.client);
 
+      if (vm.client.ewalletStatus) {
+        if (vm.client.ewalletStatus == 'pending') vm.asociateStatus = false;
+      } else {
+        vm.asociateStatus = true;
+      }
+      if (vm.client.ewalletStatus == 'pending')
+        vm.ewalletStatus = 'Solicitud pendiente';
+      if (vm.client.ewalletStatus == 'rejected')
+        vm.ewalletStatus = 'Solicitud rechazada';
+      else vm.ewalletStatus = 'Crear solicitud';
+
       if ($location.search().activeTab && $location.search().activeTab < 4) {
         vm.activeTab = $location.search().activeTab;
       }
@@ -145,6 +156,7 @@ function ClientProfileCtrl(
   function asociateEwallet(type) {
     return showAsociateEwalletDialog(type)
       .then(function(ewallet) {
+        console.log('aqui');
         if (vm.client.id == ewallet.Client) {
           vm.ewallet = ewallet;
           vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
@@ -152,6 +164,8 @@ function ClientProfileCtrl(
             vm.ewallet.amount,
             vm.ewallet.exchangeRate
           );
+          vm.asociateStatus = false;
+          dialogService.showDialog('Monedenero relacionado satisfactoriamente');
         } else {
           dialogService.showDialog('Monedero no corresponde al Cliente');
         }
