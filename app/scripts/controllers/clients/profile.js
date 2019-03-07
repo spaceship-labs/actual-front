@@ -210,6 +210,7 @@ function ClientProfileCtrl(
         console.log('promise');
         vm.ewallet = ewallet;
         vm.ewalletStatus = 'Solicitud pendiente';
+        vm.asociateStatus = true;
       })
       .catch(function(err) {
         console.log('err', err);
