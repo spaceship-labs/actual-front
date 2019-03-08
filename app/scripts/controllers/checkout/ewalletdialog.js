@@ -24,14 +24,14 @@ function EwalletDialogController(
     }
     $scope.initScan();
     Quagga.onDetected(function(result) {
+      Quagga.offDetected();
       console.log('dialog detected');
       var code = result.codeResult.code;
       console.log('CODE RESULT: ', code);
-      if (type == 'show') Quagga.offDetected();
       $scope
         .getEwallet(code, client, type)
         .then(function(ewallet) {
-          if (type != 'show') Quagga.offDetected();
+          Quagga.stop();
           $mdDialog.hide(ewallet);
         })
         .catch(function(err) {

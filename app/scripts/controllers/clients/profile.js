@@ -160,22 +160,24 @@ function ClientProfileCtrl(
   function asociateEwallet(type) {
     return showAsociateEwalletDialog(type)
       .then(function(ewallet) {
-        console.log('aqui');
-        if (vm.client.id == ewallet.Client) {
+        console.log('type', type);
+        if (vm.client.id === ewallet.Client) {
           vm.ewallet = ewallet;
           vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
           vm.ewallet.mxnAmount = paymentService.pointsToMXN(
             vm.ewallet.amount,
             vm.ewallet.exchangeRate
           );
-          vm.asociateStatus = false;
           vm.asociateEwalletStatus = true;
+          if (type != 'show') {
+            vm.asociateStatus = false;
+            dialogService.showDialog(
+              'Monedenero relacionado satisfactoriamente'
+            );
+          }
         } else {
           dialogService.showDialog('Monedero no corresponde al Cliente');
         }
-      })
-      .then(function() {
-        dialogService.showDialog('Monedenero relacionado satisfactoriamente');
       })
       .catch(function(err) {
         console.log('err', err);
@@ -186,7 +188,6 @@ function ClientProfileCtrl(
     var controller = ClientsEwalletreplacementdialogCtrl;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
-    console.log('showReplaceEwalletDialog');
     return $mdDialog.show({
       controller: [
         '$scope',
@@ -209,7 +210,6 @@ function ClientProfileCtrl(
   }
 
   function replaceEwallet() {
-    console.log('replaceEwallet');
     return showReplaceEwalletDialog()
       .then(function() {
         dialogService.showDialog('Archivo guardado');
