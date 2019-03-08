@@ -10,6 +10,7 @@
     // Base Url
     api.baseUrl = ENV.apiEndpoint;
     api.cdnUrl = ENV.cdnUrl;
+    // api.baseUrl = 'https://stagedapi.miactual.com';
     //api.baseUrl = 'http://166.78.47.146';
     //api.baseUrl = 'http://localhost:1337';
 

@@ -37,7 +37,8 @@ function ClientsEwalletreplacementdialogCtrl(
           var record = res.data;
           if (record) {
             $scope.isLoading = false;
-            $scope.showDialog('Archivo guardado');
+            $scope.hide();
+            //$scope.showDialog('Archivo guardado');
           }
         })
         .catch(function(err) {

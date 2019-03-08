@@ -96,18 +96,21 @@ function ClientProfileCtrl(
       vm.isLoading = false;
       vm.client = res.data;
       vm.client = formatClient(vm.client);
-      if (vm.client.Ewallet) vm.asociateEwalletStatus = true;
-      else vm.asociateEwalletStatus = false;
-      if (vm.client.ewalletStatus || vm.client.Ewallet) {
-        if (vm.client.ewalletStatus == 'pending') vm.asociateStatus = false;
-      } else {
-        vm.asociateStatus = true;
-      }
-      if (vm.client.ewalletStatus == 'pending')
-        vm.ewalletStatus = 'Solicitud pendiente';
-      if (vm.client.ewalletStatus == 'rejected')
-        vm.ewalletStatus = 'Solicitud rechazada';
-      else vm.ewalletStatus = 'Crear solicitud';
+      vm.asociateEwalletStatus = true;
+      vm.asociateStatus = true;
+
+      // if (vm.client.ewalletStatus == 'pending' || vm.client.Ewallet) {
+      //   vm.asociateStatus = false;
+      // } else {
+      //   vm.asociateEwalletStatus = false;
+      // }
+
+      // if (vm.client.ewalletStatus == 'pending')
+      //   vm.ewalletStatus = 'Solicitud pendiente';
+      // if (vm.client.ewalletStatus == 'rejected')
+      //   vm.ewalletStatus = 'Solicitud rechazada';
+      // else
+      vm.ewalletStatus = 'Crear solicitud';
 
       if ($location.search().activeTab && $location.search().activeTab < 4) {
         vm.activeTab = $location.search().activeTab;
@@ -166,6 +169,7 @@ function ClientProfileCtrl(
             vm.ewallet.exchangeRate
           );
           vm.asociateStatus = false;
+          vm.asociateEwalletStatus = true;
         } else {
           dialogService.showDialog('Monedero no corresponde al Cliente');
         }
@@ -207,9 +211,8 @@ function ClientProfileCtrl(
   function replaceEwallet() {
     console.log('replaceEwallet');
     return showReplaceEwalletDialog()
-      .then(function(ewallet) {
-        console.log('promise');
-        vm.ewallet = ewallet;
+      .then(function() {
+        dialogService.showDialog('Archivo guardado');
         vm.ewalletStatus = 'Solicitud pendiente';
         vm.asociateStatus = true;
         vm.asociateEwalletStatus = true;
