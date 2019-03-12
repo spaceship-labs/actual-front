@@ -13,7 +13,8 @@ function ClientsEwalletreplacementdialogCtrl(
   $timeout,
   ewalletService,
   dialogService,
-  client
+  client,
+  type
 ) {
   $scope.showDialog = dialogService.showDialog;
 
@@ -29,6 +30,7 @@ function ClientsEwalletreplacementdialogCtrl(
     } else {
       var params = {
         file: $scope.replacement,
+        type: type,
       };
       $scope.isLoading = true;
       ewalletService
@@ -38,7 +40,6 @@ function ClientsEwalletreplacementdialogCtrl(
           if (record) {
             $scope.isLoading = false;
             $scope.hide();
-            //$scope.showDialog('Archivo guardado');
           }
         })
         .catch(function(err) {

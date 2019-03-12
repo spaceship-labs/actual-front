@@ -107,8 +107,20 @@
           <strong>RESUMEN</strong>
         </h1>
 
+        <div ng-if="!vm.asociateEwalletStatus" flex="40" class="input-element">
+          <label><strong>Asignar monedero</strong></label>
+          <label class="input-label"><i class="icon-arrow"></i></label>
+          <div layout="row">
+            <a
+              ng-click="vm.replaceEwallet('payment')"
+              href=""
+              class="form-view-btn form-view-btn-100"
+              >Crear solicitud</a
+            >
+          </div>
+        </div>
         <h1
-          ng-if="!vm.ewallet"
+          ng-if="vm.asociateEwalletStatus"
           class="cart-title-ewallet"
           ng-click="vm.asociateEwallet('asociate')"
         >
