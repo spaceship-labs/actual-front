@@ -3129,6 +3129,11 @@ font-size: 20px;
 .align{
   vertical-align: middle;
 }
+
+.margin-button{
+  margin-bottom: 10px;
+}
+
 .avatar-placeholder-wrap{
   text-align: center;
 }
