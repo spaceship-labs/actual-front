@@ -108,15 +108,26 @@
         </h1>
 
         <div ng-if="!vm.asociateEwalletStatus" flex="40" class="input-element">
-          <label><strong>Asignar monedero</strong></label>
           <label class="input-label"><i class="icon-arrow"></i></label>
+          <div layout="row">
+            <a
+              href="#"
+              ng-click="vm.print()"
+              class="payment-view-btn form-view-btn-100"
+            >
+              <span class="icon-printer align"></span>
+              <strong>IMPRIMIR</strong>
+            </a>
+          </div>
           <div layout="row">
             <a
               ng-click="vm.EwalletFile('ewalletFile')"
               href=""
               class="form-view-btn form-view-btn-100"
-              >Crear solicitud</a
             >
+              <span class="icon-PDF align"></span>
+              <strong> Adjuntar archivo</strong>
+            </a>
           </div>
         </div>
         <h1

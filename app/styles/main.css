@@ -277,6 +277,9 @@ select{
   height: 100%; 
   margin-top:0px;
 }
+.svg-payment {
+  font-size: 30px;
+}
 
 .select-element,
 .input-element .input-element-inner{
@@ -2769,6 +2772,24 @@ font-size: 20px;
   font-size: 12px;
   border:0;
 }
+.payment-view-btn{
+  padding: 10px 6px;
+  text-align: center;
+  color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #fff;
+  margin: 10px 0;
+  font-size: 15px;
+  border: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+}
+.payment-view-btn span,.form-view-btn span {
+  font-size: 30px;
+}
+
 .form-view-btn-primary{
   background: #33BA2C;
 }
@@ -3105,7 +3126,9 @@ font-size: 20px;
 /*--------------/
   #AVATAR-PLACEHOLDER
 /*--------------*/
-
+.align{
+  vertical-align: middle;
+}
 .avatar-placeholder-wrap{
   text-align: center;
 }
