@@ -30,11 +30,10 @@ function ClientsEwalletreplacementdialogCtrl(
     } else {
       var params = {
         file: $scope.replacement,
-        type: type,
       };
       $scope.isLoading = true;
       ewalletService
-        .addFile(client, params)
+        .addFile(client, type, params)
         .then(function(res) {
           var record = res.data;
           if (record) {

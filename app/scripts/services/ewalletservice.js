@@ -62,8 +62,10 @@
       });
     }
 
-    function addFile(clientId, params) {
-      var url = '/replacementupdate/' + clientId;
+    function addFile(clientId, type, params) {
+      var url;
+      if (type === 'ewalletFile') url = '/ewallet/file/' + clientId;
+      else url = '/replacementupdate/' + clientId;
       return Upload.upload({ url: api.baseUrl + url, data: params });
     }
 

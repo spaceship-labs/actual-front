@@ -61,7 +61,7 @@ function CheckoutPaymentsCtrl(
     updateVMQuotation: updateVMQuotation,
     isStoreManager: authService.isStoreManager($rootScope.user),
     getEwallet: getEwallet,
-    replaceEwallet: replaceEwallet,
+    EwalletFile: EwalletFile,
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
@@ -599,7 +599,7 @@ function CheckoutPaymentsCtrl(
     }, 1000);
   }
 
-  function showReplaceEwalletDialog(type) {
+  function ShowEwalletFileDialog(type) {
     var controller = ClientsEwalletreplacementdialogCtrl;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
@@ -625,8 +625,8 @@ function CheckoutPaymentsCtrl(
     });
   }
 
-  function replaceEwallet(type) {
-    return showReplaceEwalletDialog(type)
+  function EwalletFile(type) {
+    return ShowEwalletFileDialog(type)
       .then(function() {
         dialogService.showDialog('Archivo guardado');
         vm.ewalletStatus = 'Solicitud pendiente';
