@@ -119,7 +119,7 @@ function CheckoutPaymentsCtrl(
           return;
         }
         console.log('datos globales', vm);
-        if (vm.quotation.Client.Ewallet) {
+        if (vm.quotation.Client.EwalletContract) {
           vm.asociateEwalletStatus = true;
         } else vm.asociateEwalletStatus = false;
 
@@ -630,7 +630,6 @@ function CheckoutPaymentsCtrl(
     return ShowEwalletFileDialog(type)
       .then(function() {
         dialogService.showDialog('Archivo guardado');
-        vm.ewalletStatus = 'Solicitud pendiente';
         vm.asociateStatus = true;
         vm.asociateEwalletStatus = true;
         vm.ewallet = true;

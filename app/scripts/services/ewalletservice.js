@@ -65,10 +65,8 @@
     function addFile(clientId, mode, params) {
       var url;
       if (mode === 'ewalletFile') {
-        console.log('MODE: ', mode);
         url = '/file/' + clientId + '/ewallet';
       } else {
-        console.log('aqui no');
         url = '/replacementupdate/' + clientId;
       }
       return Upload.upload({ url: api.baseUrl + url, data: params });

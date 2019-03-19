@@ -3130,6 +3130,10 @@ font-size: 20px;
   vertical-align: middle;
 }
 
+.txt-center{
+  text-align: center;
+}
+
 .margin-button{
   margin-bottom: 10px;
 }
