@@ -599,7 +599,7 @@ function CheckoutPaymentsCtrl(
     }, 1000);
   }
 
-  function ShowEwalletFileDialog(type) {
+  function ShowEwalletFileDialog(mode) {
     var controller = ClientsEwalletreplacementdialogCtrl;
     var useFullScreen =
       ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
@@ -612,6 +612,7 @@ function CheckoutPaymentsCtrl(
         'ewalletService',
         'dialogService',
         'client',
+        'mode',
         controller,
       ],
       templateUrl: 'views/clients/ewallet-replacement-dialog.html',
@@ -620,7 +621,7 @@ function CheckoutPaymentsCtrl(
       fullscreen: useFullScreen,
       locals: {
         client: vm.quotation.Client.id,
-        type: type,
+        mode: mode,
       },
     });
   }

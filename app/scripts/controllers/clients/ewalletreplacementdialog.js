@@ -14,14 +14,12 @@ function ClientsEwalletreplacementdialogCtrl(
   ewalletService,
   dialogService,
   client,
-  type
+  mode
 ) {
   $scope.showDialog = dialogService.showDialog;
 
   $scope.attachImage = function(file) {
-    console.log('whuuut: ', $scope.replacement);
     $scope.replacement = file;
-    console.log('whuuut x2: ', $scope.replacement);
   };
 
   $scope.addFile = function() {
@@ -33,7 +31,7 @@ function ClientsEwalletreplacementdialogCtrl(
       };
       $scope.isLoading = true;
       ewalletService
-        .addFile(client, type, params)
+        .addFile(client, mode, params)
         .then(function(res) {
           var record = res.data;
           if (record) {
