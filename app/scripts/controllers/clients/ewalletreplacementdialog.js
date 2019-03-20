@@ -13,14 +13,13 @@ function ClientsEwalletreplacementdialogCtrl(
   $timeout,
   ewalletService,
   dialogService,
-  client
+  client,
+  mode
 ) {
   $scope.showDialog = dialogService.showDialog;
 
   $scope.attachImage = function(file) {
-    console.log('whuuut: ', $scope.replacement);
     $scope.replacement = file;
-    console.log('whuuut x2: ', $scope.replacement);
   };
 
   $scope.addFile = function() {
@@ -32,13 +31,12 @@ function ClientsEwalletreplacementdialogCtrl(
       };
       $scope.isLoading = true;
       ewalletService
-        .addFile(client, params)
+        .addFile(client, mode, params)
         .then(function(res) {
           var record = res.data;
           if (record) {
             $scope.isLoading = false;
             $scope.hide();
-            //$scope.showDialog('Archivo guardado');
           }
         })
         .catch(function(err) {

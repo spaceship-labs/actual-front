@@ -142,51 +142,57 @@
 .icon-oportunidades:before {
   content: '\e926';
 }
-.icon-pedidos:before {
+.icon-PDF:before {
   content: '\e927';
 }
-.icon-phone:before {
+.icon-pedidos:before {
   content: '\e928';
 }
-.icon-photo:before {
+.icon-phone:before {
   content: '\e929';
 }
-.icon-place:before {
+.icon-photo:before {
   content: '\e92a';
 }
-.icon-pointer:before {
+.icon-place:before {
   content: '\e92b';
 }
-.icon-precio:before {
+.icon-pointer:before {
   content: '\e92c';
 }
-.icon-scaner-asociar:before {
+.icon-precio:before {
   content: '\e92d';
 }
-.icon-scaner:before {
+.icon-printer:before {
   content: '\e92e';
 }
-.icon-scorecard:before {
+.icon-scaner:before {
   content: '\e92f';
 }
-.icon-search:before {
+.icon-scaner-asociar:before {
   content: '\e930';
 }
-.icon-settings:before {
+.icon-scorecard:before {
   content: '\e931';
 }
-.icon-sillas:before {
+.icon-search:before {
   content: '\e932';
 }
-.icon-sofa:before {
+.icon-settings:before {
   content: '\e933';
 }
-.icon-terminal:before {
+.icon-sillas:before {
   content: '\e934';
 }
-.icon-transfer:before {
+.icon-sofa:before {
   content: '\e935';
 }
-.icon-vendedor:before {
+.icon-terminal:before {
   content: '\e936';
+}
+.icon-transfer:before {
+  content: '\e937';
+}
+.icon-vendedor:before {
+  content: '\e938';
 }

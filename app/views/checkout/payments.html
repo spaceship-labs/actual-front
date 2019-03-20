@@ -107,8 +107,31 @@
           <strong>RESUMEN</strong>
         </h1>
 
+        <div ng-if="!vm.asociateEwalletStatus" flex="40" class="input-element">
+          <label class="input-label"><i class="icon-arrow"></i></label>
+          <div layout="row" class="margin-button">
+            <a
+              href="#"
+              ng-click="vm.print()"
+              class="payment-view-btn form-view-btn-100"
+            >
+              <span class="icon-printer align"></span>
+              <strong>IMPRIMIR</strong>
+            </a>
+          </div>
+          <div layout="row" class="margin-button">
+            <a
+              ng-click="vm.EwalletFile('ewalletFile')"
+              href=""
+              class="form-view-btn  form-view-btn-100"
+            >
+              <span class="icon-PDF align"></span>
+              <strong> Adjuntar archivo</strong>
+            </a>
+          </div>
+        </div>
         <h1
-          ng-if="!vm.ewallet"
+          ng-if="vm.asociateEwalletStatus === true && !vm.ewallet"
           class="cart-title-ewallet"
           ng-click="vm.asociateEwallet('asociate')"
         >

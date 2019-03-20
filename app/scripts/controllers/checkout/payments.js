@@ -61,6 +61,7 @@ function CheckoutPaymentsCtrl(
     updateVMQuotation: updateVMQuotation,
     isStoreManager: authService.isStoreManager($rootScope.user),
     getEwallet: getEwallet,
+    EwalletFile: EwalletFile,
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
@@ -83,7 +84,6 @@ function CheckoutPaymentsCtrl(
       .then(function(res) {
         vm.quotation = res.data;
         loadSapLogs(vm.quotation.id);
-
         return $q.all([
           quotationService.validateQuotationStockById(vm.quotation.id),
           loadPaymentMethods(),
@@ -118,6 +118,10 @@ function CheckoutPaymentsCtrl(
           $location.path('/checkout/client/' + vm.quotation.id);
           return;
         }
+        console.log('datos globales', vm);
+        if (vm.quotation.Client.EwalletContract) {
+          vm.asociateEwalletStatus = true;
+        } else vm.asociateEwalletStatus = false;
 
         vm.quotation.ammountPaid = vm.quotation.ammountPaid || 0;
         vm.isLoading = false;
@@ -399,6 +403,7 @@ function CheckoutPaymentsCtrl(
       .getEwalletById(vm.ewallet.id)
       .then(function(ewallet) {
         vm.ewallet = ewallet;
+        vm.asociateEwalletStatus = false;
         var ewalletAmount = vm.ewallet.amount;
         vm.paymentMethodsGroups[0].methods[6].description =
           'Saldo disponible: ' +
@@ -593,6 +598,45 @@ function CheckoutPaymentsCtrl(
         vm.loadingEstimate = 0;
       }
     }, 1000);
+  }
+
+  function ShowEwalletFileDialog(mode) {
+    var controller = ClientsEwalletreplacementdialogCtrl;
+    var useFullScreen =
+      ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
+    return $mdDialog.show({
+      controller: [
+        '$scope',
+        '$mdDialog',
+        '$location',
+        '$timeout',
+        'ewalletService',
+        'dialogService',
+        'client',
+        'mode',
+        controller,
+      ],
+      templateUrl: 'views/clients/ewallet-replacement-dialog.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen,
+      locals: {
+        client: vm.quotation.Client.id,
+        mode: mode,
+      },
+    });
+  }
+
+  function EwalletFile(type) {
+    return ShowEwalletFileDialog(type)
+      .then(function() {
+        dialogService.showDialog('Archivo guardado');
+        vm.asociateStatus = true;
+        vm.asociateEwalletStatus = true;
+      })
+      .catch(function(err) {
+        console.log('err', err);
+      });
   }
 
   $scope.$on('$destroy', function() {
