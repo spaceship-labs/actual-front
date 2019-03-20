@@ -131,7 +131,7 @@
           </div>
         </div>
         <h1
-          ng-if="vm.asociateEwalletStatus"
+          ng-if="vm.asociateEwalletStatus === true && !vm.ewallet"
           class="cart-title-ewallet"
           ng-click="vm.asociateEwallet('asociate')"
         >

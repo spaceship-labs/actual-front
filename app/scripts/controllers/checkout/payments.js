@@ -403,6 +403,7 @@ function CheckoutPaymentsCtrl(
       .getEwalletById(vm.ewallet.id)
       .then(function(ewallet) {
         vm.ewallet = ewallet;
+        vm.asociateEwalletStatus = false;
         var ewalletAmount = vm.ewallet.amount;
         vm.paymentMethodsGroups[0].methods[6].description =
           'Saldo disponible: ' +
@@ -632,7 +633,6 @@ function CheckoutPaymentsCtrl(
         dialogService.showDialog('Archivo guardado');
         vm.asociateStatus = true;
         vm.asociateEwalletStatus = true;
-        vm.ewallet = true;
       })
       .catch(function(err) {
         console.log('err', err);
