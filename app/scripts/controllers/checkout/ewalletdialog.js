@@ -25,9 +25,8 @@ function EwalletDialogController(
     $scope.initScan();
     Quagga.onDetected(function(result) {
       Quagga.offDetected();
-      console.log('dialog detected');
       var code = result.codeResult.code;
-      console.log('CODE RESULT: ', code);
+
       $scope
         .getEwallet(code, client, type)
         .then(function(ewallet) {

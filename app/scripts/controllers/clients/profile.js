@@ -98,7 +98,7 @@ function ClientProfileCtrl(
       vm.client = formatClient(vm.client);
       vm.asociateEwalletStatus = true;
       vm.asociateStatus = true;
-
+      vm.clientEwallet = vm.client.Ewallet ? true : false;
       // if (vm.client.ewalletStatus == 'pending' || vm.client.Ewallet) {
       //   vm.asociateStatus = false;
       // } else {
@@ -171,6 +171,7 @@ function ClientProfileCtrl(
           vm.asociateEwalletStatus = true;
           if (type != 'show') {
             vm.asociateStatus = false;
+            vm.clientEwallet = true;
             dialogService.showDialog(
               'Monedenero relacionado satisfactoriamente'
             );
