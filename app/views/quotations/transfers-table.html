@@ -14,7 +14,7 @@
         </tr>
       </thead>
 
-      <tbody ng-if="vm.quotationStore.group === 'actual_marketplace'">
+      <tbody ng-if="vm.quotationStore.code === 'actual_marketplace'">
         <tr>
           <td>Pesos</td>
           <td>Banamex</td>
@@ -26,7 +26,7 @@
       </tbody>
 
       <tbody
-        ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida' && vm.quotationStore.group !== 'actual_marketplace'"
+        ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida' && vm.quotationStore.code !== 'actual_marketplace'"
       >
         <tr>
           <td>Pesos</td>
@@ -71,7 +71,7 @@
       </tbody>
 
       <tbody
-        ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida' && vm.quotationStore.group !== 'actual_marketplace'"
+        ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida' && vm.quotationStore.code !== 'actual_marketplace'"
       >
         <tr>
           <td>Pesos</td>
