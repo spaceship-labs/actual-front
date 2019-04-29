@@ -1,7 +1,6 @@
 <section ng-if="vm.quotationStore" class="transfers-table-block">
   <h2>Datos para transferencias</h2>
-  <h3>
-    <strong>Razón social: </strong> AH ACTUAL, S.A DE C.V.</h3>
+  <h3><strong>Razón social: </strong> AH ACTUAL, S.A DE C.V.</h3>
   <div class="table-list">
     <table class="dataTable row-border hover">
       <thead>
@@ -15,7 +14,20 @@
         </tr>
       </thead>
 
-      <tbody ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida'">
+      <tbody ng-if="vm.quotationStore.group === 'actual_marketplace'">
+        <tr>
+          <td>Pesos</td>
+          <td>Banamex</td>
+          <td>7013</td>
+          <td>6383408</td>
+          <td>002691701363834085</td>
+          <td>BNMXMXMM</td>
+        </tr>
+      </tbody>
+
+      <tbody
+        ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida' && vm.quotationStore.group !== 'actual_marketplace'"
+      >
         <tr>
           <td>Pesos</td>
           <td>Banamex</td>
@@ -58,7 +70,9 @@
         </tr>
       </tbody>
 
-      <tbody ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida'">
+      <tbody
+        ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida' && vm.quotationStore.group !== 'actual_marketplace'"
+      >
         <tr>
           <td>Pesos</td>
           <td>Banamex</td>
@@ -100,7 +114,6 @@
           <td>BNMXMXMM</td>
         </tr>
       </tbody>
-
     </table>
   </div>
 </section>
