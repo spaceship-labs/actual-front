@@ -34,8 +34,9 @@ function EwalletDialogController(
           $mdDialog.hide(ewallet);
         })
         .catch(function(err) {
-          console.log('err', err);
-          $scope.err = err.data;
+          Quagga.stop();
+          $mdDialog.hide(err);
+          // $scope.err = err.data;
         });
     });
   };

@@ -181,7 +181,7 @@ function ClientProfileCtrl(
         }
       })
       .catch(function(err) {
-        console.log('err', err);
+        dialogService.showDialog(err);
       });
   }
 
