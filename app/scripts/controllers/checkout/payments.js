@@ -174,7 +174,9 @@ function CheckoutPaymentsCtrl(
       })
       .catch(function(err) {
         console.log('err', err);
-        dialogService.showDialog(err);
+        if (err) {
+          dialogService.showDialog(err);
+        }
       });
   }
 
