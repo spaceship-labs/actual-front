@@ -34,8 +34,9 @@ function EwalletDialogController(
           $mdDialog.hide(ewallet);
         })
         .catch(function(err) {
-          console.log('err');
           $scope.err = err.data;
+          Quagga.stop();
+          $mdDialog.cancel(err.data);
         });
     });
   };
@@ -43,9 +44,13 @@ function EwalletDialogController(
   $timeout($scope.scanEwallet, 1000);
 
   $scope.cancel = function() {
+    Quagga.stop();
+
     $mdDialog.cancel();
   };
   $scope.hide = function() {
+    Quagga.stop();
+
     $mdDialog.hide();
   };
   $scope.save = function() {
