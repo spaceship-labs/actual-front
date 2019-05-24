@@ -75,8 +75,8 @@ module.exports = function(grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
-        //hostname:'0.0.0.0',
+        // hostname: 'localhost',
+        hostname: '0.0.0.0',
         livereload: 35729,
       },
       livereload: {
@@ -517,7 +517,7 @@ module.exports = function(grunt) {
         constants: {
           ENV: {
             name: 'dev',
-            apiEndpoint: 'http://localhost:1337',
+            apiEndpoint: 'http://192.168.0.23:1337',
             cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://localhost:3000',
             tokenPrefix: 'dev',

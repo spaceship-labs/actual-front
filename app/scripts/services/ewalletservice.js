@@ -27,7 +27,7 @@
 
     function getEwallet(cardNumber, client, type) {
       var url = '/ewallet/' + client + '/' + cardNumber + '/' + type;
-      
+
       return api.$http
         .get(url, { cache: false }, { type: type })
         .then(function(response) {
@@ -117,7 +117,7 @@
               console.log('CAMERA: ', camera);
               console.log('DEVICE: ', device);
               return device.label.indexOf('back') < 0
-                ? camera.deviceId
+                ? camera.deviceId || camera
                 : device.deviceId;
             }, devices[0]);
             console.log('CAM: ', cam);
