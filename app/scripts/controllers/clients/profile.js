@@ -96,9 +96,9 @@ function ClientProfileCtrl(
       vm.isLoading = false;
       vm.client = res.data;
       vm.client = formatClient(vm.client);
+      vm.asociateStatus = vm.client.EwalletContract ? true : false;
       vm.asociateEwalletStatus = true;
-      vm.asociateStatus = true;
-
+      vm.clientEwallet = vm.client.Ewallet ? true : false;
       // if (vm.client.ewalletStatus == 'pending' || vm.client.Ewallet) {
       //   vm.asociateStatus = false;
       // } else {
@@ -160,27 +160,33 @@ function ClientProfileCtrl(
   function asociateEwallet(type) {
     return showAsociateEwalletDialog(type)
       .then(function(ewallet) {
-        console.log('type', type);
-        if (vm.client.id === ewallet.Client) {
-          vm.ewallet = ewallet;
-          vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
-          vm.ewallet.mxnAmount = paymentService.pointsToMXN(
-            vm.ewallet.amount,
-            vm.ewallet.exchangeRate
-          );
-          vm.asociateEwalletStatus = true;
-          if (type != 'show') {
-            vm.asociateStatus = false;
-            dialogService.showDialog(
-              'Monedenero relacionado satisfactoriamente'
+        console.log('client', vm.client);
+        console.log('ewallet', vm.ewallet);
+        if (vm.client.EwalletContract) {
+          if (vm.client.id === ewallet.Client) {
+            vm.ewallet = ewallet;
+            vm.ewallet.amount = parseFloat(vm.ewallet.amount.toFixed(2));
+            vm.ewallet.mxnAmount = paymentService.pointsToMXN(
+              vm.ewallet.amount,
+              vm.ewallet.exchangeRate
             );
+            vm.asociateEwalletStatus = true;
+            if (type != 'show') {
+              vm.asociateStatus = false;
+              vm.clientEwallet = true;
+              dialogService.showDialog(
+                'Monedenero relacionado satisfactoriamente'
+              );
+            }
+          } else {
+            dialogService.showDialog('Monedero no corresponde al Cliente');
           }
         } else {
-          dialogService.showDialog('Monedero no corresponde al Cliente');
+          dialogService.showDialog('Cliente no tiene un contrato activo');
         }
       })
       .catch(function(err) {
-        console.log('err', err);
+        dialogService.showDialog(err);
       });
   }
 
