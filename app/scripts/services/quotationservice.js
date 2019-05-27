@@ -477,6 +477,14 @@
     function getPointersSources() {
       var sources = [
         {
+          label: 'Llamada',
+          value: 'llamada',
+          childs: [
+            { label: 'Asesor', value: 'asesor' },
+            { label: 'Cliente', value: 'cliente' }
+          ]
+        },
+        {
           label: 'Internet',
           value: 'internet',
           childs: [
@@ -610,6 +618,8 @@
               value: 'marina-condos-and-canal-homes'
             },
             { label: 'Artila', value: 'artila' },
+            { label: 'X Towers', value: 'x-towers' },
+            { label: 'Antaal', value: 'antaal' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
