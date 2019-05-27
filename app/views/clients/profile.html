@@ -29,7 +29,7 @@
           <i class="icon-monedero"></i> CONSULTAR SALDO
         </a>
       </h4>
-      <h4 ng-if="vm.client.Ewallet && vm.ewallet">
+      <h4 ng-if="vm.ewallet">
         <p class="primary-link">
           {{ vm.ewallet.amount | numberwithcomma }} puntos ({{
             vm.ewallet.mxnAmount | currency
