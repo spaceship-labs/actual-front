@@ -186,7 +186,9 @@ function ClientProfileCtrl(
         }
       })
       .catch(function(err) {
-        dialogService.showDialog(err);
+        console.log('error dialogo', err);
+
+        dialogService.showDialog('Error al asociar monedero');
       });
   }
 
