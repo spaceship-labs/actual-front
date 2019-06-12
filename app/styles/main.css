@@ -4265,6 +4265,12 @@ padding-left: 16px;
 /*---------------/
   #CASH-REPORT
 /*--------------*/
+
+@page { 
+size:  auto; 
+margin: 100px;
+}
+
 .cash-report-config{
   border: 1px solid #000;
   margin: 10px 0;
@@ -4284,15 +4290,16 @@ padding-left: 16px;
   color: #000;
 }
 
-.cash-report-wrapper{padding:20px;}
-.cash-report table{width: 100%}
-.cash-report .store-report-header-col:last-child{text-align: right;}
+.cash-report-wrapper{padding:20px; }
+
+.cash-report table{width: 100%;}
+.cash-report .store-report-header-col:last-child{text-align: right; }
 .cash-report h1{
   font-size: 22px;
   font-weight: 700;
   text-align: center;
 }
-.cash-report h2{font-size: 16px}
+.cash-report h2{font-size: 16px;  }
 .cash-report h3{
   font-size: 14px;
   font-weight: 400;
@@ -4310,7 +4317,7 @@ padding-left: 16px;
   margin: 2px 0;
 }
 .cash-report .seller-item:nth-child(odd){
-  background: #F8F8F8
+  background: #F8F8F8;
 }
 .cash-report .method-group{
   padding: 5px 0;
