@@ -4268,7 +4268,8 @@ padding-left: 16px;
 
 @page { 
 size:  auto; 
-margin: 100px;
+margin-top: 20px;
+margin-bottom: 80px;
 }
 
 .cash-report-config{
