@@ -109,6 +109,7 @@
       address.address = address.Address;
       address.phone = address.phone || address.Tel1;
       address.mobile = address.mobilePhone || address.Cellolar;
+      address.authorizedPerson = address.U_perautor;
       return address;
     }
   }
