@@ -52,14 +52,15 @@ function CheckoutOrderCtrl(
   });
 
   function hasTerminalPayments(payments) {
-    return payments.some(
-      payment =>
+    return payments.some(function(payment) {
+      return (
         payment.type !== 'cash' &&
         payment.type !== 'cash-usd' &&
         payment.type !== 'client-credit' &&
         payment.type !== 'client-balance' &&
         payment.currency !== 'usd'
-    );
+      );
+    });
   }
 
   function calculateBalance(paid, total) {
