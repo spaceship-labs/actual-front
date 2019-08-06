@@ -47,8 +47,20 @@ function CheckoutOrderCtrl(
     isStoreManager: authService.isStoreManager($rootScope.user),
     isAccountingUser: authService.isAccountingUser($rootScope.user),
     isCanceled: orderService.isCanceled,
-    isPaymentCanceled: paymentService.isCanceled
+    isPaymentCanceled: paymentService.isCanceled,
+    hasTerminalPayments: hasTerminalPayments
   });
+
+  function hasTerminalPayments(payments) {
+    return payments.some(
+      payment =>
+        payment.type !== 'cash' &&
+        payment.type !== 'cash-usd' &&
+        payment.type !== 'client-credit' &&
+        payment.type !== 'client-balance' &&
+        payment.currency !== 'usd'
+    );
+  }
 
   function calculateBalance(paid, total) {
     return orderService.calculateBalance(

@@ -16,8 +16,16 @@
 		<hr/>
 
 		<p>Recibí tríptico de información, el cual contiene Información de Entregas, Condiciones Generales e Información de Garantías.</p>
-		<p>Estoy de acuerdo que para artículos con un descuento del 26% o más no aplica cambio por garantía.</p>
-    <p>Autorizo que los productos comprados en su establecimiento sean entregados en el docimicilio previamente pactado a las siguientes personas: <strong>{{vm.order.Address.authorizedPerson}}</strong></p>
+    <p>Estoy de acuerdo que para artículos con un descuento del 26% o más no aplica cambio por garantía.</p>
+    <p ng-if="vm.hasTerminalPayments(vm.order.Payments) === true">Por medio del presente les informo que autorizo que los productos comprados en su establecimiento el día <strong>{{vm.order.createdAt | date:'d/MMM/yyyy'}}</strong> con mi(s) tarjeta(s) bancaria(s) terminación <strong ng-repeat="payment in vm.order.Payments" ng-if="payment.type !== 'cash' &&
+      payment.type !== 'cash-usd' &&
+      payment.type !== 'client-credit' &&
+      payment.type !== 'client-balance' &&
+      payment.currency !== 'usd'">
+        {{payment.cardLastDigits}},
+      </strong> por el importe de <strong>{{vm.order.total | roundCurrency}} MXN</strong></p>
+		<p ng-if="vm.order.Address.authorizedPerson.length > 0">Autorizo que los productos comprados en su establecimiento sean entregados en el docimicilio previamente pactado a las siguientes personas: <strong>{{vm.order.Address.authorizedPerson}}</strong></p>
+
 
 	  <div class="client-signature">
 	    <p><span class="signature-line"></span></p>
