@@ -78,7 +78,7 @@
             type="text"
             ng-model="vm.client.FirstName"
             required
-            ng-disabled="!vm.personalEditEnabled">
+            ng-disabled="!vm.personalEditEnabled || !vm.isUserAdminOrManager">
         </div>
       </div>
 
