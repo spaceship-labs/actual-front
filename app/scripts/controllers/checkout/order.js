@@ -10,6 +10,7 @@ function CheckoutOrderCtrl(
   $routeParams,
   $rootScope,
   $location,
+  $filter,
   dialogService,
   quotationService,
   orderService,
@@ -25,6 +26,7 @@ function CheckoutOrderCtrl(
   angular.extend(vm, {
     toggleRecord: toggleRecord,
     isLoading: false,
+    terminalPaymentsString: '',
     api: api,
     generateInvoice: generateInvoice,
     cancel: cancel,
@@ -50,6 +52,28 @@ function CheckoutOrderCtrl(
     isPaymentCanceled: paymentService.isCanceled,
     hasTerminalPayments: hasTerminalPayments
   });
+
+  function formatTerminalPayments(payments) {
+    payments.forEach(function(payment) {
+      if (
+        payment.type !== 'cash' &&
+        payment.type !== 'cash-usd' &&
+        payment.type !== 'client-credit' &&
+        payment.type !== 'client-balance' &&
+        payment.currency !== 'usd'
+      ) {
+        vm.terminalPaymentsString +=
+          ' ' +
+          (payment.card.charAt(0).toUpperCase() + payment.card.slice(1)) +
+          ' con terminación ' +
+          payment.cardLastDigits +
+          ' por el importe ' +
+          $filter('currency')(commonService.roundCurrency(payment.ammount)) +
+          ',';
+      }
+    });
+    vm.terminalPaymentsString = vm.terminalPaymentsString.slice(0, -1);
+  }
 
   function hasTerminalPayments(payments) {
     return payments.some(function(payment) {
@@ -118,7 +142,7 @@ function CheckoutOrderCtrl(
         vm.order.Details = vm.order.Details || [];
         vm.order.Address = orderService.formatAddress(vm.order.Address);
         vm.series = groupSeries(vm.order.OrdersSap);
-
+        formatTerminalPayments(vm.order.Payments);
         vm.isLoading = false;
 
         quotationService
