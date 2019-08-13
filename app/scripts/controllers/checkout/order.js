@@ -62,6 +62,8 @@ function CheckoutOrderCtrl(
         payment.type !== 'client-balance' &&
         payment.type !== 'transfer' &&
         payment.type !== 'transfer-usd' &&
+        payment.type !== 'cheque' &&
+        payment.type !== 'deposit' &&
         payment.currency !== 'usd'
       ) {
         vm.terminalPaymentsString +=
