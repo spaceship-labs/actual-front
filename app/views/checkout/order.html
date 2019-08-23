@@ -1,4 +1,5 @@
-<div ng-if="vm.isLoading" layout-fill layout="row" layout-sm="column" layout-align="center center" class="loading-circle">
+<div ng-if="vm.isLoading" layout-fill layout="row" layout-sm="column" layout-align="center center"
+  class="loading-circle">
   <md-progress-circular class="md-accent" md-diameter="100px"></md-progress-circular>
 </div>
 
@@ -64,7 +65,6 @@
 
       <p>
         <strong>Tienda:</strong> {{vm.order.Store.name}}</p>
-      <br />
     </div>
 
     <!--ORDER ITEMS-->
@@ -180,7 +180,8 @@
           </div>
         </div>
 
-        <div class="order-payment-item" layout="row" layout-align="space-between center" ng-repeat="payment in vm.order.Payments">
+        <div class="order-payment-item" layout="row" layout-align="space-between center"
+          ng-repeat="payment in vm.order.Payments">
           <div ng-if="payment.type == 'cash'" flex class="order-payment-item-data">
             <span>
               <i class="icon-cash"></i>
@@ -203,7 +204,8 @@
             <p class="small-note">Tipo de cambio: {{payment.exchangeRate | currency}} MXN</p>
           </div>
 
-          <div ng-if="payment.type !== 'cash' && payment.type !== 'cash-usd' && payment.currency !== 'usd' " flex class="order-payment-item-data">
+          <div ng-if="payment.type !== 'cash' && payment.type !== 'cash-usd' && payment.currency !== 'usd' " flex
+            class="order-payment-item-data">
             <span>
               <i class="icon-terminal"></i>
             </span>
@@ -250,8 +252,7 @@
           <p>
             <strong>SALDO:</strong>
           </p>
-
-          <br />
+          <br/>
           <p>
             <strong>SALDO CLIENTE:</strong>
           </p>
@@ -277,7 +278,6 @@
           <p>
             <strong>{{vm.calculateBalance( vm.order.ammountPaid, vm.order.total ) | currency }} MXN</strong>
           </p>
-
           <br />
           <p>
             <strong>{{(vm.order.Client.Balance) | currency}}</strong>
@@ -287,31 +287,31 @@
 
     </div>
     <!--END ORDER PAYMENTS-->
-    <div layout="row" >
-    <!--ENVIO-->
-    <div class="order-block delivery-block order-block-info" flex="50">
-      <h3>
-        <strong>
-          <i class="icon-envio"></i> ENVÍO</strong>
-      </h3>
-      <div class="order-block-inner">
-        <div class="resp-delivery" layout="row" layout-xs="column">
-          <div flex>
-            <p>
-              <strong>Email: </strong>{{vm.order.E_Mail}}</p>
-            <p>
-              <strong>Télefono: </strong>{{vm.order.Tel1}}</p>
-            <p>
-              <strong>Celular: </strong>{{vm.order.Cellolar}}</p>
-            <p>
-              <strong>Calle:</strong>{{vm.order.address}}</p>
-            <p>
-              <strong>No. exterior: </strong>{{vm.order.U_Noexterior}}</p>
-            <p>
-              <strong>No. interior: </strong>{{vm.order.U_Nointerior}}</p>
-            <p>
-              <strong>Colonia: </strong>{{vm.order.U_Colonia}}</p>
-            <p>
+    <div layout="row">
+      <!--ENVIO-->
+      <div class="order-block delivery-block order-block-info" flex="50">
+        <h3>
+          <strong>
+            <i class="icon-envio"></i> ENVÍO</strong>
+        </h3>
+        <div class="order-block-inner">
+          <div class="resp-delivery" layout="row" layout-xs="column">
+            <div flex>
+              <p>
+                <strong>Email: </strong>{{vm.order.E_Mail}}</p>
+              <p>
+                <strong>Télefono: </strong>{{vm.order.Tel1}}</p>
+              <p>
+                <strong>Celular: </strong>{{vm.order.Cellolar}}</p>
+              <p>
+                <strong>Calle:</strong>{{vm.order.address}}</p>
+              <p>
+                <strong>No. exterior: </strong>{{vm.order.U_Noexterior}}</p>
+              <p>
+                <strong>No. interior: </strong>{{vm.order.U_Nointerior}}</p>
+              <p>
+                <strong>Colonia: </strong>{{vm.order.U_Colonia}}</p>
+              <p>
                 <strong>Municipio: </strong>{{vm.order.U_Mpio}}</p>
               <p>
                 <strong>Ciudad: </strong>{{vm.order.U_Ciudad}}</p>
@@ -325,146 +325,134 @@
                 <strong>Y calle: </strong>{{vm.order.U_Ycalle}}</p>
               <p>
                 <strong>Referencias: </strong>{{vm.order.U_Notes1}}</p>
-          </div>
-          <!-- <div class="order-block delivery-block order-block-info" flex> -->
-          <!-- <div class="delivery-block order-block-info" flex="50">
-            <h3>
-                <strong>
-                  <i class="icon-vendedor"></i> ATENCIÓN A CLIENTES</strong>
-              </h3>
-              <div class="order-block-inner" layout="row" layout-align="space-between center">
-                <div flex="40">
-                  <p>
-                    <strong>Celular: </strong>(998) 195 8376</p>
-                  <p>
-                    <strong>Celular: </strong>(998) 195 6839</p>
-                  <p>
-                    <strong>Email:</strong> clientes@actualg.com</p>
-                </div>
-                <div flex="20">
-                  <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
-                    <strong>IMPRIMIR RECIBO</strong>
-                  </a>
-                  <a href="#" ng-if="!vm.invoiceExists && vm.isUserAdmin" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
-                    <strong>GENERAR FACTURA</strong>
-                  </a>
-                  <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
-                    <strong>ENVIAR FACTURA</strong>
-                  </a>
-                  <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
-                    <strong>CANCELAR PEDIDO</strong>
-                  </a>
-                </div>
-              </div>
-          </div> -->
-        </div>
-        <br>
-        <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
-        <ul>
-          <li>
-            <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
-            compra.</li>
-          <li>
-            <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
-          <li>
-            <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega</li>
-        </ul>
-      </div>
-    </div>
-    <!--END ENVIO-->
-
-    <!--ATENCION A CLIENTES-->
-    <div class="order-block seller-block order-block-info" flex="50">
-      <h3>
-        <strong>
-          <i class="icon-vendedor"></i> ATENCIÓN A CLIENTES</strong>
-      </h3>
-      <div class="order-block-inner" layout="row" layout-align="space-between center">
-        <div flex="40">
-          <p>
-            <strong>Celular: </strong>(998) 195 8376</p>
-          <p>
-            <strong>Celular: </strong>(998) 195 6839</p>
-          <p>
-            <strong>Email:</strong> clientes@actualg.com</p>
-        </div>
-        <div flex="20">
-          <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
-            <strong>IMPRIMIR RECIBO</strong>
-          </a>
-          <a href="#" ng-if="!vm.invoiceExists && vm.isUserAdmin" ng-click="vm.generateInvoice()" class="action-btn action-btn-save print-btn">
-            <strong>GENERAR FACTURA</strong>
-          </a>
-          <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()" class="action-btn action-btn-save print-btn">
-            <strong>ENVIAR FACTURA</strong>
-          </a>
-          <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isUserAdmin)" ng-click="vm.cancel()" class="action-btn action-btn-save print-btn">
-            <strong>CANCELAR PEDIDO</strong>
-          </a>
-        </div>
-      </div>
-      <div flex>
-          <div layout="row" layout-align="space-between end">
-              <div>
-                <row3>
-                  <strong>
-                    <i class="icon-vendedor"></i> ASESOR DE INTERIORES</strong>
-                </row3>
-                <div class="order-block-inner">
-                  <p>
-                    <strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong>
-                  </p>
-                  <p>
-                    <strong>Teléfono: </strong>{{vm.order.User.phone}}</p>
-                  <p>
-                    <strong>Celular: </strong>{{vm.order.User.mobilePhone}}</p>
-                  <p>
-                    <strong>Email:</strong> {{vm.order.User.email}}</p>
-                </div>
-              </div>
-          
-              <section class="order-texts">
-                <div class="signature-section signature-section-flex">
-          
-                  <div class="client-signature">
-                    <!-- <p>
-                      <span class="signature-line"></span>
-                    </p>
-                    <p>
-                      <span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span>
-                    </p>
-                    <p>Recibí las formas de pagos aplicadas en esta orden</p> -->
-                    <p>Estimado cliente:
-                      En nuestras tiendas tenemos muebles creados por verdaderos artistas y artesanos, estos productos de línea:</p>
-                    <p>Son fabricados con maderas naturales y están tapizados a mano. Por ésta razón podrán contar con diferencias en
-                      cuanto a tonos, nudos y poros. Así como diferencias de hasta 3cm en sus medidas.</p>
-                  </div>
-                </div>
-              </section>
-          
             </div>
-          
-            <hr class="only-show-print" />
-            <p class="only-show-print show-print" style="font-size: 19px">Favor de solicitar su factura antes de realizar el
-              pago, ya que no hay refacturación</p>
-            <!--END SELLER-->
+          </div>
+          <!-- <br>
+          <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
+          <ul>
+            <li>
+              <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
+              compra.</li>
+            <li>
+              <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
+            <li>
+              <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega</li>
+          </ul> -->
+        </div>
+      </div>
+      <!--END ENVIO-->
+
+      <!--ATENCION A CLIENTES-->
+      <div class="order-block seller-block order-block-info" layout="row" flex="50">
+        <div layout="row" flex="100">
+          <div class="order-block-inner" flex>
+            <h3>
+              <strong>
+                <i class="icon-vendedor"></i> ATENCIÓN A CLIENTES</strong>
+            </h3>
+            <div lass="order-block-inner">
+              <p>
+                <strong>Celular: </strong>(998) 195 8376</p>
+              <p>
+                <strong>Celular: </strong>(998) 195 6839</p>
+              <p>
+                <strong>Email:</strong> clientes@actualg.com</p>
+            </div>
+            <h3>
+              <strong>
+                <i class="icon-vendedor"></i>ASESOR DE INTERIORES</strong>
+            </h3>
+            <div>
+              <p>
+                <strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong>
+              </p>
+              <p>
+                <strong>Teléfono: </strong>{{vm.order.User.phone}}</p>
+              <p>
+                <strong>Celular: </strong>{{vm.order.User.mobilePhone}}</p>
+              <p>
+                <strong>Email:</strong> {{vm.order.User.email}}</p>
+            </div>
+          </div>
+          <div class="order-block-inner" layout-align="space-between center">
+            <div>
+              <a href="#" ng-click="vm.print()" class="action-btn action-btn-save print-btn">
+                <strong>IMPRIMIR RECIBO</strong>
+              </a>
+              <a href="#" ng-if="!vm.invoiceExists && vm.isUserAdmin" ng-click="vm.generateInvoice()"
+                class="action-btn action-btn-save print-btn">
+                <strong>GENERAR FACTURA</strong>
+              </a>
+              <a href="#" ng-if="vm.invoiceExists" ng-click="vm.sendInvoice()"
+                class="action-btn action-btn-save print-btn">
+                <strong>ENVIAR FACTURA</strong>
+              </a>
+              <a href="#" ng-if="!vm.isCanceled(vm.order) && (vm.isUserAdmin)" ng-click="vm.cancel()"
+                class="action-btn action-btn-save print-btn">
+                <strong>CANCELAR PEDIDO</strong>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- SELLER -->
+    <div class="seller-block order-block-info" layout="row">
+      <div >
+          <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
+          <ul>
+            <li>
+              <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
+              compra.</li>
+            <li>
+              <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
+            <li>
+              <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega</li>
+          </ul>
+      </div>
+    </div>
+    <div class="seller-block order-block-info">
+      <p>Estimado cliente:
+        En nuestras tiendas tenemos muebles creados por verdaderos artistas y artesanos, estos productos de línea son
+        fabricados con maderas naturales y están tapizados a mano. Por ésta razón podrán contar con diferencias en
+        cuanto a tonos, nudos y poros. Así como diferencias de hasta 3cm en sus medidas.</p>
+      <hr class="only-show-print" />
+      <strong>
+        <p class="only-show-print show-print">Favor de solicitar su factura antes de realizar el
+          pago, ya que no hay refacturación</p>
+      </strong>
+      <section class="order-section-signature">
+          <div class="signature-section signature-section">
+            <div class="client-signature">
+              <p>
+                <span class="signature-line"></span>
+              </p>
+              <p>
+                <span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span>
+              </p>
+              <p>Recibí las formas de pagos aplicadas en esta orden</p>
+            </div>
+          </div>
+        </section>
+    </div>
+    <br/>
+    <!--END SELLER-->
     <!--END ATENCION A CLIENTES-->
   </div>
-</div>
+  </div>
 
   <!-- <hr /> -->
 
   <ng-include src="'views/checkout/order-policies.html'"></ng-include>
 
   <section id="records-view" class="records-view">
-    <h1>
+    <h3>
       <i class="icon-attachment"></i>
       <strong>BITÁCORA DE SEGUIMIENTO</strong>
-    </h1>
+    </h3>
 
-    <div ng-if="vm.isLoadingRecords" layout-fill layout="row" layout-sm="column" layout-align="center center" class="loading-circle">
+    <div ng-if="vm.isLoadingRecords" layout-fill layout="row" layout-sm="column" layout-align="center center"
+      class="loading-circle">
       <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
     </div>
 
@@ -511,9 +499,10 @@
                   </p>
 
                   <div class="record-item-block-attach">
-                    <a ng-repeat="file in record.files" ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}"
-                      target="_blank">
-                      <img ng-src="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename + '?d=300x300' }}" alt="">
+                    <a ng-repeat="file in record.files"
+                      ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}" target="_blank">
+                      <img ng-src="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename + '?d=300x300' }}"
+                        alt="">
                     </a>
                   </div>
 
@@ -553,53 +542,26 @@
 
   <ng-include class="only-hide-print" src="'views/checkout/sap-connection-logs.html'"></ng-include>
   <ng-include class="only-hide-print" src="'views/checkout/alegra-connection-logs.html'"></ng-include>
-
-
-  <!--SELLER-->
-  <!-- <div class="order-block seller-block seller-block-last order-block-info" layout="row" layout-align="space-between end">
-
-    <div>
-      <h3>
-        <strong>
-          <i class="icon-vendedor"></i> ASESOR DE INTERIORES</strong>
-      </h3>
-      <div class="order-block-inner">
+  <div class="footer-bottom center-content">
+      <div class="container container-xlg">
         <p>
-          <strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong>
+          <strong
+            >​© AH ACTUAL S.A. de C.V. 2013-2019 | Todos los derechos reservados.
+            | Todos los precios son mostrados en Pesos Mexicanos (MXN) con IVA
+            incluido.</strong
+          >
         </p>
-        <p>
-          <strong>Teléfono: </strong>{{vm.order.User.phone}}</p>
-        <p>
-          <strong>Celular: </strong>{{vm.order.User.mobilePhone}}</p>
-        <p>
-          <strong>Email:</strong> {{vm.order.User.email}}</p>
-      </div>
-    </div>
-
-    <section class="order-texts">
-      <div class="signature-section signature-section-flex">
-
-        <div class="client-signature">
+        <div>
           <p>
-            <span class="signature-line"></span>
+            <span
+              >Se prohíbe cualquier reproducción total o parcial de este
+              contenido. Es responsabilidad del proveedor garantizar la exactitud
+              de las fotografías mostradas y no nos hacemos responsables por
+              inexactitudes en las mismas.</span
+            >
           </p>
-          <p>
-            <span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span>
-          </p>
-          <p>Recibí las formas de pagos aplicadas en esta orden</p> 
-          <p>Estimado cliente:
-            En nuestras tiendas tenemos muebles creados por verdaderos artistas y artesanos, estos productos de línea:</p>
-          <p>Son fabricados con maderas naturales y están tapizados a mano. Por ésta razón podrán contar con diferencias en
-            cuanto a tonos, nudos y poros. Así como diferencias de hasta 3cm en sus medidas.</p>
         </div>
       </div>
-    </section>
-
-  </div>
-
-  <hr class="only-show-print" />
-  <p class="only-show-print show-print" style="font-size: 19px">Favor de solicitar su factura antes de realizar el
-    pago, ya que no hay refacturación</p> -->
-  <!--END SELLER-->
+    </div>
 
 </section>
