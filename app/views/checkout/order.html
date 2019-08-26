@@ -27,7 +27,7 @@
   <div class="checkout-view-inner">
 
     <div class="checkout-title order-title" layout="row" layout-align="space-between center">
-      <h1 flex="40">
+      <h1 flex="30">
         <strong>
           <span>
             <i class="icon-checkmark"></i> NÚMERO DE ORDEN:
@@ -92,7 +92,6 @@
           <h3>
             <strong>{{detailGroup.Product.Name}}</strong>
           </h3>
-
           <div layout="row" layout-align="space-between start">
             <div flex="35" layout="row">
               <div class="order-item-img">
@@ -252,7 +251,7 @@
           <p>
             <strong>SALDO:</strong>
           </p>
-          <br/>
+          <br />
           <p>
             <strong>SALDO CLIENTE:</strong>
           </p>
@@ -398,17 +397,17 @@
     </div>
     <!-- SELLER -->
     <div class="seller-block order-block-info" layout="row">
-      <div >
-          <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
-          <ul>
-            <li>
-              <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
-              compra.</li>
-            <li>
-              <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
-            <li>
-              <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega</li>
-          </ul>
+      <div>
+        <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
+        <ul>
+          <li>
+            <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
+            compra.</li>
+          <li>
+            <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
+          <li>
+            <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega</li>
+        </ul>
       </div>
     </div>
     <div class="seller-block order-block-info">
@@ -422,26 +421,24 @@
           pago, ya que no hay refacturación</p>
       </strong>
       <section class="order-section-signature">
-          <div class="signature-section signature-section">
-            <div class="client-signature">
-              <p>
-                <span class="signature-line"></span>
-              </p>
-              <p>
-                <span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span>
-              </p>
-              <p>Recibí las formas de pagos aplicadas en esta orden</p>
-            </div>
+        <div class="signature-section signature-section">
+          <div class="client-signature">
+            <p>
+              <span class="signature-line"></span>
+            </p>
+            <p>
+              <span>Firma Asesor de Interiores {{vm.order.User.firstName + ' ' +vm.order.User.lastName}}:</span>
+            </p>
+            <p>Recibí las formas de pagos aplicadas en esta orden</p>
           </div>
-        </section>
+        </div>
+      </section>
     </div>
-    <br/>
+    <br />
     <!--END SELLER-->
     <!--END ATENCION A CLIENTES-->
   </div>
   </div>
-
-  <!-- <hr /> -->
 
   <ng-include src="'views/checkout/order-policies.html'"></ng-include>
 
@@ -497,7 +494,6 @@
                   <p>
                     <strong>ARCHIVOS ADJUNTOS ({{record.files.length}})</strong>
                   </p>
-
                   <div class="record-item-block-attach">
                     <a ng-repeat="file in record.files"
                       ng-href="{{vm.api.cdnUrl + '/uploads/records/gallery/' + file.filename }}" target="_blank">
@@ -505,19 +501,16 @@
                         alt="">
                     </a>
                   </div>
-
                 </div>
               </div>
             </div>
           </td>
         </tr>
-
       </tbody>
     </table>
-
   </section>
 
-  <hr />
+  <hr/>
 
   <section ng-show="vm.order.OrdersSap && vm.order.OrdersSap.length > 0" class="sap-docs only-hide-print">
     <h3>
@@ -542,26 +535,15 @@
 
   <ng-include class="only-hide-print" src="'views/checkout/sap-connection-logs.html'"></ng-include>
   <ng-include class="only-hide-print" src="'views/checkout/alegra-connection-logs.html'"></ng-include>
-  <div class="footer-bottom center-content">
-      <div class="container container-xlg">
-        <p>
-          <strong
-            >​© AH ACTUAL S.A. de C.V. 2013-2019 | Todos los derechos reservados.
-            | Todos los precios son mostrados en Pesos Mexicanos (MXN) con IVA
-            incluido.</strong
-          >
-        </p>
-        <div>
-          <p>
-            <span
-              >Se prohíbe cualquier reproducción total o parcial de este
-              contenido. Es responsabilidad del proveedor garantizar la exactitud
-              de las fotografías mostradas y no nos hacemos responsables por
-              inexactitudes en las mismas.</span
-            >
-          </p>
-        </div>
-      </div>
-    </div>
-
+  <div class="footer-bottom center-content show-print" style="font-size: 10px">
+      <p>
+        <strong>​© AH ACTUAL S.A. de C.V. 2013-2019 | Todos los derechos reservados.
+          | Todos los precios son mostrados en Pesos Mexicanos (MXN) con IVA
+          incluido.</strong>
+        <span>Se prohíbe cualquier reproducción total o parcial de este
+          contenido. Es responsabilidad del proveedor garantizar la exactitud
+          de las fotografías mostradas y no nos hacemos responsables por
+          inexactitudes en las mismas.</span>
+      </p>
+  </div>
 </section>
