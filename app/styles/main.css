@@ -197,7 +197,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   width: 100%;
   padding: 10px;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   text-align: center;
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
@@ -4107,6 +4107,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   border-bottom: 1px solid #000;
   padding-bottom: 20px;
 }
+.order-list-send{
+  list-style-type: none;
+}
 
 .order-view .order-block-inner{
   padding: 4px 12px;
@@ -4568,6 +4571,8 @@ margin-bottom: 35px;
   .order-view .signature-section,
   .order-view .signature-section .signature-line,
   .show-print{display: block;}
+      page-break-after: auto;
+
 
   .order-view .signature-section-flex{display: flex;}
 
