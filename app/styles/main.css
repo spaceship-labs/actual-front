@@ -99,7 +99,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
 }
 .client-signature .signature-line{
   border-bottom: 2px solid #000;
-  width: 60%;
+  width: 50%;
   margin: 0 auto;
 }
 
@@ -197,7 +197,7 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   width: 100%;
   padding: 10px;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   text-align: center;
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
@@ -4107,6 +4107,9 @@ md-radio-button.md-checked .md-off{border-color: #000!important;}
   border-bottom: 1px solid #000;
   padding-bottom: 20px;
 }
+.order-list-send{
+  list-style-type: none;
+}
 
 .order-view .order-block-inner{
   padding: 4px 12px;
@@ -4219,7 +4222,7 @@ padding-left: 16px;
 .order-view .order-block-info p{
   color: #6B6B6B;
   margin: 4px 0;
-  font-size: 13px;
+  font-size: 12px;
 }
 .order-view .order-block-info ul{
   padding-left: 20px;
@@ -4252,6 +4255,13 @@ padding-left: 16px;
 }
 .order-view .sap-docs p{margin: 4px 0}
 
+.order-section-signature {
+  margin-left: 30%;
+  margin: auto;
+  width: 80%;
+  
+}
+
 /*-----------------/
   #SAP-CONNECTION-LOGS
 /*----------------*/
@@ -4269,13 +4279,13 @@ padding-left: 16px;
 @page { 
 size:  auto; 
 margin-top: 20px;
-margin-bottom: 80px;
+margin-bottom: 35px;
 }
 
 .cash-report-config{
   border: 1px solid #000;
   margin: 10px 0;
-  padding:20px;
+  padding:10px;
 }
 .cash-report{
   border: 1px solid #000;
@@ -4528,7 +4538,7 @@ margin-bottom: 80px;
 }
 
 
-@media screen and (max-width: 960px){
+@media screen and (max-width: 980px){
   .header-top-bar.fixed-head{position:static;}
 }
 
@@ -4561,6 +4571,8 @@ margin-bottom: 80px;
   .order-view .signature-section,
   .order-view .signature-section .signature-line,
   .show-print{display: block;}
+      page-break-after: auto;
+
 
   .order-view .signature-section-flex{display: flex;}
 
@@ -4591,8 +4603,6 @@ margin-bottom: 80px;
   .quotation-view .stock-alert-layer{display: none;}
 
 }
-
-
 
 /*ICON LINK*/
 .icon-link.gray{
