@@ -585,7 +585,6 @@
           label: 'Recomendado Cancún',
           value: 'recomendado-cancun',
           childs: [
-            { label: 'Quinta Maretta', value: 'quinta-maretta' },
             { label: 'Live Desarrollos', value: 'live-desarrollos' },
             { label: 'Cumbres Towers', value: 'cumbres-towers' },
             { label: 'Long Island', value: 'long-island' },
@@ -613,6 +612,9 @@
             { label: 'Riva', value: 'riva' },
             { label: 'Marea', value: 'marea' },
             { label: 'Palmar Residencial', value: 'palmar-residencial' },
+            { label: 'Blume', value: 'blume' },
+            { label: 'Icono Towers', value: 'icono-towers' },
+            { label: 'Punta del mar', value: 'punta-del-mar' },
             {
               label: 'Marina Condos & Canal Homes',
               value: 'marina-condos-and-canal-homes'
@@ -646,6 +648,9 @@
             { label: 'The Shore', value: 'the-shore' },
             { label: 'Central Park', value: 'central-park' },
             { label: 'iPlaya', value: 'iplaya' },
+            { label: 'Siaan', value: 'siaan' },
+            { label: 'Aldea Serena', value: 'aldea-serena' },
+            { label: 'Selvanova', value: 'selvanova' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -677,6 +682,7 @@
           value: 'recomendado-puerto-morelos',
           childs: [
             { label: 'Palma Real', value: 'palma-real' },
+            { label: 'Quinta Maretta', value: 'quinta-maretta' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -693,6 +699,9 @@
             { label: 'Anah', value: 'anah' },
             { label: 'Casa', value: 'casa' },
             { label: 'Carmela', value: 'carmela' },
+            { label: 'bungalos-village', value: 'bungalos-village' },
+            { label: 'mistiq', value: 'mistiq' },
+
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         }
