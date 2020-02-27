@@ -31,10 +31,13 @@
 					autorizo que los productos comprados en su establecimiento el día
 					<strong>{{vm.order.createdAt | date:'d/MMM/yyyy'}}</strong> con mi(s) tarjeta(s) bancaria(s)
 					{{vm.terminalPaymentsString}}.
-					<p ng-if="vm.order.Address.authorizedPerson.length > 0">Autorizo que los productos comprados en su
-						establecimiento sean entregados en el domicilio previamente pactado a las siguientes personas:
-						<strong>{{vm.order.Address.authorizedPerson}}</strong></p>
-
+					<p>
+						Autorizo que los productos comprados en su establecimiento sean entregados en el domicilio
+						previamente pactado a las siguientes personas:
+						<strong>
+							{{vm.order.Address.authorizedPerson.length > 0 ? vm.order.Address.authorizedPerson:vm.order.Client.CardName}}
+						</strong>
+					</p>
 					<div class="client-signature">
 						<p><span class="signature-line"></span></p>
 						<p><span>Firma cliente {{vm.order.Client.CardName}}:</span>
