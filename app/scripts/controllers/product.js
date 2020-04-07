@@ -123,7 +123,7 @@ function ProductCtrl(
     vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
     vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
     // covid remove next line
-    vm.deliveriesGroups = $filter('filter')(vm.deliveriesGroups, {ImmediateDelivery:false},true);
+    //vm.deliveriesGroups = $filter('filter')(vm.deliveriesGroups, {ImmediateDelivery:false},true);
     vm.available = deliveryService.getAvailableByDeliveries(deliveries);
 
     if (vm.deliveries && vm.deliveries.length > 0) {
