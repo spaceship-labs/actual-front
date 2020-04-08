@@ -4371,7 +4371,10 @@ font-size: 20px;
   padding: 2px 6px;
 }
 
-.order-view .order-item h3{margin: 4px 0;}
+.order-view .order-item h3{
+  margin: 4px 0;
+  max-width: 25vw;
+}
 .order-view .order-item-img img{
   max-width: 105px;
   border: 1px solid #000;
