@@ -120,10 +120,20 @@ function ProductCtrl(
     deliveries = $filter('orderBy')(deliveries, 'date');
 
     vm.deliveries = deliveries;
+    var newDeliveries = []
+    for(var i=0;i<vm.deliveries.length;i++){
+      if(vm.deliveries[i].days >= 0){
+        newDeliveries.push(vm.deliveries[i]);
+      }
+    }
+    deliveries = newDeliveries;
+    vm.deliveries = newDeliveries;
+    console.log('deliveries',deliveries);
     vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
     vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
     // covid remove next line
     //vm.deliveriesGroups = $filter('filter')(vm.deliveriesGroups, {ImmediateDelivery:false},true);
+
     vm.available = deliveryService.getAvailableByDeliveries(deliveries);
 
     if (vm.deliveries && vm.deliveries.length > 0) {
