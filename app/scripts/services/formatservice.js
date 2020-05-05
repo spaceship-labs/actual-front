@@ -31,7 +31,7 @@
     // @author Rodolfo Carmona
     // @contributor Jean (jpbadoino@gmail.com)
     /*************************************************************/
-  function formatService(){
+  function formatService($filter){
 
       function Unidades(num){
 
@@ -182,7 +182,7 @@
                   else
                       return Millones(data.centavos) + " " + data.letrasMonedaCentavoPlural;
                   })();
-          };
+          }
 
           if(data.enteros == 0)
               return "CERO " + data.letrasMonedaPlural + " " + data.letrasCentavos;
@@ -191,11 +191,44 @@
           else
               return Millones(data.enteros) + " " + data.letrasMonedaPlural + " " + data.letrasCentavos;
       }//NumeroALetras()
+      function yesNoFormat(data){
+        return data ? 'Si' : 'No';
+      }
 
+      function nullFormat(data){
+        return data ? data : 'No asignado';        
+      }
+
+      function dateTimeFormat(data){
+        return $filter('date')(data, 'd/MMM/yyyy h:mm a');      
+      }
+
+      function dateFormat(data){
+        return $filter('date')(data, 'd/MMM/yyyy');  
+      }
+
+      function currencyFormat(data){
+        return $filter('currency')(data);
+      }
+
+      function rateFormat(data){
+        return $filter('number')(data) + '%';
+      }
+      function urlFormat(data){
+        return 'http://ventas.miactual.com/quotations/edit/'+data;
+      }
       var service = {
-        numberToLetters: numberToLetters
+        numberToLetters: numberToLetters,
+        nullFormat: nullFormat,
+        yesNoFormat: yesNoFormat,
+        dateTimeFormat: dateTimeFormat,
+        dateFormat: dateFormat,
+        currencyFormat: currencyFormat,
+        rateFormat: rateFormat,
+        urlFormat: urlFormat
       };
       return service;
 
   }
+  
 })();
