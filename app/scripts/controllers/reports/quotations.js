@@ -21,6 +21,7 @@ angular
     clientService,
     userService,
     storeService,
+    authService,
     commonService
   ) {
     var vm = this;
@@ -41,6 +42,9 @@ angular
       dateRange: {
         field: 'createdAt'
       },
+      isStoreManager: authService.isStoreManager($rootScope.user),
+      isAdmin: authService.isAdmin($rootScope.user),
+
       apiResourceQuotations: quotationService.getGeneralList,
       onStartDateSelected: onStartDateSelected,
       onEndDateSelected: onEndDateSelected,

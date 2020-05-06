@@ -1,20 +1,26 @@
-<div id="reports">
-  <div class="container container-xl">
-    <div class="head-reports" layout="row" layout-align="space-between center">
-      <div layout="row" layout-align="center center">
-        <i class="icon-pedidos"></i>
-        <h1>COTIZACIONES</h1>
-      </div>
-    </div>
-    <hr />
-    <br />
-    <ng-include src="'views/reports/quotation-report-filters.html'"></ng-include>
-    <section class="table-list-wrap">
-      <div table-list class="table-list" default-sort="vm.defaultSort" columns="vm.columnsQuotations"
-        filters="vm.searchParams" date-range="vm.dateRange" client-search-term="vm.clientSearchTerm"
-        export-query="vm.exportQuery" export-event-emitter-name="vm.triggerExportName"
-        search-event-emitter-name="vm.triggerSearchName" enable-search-field="false" pagination-position="'top'"
-        api-resource="vm.apiResourceQuotations"></div>
-    </section>
+<section class="form-view container container-xlg">
+
+  <div id="reports" ng-if="!vm.isStoreManager && !vm.isAdmin ">
+    <h2> Not authorized: you're not currently an store manager </h2>
   </div>
-</div>
+  <div id="reports" ng-if="vm.isStoreManager || vm.isAdmin">
+    <div class="container container-xl">
+      <div class="head-reports" layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="center center">
+          <i class="icon-pedidos"></i>
+          <h1>COTIZACIONES</h1>
+        </div>
+      </div>
+      <hr />
+      <br />
+      <ng-include src="'views/reports/quotation-report-filters.html'"></ng-include>
+      <section class="table-list-wrap">
+        <div table-list class="table-list" default-sort="vm.defaultSort" columns="vm.columnsQuotations"
+          filters="vm.searchParams" date-range="vm.dateRange" client-search-term="vm.clientSearchTerm"
+          export-query="vm.exportQuery" export-event-emitter-name="vm.triggerExportName"
+          search-event-emitter-name="vm.triggerSearchName" enable-search-field="false" pagination-position="'top'"
+          api-resource="vm.apiResourceQuotations"></div>
+      </section>
+    </div>
+  </div>
+</section>
