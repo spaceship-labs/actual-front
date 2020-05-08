@@ -204,6 +204,9 @@
       }
 
       function dateFormat(data){
+        if(!data){
+            return 'Sin asignar';
+        }
         return $filter('date')(data, 'd/MMM/yyyy');  
       }
 

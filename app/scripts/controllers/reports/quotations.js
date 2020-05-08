@@ -58,7 +58,7 @@ angular
           domainColumn: 'Store'
         },
         { key: 'createdAt', label: 'Fecha', dateTime: true },
-        { key: 'tracing', label: 'Fecha de cierre', dateTime: true },
+        { key: 'estimatedCloseDate', label: 'Fecha de cierre', dateTime: true, defaultValue: 'Sin asignar' },
         { key: 'discount', label: 'Descuento', currency: true },
         { key: 'Store.name', label: 'Tienda', defaultValue: 'Sin asignar'},
         { key: 'total', label: 'Total', currency: true },
@@ -84,7 +84,7 @@ angular
     vm.exportQuery += 'User->name as Asesor,';
     vm.exportQuery += 'Client->CardName as Cliente,';
     vm.exportQuery += 'currencyFormat(total) as Monto,';
-    vm.exportQuery += 'dateFormat(tracing) as Cierre,';
+    vm.exportQuery += 'dateFormat(estimatedCloseDate) as Cierre,';
     vm.exportQuery += 'urlFormat(id) as Cotizacion,';
     vm.exportQuery += 'currencyFormat(discount) as Descuento,';
     vm.exportQuery += 'Client->E_Mail as Email';
