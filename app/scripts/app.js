@@ -102,6 +102,11 @@ angular
           }
         }                
       })
+      .when('/reports/quotations', {
+        templateUrl: 'views/reports/quotations.html',
+        controller: 'ReportsQuotationsCtrl',
+        controllerAs: 'vm'
+      })
       .when('/search', {
         templateUrl: 'views/search.html',
         controller: 'SearchCtrl',
@@ -377,6 +382,9 @@ angular
     Analytics,
     localStorageService, 
     authService, 
+    formatService,
+    siteService,
+    orderService,
     jwtHelper, 
     userService, 
     $location, 
@@ -384,6 +392,21 @@ angular
     $route
   ){
     authService.runPolicies();
+    alasql.fn.nullFormat = formatService.nullFormat;
+    alasql.fn.yesNoFormat = formatService.yesNoFormat;
+    alasql.fn.dateTimeFormat = formatService.dateTimeFormat;
+    alasql.fn.dateFormat = formatService.dateFormat;
+    alasql.fn.currencyFormat = formatService.currencyFormat;
+    alasql.fn.rateFormat = formatService.rateFormat;
+    alasql.fn.urlFormat = formatService.urlFormat;
+    alasql.fn.storeIdMapperFormat = function(data) {
+      var mapper = siteService.getStoresIdMapper();
+      return mapper[data] || data;
+    };
+    alasql.fn.orderStatusMapperFormat = function(data) {
+      var mapper = orderService.getOrderStatusMapper();
+      return mapper[data] || data;
+    };
     
     //Configures $location.path second parameter, for no reloading
     var original = $location.path;
@@ -397,4 +420,5 @@ angular
       }
       return original.apply($location, [path]);
     };
+   
   });

@@ -31,6 +31,7 @@
       getByIdQuickRead: getByIdQuickRead,
       getCountByUser: getCountByUser,
       getList: getList,
+      getGeneralList: getGeneralList,
       populateDetailsWithProducts: populateDetailsWithProducts,
       getQuotationTotals: getQuotationTotals,
       getCurrentStock: getCurrentStock,
@@ -473,7 +474,11 @@
       var recordTypes = ['Email', 'Llamada', 'WhatsApp', 'Visita'];
       return recordTypes;
     }
-
+    function getGeneralList(page, params) {
+      var p = page || 1;
+      var url = '/quotation/all/find/' + p;
+      return api.$http.post(url, params);
+    }
     function getPointersSources() {
       var sources = [
         {

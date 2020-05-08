@@ -75,6 +75,9 @@ module.exports = function(config) {
       'bower_components/angular-chosen-localytics/dist/angular-chosen.js',
       'bower_components/ng-currency/dist/ng-currency.js',
       'bower_components/angular-google-analytics/dist/angular-google-analytics.min.js',
+      'bower_components/js-xlsx/dist/xlsx.full.min.js',
+      'bower_components/es6-promise/promise.js',
+      'bower_components/alasql/dist/alasql.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
