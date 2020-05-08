@@ -44,8 +44,8 @@
             <td><label for="">Vendedor</label></td>
             <td>
               <div class="input-element">
-                <select ng-model="vm.searchParams.Seller"
-                  ng-options="Seller.Seller as Seller.firstName+' '+Seller.lastName for Seller in vm.getSellersFromStore(vm.searchParams.Store)"
+                <select ng-model="vm.searchParams.User"
+                  ng-options="Seller.id as Seller.firstName+' '+Seller.lastName for Seller in vm.getSellersFromStore(vm.searchParams.Store)"
                   class="select-element">
                 </select>
               </div>
