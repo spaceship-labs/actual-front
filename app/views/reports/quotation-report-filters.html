@@ -89,6 +89,39 @@
         <div class="clear"></div>
       </div>
     </div>
+    <div layout="row" class="report-filters-search">
+      <div flex="50" class="search-column">
+        <table>
+          <tr>
+            <td><label for="">Fecha cierre inicio</label></td>
+            <td>
+              <div class="input-element">
+                <div class="input-element-inner">
+                  <input pikaday="vm.startCloseDate" format="DD/MM/YYYY" trigger="trigger-start-date-orders" readonly
+                    type="text" set-default-date="true" default-date="{{vm.startCloseDate}}"
+                    on-select="vm.onStartCloseDateSelected(pikaday)">
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          <tr>
+            <td><label for="">Fecha cierre final</label></td>
+            <td>
+              <div class="input-element">
+                <div class="input-element-inner">
+                  <input pikaday="vm.endCloseDate" format="DD/MM/YYYY" trigger="trigger-start-date-orders" readonly
+                    type="text" set-default-date="true" default-date="{{vm.startCloseDate}}"
+                    on-select="vm.onEndCloseDateSelected(pikaday)">
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <div ng-enter="vm.triggerSearch()" flex="30" class="excel-triger-wrapper">
