@@ -211,6 +211,9 @@
         if($scope.dateRange){
           query.dateRange = $scope.dateRange;
         }
+        if($scope.closeDateRange){
+          query.closeDateRange = $scope.closeDateRange;
+        }
 
         $scope.query = query;
         $scope.page = page;
@@ -413,6 +416,7 @@
           defaultSort: '=',
           filters: '=',
           dateRange: '=',
+          closeDateRange: '=',
           exportQuery: '=',
           exportColumns: '=',
           createdRowCb: '=',
