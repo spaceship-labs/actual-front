@@ -141,11 +141,13 @@ function QuotationsEditCtrl(
           vm.quotation.Details
         );
         // Check if day has passed
-        var isInValidDate = _.every(detailsStock, function (detail) {
-          return moment(detail.shipDate).isBefore(moment().startOf('day'));
-        });
-        if (isInValidDate) {
-          throw "Alguna de las fechas de entrega en la cotización están negativas."
+        if(vm.quotation.Details.length>0){
+          var isInValidDate = _.every(detailsStock, function (detail) {
+            return moment(detail.shipDate).isBefore(moment().startOf('day'));
+          });
+          if (isInValidDate) {
+            throw "Alguna de las fechas de entrega en la cotización están negativas."
+          }
         }
         vm.isValidatingStock = false;
         vm.isLoadingRecords = true;
