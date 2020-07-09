@@ -70,6 +70,7 @@ function QuotationsEditCtrl(
     getSourceTypeName: getSourceTypeName,
     ENV: ENV,
     activeStore: activeStore,
+    isInvalidDate: false,
   });
 
   init($routeParams.id);
@@ -141,13 +142,10 @@ function QuotationsEditCtrl(
           vm.quotation.Details
         );
         // Check if day has passed
-        if(vm.quotation.Details.length>0){
-          var isInValidDate = _.every(detailsStock, function (detail) {
+        if (vm.quotation.Details.length > 0) {
+          vm.isInValidDate = _.every(detailsStock, function (detail) {
             return moment(detail.shipDate).isBefore(moment().startOf('day'));
           });
-          if (isInValidDate) {
-            throw "Alguna de las fechas de entrega en la cotización están negativas."
-          }
         }
         vm.isValidatingStock = false;
         vm.isLoadingRecords = true;
@@ -158,6 +156,9 @@ function QuotationsEditCtrl(
           vm.quotation.Records = result.data;
         }
         vm.isLoadingRecords = false;
+        if (vm.isInValidDate) {
+          dialogService.showDialog('Hubo un error: Alguna de las fechas de entrega en la cotización están negativas.');
+        }
       })
       .catch(function (err) {
         console.log(err);
