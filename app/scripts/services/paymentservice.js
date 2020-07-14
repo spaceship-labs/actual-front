@@ -57,6 +57,7 @@
       getAmountMXN: getAmountMXN,
       getAmountUSD: getAmountUSD,
       getPaymentMethodsGroups: getPaymentMethodsGroups,
+      paymentsapconciliation: paymentsapconciliation,
       getPaymentWebMethodsGroups: getPaymentWebMethodsGroups,
       getMethodAvailableBalance: getMethodAvailableBalance,
       getPaymentOptionsByMethod: getPaymentOptionsByMethod,
@@ -196,6 +197,12 @@
     function getPaymentMethodsGroups(params) {
       var url = '/paymentgroups';
       return api.$http.post(url, params);
+    }
+    function paymentsapconciliation(page, params) {
+      var p = page || 1;
+      var url = '/paymentsapconciliation/';
+      console.log({paymentSapParams:params})
+      return api.$http.get(url, params);
     }
 
     function getPaymentWebMethodsGroups(params) {

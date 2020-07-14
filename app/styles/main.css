@@ -118,6 +118,9 @@ md-dialog .md-button[ng-click="dialog.abort()"]{
   margin: 0 auto;
   max-width: 1000px;
 }
+.paymentReport{
+  max-width: 90vw;
+}
 .container-lg{
   margin: 0 auto;
   max-width: 766px;

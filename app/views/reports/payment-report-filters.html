@@ -1,0 +1,55 @@
+<form ng-submit="vm.triggerSearch()" class="report-filters" layout="row" layout-wrap>
+  <div flex="70" ng-enter="vm.triggerSearch()">
+    <div layout="row" class="report-filters-search">
+      <div flex="50" class="search-column">
+      </div>
+      <div flex="50" class="search-column">
+        <table>
+          <tr>
+            <td><label for="">Fecha inicio</label></td>
+            <td>
+              <div class="input-element">
+                <div class="input-element-inner">
+                  <input pikaday="vm.dateStart" format="DD/MM/YYYY" trigger="trigger-start-date-orders" readonly
+                    type="text" set-default-date="true" default-date="{{vm.startDate}}"
+                    on-select="vm.onStartDateSelected(pikaday)">
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          <tr>
+            <td><label for="">Fecha hasta</label></td>
+            <td>
+              <div class="input-element">
+                <div class="input-element-inner">
+                  <input pikaday="vm.dateEnd" format="DD/MM/YYYY" trigger="trigger-start-date-orders" readonly
+                    type="text" set-default-date="true" default-date="{{vm.startDate}}"
+                    on-select="vm.onEndDateSelected(pikaday)">
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </table>
+
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-enter="vm.triggerSearch()" flex="30" class="excel-triger-wrapper">
+
+    <div ng-show="vm.isExporting" layout="row" layout-align="center center" class="loading-circle loading-circle-small">
+      <md-progress-circular class="md-accent" md-diameter="60px"></md-progress-circular>
+    </div>
+
+    <a ng-if="!vm.isExporting" href="" ng-click="vm.triggerExcelExport()">
+      <img src="images/excel-icon.png" alt="">
+    </a>
+
+
+    <button ng-click="vm.triggerSearch()" class="action-btn">Buscar</button>
+
+  </div>
+</form>

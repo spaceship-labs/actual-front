@@ -107,6 +107,11 @@ angular
         controller: 'ReportsQuotationsCtrl',
         controllerAs: 'vm'
       })
+      .when('/reports/payments', {
+        templateUrl: 'views/reports/payments.html',
+        controller: 'ReportsPaymentsCtrl',
+        controllerAs: 'vm'
+      })
       .when('/search', {
         templateUrl: 'views/search.html',
         controller: 'SearchCtrl',

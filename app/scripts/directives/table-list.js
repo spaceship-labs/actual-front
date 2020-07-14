@@ -210,6 +210,13 @@
 
         if($scope.dateRange){
           query.dateRange = $scope.dateRange;
+          if(query.dateRange.start){
+            query.startingDate = query.dateRange.start;
+          }
+          if(query.dateRange.end){
+            query.endingDate = query.dateRange.end;
+          }
+
         }
         if($scope.closeDateRange){
           query.closeDateRange = $scope.closeDateRange;
