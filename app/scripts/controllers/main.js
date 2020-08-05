@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
   function MainCtrl(
     api,
@@ -80,26 +80,26 @@
       vm.isLoadingCategoriesTree = true;
       categoriesService
         .createCategoriesTree()
-        .then(function(res) {
+        .then(function (res) {
           vm.isLoadingCategoriesTree = false;
           vm.categoriesTree = res.data;
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
 
       $scope.$watch(
-        function() {
+        function () {
           return localStorageService.get('quotation');
         },
-        function(quotation) {
+        function (quotation) {
           vm.quotation = quotation;
         }
       );
 
       moment.locale('es');
 
-      $(document).click(function(e) {
+      $(document).click(function (e) {
         var $target = $(event.target);
         var profileHeader = $('#profile-header');
         var profileHeaderTrigger = $('#profile-header-trigger');
@@ -172,7 +172,7 @@
       $rootScope.isMainDataLoaded = false;
       $q
         .all([loadActiveStore(), loadActiveQuotation()])
-        .then(function(data) {
+        .then(function (data) {
           $scope.mainData = {
             activeStore: data[0],
             activeQuotation: data[1]
@@ -182,7 +182,7 @@
           $rootScope.isMainDataLoaded = true;
           console.log('termino main data', new Date());
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log('err', err);
         });
     }
@@ -192,14 +192,14 @@
       var deferred = $q.defer();
       userService
         .getActiveStore()
-        .then(function(activeStore) {
+        .then(function (activeStore) {
           vm.activeStore = activeStore;
           $rootScope.activeStore = activeStore;
           console.log('loadActiveStore end', new Date());
           $rootScope.$emit('activeStoreAssigned', activeStore);
           deferred.resolve(activeStore);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
           deferred.reject(err);
         });
@@ -210,7 +210,7 @@
       var deferred = $q.defer();
       console.log('start loadActiveQuotation', new Date());
 
-      quotationService.getActiveQuotation().then(function(res) {
+      quotationService.getActiveQuotation().then(function (res) {
         var quotation = res.data;
         $rootScope.isActiveQuotationLoaded = true;
         if (quotation && quotation.id) {
@@ -235,12 +235,12 @@
       var deferred = $q.defer();
       userService
         .getBrokers()
-        .then(function(brokers) {
+        .then(function (brokers) {
           vm.brokers = brokers;
           $rootScope.brokers = brokers;
           deferred.resolve(brokers);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
           deferred.reject(err);
         });
@@ -252,20 +252,20 @@
       console.log('loadSiteInfo start', new Date());
       siteService
         .findByHandle('actual-group')
-        .then(function(res) {
+        .then(function (res) {
           vm.site = res.data || {};
           $rootScope.site = res.data || {};
           deferred.resolve(vm.site);
           console.log('loadSiteInfo end', new Date());
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
           deferred.reject(err);
         });
       return deferred.promise;
     }
 
-    $rootScope.$on('newActiveQuotation', function(ev, newQuotationId) {
+    $rootScope.$on('newActiveQuotation', function (ev, newQuotationId) {
       loadActiveQuotation();
     });
 
@@ -289,14 +289,14 @@
     }
 
     //$rootScope.$on("$locationChangeStart",function(event, next, current){
-    $scope.$on('$routeChangeStart', function(event, next, current) {
+    $scope.$on('$routeChangeStart', function (event, next, current) {
       if (current) {
         authService.runPolicies();
 
         //Only updating active quotation on every page change
         console.log('loadActiveQuotation change page', new Date());
         $rootScope.isActiveQuotationLoaded = false;
-        loadActiveQuotation().then(function() {
+        loadActiveQuotation().then(function () {
           console.log('scope.mainData', $scope.mainData);
           $scope.mainData = $scope.mainData || {};
           $scope.mainData.activeQuotation = $rootScope.activeQuotation;
@@ -418,13 +418,13 @@
       vm.isLoadingSync = true;
       clientService
         .syncClientsCredit()
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           dialogService.showDialog('Tabla de créditos actualizada');
           vm.isLoadingSync = false;
           resetSearchBox();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           dialogService.showDialog('Hubo un error: ' + err.data);
           vm.isLoadingSync = false;
         });
@@ -434,13 +434,13 @@
       vm.isLoadingSync = true;
       clientService
         .syncClientsDiscounts()
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           dialogService.showDialog('Descuentos de clientes actualizados');
           vm.isLoadingSync = false;
           resetSearchBox();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           dialogService.showDialog('Hubo un error: ' + err.data);
           vm.isLoadingSync = false;
         });
@@ -450,13 +450,13 @@
       vm.isLoadingSync = true;
       clientService
         .syncClientByCardCode(cardcode)
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           dialogService.showDialog('Cliente actualizado');
           vm.isLoadingSync = false;
           resetSearchBox();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           dialogService.showDialog('Hubo un error: ' + err.data);
           vm.isLoadingSync = false;
         });
@@ -473,13 +473,13 @@
     }
 
     function logOut() {
-      authService.logout(function() {
+      authService.logout(function () {
         $location.path('/');
         $window.location.reload();
       });
     }
 
-    $rootScope.successAuth = function(res) {
+    $rootScope.successAuth = function (res) {
       var responseData = res.data;
 
       vm.user = responseData.user;
@@ -496,7 +496,7 @@
       return { 'background-image': 'url(' + image + ')' };
     }
 
-    $scope.$on('$routeChangeStart', function(next, current) {
+    $scope.$on('$routeChangeStart', function (next, current) {
       vm.isActiveBackdrop = false;
       vm.isActiveLogin = false;
       vm.isActiveCart = false;
@@ -504,11 +504,17 @@
     });
 
     function getStores(email) {
-      userService.getStores(email).then(function(stores) {
+      userService.getStores(email).then(function (stores) {
         vm.stores = stores;
-        if (vm.stores.length > 0) {
-          vm.loginForm.activeStoreId = vm.stores[0].id;
-        }
+        userService.getMainStoreId(email).then(function (activeStore) {
+          if (activeStore) {
+            vm.loginForm.activeStoreId = activeStore.id
+          } else {
+            if (vm.stores.length > 0) {
+              vm.loginForm.activeStoreId = vm.stores[0].id;
+            }
+          }
+        })
       });
     }
 
@@ -528,12 +534,12 @@
       if (source === 'Broker') {
         quotationService
           .updateBroker(vm.quotation, { brokerId: vm.activeQuotation.Broker })
-          .then(function(res) {
+          .then(function (res) {
             vm.pointersLoading = false;
             togglePointerSidenav();
             dialogService.showDialog('Datos guardados');
           })
-          .catch(function(err) {
+          .catch(function (err) {
             vm.pointersLoading = false;
             console.log(err);
             togglePointerSidenav();
@@ -548,14 +554,14 @@
           };
           quotationService
             .updateSource(vm.quotation, params)
-            .then(function(res) {
+            .then(function (res) {
               vm.pointersLoading = false;
               togglePointerSidenav();
               dialogService.showDialog('Datos guardados');
               $rootScope.$emit('changedActiveQuotationSource', params);
               console.log(res);
             })
-            .catch(function(err) {
+            .catch(function (err) {
               vm.pointersLoading = false;
               console.log(err);
               togglePointerSidenav();
