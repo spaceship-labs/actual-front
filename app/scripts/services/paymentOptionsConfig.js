@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -102,7 +102,7 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'American Express', value: 'american-express' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANAMEX
@@ -119,7 +119,7 @@
       paymentTypes: ['credit-card', 'debit-card'],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
@@ -157,14 +157,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Santander', value: 'santander' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANCOMER
@@ -189,14 +189,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Bancomer', value: 'bancomer' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Bancomer', value: 'bancomer' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANORTE
@@ -221,14 +221,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Banorte', value: 'banorte' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //AFIRME
@@ -253,14 +253,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Afirme', value: 'afirme' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANBAJIO
@@ -285,14 +285,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Banbajio', value: 'banbajio' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANCAMIFEL
@@ -317,14 +317,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Bancamifel', value: 'bancamifel' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     // BANCO AHORRO FAMSA
@@ -349,14 +349,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Banco Ahorro Famsa', value: 'banco-ahorro-famsa' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANJERCITO
@@ -381,14 +381,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Banjercito', value: 'banjercito' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //BANREGIO
@@ -413,14 +413,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Banregio', value: 'banregio' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //HSBC
@@ -445,14 +445,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'HSBC', value: 'hsbc' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //INBURSA
@@ -477,14 +477,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Inbursa', value: 'inbursa' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //INVEX
@@ -509,14 +509,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Invex Banco', value: 'invex-banco' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //ITAUCARD
@@ -541,14 +541,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'Itaucard', value: 'itaucard' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //IXE
@@ -573,14 +573,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'IXE', value: 'ixe' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //LIVERPOOL
@@ -611,7 +611,7 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
@@ -621,7 +621,7 @@
       },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //SCOTIABANK
@@ -646,14 +646,14 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     {
       card: { label: 'ScotiaBank', value: 'scotiabank' },
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     }
   ];
 })();
