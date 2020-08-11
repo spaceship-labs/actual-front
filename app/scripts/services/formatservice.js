@@ -221,7 +221,7 @@
       }
       switch (data) {
         case 'to-order':
-          return 'Orden creada'
+          return 'Cerrada(orden)'
         case 'closed':
           return 'Cerrada'
         case 'pending-payment':
