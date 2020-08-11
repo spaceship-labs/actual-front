@@ -67,7 +67,13 @@ angular
         { key: 'discount', label: 'Descuento', currency: true },
         { key: 'Store.name', label: 'Tienda', defaultValue: 'Sin asignar' },
         { key: 'total', label: 'Total', currency: true },
-        { key: 'status', label: 'Status', defaultValue: 'Abierta' },
+        {
+          key: 'status', label: 'Status', mapper: {
+            'to-order': 'Cerrada(orden)',
+            'closed': 'Cerrada',
+          },
+          defaultValue: 'Abierta'
+        },
         {
           key: 'Client.CardName',
           label: 'Cliente',
