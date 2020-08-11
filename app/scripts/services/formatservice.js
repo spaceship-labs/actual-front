@@ -213,7 +213,7 @@
       return $filter('number')(data) + '%';
     }
     function urlFormat(data) {
-      return 'http://ventas.miactual.com/quotations/edit/' + data;
+      return 'http://ventaskids.miactual.com/quotations/edit/' + data;
     }
     function quotationStatusMapper(data) {
       if (!data) {
