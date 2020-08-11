@@ -10,7 +10,7 @@
 
 angular
   .module('actualApp')
-  .controller('ReportsQuotationsCtrl', function(
+  .controller('ReportsQuotationsCtrl', function (
     $scope,
     $rootScope,
     $q,
@@ -27,9 +27,9 @@ angular
     var vm = this;
     angular.extend(vm, {
       closedOptions: [
-        {label: 'Abiertas', value: {'!': true}},
-        {label:'Cerradas', value: true}
-      ],    
+        { label: 'Abiertas', value: { '!': true } },
+        { label: 'Cerradas', value: true }
+      ],
       user: angular.copy($rootScope.user),
       queryClients: queryClients,
       triggerExportName: 'triggerExcelExport',
@@ -65,8 +65,9 @@ angular
         { key: 'createdAt', label: 'Fecha', dateTime: true },
         { key: 'estimatedCloseDate', label: 'Fecha de cierre', dateTime: true, defaultValue: 'Sin asignar' },
         { key: 'discount', label: 'Descuento', currency: true },
-        { key: 'Store.name', label: 'Tienda', defaultValue: 'Sin asignar'},
+        { key: 'Store.name', label: 'Tienda', defaultValue: 'Sin asignar' },
         { key: 'total', label: 'Total', currency: true },
+        { key: 'status', label: 'Status', defaultValue: 'Abierta' },
         {
           key: 'Client.CardName',
           label: 'Cliente',
@@ -78,7 +79,7 @@ angular
         },
         //{ key: 'Client.E_Mail', label: 'Email', defaultValue: 'Sin cliente' },
         //{ key: 'fromOffers', label: 'Paquetes', defaultValue: 'No' },
-        { key: 'Payments[0].name', label: 'Tipo pago', defaultValue: 'Sin asignar'},
+        { key: 'Payments[0].name', label: 'Tipo pago', defaultValue: 'Sin asignar' },
         { key: 'Order', label: 'Order' }
       ]
     });
@@ -89,6 +90,7 @@ angular
     vm.exportQuery += 'User->name as Asesor,';
     vm.exportQuery += 'Client->CardName as Cliente,';
     vm.exportQuery += 'currencyFormat(total) as Monto,';
+    vm.exportQuery += 'quotationStatusMapper(status) as Status,';
     vm.exportQuery += 'dateFormat(estimatedCloseDate) as Cierre,';
     vm.exportQuery += 'urlFormat(id) as Cotizacion,';
     vm.exportQuery += 'currencyFormat(discount) as Descuento,';
@@ -126,37 +128,37 @@ angular
       var userEmail = vm.user.email;
       return userService.getStores(userEmail);
     }
-    function getSellersFromStore(id){
-      var selectedStore = _.find(vm.stores,{id:id});
+    function getSellersFromStore(id) {
+      var selectedStore = _.find(vm.stores, { id: id });
       return selectedStore !== undefined ? selectedStore.sellers : []
 
     }
-    function setupManagerData(){
+    function setupManagerData() {
       vm.isLoading = true;
       getManagerStores()
-        .then(function(stores){
+        .then(function (stores) {
           vm.stores = stores;
-          var storePromises = stores.map(function(store){
-            return populateStoreWithSellers(store);          
+          var storePromises = stores.map(function (store) {
+            return populateStoreWithSellers(store);
           });
           vm.isLoading = false;
           return $q.all(storePromises);
 
-        }).then(function(stores){
+        }).then(function (stores) {
           console.log('stores', stores);
           vm.stores = stores;
         })
-        .catch(function(err){
+        .catch(function (err) {
           console.log('err', err);
-        });      
+        });
     }
-  
-    function populateStoreWithSellers(store){
+
+    function populateStoreWithSellers(store) {
       var deferred = $q.defer();
       storeService.getSellersByStore(store.id)
-        .then(function(res){
+        .then(function (res) {
           store.sellers = res.data;
-          store.sellers = store.sellers.map(function(seller){
+          store.sellers = store.sellers.map(function (seller) {
             seller.filters = {
               User: seller.id
             };
@@ -164,17 +166,17 @@ angular
           });
           return store;
         })
-        .then(function(store){
+        .then(function (store) {
           deferred.resolve(store);
         })
-        .catch(function(err){
+        .catch(function (err) {
           console.log(err);
           deferred.reject(err);
         });
-  
+
       return deferred.promise;
     }
-    $scope.$on('isExporting', function(evt, data) {
+    $scope.$on('isExporting', function (evt, data) {
       vm.isExporting = data;
     });
 
@@ -183,7 +185,7 @@ angular
       $scope.$broadcast(vm.triggerSearchName);
     }
 
-    $scope.$watch('vm.selectedClient', function(newVal, oldVal) {
+    $scope.$watch('vm.selectedClient', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal) {
         console.log('newVal', newVal);
         vm.searchParams.Client = newVal.id;
@@ -197,7 +199,7 @@ angular
     function queryClients(term) {
       if (term !== '' && term) {
         var params = { term: term, autocomplete: true };
-        return clientService.getClients(1, params).then(function(res) {
+        return clientService.getClients(1, params).then(function (res) {
           return res.data.data;
         });
       } else {
