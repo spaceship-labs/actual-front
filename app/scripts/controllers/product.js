@@ -63,7 +63,7 @@ function ProductCtrl(
 
     productService
       .getById(productId, params)
-      .then(function(res) {
+      .then(function (res) {
         var productFound = res.data.data;
         if (!productFound || !productFound.ItemCode) {
           dialogService.showDialog('No se encontro el articulo');
@@ -71,7 +71,7 @@ function ProductCtrl(
 
         return productService.formatSingleProduct(productFound);
       })
-      .then(function(formattedProduct) {
+      .then(function (formattedProduct) {
         vm.product = formattedProduct;
         vm.mainPromo = vm.product.mainPromo;
         vm.lowestCategory = categoriesService.getLowestCategory(
@@ -99,19 +99,19 @@ function ProductCtrl(
           activeQuotationId
         );
       })
-      .then(function(deliveries) {
+      .then(function (deliveries) {
         setUpDeliveries(deliveries);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
 
     pmPeriodService
       .getActive()
-      .then(function(res) {
+      .then(function (res) {
         vm.validPayments = res.data;
       })
-      .catch(function(err) {
+      .catch(function (err) {
         $log.error(err);
       });
   }
@@ -121,19 +121,18 @@ function ProductCtrl(
 
     vm.deliveries = deliveries;
     var newDeliveries = []
-    for(var i=0;i<vm.deliveries.length;i++){
-      if(vm.deliveries[i].days >= 0){
+    for (var i = 0; i < vm.deliveries.length; i++) {
+      if (vm.deliveries[i].days >= 0) {
         newDeliveries.push(vm.deliveries[i]);
       }
     }
     deliveries = newDeliveries;
     vm.deliveries = newDeliveries;
-    console.log('deliveries',deliveries);
+    console.log('deliveries', deliveries);
     vm.deliveriesGroups = deliveryService.groupDeliveryDates(vm.deliveries);
     vm.deliveriesGroups = $filter('orderBy')(vm.deliveriesGroups, 'date');
     // covid remove next line
     //vm.deliveriesGroups = $filter('filter')(vm.deliveriesGroups, {ImmediateDelivery:false},true);
-
     vm.available = deliveryService.getAvailableByDeliveries(deliveries);
 
     if (vm.deliveries && vm.deliveries.length > 0) {
@@ -147,11 +146,11 @@ function ProductCtrl(
   function loadVariants(product) {
     productService
       .loadVariants(product, activeStore)
-      .then(function(variants) {
+      .then(function (variants) {
         vm.variants = variants;
         vm.hasVariants = checkIfHasVariants(vm.variants);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
   }
@@ -185,13 +184,13 @@ function ProductCtrl(
   function loadWarehouses(activeStore) {
     api.$http
       .get('/company/find')
-      .then(function(res) {
+      .then(function (res) {
         vm.warehouses = res.data;
         activeStoreWarehouse = _.findWhere(vm.warehouses, {
           id: activeStore.Warehouse
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         $log.error(err);
       });
   }
@@ -209,22 +208,22 @@ function ProductCtrl(
   function loadProductFilters(product) {
     productService
       .getAllFilters({ quickread: true })
-      .then(function(res) {
+      .then(function (res) {
         var data = res.data || [];
-        var filters = data.map(function(filter) {
+        var filters = data.map(function (filter) {
           filter.Values = [];
-          product.FilterValues.forEach(function(value) {
+          product.FilterValues.forEach(function (value) {
             if (value.Filter === filter.id) {
               filter.Values.push(value);
             }
           });
           return filter;
         });
-        vm.filters = filters.filter(function(filter) {
+        vm.filters = filters.filter(function (filter) {
           return filter.Values.length > 0;
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         $log.error(err);
       });
   }
@@ -253,7 +252,7 @@ function ProductCtrl(
       console.log('params', params);
       quotationService.addProduct(vm.product.id, params);
     } else if (productCartItems.length > 1) {
-      var multiParams = productCartItems.map(function(cartItem) {
+      var multiParams = productCartItems.map(function (cartItem) {
         return cartService.buildAddProductToCartParams(vm.product.id, cartItem);
       });
       quotationService.addMultipleProducts(multiParams);

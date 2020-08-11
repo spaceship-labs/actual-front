@@ -54,7 +54,7 @@ function CheckoutOrderCtrl(
   });
 
   function formatTerminalPayments(payments) {
-    payments.forEach(function(payment) {
+    payments.forEach(function (payment) {
       if (
         payment.type !== 'cash' &&
         payment.type !== 'cash-usd' &&
@@ -66,21 +66,29 @@ function CheckoutOrderCtrl(
         payment.type !== 'deposit' &&
         payment.currency !== 'usd'
       ) {
-        vm.terminalPaymentsString +=
-          ' ' +
-          (payment.card.charAt(0).toUpperCase() + payment.card.slice(1)) +
+        if (payment.card) {
+          vm.terminalPaymentsString +=
+            ' ' +
+            (payment.card.charAt(0).toUpperCase() + payment.card.slice(1)) +
+            ' con terminación ' +
+            payment.cardLastDigits +
+            ' por el importe ' +
+            $filter('currency')(commonService.roundCurrency(payment.ammount)) +
+            ',';
+        } else {
           ' con terminación ' +
-          payment.cardLastDigits +
-          ' por el importe ' +
-          $filter('currency')(commonService.roundCurrency(payment.ammount)) +
-          ',';
+            payment.cardLastDigits +
+            ' por el importe ' +
+            $filter('currency')(commonService.roundCurrency(payment.ammount)) +
+            ',';
+        }
       }
     });
     vm.terminalPaymentsString = vm.terminalPaymentsString.slice(0, -1);
   }
 
   function hasTerminalPayments(payments) {
-    return payments.some(function(payment) {
+    return (payments || []).some(function (payment) {
       return (
         payment.type !== 'cash' &&
         payment.type !== 'cash-usd' &&
@@ -100,7 +108,7 @@ function CheckoutOrderCtrl(
 
   function showImmediateDeliveryDialog(order) {
     if (order.Details) {
-      var hasImmediateDelivery = order.Details.some(function(detail) {
+      var hasImmediateDelivery = order.Details.some(function (detail) {
         return detail.immediateDelivery && !detail.isSRService;
       });
       if (hasImmediateDelivery) {
@@ -122,7 +130,7 @@ function CheckoutOrderCtrl(
 
     orderService
       .getById($routeParams.id)
-      .then(function(res) {
+      .then(function (res) {
         vm.order = res.data;
 
         if ($location.search().orderCreated) {
@@ -151,7 +159,7 @@ function CheckoutOrderCtrl(
 
         quotationService
           .populateDetailsWithProducts(vm.order)
-          .then(function(details) {
+          .then(function (details) {
             vm.order.Details = details;
             vm.order.DetailsGroups = deliveryService.groupDetails(details);
             vm.order.DetailsGroups = assignSeriesToDeliveryGroups(
@@ -159,15 +167,15 @@ function CheckoutOrderCtrl(
             );
             return quotationService.loadProductsFilters(vm.order.Details);
           })
-          .then(function(details2) {
+          .then(function (details2) {
             vm.order.Details = details2;
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
           });
 
         vm.invoicesInterval = $interval(
-          function() {
+          function () {
             if (
               vm.invoiceLoadCounter <= vm.invoiceLoadLimit &&
               !vm.invoiceExists
@@ -181,7 +189,7 @@ function CheckoutOrderCtrl(
         );
 
         vm.invoiceLogInterval = $interval(
-          function() {
+          function () {
             if (vm.invoiceLogLoadCounter <= vm.invoiceLogLoadLimit) {
               loadLogsInvoice();
               vm.invoiceLogLoadCounter++;
@@ -191,7 +199,7 @@ function CheckoutOrderCtrl(
           10
         );
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
         var error = err.data || err;
         error = error ? error.toString() : '';
@@ -206,12 +214,12 @@ function CheckoutOrderCtrl(
     vm.isLoadingSapLogs = true;
     quotationService
       .getSapOrderConnectionLogs(quotationId)
-      .then(function(res) {
+      .then(function (res) {
         vm.sapLogs = res.data;
         console.log('sapLogs', vm.sapLogs);
         vm.isLoadingSapLogs = false;
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log('err', err);
         vm.isLoadingSapLogs = false;
       });
@@ -219,7 +227,7 @@ function CheckoutOrderCtrl(
 
   function loadInvoices() {
     if (vm.invoices.length === 0) {
-      invoiceService.find($routeParams.id).then(function(invoices) {
+      invoiceService.find($routeParams.id).then(function (invoices) {
         vm.invoices = invoices;
         vm.invoiceExists = invoices.length > 0;
         if (vm.invoiceExists && $location.search().orderCreated) {
@@ -233,7 +241,7 @@ function CheckoutOrderCtrl(
     if (vm.alegraLogs.length === 0) {
       invoiceService
         .getInvoiceLogs($routeParams.id)
-        .then(function(logs) {
+        .then(function (logs) {
           vm.alegraLogs = logs;
           //console.log('vm.invoices', vm.invoices);
           //console.log('logs');
@@ -243,7 +251,7 @@ function CheckoutOrderCtrl(
             );
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log('err', err);
         });
     }
@@ -251,7 +259,7 @@ function CheckoutOrderCtrl(
 
   function showInvoiceErrorIfNeeded(logs) {
     logs = logs || [];
-    var errorExists = _.some(logs, function(log) {
+    var errorExists = _.some(logs, function (log) {
       return log.isError;
     });
     return errorExists && (!vm.invoices || vm.invoices.length === 0);
@@ -276,20 +284,20 @@ function CheckoutOrderCtrl(
   function loadOrderQuotationRecords(order) {
     quotationService
       .getRecords(order.Quotation)
-      .then(function(result) {
+      .then(function (result) {
         console.log(result);
         vm.records = result.data;
         vm.isLoadingRecords = false;
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
   }
 
   function assignSeriesToDeliveryGroups(deliveryGroups) {
-    var mappedDeliveryGroups = deliveryGroups.map(function(group) {
+    var mappedDeliveryGroups = deliveryGroups.map(function (group) {
       var hasSeries = false;
-      group.details = group.details.map(function(detail) {
+      group.details = group.details.map(function (detail) {
         var productSerie = getSerieByDetailId(detail.id);
         if (productSerie) {
           detail.productSerie = productSerie;
@@ -304,7 +312,7 @@ function CheckoutOrderCtrl(
   }
 
   function groupSeries(ordersSap) {
-    var series = ordersSap.reduce(function(acum, orderSap) {
+    var series = ordersSap.reduce(function (acum, orderSap) {
       if (orderSap.ProductSeries) {
         acum = acum.concat(orderSap.ProductSeries);
       }
@@ -320,7 +328,7 @@ function CheckoutOrderCtrl(
   }
 
   function toggleRecord(record) {
-    vm.records.forEach(function(rec) {
+    vm.records.forEach(function (rec) {
       if (rec.id !== record.id) {
         rec.isActive = false;
       }
@@ -336,7 +344,7 @@ function CheckoutOrderCtrl(
     vm.isLoading = true;
     invoiceService
       .create($routeParams.id)
-      .then(function(res) {
+      .then(function (res) {
         var invoice = res.data;
 
         vm.invoices.push(invoice);
@@ -345,7 +353,7 @@ function CheckoutOrderCtrl(
         dialogService.showDialog('Factura creada exitosamente');
         console.log('factura created response', res);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         vm.isLoading = false;
         console.log('err', err);
         var error = err.data.message;
@@ -357,12 +365,12 @@ function CheckoutOrderCtrl(
     vm.isLoading = true;
     invoiceService
       .send($routeParams.id)
-      .then(function(res) {
+      .then(function (res) {
         vm.isLoading = false;
         dialogService.showDialog('Factura enviada exitosamente');
         console.log('factura sent response', res);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         vm.isLoading = false;
         var error = err.data;
         dialogService.showDialog(error);
@@ -373,21 +381,21 @@ function CheckoutOrderCtrl(
     vm.isLoading = true;
     orderService
       .cancel(vm.order.id)
-      .then(function(res) {
+      .then(function (res) {
         if (res.data && res.data.id) {
           dialogService.showDialog('Orden cancelada');
           vm.order.status = res.data.status;
         }
         vm.isLoading = false;
       })
-      .catch(function(err) {
+      .catch(function (err) {
         vm.isLoading = false;
         var error = err.data;
         dialogService.showDialog(error);
       });
   }
 
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', function () {
     if (vm.invoicesInterval) {
       $interval.cancel(vm.invoicesInterval);
     }

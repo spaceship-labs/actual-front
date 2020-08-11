@@ -54,7 +54,8 @@
       <div id="topBackRepeat" layout='row' flex layout-fill>
 
         <div layout="column" flex>
-          <ng-include ng-if="main.activeModule !== 'policies' && main.activeModule !== 'manuals' " src="'views/header.html'"></ng-include>
+          <ng-include ng-if="main.activeModule !== 'policies' && main.activeModule !== 'manuals' "
+            src="'views/header.html'"></ng-include>
           <md-content ng-view autoscroll>
           </md-content>
 
@@ -86,8 +87,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpLv18a2AvczWYaEv_HMA9T_m2ElMJgro"></script>
     -->
 
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvLCjzJKSl6XQg-k0fcpPWbg8nNbKEFZI">
-  </script>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvLCjzJKSl6XQg-k0fcpPWbg8nNbKEFZI">
+    </script>
 
   <!-- build:js(.) scripts/vendor.js -->
   <!-- bower:js -->
@@ -141,6 +143,9 @@
   <script src="bower_components/angular-chosen-localytics/dist/angular-chosen.js"></script>
   <script src="bower_components/ng-currency/dist/ng-currency.js"></script>
   <script src="bower_components/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
+  <script src="bower_components/js-xlsx/dist/xlsx.full.min.js"></script>
+  <script src="bower_components/es6-promise/promise.js"></script>
+  <script src="bower_components/alasql/dist/alasql.min.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -194,6 +199,7 @@
   <script src="scripts/controllers/users/profile.js"></script>
   <script src="scripts/controllers/quotations/list.js"></script>
   <script src="scripts/controllers/quotations/stockdialog.js"></script>
+  <script src="scripts/controllers/reports/quotations.js"></script>
   <script src="scripts/datatables.input.js"></script>
   <script src="scripts/controllers/sr-services.js"></script>
   <script src="scripts/controllers/quotations/edit.js"></script>

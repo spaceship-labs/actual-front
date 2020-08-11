@@ -73,6 +73,13 @@
               $scope.dtInstance.DataTable.search($($scope.wrapperElementId + ' .dataTables_filter input').val()).draw();
           })
 
+          $scope.$on($scope.exportEventEmitterName, function(evt, args) {
+            $scope.exportToExcel();
+          });
+
+          $scope.$on($scope.searchEventEmitterName, function(evt, args) {
+            $scope.dtInstance.DataTable.search('').draw();
+          });
           changePaginationLabels();
 
         })
@@ -203,6 +210,9 @@
 
         if($scope.dateRange){
           query.dateRange = $scope.dateRange;
+        }
+        if($scope.closeDateRange){
+          query.closeDateRange = $scope.closeDateRange;
         }
 
         $scope.query = query;
@@ -352,6 +362,7 @@
           auxQuery.getAll = true;
           $scope.apiResource($scope.page, auxQuery).then(function(result){
             var items = result.data.data;
+            /*
             var itemsFormatted = items.map(function(item){
               $scope.exportColumns.forEach(function(col){
                 var columnParts = col.split('.');
@@ -379,7 +390,8 @@
               });
               return item;
             });
-            alasql($scope.exportQuery ,[itemsFormatted]);
+            */
+            alasql($scope.exportQuery ,[items]);
             $('.export-button').text('Exportar registros');
             $scope.isExporting = false;
           });
@@ -404,10 +416,15 @@
           defaultSort: '=',
           filters: '=',
           dateRange: '=',
+          closeDateRange: '=',
           exportQuery: '=',
           exportColumns: '=',
           createdRowCb: '=',
-          clientSearch: '='
+          clientSearch: '=',
+          searchEventEmitterName: '=',
+          exportEventEmitterName: '=',
+          enableSearchField: '=',
+          paginationPosition: '='
         },
         templateUrl : 'views/directives/table-list.html'
       };

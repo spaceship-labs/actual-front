@@ -63,15 +63,15 @@ angular
         controller: 'HomeCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q, authService){
-            if(!authService.isUserSignedIn()){
+          activeStore: function ($rootScope, $q, authService) {
+            if (!authService.isUserSignedIn()) {
               return $q.resolve(false);
             }
-            if($rootScope.activeStore){
+            if ($rootScope.activeStore) {
               return $q.resolve($rootScope.activeStore);
-            }else{
+            } else {
               var deferred = $q.defer();
-              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+              $rootScope.$on('activeStoreAssigned', function (ev, _activeStore) {
                 deferred.resolve(_activeStore);
               });
               return deferred.promise;
@@ -89,42 +89,47 @@ angular
         controller: 'ProductCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q){
-            if($rootScope.activeStore){
+          activeStore: function ($rootScope, $q) {
+            if ($rootScope.activeStore) {
               return $q.resolve($rootScope.activeStore);
-            }else{
+            } else {
               var deferred = $q.defer();
-              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+              $rootScope.$on('activeStoreAssigned', function (ev, _activeStore) {
                 deferred.resolve(_activeStore);
               });
               return deferred.promise;
             }
           }
-        }                
+        }
+      })
+      .when('/reports/quotations', {
+        templateUrl: 'views/reports/quotations.html',
+        controller: 'ReportsQuotationsCtrl',
+        controllerAs: 'vm'
       })
       .when('/search', {
         templateUrl: 'views/search.html',
         controller: 'SearchCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q){
-            if($rootScope.activeStore){
+          activeStore: function ($rootScope, $q) {
+            if ($rootScope.activeStore) {
               return $q.resolve($rootScope.activeStore);
-            }else{
+            } else {
               var deferred = $q.defer();
-              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+              $rootScope.$on('activeStoreAssigned', function (ev, _activeStore) {
                 deferred.resolve(_activeStore);
               });
               return deferred.promise;
             }
           }
-        }                        
+        }
       })
       .when('/servicios', {
         templateUrl: 'views/sr-services.html',
         controller: 'SrServicesCtrl',
         controllerAs: 'vm'
-      })      
+      })
       .when('/addquotation', {
         templateUrl: 'views/addquotation.html',
         controller: 'AddquotationCtrl',
@@ -160,18 +165,18 @@ angular
         controller: 'QuotationsEditCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q){
-            if($rootScope.activeStore){
+          activeStore: function ($rootScope, $q) {
+            if ($rootScope.activeStore) {
               return $q.resolve($rootScope.activeStore);
-            }else{
+            } else {
               var deferred = $q.defer();
-              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+              $rootScope.$on('activeStoreAssigned', function (ev, _activeStore) {
                 deferred.resolve(_activeStore);
               });
               return deferred.promise;
             }
           }
-        }                
+        }
       })
       .when('/dashboard', {
         templateUrl: 'views/dashboard/dashboard.html',
@@ -188,18 +193,18 @@ angular
         controller: 'CheckoutPaymentsCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q){
-            if($rootScope.activeStore){
+          activeStore: function ($rootScope, $q) {
+            if ($rootScope.activeStore) {
               return $q.resolve($rootScope.activeStore);
-            }else{
+            } else {
               var deferred = $q.defer();
-              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+              $rootScope.$on('activeStoreAssigned', function (ev, _activeStore) {
                 deferred.resolve(_activeStore);
               });
               return deferred.promise;
             }
           }
-        }        
+        }
       })
       .when('/continuequotation', {
         templateUrl: 'views/continuequotation.html',
@@ -226,18 +231,18 @@ angular
         controller: 'OffersCtrl',
         controllerAs: 'vm',
         resolve: {
-          activeStore: function($rootScope, $q){
-            if($rootScope.activeStore){
+          activeStore: function ($rootScope, $q) {
+            if ($rootScope.activeStore) {
               return $q.resolve($rootScope.activeStore);
-            }else{
+            } else {
               var deferred = $q.defer();
-              $rootScope.$on('activeStoreAssigned', function(ev, _activeStore){
+              $rootScope.$on('activeStoreAssigned', function (ev, _activeStore) {
                 deferred.resolve(_activeStore);
               });
               return deferred.promise;
             }
           }
-        }        
+        }
       })
       .when('/politicas-de-entrega', {
         templateUrl: 'views/delivery-policy.html',
@@ -338,9 +343,9 @@ angular
     moment.locale('es');
     var locales = {
       es: {
-        months        : moment.localeData()._months,
-        weekdays      : moment.localeData()._weekdays,
-        weekdaysShort : moment.localeData()._weekdaysShort,
+        months: moment.localeData()._months,
+        weekdays: moment.localeData()._weekdays,
+        weekdaysShort: moment.localeData()._weekdaysShort,
       }
     };
     pikadayConfigProvider.setConfig({
@@ -351,18 +356,18 @@ angular
 
     //JWT TOKENS CONFIG
     $httpProvider.interceptors.push([
-      '$q', 
-      '$location', 
+      '$q',
+      '$location',
       'localStorageService',
-       function ($q, $location, localStorageService) {
+      function ($q, $location, localStorageService) {
         return {
           request: function (config) {
             config.headers = config.headers || {};
-            if ( localStorageService.get('token') ) {
+            if (localStorageService.get('token')) {
               config.headers.Authorization = 'JWT ' + localStorageService.get('token');
             }
 
-            if( localStorageService.get('activeStore') ){
+            if (localStorageService.get('activeStore')) {
               config.headers.ActiveStoreId = localStorageService.get('activeStore');
             }
 
@@ -373,18 +378,37 @@ angular
     ]);
 
   })
-  .run(function(
+  .run(function (
     Analytics,
-    localStorageService, 
-    authService, 
-    jwtHelper, 
-    userService, 
-    $location, 
+    localStorageService,
+    authService,
+    formatService,
+    siteService,
+    orderService,
+    jwtHelper,
+    userService,
+    $location,
     $rootScope,
     $route
-  ){
+  ) {
     authService.runPolicies();
-    
+    alasql.fn.nullFormat = formatService.nullFormat;
+    alasql.fn.yesNoFormat = formatService.yesNoFormat;
+    alasql.fn.dateTimeFormat = formatService.dateTimeFormat;
+    alasql.fn.dateFormat = formatService.dateFormat;
+    alasql.fn.currencyFormat = formatService.currencyFormat;
+    alasql.fn.rateFormat = formatService.rateFormat;
+    alasql.fn.urlFormat = formatService.urlFormat;
+    alasql.fn.quotationStatusMapper = formatService.quotationStatusMapper;
+    alasql.fn.storeIdMapperFormat = function (data) {
+      var mapper = siteService.getStoresIdMapper();
+      return mapper[data] || data;
+    };
+    alasql.fn.orderStatusMapperFormat = function (data) {
+      var mapper = orderService.getOrderStatusMapper();
+      return mapper[data] || data;
+    };
+
     //Configures $location.path second parameter, for no reloading
     var original = $location.path;
     $location.path = function (path, reload) {
@@ -397,4 +421,5 @@ angular
       }
       return original.apply($location, [path]);
     };
+
   });
