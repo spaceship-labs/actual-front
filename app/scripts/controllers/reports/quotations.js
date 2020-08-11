@@ -42,12 +42,17 @@ angular
       dateRange: {
         field: 'createdAt'
       },
+      closeDateRange: {
+        field: 'estimatedCloseDate'
+      },
       isStoreManager: authService.isStoreManager($rootScope.user),
       isAdmin: authService.isAdmin($rootScope.user),
 
       apiResourceQuotations: quotationService.getGeneralList,
       onStartDateSelected: onStartDateSelected,
       onEndDateSelected: onEndDateSelected,
+      onStartCloseDateSelected: onStartCloseDateSelected,
+      onEndCloseDateSelected: onEndCloseDateSelected,
       clientSearch: true,
       defaultSort: [1, 'desc'], //created at
       columnsQuotations: [
@@ -206,6 +211,13 @@ angular
 
     function onEndDateSelected(pikaday) {
       vm.dateRange.end = pikaday._d;
+    }
+    function onStartCloseDateSelected(pikaday) {
+      vm.closeDateRange.start = pikaday._d;
+    }
+
+    function onEndCloseDateSelected(pikaday) {
+      vm.closeDateRange.end = pikaday._d;
     }
 
     function loadPaymentsTypes() {
