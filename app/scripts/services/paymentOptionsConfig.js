@@ -33,7 +33,7 @@
       storesTypes: ['studio'],
       isInternational: true,
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //VISA(International)
@@ -51,7 +51,7 @@
       storesTypes: ['studio'],
       isInternational: true,
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banorte', value: 'banorte' }
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //AMERICAN EXPRESS (International)
