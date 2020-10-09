@@ -504,11 +504,17 @@
     });
 
     function getStores(email) {
-      userService.getStores(email).then(function(stores) {
+      userService.getStores(email).then(function (stores) {
         vm.stores = stores;
-        if (vm.stores.length > 0) {
-          vm.loginForm.activeStoreId = vm.stores[0].id;
-        }
+        userService.getMainStoreId(email).then(function (activeStore) {
+          if (activeStore) {
+            vm.loginForm.activeStoreId = activeStore.id
+          } else {
+            if (vm.stores.length > 0) {
+              vm.loginForm.activeStoreId = vm.stores[0].id;
+            }
+          }
+        })
       });
     }
 

@@ -13,6 +13,7 @@
         getUser: getUser,
         getStores: getStores,
         getActiveStore: getActiveStore,
+        getMainStoreId: getMainStoreId,
         getCashReport: getCashReport,
         update: update,
         sendPasswordRecovery: sendPasswordRecovery,
@@ -78,5 +79,13 @@
         return api.$http.post(url, params);
       }
 
+      function getMainStoreId(email) {
+        var url = '/seller/getMainStore'
+        var params = { email: email };
+        return api.$http.get(url, params).then(function (res) {
+          return res.data;
+        });
+      }
+   
     }
 })();
