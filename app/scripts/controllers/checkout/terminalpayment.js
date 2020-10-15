@@ -15,7 +15,7 @@ function TerminalController(
   $scope.isCardPayment = paymentService.isCardPayment;
   $scope.numberToLetters = formatService.numberToLetters;
 
-  $scope.init = function() {
+  $scope.init = function () {
     $scope.payment = payment;
     $scope.needsVerification = payment.needsVerification;
     $scope.maxAmount = payment.maxAmount >= 0 ? payment.maxAmount : false;
@@ -53,11 +53,11 @@ function TerminalController(
     }
   };
 
-  $scope.hide = function() {
+  $scope.hide = function () {
     $mdDialog.hide();
   };
 
-  $scope.isMinimumValid = function() {
+  $scope.isMinimumValid = function () {
     $scope.payment.min = $scope.payment.min || 0;
     if (
       $scope.payment.ammount === $scope.payment.remaining ||
@@ -83,7 +83,7 @@ function TerminalController(
     return false;
   };
 
-  $scope.$watch('payment.ammount', function(newVal, oldVal) {
+  $scope.$watch('payment.ammount', function (newVal, oldVal) {
     if (newVal !== oldVal) {
       $scope.isMinimumValid();
     }
@@ -99,7 +99,7 @@ function TerminalController(
     return true;
   }
 
-  $scope.isValidPayment = function() {
+  $scope.isValidPayment = function () {
     $scope.payment.min = $scope.payment.min || 0;
     if ($scope.payment.ammount < $scope.payment.min) {
       $scope.minStr = $filter('currency')($scope.payment.min);
@@ -123,11 +123,14 @@ function TerminalController(
     );
   };
 
-  $scope.onChangeCard = function(card) {
+  $scope.onChangeCard = function (card) {
+    $scope.payment.terminal = getSelectedTerminal(card);
     $scope.terminal = getSelectedTerminal(card);
+    $scope.card = card;
+    $scope.payment.card = card;
   };
 
-  $scope.onChangePaymentNation = function(payment) {
+  $scope.onChangePaymentNation = function (payment) {
     $scope.payment.card = null;
     $scope.terminal = null;
     $scope.payment.options = [];
@@ -135,7 +138,7 @@ function TerminalController(
   };
 
   function getSelectedTerminal(card) {
-    var option = _.find($scope.payment.options, function(option) {
+    var option = _.find($scope.payment.options, function (option) {
       return option.card.value === card;
     });
     if (option) {
@@ -144,15 +147,15 @@ function TerminalController(
     return false;
   }
 
-  $scope.openConfirmation = function() {
+  $scope.openConfirmation = function () {
     $scope.isConfirmationActive = true;
   };
 
-  $scope.cancel = function() {
+  $scope.cancel = function () {
     $scope.isConfirmationActive = false;
   };
 
-  $scope.save = function() {
+  $scope.save = function () {
     if ($scope.isValidPayment()) {
       if ($scope.payment.options.length > 0) {
         $scope.terminal = getSelectedTerminal($scope.payment.card);
