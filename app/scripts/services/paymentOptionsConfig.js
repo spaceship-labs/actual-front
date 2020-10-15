@@ -102,7 +102,7 @@
       ],
       storesTypes: ['studio'],
       storeCodes: ['actual_studio_cumbres'],
-      terminal: { label: 'Banamex', value: 'banamex' }
+      terminal: { label: 'American Express', value: 'american-express' }
     },
 
     //BANAMEX
