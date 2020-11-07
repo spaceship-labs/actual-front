@@ -252,6 +252,7 @@
       var STUDIO_MERIDA = '11';
       var HOME_XCARET = '81';
       var PUERTO_CANCUN = '82';
+      var ISLA_MERIDA = '22';
 
       var hierarchy = [];
       switch (activeWarehouse.WhsCode) {
@@ -334,7 +335,18 @@
           ];
           //hierarchy = ["10","01","11","81","82","02","03","05"];
           break;
-
+        case ISLA_MERIDA:
+          hierarchy = [
+            CEDIS_MERIDA,
+            CEDIS_QROO,
+            ISLA_MERIDA,
+            STUDIO_MERIDA,
+            HOME_XCARET,
+            PUERTO_CANCUN,
+            STUDIO_MALECON,
+            STUDIO_PLAYA,
+            STUDIO_CUMBRES,
+          ]
         default:
           hierarchy = [];
           break;
