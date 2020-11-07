@@ -346,7 +346,8 @@
             STUDIO_MALECON,
             STUDIO_PLAYA,
             STUDIO_CUMBRES,
-          ]
+          ];
+          break;
         default:
           hierarchy = [];
           break;
