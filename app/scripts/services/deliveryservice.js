@@ -252,7 +252,7 @@
       var STUDIO_MERIDA = '11';
       var HOME_XCARET = '81';
       var PUERTO_CANCUN = '82';
-      var ISLA_MERIDA = '82';
+      var ISLA_MERIDA = '22';
 
       var hierarchy = [];
       switch (activeWarehouse.WhsCode) {
