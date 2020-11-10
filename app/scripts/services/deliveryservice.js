@@ -265,6 +265,8 @@
             STUDIO_CUMBRES,
             HOME_XCARET,
             PUERTO_CANCUN,
+            ISLA_MERIDA,
+            
           ];
           //hierarchy = ["01","02","03","05", "81", "82"];
           break;
@@ -278,6 +280,8 @@
             STUDIO_CUMBRES,
             HOME_XCARET,
             PUERTO_CANCUN,
+            ISLA_MERIDA,
+
           ];
           //hierarchy = ["01","03","02", "05","81","82"];
           break;
@@ -291,6 +295,8 @@
             STUDIO_PLAYA,
             HOME_XCARET,
             PUERTO_CANCUN,
+            ISLA_MERIDA,
+
           ];
           //hierarchy = ["01","05","02","03","81","82"];
           break;
@@ -304,6 +310,8 @@
             STUDIO_MALECON,
             STUDIO_PLAYA,
             STUDIO_CUMBRES,
+            ISLA_MERIDA,
+
           ];
           //hierarchy = ["01","81","82","02","03","05"];
           break;
@@ -317,6 +325,8 @@
             STUDIO_MALECON,
             STUDIO_PLAYA,
             STUDIO_CUMBRES,
+            ISLA_MERIDA,
+
           ];
           //hierarchy = ["01","82","81","02","03","05"];
           break;
@@ -332,6 +342,8 @@
             STUDIO_MALECON,
             STUDIO_PLAYA,
             STUDIO_CUMBRES,
+            ISLA_MERIDA,
+
           ];
           //hierarchy = ["10","01","11","81","82","02","03","05"];
           break;
