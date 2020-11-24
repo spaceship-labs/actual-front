@@ -129,8 +129,8 @@
         '6-msi-banamex',
         '9-msi-banamex',
         '12-msi-banamex',
-        '13-msi',
-        '18-msi'
+        '13-msi'/*,
+        '18-msi'*/
       ],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banamex', value: 'banamex' }
