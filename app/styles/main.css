@@ -4262,6 +4262,13 @@ padding-left: 16px;
   
 }
 
+.remark-message {
+  border-style: solid; 
+  border-width: 2.6px; 
+  border-color: red; 
+  padding: 6px;
+}
+
 /*-----------------/
   #SAP-CONNECTION-LOGS
 /*----------------*/
