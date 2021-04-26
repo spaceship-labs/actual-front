@@ -86,6 +86,7 @@ angular
         //{ key: 'Client.E_Mail', label: 'Email', defaultValue: 'Sin cliente' },
         //{ key: 'fromOffers', label: 'Paquetes', defaultValue: 'No' },
         { key: 'Payments[0].name', label: 'Tipo pago', defaultValue: 'Sin asignar' },
+        { key: 'source', label: 'Fuente', defaultValue: '-' },
         { key: 'Order', label: 'Order' }
       ]
     });
@@ -97,6 +98,7 @@ angular
     vm.exportQuery += 'Client->CardName as Cliente,';
     vm.exportQuery += 'currencyFormat(total) as Monto,';
     vm.exportQuery += 'quotationStatusMapper(status) as Status,';
+    vm.exportQuery += 'source as Fuente,';
     vm.exportQuery += 'dateFormat(estimatedCloseDate) as CierreEstimado,';
     vm.exportQuery += 'urlFormat(id) as Cotizacion,';
     vm.exportQuery += 'currencyFormat(discount) as Descuento,';
