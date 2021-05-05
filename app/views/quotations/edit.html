@@ -185,18 +185,22 @@
             ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || vm.isInValidDate }"
             class="cart-view-btn print-btn" />
 
-          <input type="submit" value="ASIGNAR CLIENTE"
-            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0"
+            <input
+            type="submit"
+            value="ASIGNAR CLIENTE"
+            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 || !vm.quotation.source"
             ng-if="!vm.quotation.Order && !vm.quotation.isClosed && !vm.quotation.Client"
-            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 }"
-            class="cart-view-btn print-btn" />
-
+            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 || !vm.quotation.source}"
+            class="cart-view-btn print-btn"
+          >
+          
           <p class="cart-summary-note" ng-show="vm.isValidatingStock && vm.quotation.Details">
             Validando disponibilidad...
-          </p>
+          </p>          
 
           <p class="cart-summary-note" ng-show="!vm.quotation.Client">
-            A continuación puedes elegir un cliente o asignar un nuevo cliente
+            A continuación puedes elegir un cliente o asignar un nuevo cliente.<br/>
+            En caso de tener el botón desactivado favor de seleccionar una opción de la toma de tráfico.
           </p>
 
           <p class="cart-summary-note" ng-show="vm.quotation.Client">
