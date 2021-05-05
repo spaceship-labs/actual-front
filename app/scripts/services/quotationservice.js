@@ -572,11 +572,6 @@
           ]
         },
         {
-          label: 'Ubicación',
-          value: 'ubicacion',
-          childs: [{ label: 'Tienda', value: 'tienda' }]
-        },
-        {
           label: 'Activaciones Especiales',
           value: 'activaciones-especiales',
           childs: [
