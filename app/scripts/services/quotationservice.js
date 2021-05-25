@@ -490,6 +490,14 @@
           ]
         },
         {
+          label: 'Promoción Exterior de Tienda',
+          value: 'promocion-exterior-de-tienda'
+        },
+        {
+          label: 'Compra Complementaria',
+          value: 'compra-complementaria'
+        },
+        {
           label: 'Internet',
           value: 'internet',
           childs: [
