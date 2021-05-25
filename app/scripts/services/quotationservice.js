@@ -651,6 +651,13 @@
             { label: 'Siaan', value: 'siaan' },
             { label: 'Aldea Serena', value: 'aldea-serena' },
             { label: 'Selvanova', value: 'selvanova' },
+            { label: 'Palmaria', value: 'palmaria' },
+            { label: 'Volta', value: 'volta' },
+            { label: 'Awa', value: 'awa' },
+            { label: 'Urban Towers', value: 'urban-towers' },
+            { label: 'Bali', value: 'bali' },
+            { label: 'Valenia', value: 'valenia' },
+            { label: 'Jardines de Mayakoba', value: 'jardines-de-mayakoba' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
