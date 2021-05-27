@@ -490,6 +490,14 @@
           ]
         },
         {
+          label: 'Promoción Exterior de Tienda',
+          value: 'promocion-exterior-de-tienda'
+        },
+        {
+          label: 'Compra Complementaria',
+          value: 'compra-complementaria'
+        },
+        {
           label: 'Internet',
           value: 'internet',
           childs: [
@@ -651,6 +659,13 @@
             { label: 'Siaan', value: 'siaan' },
             { label: 'Aldea Serena', value: 'aldea-serena' },
             { label: 'Selvanova', value: 'selvanova' },
+            { label: 'Palmaria', value: 'palmaria' },
+            { label: 'Volta', value: 'volta' },
+            { label: 'Awa', value: 'awa' },
+            { label: 'Urban Towers', value: 'urban-towers' },
+            { label: 'Bali', value: 'bali' },
+            { label: 'Valenia', value: 'valenia' },
+            { label: 'Jardines de Mayakoba', value: 'jardines-de-mayakoba' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -701,7 +716,30 @@
             { label: 'Carmela', value: 'carmela' },
             { label: 'bungalos-village', value: 'bungalos-village' },
             { label: 'mistiq', value: 'mistiq' },
-
+            { label: 'Omara', value: 'omara' },
+            { label: 'Essentia', value: 'essentia' },
+            { label: 'Bajo Cielo', value: 'bajo-cielo' },
+            { label: 'Tribu', value: 'tribu' },
+            { label: 'Nuuch', value: 'nuuch' },
+            { label: 'Mar y Miel', value: 'mar-y-miel' },
+            { label: 'Miraluna', value: 'miraluna' },
+            { label: 'Bonita', value: 'bonita' },
+            { label: 'Tikal', value: 'tikal' },
+            { label: 'Amelia', value: 'amelia' },
+            { label: 'Santomar', value: 'santomar' },
+            { label: 'Phimai', value: 'phimai' },
+            { label: 'Atta Holistyka', value: 'atta-holistyka' },
+            { label: 'El Nido', value: 'el-nido' },
+            { label: 'Cuatrio Cielos', value: 'cuatro-cielos' },
+            { label: 'Vita Tulum', value: 'vita-tulum' },
+            { label: 'Casa Natura', value: 'casa-natura' },
+            { label: 'Kaay', value: 'kaay' },
+            { label: 'Kasa Residences', value: 'kasa-residences' },
+            { label: 'Amana', value: 'amana' },
+            { label: 'Antal Tulum', value: 'antal-tulum' },
+            { label: '525 Tulum', value: '525-tulum' },
+            { label: 'Casa Leo', value: 'casa-leo' },
+            { label: 'Folclore', value: 'folclore' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         }
