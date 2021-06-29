@@ -61,10 +61,12 @@
       </p>
       <p>Su compra ha sido procesada y en breve estará recibiendo su confirmación al correo electrónico
         <strong>{{vm.order.Client.E_Mail}}</strong>
-        <!--<strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>-->.</p>
+        <!--<strong>{{vm.order.Address.E_Mail || vm.order.Client.E_Mail}}</strong>-->.
+      </p>
 
       <p>
-        <strong>Tienda:</strong> {{vm.order.Store.name}}</p>
+        <strong>Tienda:</strong> {{vm.order.Store.name}}
+      </p>
     </div>
 
     <!--ORDER ITEMS-->
@@ -100,7 +102,8 @@
               <div flex class="order-item-features">
                 <ul>
                   <li>
-                    <strong>Código: </strong> {{detailGroup.Product.ItemCode}}</li>
+                    <strong>Código: </strong> {{detailGroup.Product.ItemCode}}
+                  </li>
                   <li ng-repeat="filter in detailGroup.Product.Filters" ng-if="
                       filter.Handle == 'codigo' ||
                       filter.Handle == 'material' ||
@@ -293,43 +296,57 @@
           <strong>
             <i class="icon-envio"></i> ENVÍO</strong>
         </h3>
-        <div class="order-block-inner" layout="row" >
+        <div class="order-block-inner" layout="row">
           <div class="resp-delivery" layout-xs="column" flex="60">
             <div flex="90">
               <p>
-                <strong>Email: </strong>{{vm.order.E_Mail}}</p>
+                <strong>Email: </strong>{{vm.order.E_Mail}}
+              </p>
               <p>
-                <strong>Télefono: </strong>{{vm.order.Tel1}}</p>
+                <strong>Télefono: </strong>{{vm.order.Tel1}}
+              </p>
               <p>
-                <strong>Celular: </strong>{{vm.order.Cellolar}}</p>
+                <strong>Celular: </strong>{{vm.order.Cellolar}}
+              </p>
               <p>
-                <strong>Calle:</strong>{{vm.order.address}}</p>
+                <strong>Calle:</strong>{{vm.order.address}}
+              </p>
               <p>
-                <strong>No. exterior: </strong>{{vm.order.U_Noexterior}}</p>
+                <strong>No. exterior: </strong>{{vm.order.U_Noexterior}}
+              </p>
               <p>
-                <strong>No. interior: </strong>{{vm.order.U_Nointerior}}</p>
+                <strong>No. interior: </strong>{{vm.order.U_Nointerior}}
+              </p>
               <p>
-                <strong>Colonia: </strong>{{vm.order.U_Colonia}}</p>
+                <strong>Colonia: </strong>{{vm.order.U_Colonia}}
+              </p>
             </div>
           </div>
           <div class="resp-delivery" layout-xs="column" flex="40">
-              <div flex="90">
-                <p>
-                  <strong>Municipio: </strong>{{vm.order.U_Mpio}}</p>
-                <p>
-                  <strong>Ciudad: </strong>{{vm.order.U_Ciudad}}</p>
-                <p>
-                  <strong>Estado: </strong>{{vm.order.U_Estado}}</p>
-                <p>
-                  <strong>C.P.: </strong>{{vm.order.U_CP}}</p>
-                <p>
-                  <strong>Entre calle: </strong>{{vm.order.U_Entrecalle}}</p>
-                <p>
-                  <strong>Y calle: </strong>{{vm.order.U_Ycalle}}</p>
-                <p>
-                  <strong>Referencias: </strong>{{vm.order.U_Notes1}}</p>
-              </div>
+            <div flex="90">
+              <p>
+                <strong>Municipio: </strong>{{vm.order.U_Mpio}}
+              </p>
+              <p>
+                <strong>Ciudad: </strong>{{vm.order.U_Ciudad}}
+              </p>
+              <p>
+                <strong>Estado: </strong>{{vm.order.U_Estado}}
+              </p>
+              <p>
+                <strong>C.P.: </strong>{{vm.order.U_CP}}
+              </p>
+              <p>
+                <strong>Entre calle: </strong>{{vm.order.U_Entrecalle}}
+              </p>
+              <p>
+                <strong>Y calle: </strong>{{vm.order.U_Ycalle}}
+              </p>
+              <p>
+                <strong>Referencias: </strong>{{vm.order.U_Notes1}}
+              </p>
             </div>
+          </div>
 
         </div>
       </div>
@@ -345,11 +362,14 @@
             </h3>
             <div lass="order-block-inner">
               <p>
-                <strong>Celular: </strong>(998) 195 8376</p>
+                <strong>Celular: </strong>(998) 195 8376
+              </p>
               <p>
-                <strong>Celular: </strong>(998) 195 6839</p>
+                <strong>Celular: </strong>(998) 195 6839
+              </p>
               <p>
-                <strong>Email:</strong> clientes@actualg.com</p>
+                <strong>Email:</strong> clientes@actualg.com
+              </p>
             </div>
             <h3>
               <strong>
@@ -360,11 +380,14 @@
                 <strong>{{vm.order.User.firstName + ' ' + vm.order.User.lastName}}</strong>
               </p>
               <p>
-                <strong>Teléfono: </strong>{{vm.order.User.phone}}</p>
+                <strong>Teléfono: </strong>{{vm.order.User.phone}}
+              </p>
               <p>
-                <strong>Celular: </strong>{{vm.order.User.mobilePhone}}</p>
+                <strong>Celular: </strong>{{vm.order.User.mobilePhone}}
+              </p>
               <p>
-                <strong>Email:</strong> {{vm.order.User.email}}</p>
+                <strong>Email:</strong> {{vm.order.User.email}}
+              </p>
             </div>
           </div>
           <div class="order-block-inner" layout-align="space-between center">
@@ -390,17 +413,20 @@
       </div>
     </div>
     <!-- SELLER -->
-    <div class="seller-block order-block-info" layout="row" >
+    <div class="seller-block order-block-info" layout="row">
       <div style="font-size: 8px">
         <p>El personal de entrega le estará contactando vía telefónica en varias ocasiones:</p>
         <ul>
           <li>
             <strong>Coordinación de la fecha de entrega:</strong> En los siguientes 24 horas hábiles después de la
-            compra.</li>
+            compra.
+          </li>
           <li>
-            <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.</li>
+            <strong>Coordinación de la hora de entrega:</strong> Mínimo 24 horas antes de la entrega.
+          </li>
           <li>
-            <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega</li>
+            <strong>Aviso de la llegada de la unidad de entrega</strong> 1 hora antes de la entrega
+          </li>
         </ul>
       </div>
     </div>
@@ -420,11 +446,24 @@
     <div class="seller-block order-block-info remark-message">
       <strong>
         <p class="only-show-print show-print"> Estimado cliente:
-          <p>Derivado de las diferentes medidas de sanidad nacionales e internacionales en contra del COVID-19, sumado a los atrasos en el abasto de insumos de importación; estamos experimentando atrasos en las fechas de entrega. La fecha que aparece en el pedido es estimada, y trabajamos para que su entrega se de en tiempo y forma.
-          </p> 
+        <p>Derivado de las diferentes medidas de sanidad nacionales e internacionales en contra del COVID-19, sumado a
+          los atrasos en el abasto de insumos de importación; estamos experimentando atrasos en las fechas de entrega.
+          La fecha que aparece en el pedido es estimada, y trabajamos para que su entrega se de en tiempo y forma.
         </p>
-          <hr class="only-show-print" />
+        </p>
+        <hr class="only-show-print" />
       </strong>
+    </div>
+    <br>
+    <div class="seller-block order-block-info">
+      <p>
+        <strong>Si el pedido contiene varios productos y diferentes fechas. Se realizará una sola entrega consolidando
+          sus
+          productos en la ultima fecha que aparezca en su pedido. Si desea entregas parciales podrá solicitarlo sin
+          cargo
+          extra en el teléfono: 998 246 0845
+        </strong>
+      </p>
     </div>
     <br>
     <!--END SELLER-->
@@ -502,7 +541,7 @@
     </table>
   </section>
 
-  <hr/>
+  <hr />
 
   <section ng-show="vm.order.OrdersSap && vm.order.OrdersSap.length > 0" class="sap-docs only-hide-print">
     <h3>
@@ -517,7 +556,8 @@
           <strong>Factura de deudores SAP</strong>: {{orderSap.invoiceSap}}
         </p>
         <p>
-          <strong>Pagos</strong>:</p>
+          <strong>Pagos</strong>:
+        </p>
         <ul>
           <li ng-repeat="paymentSap in orderSap.PaymentsSap">{{paymentSap.document}}</li>
         </ul>
@@ -528,14 +568,14 @@
   <ng-include class="only-hide-print" src="'views/checkout/sap-connection-logs.html'"></ng-include>
   <ng-include class="only-hide-print" src="'views/checkout/alegra-connection-logs.html'"></ng-include>
   <div class="footer-bottom center-content show-print" style="font-size: 10px">
-      <p>
-        <strong>​© ACTUAL KIDS, S.A. DE C.V. 2013-2019 | Todos los derechos reservados.
-          | Todos los precios son mostrados en Pesos Mexicanos (MXN) con IVA
-          incluido.</strong>
-        <span>Se prohíbe cualquier reproducción total o parcial de este
-          contenido. Es responsabilidad del proveedor garantizar la exactitud
-          de las fotografías mostradas y no nos hacemos responsables por
-          inexactitudes en las mismas.</span>
-      </p>
+    <p>
+      <strong>​© ACTUAL KIDS, S.A. DE C.V. 2013-2019 | Todos los derechos reservados.
+        | Todos los precios son mostrados en Pesos Mexicanos (MXN) con IVA
+        incluido.</strong>
+      <span>Se prohíbe cualquier reproducción total o parcial de este
+        contenido. Es responsabilidad del proveedor garantizar la exactitud
+        de las fotografías mostradas y no nos hacemos responsables por
+        inexactitudes en las mismas.</span>
+    </p>
   </div>
 </section>
