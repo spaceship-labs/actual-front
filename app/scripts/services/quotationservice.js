@@ -501,16 +501,12 @@
           label: 'Internet',
           value: 'internet',
           childs: [
-            { label: 'Facebook', value: 'facebook' },
-            { label: 'Mailing', value: 'mailing' },
             { label: 'Google(Buscador)', value: 'google' },
-            { label: 'Yucatán premier', value: 'yucatan-premier' },
+            { label: 'Mercado libre', value: 'mercado-libre' },
+            { label: 'Amazon', value: 'amazon' },
+            { label: 'Facebook', value: 'facebook' },
             { label: 'Instagram', value: 'Instagram' },
-            {
-              label: 'Diario de Yucatán Online',
-              value: 'diario-de-yucatan-online'
-            },
-            { label: 'Foursquare', value: 'foursquare' },
+            { label: 'Mailing', value: 'mailing' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -673,13 +669,17 @@
           label: 'Recomendado Mérida',
           value: 'recomendado-merida',
           childs: [
-            { label: 'Altozano', value: 'altozano' },
-            { label: 'Armonia', value: 'armonia' },
+            { label: 'Yucatán Country Club', value: 'yucatan-country-club' },
             { label: 'Country Towers', value: 'country-towers' },
+            { label: 'Villas del Sol', value: 'villas-del-sol' },
+            { label: 'Vía Montejo', value: 'via-montejo' },
             { label: 'Serena', value: 'serena' },
-            { label: 'Anthea', value: 'anthea' },
-            { label: 'La Vista', value: 'la-vista' },
-            { label: 'Floresta', value: 'floresta' },
+            { label: 'Turena', value: 'turena' },
+            { label: 'Idilia', value: 'Idilia' },
+            { label: 'Tabia', value: 'tabia' },
+            { label: 'Kellman', value: 'kellman' },
+            { label: 'Town Square', value: 'town-square' },
+            { label: 'Art House', value: 'art-house' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
