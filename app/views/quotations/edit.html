@@ -98,7 +98,7 @@
 
     <div class="quotation-data-row quotation-validity">
       <label>Vigencia</label>
-      <p>Hasta agotar existencias y sujeto a términos de promociones.</p>
+      <p>1 día.</p>
     </div>
 
     <div class="hr">
@@ -142,7 +142,7 @@
             <tr>
               <td>
                 <strong>Subtotal ({{
-                    vm.quotation.totalProducts
+                  vm.quotation.totalProducts
                   }}
                   productos):</strong>
               </td>
@@ -153,8 +153,8 @@
             <tr>
               <td>Descuento:</td>
               <td>
-                <strong>MXN <span
-                    ng-show="vm.quotation.discount > 0">-</span>{{ vm.quotation.discount | currency }}</strong>
+                <strong>MXN <span ng-show="vm.quotation.discount > 0">-</span>{{ vm.quotation.discount | currency
+                  }}</strong>
               </td>
             </tr>
           </table>
@@ -170,7 +170,7 @@
                 <span class="currency-label">MXN</span>
                 <span class="price-crossed">{{
                   vm.quotation.subtotal | roundCurrency
-                }}</span>
+                  }}</span>
               </h3>
               <h1 class="price-main">
                 <span class="currency-label">MXN</span>
@@ -185,21 +185,18 @@
             ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || vm.isInValidDate }"
             class="cart-view-btn print-btn" />
 
-            <input
-            type="submit"
-            value="ASIGNAR CLIENTE"
+          <input type="submit" value="ASIGNAR CLIENTE"
             ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 || !vm.quotation.source"
             ng-if="!vm.quotation.Order && !vm.quotation.isClosed && !vm.quotation.Client"
             ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 || !vm.quotation.source}"
-            class="cart-view-btn print-btn"
-          >
-          
+            class="cart-view-btn print-btn">
+
           <p class="cart-summary-note" ng-show="vm.isValidatingStock && vm.quotation.Details">
             Validando disponibilidad...
-          </p>          
+          </p>
 
           <p class="cart-summary-note" ng-show="!vm.quotation.Client">
-            A continuación puedes elegir un cliente o asignar un nuevo cliente.<br/>
+            A continuación puedes elegir un cliente o asignar un nuevo cliente.<br />
             En caso de tener el botón desactivado favor de seleccionar una opción de la toma de tráfico.
           </p>
 
