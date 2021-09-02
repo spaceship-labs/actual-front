@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('actualApp').factory('quotationService', quotationService);
@@ -157,7 +157,7 @@
       options = options || {};
       var deferred = $q.defer();
       if (quotation && quotation.Details) {
-        var productsIds = quotation.Details.map(function(detail) {
+        var productsIds = quotation.Details.map(function (detail) {
           return detail.Product; //product id
         });
 
@@ -168,13 +168,13 @@
 
         productService
           .multipleGetByIds(params)
-          .then(function(res) {
+          .then(function (res) {
             console.log('res', res);
             return productService.formatProducts(res.data);
           })
-          .then(function(formattedProducts) {
+          .then(function (formattedProducts) {
             //Match detail - product
-            quotation.Details = quotation.Details.map(function(detail) {
+            quotation.Details = quotation.Details.map(function (detail) {
               detail.Product = _.findWhere(formattedProducts, {
                 id: detail.Product
               });
@@ -182,7 +182,7 @@
             });
             deferred.resolve(quotation.Details);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log('err', err);
             deferred.reject(err);
           });
@@ -220,7 +220,7 @@
 
     function newQuotation(params, options) {
       options = options || {};
-      create(params).then(function(res) {
+      create(params).then(function (res) {
         var quotation = res.data;
         if (quotation) {
           setActiveQuotation(quotation.id);
@@ -262,11 +262,11 @@
       if (quotationId) {
         //Agregar al carrito
         addDetail(quotationId, detail)
-          .then(function(res) {
+          .then(function (res) {
             //setActiveQuotation(quotationId);
             $location.path('/quotations/edit/' + quotationId);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
             authService.showUnauthorizedDialogIfNeeded(err);
           });
@@ -275,14 +275,14 @@
         var createParams = { Details: [detail] };
 
         create(createParams)
-          .then(function(res) {
+          .then(function (res) {
             var quotation = res.data;
             if (quotation) {
               setActiveQuotation(quotation.id);
               $location.path('/quotations/edit/' + quotation.id);
             }
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
             authService.showUnauthorizedDialogIfNeeded(err);
           });
@@ -293,37 +293,37 @@
     function addMultipleProducts(products) {
       var quotationId = localStorageService.get('quotation');
       if (quotationId) {
-        var detailsParams = products.map(function(product) {
+        var detailsParams = products.map(function (product) {
           return createDetailObjectFromParams(product.id, product, quotationId);
         });
 
         addMultipleDetails(quotationId, { Details: detailsParams })
-          .then(function(details) {
+          .then(function (details) {
             //setActiveQuotation(quotationId);
             $location.path('/quotations/edit/' + quotationId);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
             authService.showUnauthorizedDialogIfNeeded(err);
           });
       } else {
         //Crear cotizacion con producto agregado
         var createParams = {
-          Details: products.map(function(product) {
+          Details: products.map(function (product) {
             var detail = createDetailObjectFromParams(product.id, product);
             return detail;
           })
         };
 
         create(createParams)
-          .then(function(res) {
+          .then(function (res) {
             var quotation = res.data;
             if (quotation) {
               setActiveQuotation(quotation.id);
               $location.path('/quotations/edit/' + quotation.id);
             }
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
             authService.showUnauthorizedDialogIfNeeded(err);
           });
@@ -340,15 +340,15 @@
 
       productService
         .getAllFilters({ quickread: true })
-        .then(function(res) {
+        .then(function (res) {
           //Assign filters to every product
           var filters = res.data;
-          details.forEach(function(detail) {
-            filters = filters.map(function(filter) {
+          details.forEach(function (detail) {
+            filters = filters.map(function (filter) {
               filter.Values = [];
 
               if (detail.Product && detail.Product.FilterValues) {
-                detail.Product.FilterValues.forEach(function(value) {
+                detail.Product.FilterValues.forEach(function (value) {
                   if (value.Filter === filter.id) {
                     filter.Values.push(value);
                   }
@@ -358,7 +358,7 @@
               return filter;
             });
 
-            filters = filters.filter(function(filter) {
+            filters = filters.filter(function (filter) {
               return filter.Values.length > 0;
             });
 
@@ -369,7 +369,7 @@
 
           deferred.resolve(details);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
@@ -415,7 +415,7 @@
     }
 
     function mapDetailsStock(details, detailsStock) {
-      details = details.map(function(detail) {
+      details = details.map(function (detail) {
         var detailStock = _.findWhere(detailsStock, { id: detail.id });
         if (detailsStock) {
           detail.validStock = detailStock.validStock;
@@ -426,7 +426,7 @@
     }
 
     function isValidStock(detailsStock) {
-      return _.every(detailsStock, function(detail) {
+      return _.every(detailsStock, function (detail) {
         return detail.validStock;
       });
     }
@@ -436,14 +436,14 @@
       var deferred = $q.defer();
       api.$http
         .post(url)
-        .then(function(response) {
+        .then(function (response) {
           if (response.data.isValid) {
             deferred.resolve(true);
           } else {
             deferred.resolve(false);
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
       return deferred.promise;
@@ -516,7 +516,6 @@
           childs: [
             { label: 'ALTTA', value: 'altta' },
             { label: 'Cancunissimo', value: 'cancunissimo' },
-            { label: 'Diario de Yucatán', value: 'diario-de-yucatan' },
             { label: 'The playa times', value: 'the-playa-times' },
             { label: 'Ambientes', value: 'ambientes' },
             { label: 'Abitat', value: 'abitat' },
@@ -538,8 +537,8 @@
             { label: 'Pirata', value: 'pirata' },
             { label: 'Kiss Mérida', value: 'kiss-merida' },
             {
-              label: '104.3 Qfm / Rock by the sea',
-              value: '104.3qfm_rock-by-the-sea'
+              label: 'Radio',
+              value: 'Radio'
             },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
