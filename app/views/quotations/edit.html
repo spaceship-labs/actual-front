@@ -181,9 +181,9 @@
 
           <input type="submit" value="CONTINUAR"
             ng-if="!vm.quotation.Order && !vm.quotation.isClosed && vm.quotation.Client"
-            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || vm.isInValidDate"
-            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || vm.isInValidDate }"
-            class="cart-view-btn print-btn" />
+            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || !vm.quotation.source  || vm.isInValidDate"
+            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || !vm.quotation.source  || vm.isInValidDate}"
+            class="cart-view-btn print-btn">
 
           <input type="submit" value="ASIGNAR CLIENTE"
             ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.quotation.Details.length === 0 || !vm.quotation.source"
@@ -197,6 +197,8 @@
 
           <p class="cart-summary-note" ng-show="!vm.quotation.Client">
             A continuación puedes elegir un cliente o asignar un nuevo cliente.<br />
+          </p>
+          <p class="cart-summary-note" ng-show="!vm.quotation.source">
             En caso de tener el botón desactivado favor de seleccionar una opción de la toma de tráfico.
           </p>
 
