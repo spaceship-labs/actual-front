@@ -181,8 +181,8 @@
             type="submit"
             value="CONTINUAR"
             ng-if="!vm.quotation.Order && !vm.quotation.isClosed && vm.quotation.Client"
-            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0"
-            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 }"
+            ng-disabled="!vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || !vm.quotation.source"
+            ng-class="{'cart-view-btn-disabled' : !vm.isValidStock(vm.quotation.Details) || vm.isValidatingStock || vm.quotation.Details.length === 0 || !vm.quotation.source }"
             class="cart-view-btn print-btn"
           >
 
