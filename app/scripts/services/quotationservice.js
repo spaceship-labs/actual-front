@@ -668,7 +668,14 @@
           label: 'Recomendado Mérida',
           value: 'recomendado-merida',
           childs: [
-            { label: 'Yucatán Country Club', value: 'yucatan-country-club' },
+            { 
+              label: 'Yucatán Country Club', 
+              value: 'yucatan-country-club',
+              childs: [
+                { label: 'Anthea', value: 'anthea' },
+                { label: 'Armonía', value: 'armonia' }
+              ] 
+            },
             { label: 'Country Towers', value: 'country-towers' },
             { label: 'Villas del Sol', value: 'villas-del-sol' },
             { label: 'Vía Montejo', value: 'via-montejo' },
