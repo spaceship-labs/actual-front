@@ -45,6 +45,7 @@
     "angular-material": "master",
     "ngInfiniteScroll": "1.0.0",
     "angular-animate": "^1.6.3",
-    "photoswipe": "~4.1.0"
+    "photoswipe": "~4.1.0",
+    "jquery": "2.1.4"
   }
 }
