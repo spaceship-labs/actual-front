@@ -32,7 +32,8 @@
     "angular-chosen-localytics": "~1.5.0",
     "ng-currency": "~1.1.4",
     "angular-google-analytics": "^1.1.9",
-    "quagga": "^0.12.1"
+    "quagga": "^0.12.1",
+    "jquery": "2.1.4"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
