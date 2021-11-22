@@ -40,6 +40,7 @@ function ProductCtrl(
     init: init,
     isImmediateDelivery: isImmediateDelivery,
     isImmediateDeliveryGroup: isImmediateDeliveryGroup,
+    isShopDeliveryGroup: isShopDeliveryGroup,
     isLoading: true,
     isSRService: isSRService,
     resetProductCartQuantity: resetProductCartQuantity,
@@ -283,7 +284,9 @@ function ProductCtrl(
       isImmediateDelivery(deliveryGroup.date) && deliveryGroup.ImmediateDelivery
     );
   }
-
+  function isShopDeliveryGroup(deliveryGroup) {
+    return deliveryGroup.ShopDelivery
+  }
   function isSRService(product) {
     return product.Service === 'Y';
   }

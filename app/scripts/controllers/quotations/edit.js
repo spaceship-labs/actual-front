@@ -635,6 +635,11 @@ function QuotationsEditCtrl(
               '¡Elegiste un artículo "entrega en tienda" el cliente tiene que llevarselo!';
             dialogService.showDialog(immediateDeliveryMsg);
           }
+          if (quotationHasShopDeliveryProducts(vm.quotation)) {
+            var ShopDeliveryMsg =
+              '¡Elegiste un artículo "Centro de entregas", Informa al cliente sobre la recolección del pedido!';
+            dialogService.showDialog(ShopDeliveryMsg);
+          }
 
           if (vm.quotation.Client) {
             if (quotationUpdated.immediateDelivery) {
@@ -666,7 +671,11 @@ function QuotationsEditCtrl(
       return detail.immediateDelivery && !detail.isSRService;
     });
   }
-
+  function quotationHasShopDeliveryProducts(quotation) {
+    return _.some(quotation.Details, function(detail) {
+      return detail.ShopDelivery;
+    });
+  }
   function getUnitPriceWithDiscount(unitPrice, discountPercent) {
     var result = unitPrice - unitPrice / 100 * discountPercent;
     return result;
