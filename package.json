@@ -48,7 +48,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "npm install -g bower && npm install -g grunt-cli && bower install",
+    "postinstall": "npm install -g bower && npm install -g grunt-cli@1.4.1 && bower install",
     "start": "npm install && grunt build --env=sandbox"
   },
   "dependencies": {
