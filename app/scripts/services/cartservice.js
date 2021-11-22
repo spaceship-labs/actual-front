@@ -28,6 +28,7 @@
         PurchaseAfter: cartItem.PurchaseAfter,
         PurchaseDocument: cartItem.PurchaseDocument,
         immediateDelivery: cartItem.ImmediateDelivery,
+        ShopDelivery: cartItem.ShopDelivery,
       };
       return params;
     }
