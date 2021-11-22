@@ -154,7 +154,7 @@ function CheckoutClientCtrl(
       }
     }
 
-    if (vm.quotation.Address || vm.quotation.immediateDelivery) {
+    if (vm.quotation.Address || vm.quotation.immediateDelivery || vm.quotation.ShopDelivery) {
       vm.isLoading = true;
       var params = { Address: vm.quotation.Address };
       quotationService

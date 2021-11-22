@@ -69,6 +69,18 @@ function CheckoutOrderCtrl(
       }
     }
   }
+  function showShopDeliveryDialog(order) {
+    if (order.Details) {
+      var hasShopDelivery = order.Details.some(function(detail) {
+        return detail.ShopDelivery;
+      });
+      if (hasShopDelivery) {
+        dialogService.showDialog(
+          '¡Favor de informar al cliente que la entrega es en el centro de distribución!'
+        );
+      }
+    }
+  }
 
   function init() {
     //vm.isLoading = false;
@@ -99,6 +111,7 @@ function CheckoutOrderCtrl(
         console.log('ORDER EWALLET RECORDS: ', vm.order.ewalletAmount);
         if ($location.search().orderCreated) {
           showImmediateDeliveryDialog(vm.order);
+          showShopDeliveryDialog(vm.order);
         }
 
         loadOrderQuotationRecords(vm.order);

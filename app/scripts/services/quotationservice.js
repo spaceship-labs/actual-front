@@ -149,7 +149,7 @@
     }
 
     function isValidQuotationAddress(quotation) {
-      return quotation.immediateDelivery || quotation.Address ? true : false;
+      return quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery ? true : false;
     }
 
     function populateDetailsWithProducts(quotation, options) {
@@ -244,6 +244,7 @@
         Quotation: quotationId,
         shipDate: params.shipDate,
         immediateDelivery: params.immediateDelivery,
+        ShopDelivery: params.ShopDelivery,
         originalShipDate: params.originalShipDate,
         productDate: params.productDate,
         shipCompany: params.shipCompany,

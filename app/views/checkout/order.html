@@ -146,6 +146,9 @@
               <span class="immediate-delivery-tag" ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService">
                 Entrega en tienda
               </span>
+              <span class="immediate-delivery-tag" ng-if="detailGroup.ShopDelivery">
+                Centro de entregas
+              </span>
             </div>
             <div flex="20" class="order-item-data">
               <span>{{detailGroup.total | currency}} MXN</span>
