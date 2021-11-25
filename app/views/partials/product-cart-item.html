@@ -98,6 +98,9 @@
       <p ng-if="detailGroup.immediateDelivery && !detailGroup.isSRService" class="bottom-text">
         <span class="immediate-delivery-label">Entrega en tienda</span>
       </p>
+      <p ng-if="detailGroup.ShopDelivery" class="bottom-text">
+        <span class="immediate-delivery-label">Centro de entregas</span>
+      </p>
 
       
       <p class="bottom-text" ng-show="vm.ENV.name === 'sandbox' || vm.ENV.name === 'dev' " ng-repeat="detail in detailGroup.details">
@@ -109,6 +112,12 @@
           class="immediate-delivery-label"
         >
           Entrega en tienda
+        </span>
+        <span 
+          ng-if="detail.ShopDelivery"
+          class="immediate-delivery-label"
+        >
+          Centro de entregas
         </span>
         | {{ vm.getWarehouseById(detail.shipCompanyFrom).WhsName }}  | Cantidad: {{detail.quantity}} | Valido: {{detail.validStock}}
       </p>
