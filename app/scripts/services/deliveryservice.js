@@ -87,6 +87,9 @@
             ImmediateDelivery: _.every(items, function(delivery) {
               return delivery.ImmediateDelivery;
             }),
+            ShopDelivery: _.every(items, function(delivery) {
+              return delivery.ShopDelivery;
+            }),
           };
           groups.push(group);
         }

@@ -32,7 +32,9 @@
           <span ng-show="vm.isImmediateDeliveryGroup(deliveryGroup)" class="immediate-delivery">
             Entrega en tienda
           </span> 
-
+          <span ng-show="vm.isShopDeliveryGroup(deliveryGroup)" class="immediate-delivery">
+            Centro de entregas
+          </span> 
           <div ng-show="vm.ENV.name === 'sandbox' || vm.ENV.name === 'dev' ">
             <p>Debug</p>                       
             <span 
