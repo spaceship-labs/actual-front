@@ -67,7 +67,7 @@
             delivery.companyFrom !== deliveries[i].companyFrom &&
             convertDatetimeToDate(delivery.date) <=
               convertDatetimeToDate(deliveries[i].date) &&
-            !isDateImmediateDelivery(delivery)
+            !isDateImmediateDelivery(delivery) && delivery.ShopDelivery === deliveries[i].ShopDelivery
           ) {
             return true;
           } else {
