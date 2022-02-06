@@ -154,6 +154,7 @@ function OffersCtrl(
         product.productDate = deliveryDate.productDate;
         product.shipCompany = deliveryDate.company;
         product.shipCompanyFrom = deliveryDate.companyFrom;
+        product.ShopDelivery = deliveryDate.ShopDelivery;
         product.promotionPackage = packageId;
         product.PurchaseAfter = deliveryDate.PurchaseAfter;
         product.PurchaseDocument = deliveryDate.PurchaseDocument;
