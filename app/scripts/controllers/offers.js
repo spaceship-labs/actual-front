@@ -143,7 +143,10 @@ function OffersCtrl(
 
     console.log('sortDeliveriesByHierarchy', productDeliveryDates);
     productDeliveryDates = removeImmediateDeliveryDates(productDeliveryDates);
-
+    productDeliveryDates = removeShopDeliveryDeliveryDates(productDeliveryDates);
+    // productDeliveryDates = _.sortBy(productDeliveryDates,function (deliveryDate){
+    //   return deliveryDate.date
+    // });
     console.log('removeImmediateDeliveryDates', productDeliveryDates);
 
     for (var i = productDeliveryDates.length - 1; i >= 0; i--) {
@@ -169,6 +172,11 @@ function OffersCtrl(
   function removeImmediateDeliveryDates(deliveryDates) {
     return deliveryDates.filter(function(deliveryDate) {
       return !deliveryDate.ImmediateDelivery;
+    });
+  }
+  function removeShopDeliveryDeliveryDates(deliveryDates) {
+    return deliveryDates.filter(function(deliveryDate) {
+      return !deliveryDate.ShopDelivery;
     });
   }
 
