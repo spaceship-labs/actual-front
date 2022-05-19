@@ -57,7 +57,7 @@
     //AMERICAN EXPRESS (International)
     {
       card: { label: 'American Express', value: 'american-express' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: ['credit-card'],
       storesTypes: ['home', 'studio', 'proyectos'],
       isInternational: true,
       terminal: { label: 'American Express', value: 'american-express' }
@@ -65,7 +65,7 @@
 
     {
       card: { label: 'American Express', value: 'american-express' },
-      paymentTypes: ['credit-card', 'debit-card'],
+      paymentTypes: ['credit-card'],
       storesTypes: ['home', 'studio', 'proyectos'],
       storeCodes: ['actual_studio_cumbres'],
       isInternational: true,
@@ -77,7 +77,6 @@
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: [
         'credit-card',
-        'debit-card',
         '3-msi',
         '6-msi',
         '9-msi',
@@ -93,7 +92,6 @@
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: [
         'credit-card',
-        'debit-card',
         '3-msi',
         '6-msi',
         '9-msi',
@@ -230,6 +228,14 @@
       paymentTypes: ['3-msi', '6-msi', '9-msi', '12-msi', '18-msi'],
       storesTypes: ['home', 'studio', 'proyectos'],
       terminal: { label: 'Banorte', value: 'banorte' }
+    },
+
+    //Liga Banorte USD
+    {
+      card: { label: 'Liga Banorte USD', value: 'banorte' },
+      paymentTypes: ['credit-card-usd'],
+      storesTypes: ['home', 'studio', 'proyectos'],
+      terminal: { label: 'Banamex', value: 'banamex' }
     },
 
     //AFIRME
