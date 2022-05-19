@@ -28,13 +28,13 @@
       CLIENT_BALANCE: 'client-balance',
       CASH: 'cash',
       CASH_USD: 'cash-usd',
-
       CHEQUE: 'cheque',
       DEPOSIT: 'deposit',
       TRANSFER: 'transfer',
       TRANSFER_USD: 'transfer-usd',
       CREDIT_CARD: 'credit-card',
       DEBIT_CARD: 'debit-card',
+      CREDIT_CARD_USD : 'credit-card-usd',
       EWALLET: 'ewallet',
       SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
       MSI_3: '3-msi',
@@ -270,7 +270,7 @@
     }
 
     /*
-    @params 
+    @params
     method {Object}
     quotation {Quotation Object} populated with Client{ Client Object}
     */
