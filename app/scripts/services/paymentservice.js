@@ -108,13 +108,14 @@
         payment.msi ||
         payment.type === types.CREDIT_CARD ||
         payment.type === types.DEBIT_CARD ||
-        payment.type === types.SINGLE_PAYMENT_TERMINAL
+        payment.type === types.SINGLE_PAYMENT_TERMINAL ||
+        payment.type === types.CREDIT_CARD_USD
       );
     }
 
     function isCardCreditOrDebitPayment(payment) {
       return (
-        payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD
+        payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD || payment.type === types.CREDIT_CARD_USD
       );
     }
 
