@@ -4,10 +4,10 @@ angular.module('actualApp')
 
 function ClientCreateCtrl(
     $scope,
-    $location, 
-    $rootScope, 
-    dialogService, 
-    commonService, 
+    $location,
+    $rootScope,
+    dialogService,
+    commonService,
     clientService,
     quotationService,
     checkoutService,
@@ -28,7 +28,8 @@ function ClientCreateCtrl(
     companyNameMaxLength: 50,
     isLoadingProgress: false,
     intervalProgress: false,
-    cfdiUseList: clientService.getCFDIUseList(),    
+    cfdiUseList     : clientService.getCFDIUseList(),
+    regimes         : clientService.getRegimes(),
     titles          : clientService.getTitles(),
     genders         : clientService.getGenders(),
     states          : [],
@@ -112,7 +113,7 @@ function ClientCreateCtrl(
     if(client.contacts && client.contacts.length > 0){
       for(var i=0;i<client.contacts.length;i++){
         if(
-          !commonService.isValidEmail(client.contacts[i].E_Mail, {excludeActualDomains: true}) && 
+          !commonService.isValidEmail(client.contacts[i].E_Mail, {excludeActualDomains: true}) &&
           !_.isEmpty(client.fiscalAddress)
         ){
           return false;
@@ -197,7 +198,7 @@ function ClientCreateCtrl(
       //When activequotation contacts arent needed
       //if($rootScope.activeQuotation.immediateDelivery){
         return true;
-      //} 
+      //}
     }
 
     if(contacts.length > 0){
@@ -231,15 +232,15 @@ function ClientCreateCtrl(
 
   function create(createPersonalForm, createFiscalForm, createDeliveryForm){
     vm.isLoadingProgress = true;
-    vm.loadingEstimate = 0;    
+    vm.loadingEstimate = 0;
     animateProgress();
 
     vm.client.contacts = vm.contacts.filter(filterContacts);
     vm.client.fiscalAddress = vm.fiscalAddress || false;
-    
+
     var formsRelations = [
       {form: createFiscalForm, data: vm.client.fiscalAddress, tab:'dirección fiscal'},
-      {form: createDeliveryForm, data: vm.client.contacts,  tab: 'contactos'}      
+      {form: createDeliveryForm, data: vm.client.contacts,  tab: 'contactos'}
     ];
 
     if($location.search().checkoutProcess && $rootScope.activeQuotation){
@@ -255,10 +256,10 @@ function ClientCreateCtrl(
     var areFormsValid = validateFormsResult.valid;
     var formsValidationErrors = validateFormsResult.errorTabs;
 
-    if( 
-        areFormsValid && 
-        createPersonalForm.$valid && 
-        areValidEmails && 
+    if(
+        areFormsValid &&
+        createPersonalForm.$valid &&
+        areValidEmails &&
         validateAddedContactsIfNeeded(vm.contacts)
       ){
       clientService.create(vm.client)
@@ -286,7 +287,7 @@ function ClientCreateCtrl(
 
           var error = err.data || err;
           error = error ? error.toString() : '';
-          dialogService.showDialog('Hubo un error: ' + error );          
+          dialogService.showDialog('Hubo un error: ' + error );
         });
     }
     else if(!areValidEmails){
@@ -330,7 +331,7 @@ function ClientCreateCtrl(
   function cancelProgressInterval(){
     if(vm.intervalProgress){
       $interval.cancel(vm.intervalProgress);
-    }    
+    }
   }
 
   function animateProgress(){
@@ -350,13 +351,13 @@ function ClientCreateCtrl(
       quotationService.update(activeQuotation.id, params)
       .then(function(res){
         var quotation = res.data;
-        
+
         if(quotation && quotation.id){
           quotationService.setActiveQuotation(activeQuotation.id);
           localStorageService.remove('inCheckoutProcess');
-          
-          if($location.search().checkoutProcess && 
-            $rootScope.activeQuotation.total && 
+
+          if($location.search().checkoutProcess &&
+            $rootScope.activeQuotation.total &&
             !$location.search().startQuotation
           ){
             $location
@@ -364,13 +365,13 @@ function ClientCreateCtrl(
               .search({
                 createdClient:true,
                 checkoutProcess: $location.search().checkoutProcess
-              });            
+              });
           }
 
           else{
             $location
               .path('/quotations/edit/' + quotation.id)
-              .search({createdClient:true});        
+              .search({createdClient:true});
           }
         }
       })
@@ -383,7 +384,7 @@ function ClientCreateCtrl(
 
   $scope.$on('$destroy', function(){
     cancelProgressInterval();
-  });  
+  });
 
   init();
 

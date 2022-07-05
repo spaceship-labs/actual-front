@@ -24,6 +24,7 @@ function CheckoutClientCtrl(
   angular.extend(vm, {
     continueProcess: continueProcess,
     getContactName: getContactName,
+    commercialSocieties : quotationService.getCommercialSocieties(),
     mapCFDIuseCode: clientService.mapCFDIuseCode,
     isClientFiscalDataValid: clientService.isClientFiscalDataValid,
   });
@@ -38,6 +39,9 @@ function CheckoutClientCtrl(
       .then(function(res) {
         vm.quotation = res.data;
         vm.isLoading = false;
+        if(res.data.Client !== undefined){
+          quotationService.itHasCommercialSociety(res.data.Client.CardName);
+        }
         return quotationService.validateQuotationStockById(vm.quotation.id);
       })
       .then(function(isValidStock) {

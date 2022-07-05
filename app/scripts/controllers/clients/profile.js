@@ -29,7 +29,7 @@ function ClientProfileCtrl(
     cfdiUseList: clientService.getCFDIUseList(),
     asociateEwallet: asociateEwallet,
     replaceEwallet: replaceEwallet,
-
+    regimes: clientService.getRegimes(),
     states: [],
     countries: commonService.getCountries(),
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
@@ -442,7 +442,7 @@ function ClientProfileCtrl(
       var params = _.clone(vm.client.FiscalAddress);
       params.LicTradNum = _.clone(vm.client.LicTradNum);
       params.cfdiUse = vm.client.cfdiUse;
-
+      params.regime = vm.client.regime;
       clientService
         .updateFiscalAddress(params.id, vm.client.CardCode, params)
         .then(function(results) {
