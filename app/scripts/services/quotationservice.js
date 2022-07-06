@@ -703,8 +703,7 @@
       var upperCaseCardNameNoSpaces = cardName.toUpperCase().replace(/\s/g, '');
       var commercialSocieties = getCommercialSocieties();
       var result = false;
-      var commercialSocietiesLength = commercialSocieties.length;
-      for(let i=0; i<commercialSocietiesLength-1; i++){
+      for(var i=0; i<commercialSocieties.length; i++){
         if(upperCaseCardName.indexOf(commercialSocieties[i]) !== -1){
           result = true;
         }
