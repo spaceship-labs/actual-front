@@ -703,11 +703,12 @@
       var upperCaseCardNameNoSpaces = cardName.toUpperCase().replace(/\s/g, '');
       var commercialSocieties = getCommercialSocieties();
       var result = false;
-      for(var commercialSociety of commercialSocieties){
-        if(upperCaseCardName.indexOf(commercialSociety) !== -1){
+      var commercialSocietiesLength = commercialSocieties.length;
+      for(let i=0; i<commercialSocietiesLength-1; i++){
+        if(upperCaseCardName.indexOf(commercialSocieties[i]) !== -1){
           result = true;
         }
-        if(upperCaseCardNameNoSpaces.indexOf(commercialSociety.replace(/\s/g, '')) !== 1){
+        if(upperCaseCardNameNoSpaces.indexOf(commercialSocieties[i].replace(/\s/g, '')) !== 1){
           result = true;
         }
       }
