@@ -707,7 +707,7 @@
         if(upperCaseCardName.indexOf(commercialSocieties[i]) !== -1){
           result = true;
         }
-        if(upperCaseCardNameNoSpaces.indexOf(commercialSocieties[i].replace(/\s/g, '')) !== 1){
+        if(upperCaseCardNameNoSpaces.indexOf(commercialSocieties[i].replace(/\s/g, '')) !== -1){
           result = true;
         }
       }
@@ -758,7 +758,6 @@
         "S DE RL DE CV",
         "S.A.",
         "S.A",
-        "SA",
         "S.A. DE C.V.",
         "S.A. DE C.V",
         "S.A DE C.V",
@@ -775,21 +774,18 @@
         "S EN C POR A DE CV",
         "S.C.",
         "S.C",
-        "SC",
         "S.C. DE C.V.",
         "S.C. DE C.V",
         "S.C DE C.V",
         "SC DE CV",
         "S.A.S.",
         "S.A.S",
-        "SAS",
         "S.A.S. DE C.V.",
         "S.A.S. DE C.V",
         "S.A.S DE C.V",
         "SAS DE CV",
         "S.A.P.I.",
         "S.A.P.I",
-        "SAPI",
         "S.A.P.I. DE C.V.",
         "S.A.P.I. DE C.V",
         "S.A.P.I DE C.V",
