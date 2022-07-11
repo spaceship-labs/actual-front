@@ -70,7 +70,8 @@ function QuotationsEditCtrl(
     getSourceTypeName: getSourceTypeName,
     ENV: ENV,
     activeStore: activeStore,
-    isInvalidDate: false,
+    setLastShippingDate: setLastShippingDate,
+    delivery: delivery
   });
 
   init($routeParams.id);
@@ -124,6 +125,7 @@ function QuotationsEditCtrl(
         return quotationService.loadProductsFilters(vm.quotation.Details);
       })
       .then(function (detailsWithFilters) {
+        console.log({ detailsWithFilters })
         vm.quotation.Details = detailsWithFilters;
         vm.quotation.DetailsGroups = deliveryService.groupDetails(
           vm.quotation.Details
@@ -133,6 +135,7 @@ function QuotationsEditCtrl(
         return quotationService.getCurrentStock(vm.quotation.id);
       })
       .then(function (response) {
+        console.log({ response })
         var detailsStock = response.data;
         vm.quotation.Details = quotationService.mapDetailsStock(
           vm.quotation.Details,
@@ -342,6 +345,70 @@ function QuotationsEditCtrl(
       );
     }
   }
+  function delivery(productCode) {
+    var url = '/shipping/product';
+
+    var params = {
+      productCode: productCode,
+      storeId: vm.quotation.Store,
+      activeQuotationId: vm.quotation.id,
+    };
+
+    return api.$http.get(url, params).then(function (res) {
+      return res.data;
+    });
+  }
+
+  function setLastShippingDate() {
+    var oldDetails = vm.quotation.Details;
+    var oldDetail;
+    for (var i = 0; i < oldDetails.length; i++) {
+
+      console.log('we call for', i)
+      oldDetail = oldDetails[i];
+      //console.log({ oldDetails, i, oldDetail });
+
+      vm.delivery(oldDetail.Product.ItemCode).then(function (res) { // find delivery for product
+        //  console.log({ res })
+        var farthestDelivery;
+        farthestDelivery = res[res.length - 1];
+        if (farthestDelivery.quantity < oldDetail.quantity) {
+          dialogService.showDialog('No hay suficiente stock (' + farthestDelivery.quantity + ' < ' + oldDetail.quantity + ') para el producto en fecha lejana: ' + oldDetail.Product.ItemCode + ' Se agrego el disponible, agregue manualmente el faltante.');
+          oldDetail.quantity = farthestDelivery.quantity; // set maximum
+        }
+        let params = {
+          quantity: oldDetail.quantity,
+          shipDate: farthestDelivery.date,
+          immediateDelivery: farthestDelivery.immediateDelivery,
+          ShopDelivery: farthestDelivery.ShopDelivery,
+          originalShipDate: farthestDelivery.date,
+          productDate: farthestDelivery.productDate,
+          shipCompany: farthestDelivery.company,
+          shipCompanyFrom: farthestDelivery.companyFrom,
+          PromotionPackage: oldDetail.promotionPackage || null,
+          PurchaseAfter: oldDetail.PurchaseAfter,
+          PurchaseDocument: oldDetail.PurchaseDocument
+        }
+        // console.log({ addedProduct: oldDetail.Product, params })
+        //res.itemCode
+        let index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == farthestDelivery.itemCode })
+        console.log({ index, oldDetails, res, })
+        if (index != -1) {
+          try {
+            quotationService.addProduct(oldDetails[index].Product.id, params)
+            removeDetailsGroup(oldDetails[index]); // remove detail from group
+          } catch (ex) {
+            console.log(ex);
+          }
+        }
+        //updateDetailsInfo(detailCopy);
+      })
+
+    }
+    init(vm.quotation.id)
+    console.log('we call init')
+  }
+
 
   function addRecord(form) {
     if (vm.newRecord.eventType && form.$valid) {
@@ -465,11 +532,10 @@ function QuotationsEditCtrl(
   }
 
   function removeDetailsGroup(detailsGroup) {
+    console.log('Removing', { detailsGroup })
     var deferred = $q.defer();
     vm.isLoadingDetails = true;
-    var detailsIds = detailsGroup.details.map(function (d) {
-      return d.id;
-    });
+    var detailsIds = [detailsGroup.id]
     var params = {
       detailsIds: detailsIds,
     };
@@ -662,6 +728,8 @@ function QuotationsEditCtrl(
           authService.showUnauthorizedDialogIfNeeded(err);
         });
     } else {
+
+      updateDetailsInfo
       dialogService.showDialog('Esta cotización ya tiene un pedido asignado');
     }
   }
@@ -672,7 +740,7 @@ function QuotationsEditCtrl(
     });
   }
   function quotationHasShopDeliveryProducts(quotation) {
-    return _.some(quotation.Details, function(detail) {
+    return _.some(quotation.Details, function (detail) {
       return detail.ShopDelivery;
     });
   }
