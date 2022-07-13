@@ -365,7 +365,7 @@ function QuotationsEditCtrl(
           farthestDelivery = sortFarthestDelivery[sortFarthestDelivery.length - 1];
           if (farthestDelivery.available < oldDetail.quantity) {
             dialogService.showDialog('No hay suficiente stock (' + farthestDelivery.available + ' < ' + oldDetail.quantity + ') para el producto en fecha lejana: ' + oldDetail.Product.ItemCode + ' Se agrego el disponible, agregue manualmente el faltante.');
-            oldDetail.quantity = farthestDelivery.quantity; // set maximum
+            oldDetail.quantity = farthestDelivery.available; // set maximum
           }
           var params = {
             quantity: oldDetail.quantity,
@@ -396,6 +396,8 @@ function QuotationsEditCtrl(
 
     Promise.all(allPromises).then(function () {
       init(vm.quotation.id)
+    }).catch(function (ex) {
+      console.log(ex);
     })
   }
 
