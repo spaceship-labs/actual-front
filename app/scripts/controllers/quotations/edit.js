@@ -361,7 +361,10 @@ function QuotationsEditCtrl(
 
         vm.delivery(oldDetail.Product.ItemCode).then(function (res) { // find delivery for product
           var farthestDelivery;
-          farthestDelivery = res[res.length - 1];
+          var sortFarthestDelivery = _.sortBy(res,function (res) {
+            return res.date;
+          });
+          farthestDelivery = sortFarthestDelivery[sortFarthestDelivery.length - 1];
           if (farthestDelivery.quantity < oldDetail.quantity) {
             dialogService.showDialog('No hay suficiente stock (' + farthestDelivery.quantity + ' < ' + oldDetail.quantity + ') para el producto en fecha lejana: ' + oldDetail.Product.ItemCode + ' Se agrego el disponible, agregue manualmente el faltante.');
             oldDetail.quantity = farthestDelivery.quantity; // set maximum
