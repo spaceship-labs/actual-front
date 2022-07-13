@@ -371,8 +371,8 @@ function QuotationsEditCtrl(
             return res.date;
           });
           farthestDelivery = sortFarthestDelivery[sortFarthestDelivery.length - 1];
-          if (farthestDelivery.quantity < oldDetail.quantity) {
-            dialogService.showDialog('No hay suficiente stock (' + farthestDelivery.quantity + ' < ' + oldDetail.quantity + ') para el producto en fecha lejana: ' + oldDetail.Product.ItemCode + ' Se agrego el disponible, agregue manualmente el faltante.');
+          if (farthestDelivery.available < oldDetail.quantity) {
+            dialogService.showDialog('No hay suficiente stock (' + farthestDelivery.available + ' < ' + oldDetail.quantity + ') para el producto en fecha lejana: ' + oldDetail.Product.ItemCode + ' Se agrego el disponible, agregue manualmente el faltante.');
             oldDetail.quantity = farthestDelivery.quantity; // set maximum
           }
           var params = {
