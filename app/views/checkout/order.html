@@ -144,6 +144,12 @@
               <span class="immediate-delivery-tag" ng-if="detailGroup.ShopDelivery">
                 Centro de entregas
               </span>
+              <span ng-show="!detailGroup.weekend" class="immediate-delivery-tag">
+                Entrega a 3 días
+              </span>
+              <span ng-show="detailGroup.weekend" class="immediate-delivery-tag">
+                Entrega a 2 días
+              </span>
             </div>
             <div flex="20" class="order-item-data">
               <span>{{detailGroup.total | currency}} MXN</span>
