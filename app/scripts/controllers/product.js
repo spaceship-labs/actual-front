@@ -41,6 +41,7 @@ function ProductCtrl(
     isImmediateDelivery: isImmediateDelivery,
     isImmediateDeliveryGroup: isImmediateDeliveryGroup,
     isShopDeliveryGroup: isShopDeliveryGroup,
+    isWeekendGroup: isWeekendGroup,
     isLoading: true,
     isSRService: isSRService,
     resetProductCartQuantity: resetProductCartQuantity,
@@ -268,6 +269,13 @@ function ProductCtrl(
     var currentDate = moment().startOf('date');
     date = moment(date).startOf('date');
     return currentDate.format() === date.format() && !isSRService(vm.product);
+  }
+
+  function isWeekend(deliveryGroup){
+    var currentDate = moment().startOf('date');
+    return currentDate.day() >= 0 && currentDate.day() <= 4
+      ? true
+      : false ;
   }
 
   function isImmediateDeliveryGroup(deliveryGroup) {
