@@ -254,6 +254,7 @@
         PromotionPackage: params.promotionPackage || null,
         PurchaseAfter: params.PurchaseAfter,
         PurchaseDocument: params.PurchaseDocument,
+        force: params.force,
       };
       return detail;
     }
@@ -420,7 +421,7 @@
       details = details.map(function(detail) {
         var detailStock = _.findWhere(detailsStock, { id: detail.id });
         if (detailsStock) {
-          detail.validStock = detailStock.validStock;
+          detail.validStock = detailStock.validStock || detailStock.force;
         }
         return detail;
       });
@@ -429,7 +430,7 @@
 
     function isValidStock(detailsStock) {
       return _.every(detailsStock, function(detail) {
-        return detail.validStock;
+        return detail.validStock || detail.force;
       });
     }
 
