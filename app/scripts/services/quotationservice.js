@@ -253,7 +253,8 @@
         shipCompanyFrom: params.shipCompanyFrom,
         PromotionPackage: params.promotionPackage || null,
         PurchaseAfter: params.PurchaseAfter,
-        PurchaseDocument: params.PurchaseDocument
+        PurchaseDocument: params.PurchaseDocument,
+        force: params.force,
       };
       return detail;
     }
@@ -420,7 +421,7 @@
       details = details.map(function (detail) {
         var detailStock = _.findWhere(detailsStock, { id: detail.id });
         if (detailsStock) {
-          detail.validStock = detailStock.validStock;
+          detail.validStock = detailStock.validStock || detailStock.force;
         }
         return detail;
       });
@@ -428,8 +429,8 @@
     }
 
     function isValidStock(detailsStock) {
-      return _.every(detailsStock, function (detail) {
-        return detail.validStock;
+      return _.every(detailsStock, function(detail) {
+        return detail.validStock || detail.force;
       });
     }
 
@@ -670,13 +671,13 @@
           label: 'Recomendado Mérida',
           value: 'recomendado-merida',
           childs: [
-            { 
-              label: 'Yucatán Country Club', 
+            {
+              label: 'Yucatán Country Club',
               value: 'yucatan-country-club',
               childs: [
                 { label: 'Anthea', value: 'anthea' },
                 { label: 'Armonía', value: 'armonia' }
-              ] 
+              ]
             },
             { label: 'Country Towers', value: 'country-towers' },
             { label: 'Villas del Sol', value: 'villas-del-sol' },

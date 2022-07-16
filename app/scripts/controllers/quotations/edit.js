@@ -99,7 +99,6 @@ function QuotationsEditCtrl(
       .then(function (res) {
         vm.isLoading = false;
         vm.quotation = res.data;
-
         if (vm.quotation.estimatedCloseDate) {
           vm.estimatedCloseDateWrapper.setDate(
             new Date(vm.quotation.estimatedCloseDate)
@@ -391,7 +390,6 @@ function QuotationsEditCtrl(
         }))
       }
     }
-
     Promise.all(allPromises).then(function () {
       init(vm.quotation.id)
     }).catch(function (ex) {
