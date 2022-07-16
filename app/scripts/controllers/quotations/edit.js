@@ -56,7 +56,7 @@ function QuotationsEditCtrl(
     isUserAdminOrManager: authService.isUserAdminOrManager,
     isValidStock: isValidStock,
     print: print,
-    commercialSocieties : quotationService.getCommercialSocieties(),
+    commercialSocieties: quotationService.getCommercialSocieties(),
     promotionPackages: [],
     quotationStore: {},
     removeDetail: removeDetail,
@@ -99,7 +99,7 @@ function QuotationsEditCtrl(
       .then(function (res) {
         vm.isLoading = false;
         vm.quotation = res.data;
-        if (vm.quotation.Client !== undefined){
+        if (vm.quotation.Client !== undefined) {
           quotationService.itHasCommercialSociety(vm.quotation.Client.CardName);
         }
         if (vm.quotation.estimatedCloseDate) {
@@ -353,50 +353,45 @@ function QuotationsEditCtrl(
 
   function setLastShippingDate() {
     var oldDetails = vm.quotation.Details;
+
+    var lastDeliveryDate = vm.quotation.Details[0].shipDate;
+    for (var i = 0; i < oldDetails.length; i++) {
+      if (moment(oldDetails[i].shipDate) > moment(lastDeliveryDate)) {
+        lastDeliveryDate = oldDetails[i].shipDate;
+      }
+    }
     var allPromises = []
     for (var i = 0; i < oldDetails.length; i++) {
       allPromises.push(new Promise(function (resolve, reject) {
         var oldDetail;
         oldDetail = oldDetails[i];
+        var params = {
+          quantity: oldDetail.quantity,
+          immediateDelivery: moment().isSame(moment(lastDeliveryDate), "day"),
+          ShopDelivery: oldDetail.ShopDelivery,
+          WeekendDelivery: oldDetail.WeekendDelivery,
+          originalShipDate: lastDeliveryDate,
+          shipDate: lastDeliveryDate,
+          productDate: oldDetail.productDate,
+          shipCompany: oldDetail.shipCompany,
+          shipCompanyFrom: oldDetail.shipCompanyFrom,
+          PromotionPackage: oldDetail.PromotionPackage || null,
+          PurchaseAfter: oldDetail.PurchaseAfter,
+          PurchaseDocument: oldDetail.PurchaseDocument,
+          force: true
+        }
+        var index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == oldDetail.Product.ItemCode })
+        try {
+          quotationService.addProduct(oldDetails[index].Product.id, params)
+          removeDetailsGroup(oldDetails[index]); // remove detail from group
+        } catch (ex) {
+          console.log(ex)
+        } finally {
+          resolve(true)
+        }
 
-        vm.delivery(oldDetail.Product.ItemCode).then(function (res) { // find delivery for product
-          var farthestDelivery;
-          var sortFarthestDelivery = _.sortBy(res,function (res) {
-            return res.date;
-          });
-          farthestDelivery = sortFarthestDelivery[sortFarthestDelivery.length - 1];
-          if (farthestDelivery.available < oldDetail.quantity) {
-            dialogService.showDialog('No hay suficiente stock (' + farthestDelivery.available + ' < ' + oldDetail.quantity + ') para el producto en fecha lejana: ' + oldDetail.Product.ItemCode + ' Se agrego el disponible, agregue manualmente el faltante.');
-            oldDetail.quantity = farthestDelivery.available; // set maximum
-          }
-          var params = {
-            quantity: oldDetail.quantity,
-            shipDate: farthestDelivery.date,
-            immediateDelivery: farthestDelivery.immediateDelivery,
-            ShopDelivery: farthestDelivery.ShopDelivery,
-            WeekendDelivery: farthestDelivery.WeekendDelivery,
-            originalShipDate: farthestDelivery.date,
-            productDate: farthestDelivery.productDate,
-            shipCompany: farthestDelivery.company,
-            shipCompanyFrom: farthestDelivery.companyFrom,
-            PromotionPackage: oldDetail.promotionPackage || null,
-            PurchaseAfter: oldDetail.PurchaseAfter,
-            PurchaseDocument: oldDetail.PurchaseDocument
-          }
-          var index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == farthestDelivery.itemCode })
-          if (index != -1) {
-            try {
-              quotationService.addProduct(oldDetails[index].Product.id, params)
-              removeDetailsGroup(oldDetails[index]); // remove detail from group
-              resolve(true)
-            } catch (ex) {
-              console.log(ex);
-            }
-          }
-        })
       }))
     }
-
     Promise.all(allPromises).then(function () {
       init(vm.quotation.id)
     }).catch(function (ex) {
