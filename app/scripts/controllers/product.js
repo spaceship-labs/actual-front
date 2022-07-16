@@ -66,7 +66,7 @@ function ProductCtrl(
 
     productService
       .getById(productId, params)
-      .then(function(res) {
+      .then(function (res) {
         var productFound = res.data.data;
         if (!productFound || !productFound.ItemCode) {
           dialogService.showDialog('No se encontro el articulo');
@@ -74,7 +74,7 @@ function ProductCtrl(
 
         return productService.formatSingleProduct(productFound);
       })
-      .then(function(formattedProduct) {
+      .then(function (formattedProduct) {
         vm.product = formattedProduct;
         vm.mainPromo = vm.product.mainPromo;
         vm.lowestCategory = categoriesService.getLowestCategory(
@@ -102,19 +102,19 @@ function ProductCtrl(
           activeQuotationId
         );
       })
-      .then(function(deliveries) {
+      .then(function (deliveries) {
         setUpDeliveries(deliveries);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
 
     pmPeriodService
       .getActive()
-      .then(function(res) {
+      .then(function (res) {
         vm.validPayments = res.data;
       })
-      .catch(function(err) {
+      .catch(function (err) {
         $log.error(err);
       });
   }
@@ -138,11 +138,11 @@ function ProductCtrl(
   function loadVariants(product) {
     productService
       .loadVariants(product, activeStore)
-      .then(function(variants) {
+      .then(function (variants) {
         vm.variants = variants;
         vm.hasVariants = checkIfHasVariants(vm.variants);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
   }
@@ -176,13 +176,13 @@ function ProductCtrl(
   function loadWarehouses(activeStore) {
     api.$http
       .get('/company/find')
-      .then(function(res) {
+      .then(function (res) {
         vm.warehouses = res.data;
         activeStoreWarehouse = _.findWhere(vm.warehouses, {
           id: activeStore.Warehouse
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         $log.error(err);
       });
   }
@@ -210,22 +210,22 @@ function ProductCtrl(
   function loadProductFilters(product) {
     productService
       .getAllFilters({ quickread: true })
-      .then(function(res) {
+      .then(function (res) {
         var data = res.data || [];
-        var filters = data.map(function(filter) {
+        var filters = data.map(function (filter) {
           filter.Values = [];
-          product.FilterValues.forEach(function(value) {
+          product.FilterValues.forEach(function (value) {
             if (value.Filter === filter.id) {
               filter.Values.push(value);
             }
           });
           return filter;
         });
-        vm.filters = filters.filter(function(filter) {
+        vm.filters = filters.filter(function (filter) {
           return filter.Values.length > 0;
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         $log.error(err);
       });
   }
@@ -254,7 +254,7 @@ function ProductCtrl(
       console.log('params', params);
       quotationService.addProduct(vm.product.id, params);
     } else if (productCartItems.length > 1) {
-      var multiParams = productCartItems.map(function(cartItem) {
+      var multiParams = productCartItems.map(function (cartItem) {
         return cartService.buildAddProductToCartParams(vm.product.id, cartItem);
       });
       quotationService.addMultipleProducts(multiParams);
@@ -280,11 +280,11 @@ function ProductCtrl(
     return currentDate.format() === date.format() && !isSRService(vm.product);
   }
 
-  function isWeekend(deliveryGroup){
+  function isWeekend(deliveryGroup) {
     var currentDate = moment().startOf('date');
     return currentDate.day() >= 0 && currentDate.day() <= 4
       ? true
-      : false ;
+      : false;
   }
 
   function isImmediateDeliveryGroup(deliveryGroup) {
@@ -296,11 +296,11 @@ function ProductCtrl(
     return deliveryGroup.ShopDelivery
   }
   function isWeekendGroup(deliveryGroup) {
-    return isWeekend(deliveryGroup) && deliveryGroup.WeekendDelivery
+    return deliveryGroup.WeekendDelivery ? (isWeekend(deliveryGroup) ? "Entrega a 3 días" : "Entrega a 2 días") : false;
   }
-  function isSRService(product) {
-    return product.Service === 'Y';
-  }
+}
+function isSRService(product) {
+  return product.Service === 'Y';
 }
 
 ProductCtrl.$inject = [

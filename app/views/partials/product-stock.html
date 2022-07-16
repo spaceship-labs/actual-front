@@ -35,11 +35,8 @@
           <span ng-show="vm.isShopDeliveryGroup(deliveryGroup)" class="immediate-delivery">
             Centro de entregas
           </span>
-          <span ng-show="!vm.isWeekendGroup(deliveryGroup)" class="immediate-delivery">
-            Entrega a 3 días
-          </span>
           <span ng-show="vm.isWeekendGroup(deliveryGroup)" class="immediate-delivery">
-            Entrega a 2 días
+            {{vm.isWeekendGroup(deliveryGroup)}}
           </span>
           <div ng-show="vm.ENV.name === 'sandbox' || vm.ENV.name === 'dev' ">
             <p>Debug</p>

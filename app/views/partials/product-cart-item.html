@@ -101,12 +101,7 @@
       <p ng-if="detailGroup.ShopDelivery" class="bottom-text">
         <span class="immediate-delivery-label">Centro de entregas</span>
       </p>
-      <p ng-show="!detailGroup.weekend" class="bottom-text">
-        <span class="immediate-delivery-label">Entrega a 3 días</span>
-      </p>
-      <p ng-show="detailGroup.weekend" class="bottom-text">
-        <span class="immediate-delivery-label">Entrega a 2 días</span>
-      </p>
+      
 
       <p class="bottom-text" ng-show="vm.ENV.name === 'sandbox' || vm.ENV.name === 'dev' " ng-repeat="detail in detailGroup.details">
         <strong>Entrega aproximada:</strong>
