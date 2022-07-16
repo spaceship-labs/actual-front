@@ -90,8 +90,8 @@
             ShopDelivery: _.every(items, function(delivery) {
               return delivery.ShopDelivery;
             }),
-            weekenddate: _.every(items, function(delivery) {
-              return delivery.weekenddate;
+            WeekendDelivery: _.every(items, function(delivery) {
+              return delivery.WeekendDelivery;
             }),
           };
           groups.push(group);
