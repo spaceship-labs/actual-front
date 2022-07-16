@@ -369,6 +369,7 @@ function QuotationsEditCtrl(
           quantity: oldDetail.quantity,
           immediateDelivery: moment().isSame(moment(lastDeliveryDate), "day"),
           ShopDelivery: oldDetail.ShopDelivery,
+          WeekendDelivery: oldDetail.WeekendDelivery,
           originalShipDate: lastDeliveryDate,
           shipDate: lastDeliveryDate,
           productDate: oldDetail.productDate,
@@ -388,6 +389,7 @@ function QuotationsEditCtrl(
         } finally {
           resolve(true)
         }
+
       }))
     }
     Promise.all(allPromises).then(function () {

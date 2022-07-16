@@ -1,5 +1,5 @@
-<div 
-  class="cart-item" 
+<div
+  class="cart-item"
 >
   <h3>
     <a ng-href="/product/{{detailGroup.Product.ItemCode}}">
@@ -53,13 +53,13 @@
 
         <div class="cart-item-data-prices" layout="row" layout-align="space-between center">
           <div flex="35">
-            <p 
-              ng-if="detailGroup.discountPercent > 0" 
+            <p
+              ng-if="detailGroup.discountPercent > 0"
               class="discount-label"
             >
               -{{detailGroup.discountPercentPromos}}%
             </p>
-            <p 
+            <p
               ng-if="vm.getUnitPriceWithDiscount(detailGroup.unitPrice, detailGroup.discountPercent) != detailGroup.unitPrice"
             >
               <span class="currency-label">MXN</span> <span class="price-crossed">{{ detailGroup.unitPrice | roundCurrency }}</span>
@@ -101,19 +101,19 @@
       <p ng-if="detailGroup.ShopDelivery" class="bottom-text">
         <span class="immediate-delivery-label">Centro de entregas</span>
       </p>
-
       
+
       <p class="bottom-text" ng-show="vm.ENV.name === 'sandbox' || vm.ENV.name === 'dev' " ng-repeat="detail in detailGroup.details">
         <strong>Entrega aproximada:</strong>
         {{detail.shipDate | date: "d/MMM/yyyy"}}
-        (en {{vm.daysDiff(detail.shipDate)}} días)  
-        <span 
+        (en {{vm.daysDiff(detail.shipDate)}} días)
+        <span
           ng-if="detail.immediateDelivery && !detail.isSRService"
           class="immediate-delivery-label"
         >
           Entrega en tienda
         </span>
-        <span 
+        <span
           ng-if="detail.ShopDelivery"
           class="immediate-delivery-label"
         >
@@ -121,7 +121,7 @@
         </span>
         | {{ vm.getWarehouseById(detail.shipCompanyFrom).WhsName }}  | Cantidad: {{detail.quantity}} | Valido: {{detail.validStock}}
       </p>
-      
+
 
       <p
         ng-if="
@@ -131,7 +131,7 @@
       >
         Paquete: {{detailGroup.discountName}}
       </p>
-      <div 
+      <div
         ng-if="vm.appliesForPackageOrPromotionDiscount(detailGroup) == 'promoDiscount'"
       >
         <p class="bottom-text">
@@ -139,7 +139,7 @@
         </p>
         <p class="bottom-text" ng-if="detailGroup.ewallet > 0">
           Beneficio monedero eléctronico: {{detailGroup.ewallet | currency}}
-        </p>                  
+        </p>
       </div>
     </div>
     <!--END ITEM DATA-->
@@ -154,13 +154,13 @@
       </a>
     </div>
 
-    <div 
-      ng-show="!detailGroup.validStock && !vm.quotation.Order" 
+    <div
+      ng-show="!detailGroup.validStock && !vm.quotation.Order"
       layout="row"
       layout-align="center center"
       class="stock-alert-layer"
       ng-click="vm.showDetailGroupStockAlert($event, detailGroup)"
-    > 
+    >
       <div class="stock-alert-content">
         <p>
           <a><i class="icon-alert"></i></a>

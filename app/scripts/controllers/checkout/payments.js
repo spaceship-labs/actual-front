@@ -195,7 +195,7 @@ function CheckoutPaymentsCtrl(
   }
 
   function isValidQuotationAddress(quotation) {
-    if (quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery) {
+    if (quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery || quotation.WeekendDelivery) {
       return true;
     }
     return false;
