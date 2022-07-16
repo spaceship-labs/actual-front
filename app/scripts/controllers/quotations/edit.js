@@ -374,7 +374,7 @@ function QuotationsEditCtrl(
             shipDate: farthestDelivery.date,
             immediateDelivery: farthestDelivery.immediateDelivery,
             ShopDelivery: farthestDelivery.ShopDelivery,
-            weekenddate: farthestDelivery.weekenddate,
+            WeekendDelivery: farthestDelivery.WeekendDelivery,
             originalShipDate: farthestDelivery.date,
             productDate: farthestDelivery.productDate,
             shipCompany: farthestDelivery.company,

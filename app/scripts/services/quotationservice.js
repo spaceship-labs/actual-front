@@ -151,7 +151,7 @@
     }
 
     function isValidQuotationAddress(quotation) {
-      return quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery || quotation.weekenddate ? true : false;
+      return quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery || quotation.WeekendDelivery ? true : false;
     }
 
     function populateDetailsWithProducts(quotation, options) {
@@ -247,7 +247,7 @@
         shipDate: params.shipDate,
         immediateDelivery: params.immediateDelivery,
         ShopDelivery: params.ShopDelivery,
-        weekenddate: params.weekenddate,
+        WeekendDelivery: params.WeekendDelivery,
         originalShipDate: params.originalShipDate,
         productDate: params.productDate,
         shipCompany: params.shipCompany,
