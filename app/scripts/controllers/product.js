@@ -280,11 +280,11 @@ function ProductCtrl(
     return currentDate.format() === date.format() && !isSRService(vm.product);
   }
 
-  function isWeekend(deliveryGroup){
+  function isWeekend(deliveryGroup) {
     var currentDate = moment().startOf('date');
     return currentDate.day() >= 0 && currentDate.day() <= 4
       ? true
-      : false ;
+      : false;
   }
 
   function isImmediateDeliveryGroup(deliveryGroup) {
@@ -296,11 +296,11 @@ function ProductCtrl(
     return deliveryGroup.ShopDelivery
   }
   function isWeekendGroup(deliveryGroup) {
-    return isWeekend(deliveryGroup) && deliveryGroup.WeekendDelivery
+    return deliveryGroup.WeekendDelivery ? (isWeekend(deliveryGroup) ? "Entrega a 3 días" : "Entrega a 2 días") : false;
   }
-  function isSRService(product) {
-    return product.Service === 'Y';
-  }
+}
+function isSRService(product) {
+  return product.Service === 'Y';
 }
 
 ProductCtrl.$inject = [
