@@ -282,11 +282,8 @@ function ProductCtrl(
 
   function isWeekend(deliveryGroup) {
     var currentDate = moment().startOf('date');
-    return (
-      (currentDate.day() >= 0 && currentDate.day() <= 4)
-      || currentDate.day() === 7) ? true : false;
+    return (currentDate.day() >= 0 && currentDate.day() <= 4) ? false : true;
   }
-
   function isImmediateDeliveryGroup(deliveryGroup) {
     return (
       isImmediateDelivery(deliveryGroup.date) && deliveryGroup.ImmediateDelivery
