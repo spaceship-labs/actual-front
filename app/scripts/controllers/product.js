@@ -278,6 +278,9 @@ function ProductCtrl(
   function isShopDeliveryGroup(deliveryGroup) {
     return deliveryGroup.ShopDelivery
   }
+  function isWeekendGroup(deliveryGroup) {
+    return isWeekend(deliveryGroup) && deliveryGroup.WeekendDelivery
+  }
   function isSRService(product) {
     return product.Service === 'Y';
   }

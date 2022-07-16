@@ -29,6 +29,7 @@
         PurchaseDocument: cartItem.PurchaseDocument,
         immediateDelivery: cartItem.ImmediateDelivery,
         ShopDelivery: cartItem.ShopDelivery,
+        WeekendDelivery: cartItem.WeekendDelivery,
       };
       return params;
     }
