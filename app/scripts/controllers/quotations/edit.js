@@ -353,35 +353,37 @@ function QuotationsEditCtrl(
     var oldDetails = vm.quotation.Details;
     var allPromises = []
     for (var i = 0; i < oldDetails.length; i++) {
-      allPromises.push(new Promise(function (resolve, reject) {
-        var oldDetail;
-        oldDetail = oldDetails[i];
-        var params = {
-          quantity: oldDetail.quantity,
-          immediateDelivery: moment().isSame(moment(lastDeliveryDate), "day"),
-          ShopDelivery: oldDetail.ShopDelivery,
-          WeekendDelivery: oldDetail.WeekendDelivery,
-          originalShipDate: lastDeliveryDate,
-          shipDate: lastDeliveryDate,
-          productDate: oldDetail.productDate,
-          shipCompany: oldDetail.shipCompany,
-          shipCompanyFrom: oldDetail.shipCompanyFrom,
-          PromotionPackage: oldDetail.PromotionPackage || null,
-          PurchaseAfter: oldDetail.PurchaseAfter,
-          PurchaseDocument: oldDetail.PurchaseDocument,
-          force: true
-        }
-        var index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == oldDetail.Product.ItemCode })
-        try {
-          quotationService.addProduct(oldDetails[index].Product.id, params)
-          removeDetailsGroup(oldDetails[index]); // remove detail from group
-        } catch (ex) {
-          console.log(ex)
-        } finally {
-          resolve(true)
-        }
+      if (oldDetails[i].immediateDelivery == false && oldDetails[i].ShopDelivery == false) {
+        allPromises.push(new Promise(function (resolve, reject) {
+          var oldDetail;
+          oldDetail = oldDetails[i];
+          var params = {
+            quantity: oldDetail.quantity,
+            immediateDelivery: moment().isSame(moment(lastDeliveryDate), "day"),
+            ShopDelivery: oldDetail.ShopDelivery,
+            WeekendDelivery: oldDetail.WeekendDelivery,
+            originalShipDate: lastDeliveryDate,
+            shipDate: lastDeliveryDate,
+            productDate: oldDetail.productDate,
+            shipCompany: oldDetail.shipCompany,
+            shipCompanyFrom: oldDetail.shipCompanyFrom,
+            PromotionPackage: oldDetail.PromotionPackage || null,
+            PurchaseAfter: oldDetail.PurchaseAfter,
+            PurchaseDocument: oldDetail.PurchaseDocument,
+            force: true
+          }
+          var index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == oldDetail.Product.ItemCode })
+          try {
+            quotationService.addProduct(oldDetails[index].Product.id, params)
+            removeDetailsGroup(oldDetails[index]); // remove detail from group
+          } catch (ex) {
+            console.log(ex)
+          } finally {
+            resolve(true)
+          }
 
-      }))
+        }))
+      }
     }
 
     Promise.all(allPromises).then(function () {
