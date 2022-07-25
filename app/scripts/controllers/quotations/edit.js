@@ -351,6 +351,12 @@ function QuotationsEditCtrl(
 
   function setLastShippingDate() {
     var oldDetails = vm.quotation.Details;
+    var lastDeliveryDate = vm.quotation.Details[0].shipDate;
+    for (var i = 0; i < oldDetails.length; i++) {
+      if (moment(oldDetails[i].shipDate) > moment(lastDeliveryDate)) {
+        lastDeliveryDate = oldDetails[i].shipDate;
+      }
+    }
     var allPromises = []
     for (var i = 0; i < oldDetails.length; i++) {
       if (oldDetails[i].immediateDelivery == false && oldDetails[i].ShopDelivery == false) {
