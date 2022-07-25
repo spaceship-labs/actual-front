@@ -55,6 +55,7 @@
         var productCartItem = deliveryGroup.deliveries[0];
         productCartItem.quantity = quantity;
         productCartItem.ShopDelivery = deliveryGroup.ShopDelivery;
+        productCartItem.WeekendDelivery = deliveryGroup.WeekendDelivery;
         productCartItem.originalDate = productCartItem.date;
         productCartItem.PurchaseAfter = productCartItem.PurchaseAfter;
         productCartItem.PurchaseDocument = productCartItem.PurchaseDocument;
