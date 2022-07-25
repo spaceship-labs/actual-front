@@ -67,7 +67,7 @@
             delivery.companyFrom !== deliveries[i].companyFrom &&
             convertDatetimeToDate(delivery.date) <=
               convertDatetimeToDate(deliveries[i].date) &&
-            !isDateImmediateDelivery(delivery) && delivery.ShopDelivery === deliveries[i].ShopDelivery
+            !isDateImmediateDelivery(delivery) && delivery.ShopDelivery === deliveries[i].ShopDelivery && delivery.WeekendDelivery === deliveries[i].WeekendDelivery
           ) {
             return true;
           } else {
