@@ -99,10 +99,10 @@ function QuotationsEditCtrl(
       .getById(quotationId)
       .then(function (res) {
         vm.isLoading = false;
-        vm.quotation = res.data;
+        vm.quotation = res.data;/*
         if (vm.quotation.Client !== undefined) {
           quotationService.itHasCommercialSociety(vm.quotation.Client.CardName);
-        }
+        } */
         if (vm.quotation.estimatedCloseDate) {
           vm.estimatedCloseDateWrapper.setDate(
             new Date(vm.quotation.estimatedCloseDate)
