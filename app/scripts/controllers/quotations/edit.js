@@ -56,7 +56,7 @@ function QuotationsEditCtrl(
     isUserAdminOrManager: authService.isUserAdminOrManager,
     isValidStock: isValidStock,
     print: print,
-    commercialSocieties: quotationService.getCommercialSocieties(),
+    // commercialSocieties: quotationService.getCommercialSocieties(),
     promotionPackages: [],
     quotationStore: {},
     removeDetail: removeDetail,
