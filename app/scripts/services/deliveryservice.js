@@ -17,7 +17,7 @@
       var groupedDetails = _.groupBy(details, function(detail) {
         var discountPercent = detail.discountPercent || 0;
         var date = moment(detail.shipDate).startOf('day');
-        return detail.Product.ItemCode + '#' + date + '#' + discountPercent;
+        return detail.Product.ItemCode + '#' + date + '#' + discountPercent + '#' + detail.WeekendDelivery + '#' + detail.ShopDelivery;
       });
       for (var key in groupedDetails) {
         var group = _.clone(groupedDetails[key][0]);
