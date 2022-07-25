@@ -41,6 +41,7 @@ function ProductCtrl(
     isImmediateDelivery: isImmediateDelivery,
     isImmediateDeliveryGroup: isImmediateDeliveryGroup,
     isShopDeliveryGroup: isShopDeliveryGroup,
+    isWeekendGroup: isWeekendGroup,
     isLoading: true,
     isSRService: isSRService,
     resetProductCartQuantity: resetProductCartQuantity,
@@ -279,6 +280,10 @@ function ProductCtrl(
     return currentDate.format() === date.format() && !isSRService(vm.product);
   }
 
+  function isWeekend(deliveryGroup) {
+    var currentDate = moment().startOf('date');
+    return (currentDate.day() >= 0 && currentDate.day() <= 4) ? false : true;
+  }
   function isImmediateDeliveryGroup(deliveryGroup) {
     return (
       isImmediateDelivery(deliveryGroup.date) && deliveryGroup.ImmediateDelivery
@@ -287,9 +292,12 @@ function ProductCtrl(
   function isShopDeliveryGroup(deliveryGroup) {
     return deliveryGroup.ShopDelivery
   }
-  function isSRService(product) {
-    return product.Service === 'Y';
+  function isWeekendGroup(deliveryGroup) {
+    return deliveryGroup.WeekendDelivery ? (isWeekend(deliveryGroup) ? "Entrega a 3 días" : "Entrega a 2 días") : false;
   }
+}
+function isSRService(product) {
+  return product.Service === 'Y';
 }
 
 ProductCtrl.$inject = [

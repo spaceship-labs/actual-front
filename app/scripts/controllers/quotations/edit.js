@@ -56,6 +56,7 @@ function QuotationsEditCtrl(
     isUserAdminOrManager: authService.isUserAdminOrManager,
     isValidStock: isValidStock,
     print: print,
+    commercialSocieties: quotationService.getCommercialSocieties(),
     promotionPackages: [],
     quotationStore: {},
     removeDetail: removeDetail,
@@ -70,7 +71,8 @@ function QuotationsEditCtrl(
     getSourceTypeName: getSourceTypeName,
     ENV: ENV,
     activeStore: activeStore,
-    isInvalidDate: false,
+    setLastShippingDate: setLastShippingDate,
+    delivery: delivery,
   });
 
   init($routeParams.id);
@@ -98,7 +100,9 @@ function QuotationsEditCtrl(
       .then(function (res) {
         vm.isLoading = false;
         vm.quotation = res.data;
-
+        if (vm.quotation.Client !== undefined) {
+          quotationService.itHasCommercialSociety(vm.quotation.Client.CardName);
+        }
         if (vm.quotation.estimatedCloseDate) {
           vm.estimatedCloseDateWrapper.setDate(
             new Date(vm.quotation.estimatedCloseDate)
@@ -342,6 +346,70 @@ function QuotationsEditCtrl(
       );
     }
   }
+  function delivery(productCode) {
+    var url = '/shipping/product';
+
+    var params = {
+      productCode: productCode,
+      storeId: vm.quotation.Store,
+      activeQuotationId: vm.quotation.id,
+    };
+
+    return api.$http.get(url, params).then(function (res) {
+      return res.data;
+    });
+  }
+
+  function setLastShippingDate() {
+    var oldDetails = vm.quotation.Details;
+
+    var lastDeliveryDate = vm.quotation.Details[0].shipDate;
+    for (var i = 0; i < oldDetails.length; i++) {
+      if (moment(oldDetails[i].shipDate) > moment(lastDeliveryDate)) {
+        lastDeliveryDate = oldDetails[i].shipDate;
+      }
+    }
+    var allPromises = []
+    for (var i = 0; i < oldDetails.length; i++) {
+      if (oldDetails[i].immediateDelivery == false && oldDetails[i].ShopDelivery == false) {
+        allPromises.push(new Promise(function (resolve, reject) {
+          var oldDetail;
+          oldDetail = oldDetails[i];
+          var params = {
+            quantity: oldDetail.quantity,
+            immediateDelivery: moment().isSame(moment(lastDeliveryDate), "day"),
+            ShopDelivery: oldDetail.ShopDelivery,
+            WeekendDelivery: oldDetail.WeekendDelivery,
+            originalShipDate: lastDeliveryDate,
+            shipDate: lastDeliveryDate,
+            productDate: oldDetail.productDate,
+            shipCompany: oldDetail.shipCompany,
+            shipCompanyFrom: oldDetail.shipCompanyFrom,
+            PromotionPackage: oldDetail.PromotionPackage || null,
+            PurchaseAfter: oldDetail.PurchaseAfter,
+            PurchaseDocument: oldDetail.PurchaseDocument,
+            force: true
+          }
+          var index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == oldDetail.Product.ItemCode })
+          try {
+            quotationService.addProduct(oldDetails[index].Product.id, params)
+            removeDetailsGroup(oldDetails[index]); // remove detail from group
+          } catch (ex) {
+            console.log(ex)
+          } finally {
+            resolve(true)
+          }
+
+        }))
+      }
+    }
+    Promise.all(allPromises).then(function () {
+      init(vm.quotation.id)
+    }).catch(function (ex) {
+      console.log(ex);
+    })
+  }
+
 
   function addRecord(form) {
     if (vm.newRecord.eventType && form.$valid) {
@@ -467,9 +535,7 @@ function QuotationsEditCtrl(
   function removeDetailsGroup(detailsGroup) {
     var deferred = $q.defer();
     vm.isLoadingDetails = true;
-    var detailsIds = detailsGroup.details.map(function (d) {
-      return d.id;
-    });
+    var detailsIds = [detailsGroup.id]
     var params = {
       detailsIds: detailsIds,
     };
@@ -662,6 +728,8 @@ function QuotationsEditCtrl(
           authService.showUnauthorizedDialogIfNeeded(err);
         });
     } else {
+
+      updateDetailsInfo
       dialogService.showDialog('Esta cotización ya tiene un pedido asignado');
     }
   }
@@ -672,7 +740,7 @@ function QuotationsEditCtrl(
     });
   }
   function quotationHasShopDeliveryProducts(quotation) {
-    return _.some(quotation.Details, function(detail) {
+    return _.some(quotation.Details, function (detail) {
       return detail.ShopDelivery;
     });
   }

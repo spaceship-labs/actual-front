@@ -150,7 +150,7 @@
     }
 
     function isValidQuotationAddress(quotation) {
-      return quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery ? true : false;
+      return quotation.immediateDelivery || quotation.Address || quotation.ShopDelivery || quotation.WeekendDelivery ? true : false;
     }
 
     function populateDetailsWithProducts(quotation, options) {
@@ -246,13 +246,15 @@
         shipDate: params.shipDate,
         immediateDelivery: params.immediateDelivery,
         ShopDelivery: params.ShopDelivery,
+        WeekendDelivery: params.WeekendDelivery,
         originalShipDate: params.originalShipDate,
         productDate: params.productDate,
         shipCompany: params.shipCompany,
         shipCompanyFrom: params.shipCompanyFrom,
         PromotionPackage: params.promotionPackage || null,
         PurchaseAfter: params.PurchaseAfter,
-        PurchaseDocument: params.PurchaseDocument
+        PurchaseDocument: params.PurchaseDocument,
+        force: params.force,
       };
       return detail;
     }
@@ -419,7 +421,7 @@
       details = details.map(function (detail) {
         var detailStock = _.findWhere(detailsStock, { id: detail.id });
         if (detailsStock) {
-          detail.validStock = detailStock.validStock;
+          detail.validStock = detailStock.validStock || detailStock.force;
         }
         return detail;
       });
@@ -427,8 +429,8 @@
     }
 
     function isValidStock(detailsStock) {
-      return _.every(detailsStock, function (detail) {
-        return detail.validStock;
+      return _.every(detailsStock, function(detail) {
+        return detail.validStock || detail.force;
       });
     }
 

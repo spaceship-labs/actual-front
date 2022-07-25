@@ -205,9 +205,17 @@
           <p class="cart-summary-note" ng-show="vm.quotation.Client">
             *Precios en Pesos Mexicanos con impuestos incluidos.
           </p>
+          
         </div>
+        <button type="button" ng-click="vm.setLastShippingDate()">
+          Seleccionar las fechas de entrega mas lejana
+        </button>
 
-        <div layout="row" layout-align="space-between center" layout-xs="column">
+        <div 
+          layout="row" 
+          layout-align="space-between center" 
+          layout-xs="column"
+        >
           <div flex="45">
             <a ng-if="vm.quotation.Client && vm.quotation.Details.length > 0" href="#" ng-click="vm.print()"
               class="action-btn-print print-btn">
