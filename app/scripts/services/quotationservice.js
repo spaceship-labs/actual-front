@@ -421,7 +421,7 @@
       details = details.map(function (detail) {
         var detailStock = _.findWhere(detailsStock, { id: detail.id });
         if (detailsStock) {
-          detail.validStock = detailStock.validStock || detailStock.force;
+          detail.validStock = detailStock.validStock || detailStock.force == true;
         }
         return detail;
       });
@@ -430,7 +430,7 @@
 
     function isValidStock(detailsStock) {
       return _.every(detailsStock, function(detail) {
-        return detail.validStock || detail.force;
+        return detail.validStock || detail.force == true;
       });
     }
 
