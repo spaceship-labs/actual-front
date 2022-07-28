@@ -349,8 +349,8 @@ function QuotationsEditCtrl(
   }
 
   function setLastShippingDate() {
-    var oldDetails = vm.quotation.Details;
-    var lastDeliveryDate = vm.quotation.Details[0].shipDate;
+    var oldDetails = vm.quotation.DetailsGroups;
+    var lastDeliveryDate = vm.quotation.DetailsGroups[0].shipDate;
     for (var i = 0; i < oldDetails.length; i++) {
       if (moment(oldDetails[i].shipDate) > moment(lastDeliveryDate)) {
         lastDeliveryDate = oldDetails[i].shipDate;
@@ -364,8 +364,8 @@ function QuotationsEditCtrl(
           oldDetail = oldDetails[i];
           var params = {
             quantity: oldDetail.quantity,
-            immediateDelivery: moment().isSame(moment(lastDeliveryDate), "day"),
-            ShopDelivery: oldDetail.ShopDelivery,
+            immediateDelivery: false,
+            ShopDelivery: false,
             WeekendDelivery: oldDetail.WeekendDelivery,
             originalShipDate: lastDeliveryDate,
             shipDate: lastDeliveryDate,
@@ -377,7 +377,14 @@ function QuotationsEditCtrl(
             PurchaseDocument: oldDetail.PurchaseDocument,
             force: true
           }
-          var index = oldDetails.findIndex(function (detail) { return detail.Product.ItemCode == oldDetail.Product.ItemCode })
+          var index = oldDetails.findIndex(
+            function (detail) {
+              return detail.Product.ItemCode == oldDetail.Product.ItemCode &&
+                detail.ShopDelivery == oldDetail.ShopDelivery &&
+                detail.WeekendDelivery == oldDetail.WeekendDelivery &&
+                detail.immediateDelivery == oldDetail.immediateDelivery &&
+                detail.quantity == oldDetail.quantity
+            })
           try {
             quotationService.addProduct(oldDetails[index].Product.id, params)
             removeDetailsGroup(oldDetails[index]); // remove detail from group
