@@ -386,8 +386,10 @@ function QuotationsEditCtrl(
                 detail.quantity == oldDetail.quantity
             })
           try {
-            quotationService.addProduct(oldDetails[index].Product.id, params)
-            removeDetailsGroup(oldDetails[index]); // remove detail from group
+            for( var j = 0; j < oldDetail.details.lenght; j++ ){
+              quotationService.addProduct(oldDetails[index].Product.id, params)
+              removeDetailsGroup(oldDetails.details[i]); // remove detail from group
+            }
           } catch (ex) {
             console.log(ex)
           } finally {
