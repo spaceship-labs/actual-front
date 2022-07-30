@@ -293,7 +293,7 @@ function ProductCtrl(
     return deliveryGroup.ShopDelivery
   }
   function isWeekendGroup(deliveryGroup) {
-    return deliveryGroup.WeekendDelivery ? (isWeekend(deliveryGroup) ? "Entrega a 3 días" : "Entrega a 3 días") : false;
+    return deliveryGroup.WeekendDelivery ? (isWeekend(deliveryGroup) ? "Entrega a 4 días" : "Entrega a 3 días") : false;
   }
 }
 function isSRService(product) {
