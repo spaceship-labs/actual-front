@@ -258,7 +258,7 @@
       var STUDIO_MERIDA = '11';
       var HOME_XCARET = '81';
       var PUERTO_CANCUN = '82';
-      var ACTUAL_ATELIER = '82';
+      var ACTUAL_ATELIER = '152';
 
       var hierarchy = [];
       switch (activeWarehouse.WhsCode) {
