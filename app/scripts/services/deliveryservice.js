@@ -67,7 +67,9 @@
             delivery.companyFrom !== deliveries[i].companyFrom &&
             convertDatetimeToDate(delivery.date) <=
               convertDatetimeToDate(deliveries[i].date) &&
-            !isDateImmediateDelivery(delivery) && delivery.ShopDelivery === deliveries[i].ShopDelivery && delivery.WeekendDelivery === deliveries[i].WeekendDelivery
+              !isDateImmediateDelivery(delivery) &&
+              delivery.ShopDelivery === deliveries[i].ShopDelivery &&
+              delivery.WeekendDelivery === deliveries[i].WeekendDelivery
           ) {
             return true;
           } else {
@@ -95,11 +97,27 @@
             }),
           };
           groups.push(group);
+          var existingGroup = _.findIndex(groups, function (groupIndex) {
+            return moment(groupIndex.date).format('YYYY-MM-DD') == moment(group.date).format('YYYY-MM-DD')
+          });
+
+          if (existingGroup == -1) {
+            console.log('NO EXISTE FECHA')
+            groups.push(group);
+          } else {
+            console.log('EXISTE FECHA')
+            if(group.available > groups[existingGroup].available){
+              groups[existingGroup] = group;
+            }
+
+          }
         }
       }
       groups = _.uniq(groups, false, function(group) {
         return group.date;
       });
+
+      console.log({HERETHEYARE: groups})
 
       return groups;
     }
