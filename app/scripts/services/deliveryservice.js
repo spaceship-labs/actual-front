@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('actualApp').factory('deliveryService', deliveryService);
@@ -14,7 +14,7 @@
 
     function groupDetails(details) {
       var groups = [];
-      var groupedDetails = _.groupBy(details, function(detail) {
+      var groupedDetails = _.groupBy(details, function (detail) {
         var discountPercent = detail.discountPercent || 0;
         var date = moment(detail.shipDate).startOf('day');
         return detail.Product.ItemCode + '#' + date + '#' + discountPercent + '#' + detail.WeekendDelivery + '#' + detail.ShopDelivery;
@@ -62,12 +62,14 @@
     function groupDeliveryDates(deliveries) {
       var groups = [];
       for (var i = deliveries.length - 1; i >= 0; i--) {
-        var items = _.filter(deliveries, function(delivery) {
+        var items = _.filter(deliveries, function (delivery) {
           if (
             delivery.companyFrom !== deliveries[i].companyFrom &&
             convertDatetimeToDate(delivery.date) <=
-              convertDatetimeToDate(deliveries[i].date) &&
-            !isDateImmediateDelivery(delivery) && delivery.ShopDelivery === deliveries[i].ShopDelivery && delivery.WeekendDelivery === deliveries[i].WeekendDelivery
+            convertDatetimeToDate(deliveries[i].date) &&
+            !isDateImmediateDelivery(delivery) && 
+            delivery.ShopDelivery === deliveries[i].ShopDelivery && 
+            delivery.WeekendDelivery === deliveries[i].WeekendDelivery
           ) {
             return true;
           } else {
@@ -84,23 +86,37 @@
             days: farthestDelivery.days,
             deliveries: items,
             date: farthestDelivery.date,
-            ImmediateDelivery: _.every(items, function(delivery) {
+            ImmediateDelivery: _.every(items, function (delivery) {
               return delivery.ImmediateDelivery;
             }),
-            ShopDelivery: _.every(items, function(delivery) {
+            ShopDelivery: _.every(items, function (delivery) {
               return delivery.ShopDelivery;
             }),
-            WeekendDelivery: _.every(items, function(delivery) {
+            WeekendDelivery: _.every(items, function (delivery) {
               return delivery.WeekendDelivery;
             }),
           };
-          groups.push(group);
+          var existingGroup = _.findIndex(groups, function (groupIndex) {
+            return moment(groupIndex.date).format('YYYY-MM-DD') == moment(group.date).format('YYYY-MM-DD')
+          });
+
+          if (existingGroup == -1) {
+            console.log('NO EXISTE FECHA')
+            groups.push(group);
+          } else {
+            console.log('EXISTE FECHA')
+            if(group.available > groups[existingGroup].available){
+              groups[existingGroup] = group;
+            }
+
+          }
         }
       }
       groups = _.uniq(groups, false, function(group) {
         return group.date;
       });
-
+      
+      console.log({HERETHEYARE: groups})
       return groups;
     }
 
@@ -121,14 +137,14 @@
     function getAvailableByDeliveries(deliveries) {
       var warehousesIds = getWarehousesIdsByDeliveries(deliveries);
       var available = 0;
-      available = warehousesIds.reduce(function(acum, whsId) {
+      available = warehousesIds.reduce(function (acum, whsId) {
         return acum + getDeliveryStockByWarehouse(whsId, deliveries);
       }, 0);
       return available;
     }
 
     function getDeliveryStockByWarehouse(warehouseId, deliveries) {
-      var stock = deliveries.reduce(function(acum, delivery) {
+      var stock = deliveries.reduce(function (acum, delivery) {
         if (delivery.companyFrom === warehouseId && delivery.available > acum) {
           return delivery.available;
         }
@@ -138,7 +154,7 @@
     }
 
     function getWarehousesIdsByDeliveries(deliveries) {
-      var warehousesIds = deliveries.reduce(function(warehouses, delivery) {
+      var warehousesIds = deliveries.reduce(function (warehouses, delivery) {
         if (warehouses.indexOf(delivery.companyFrom) === -1) {
           return warehouses.concat(delivery.companyFrom);
         }
@@ -154,7 +170,7 @@
     ) {
       var sortedDeliveries = [];
 
-      var warehouses = deliveries.map(function(delivery) {
+      var warehouses = deliveries.map(function (delivery) {
         var warehouse = _.findWhere(allWarehouses, {
           id: delivery.companyFrom,
         });
@@ -188,14 +204,14 @@
 
     function getAfterPurchaseDeliveries(deliveries) {
       var afterPurchaseDeliveries = [];
-      return (afterPurchaseDeliveries = deliveries.filter(function(delivery) {
+      return (afterPurchaseDeliveries = deliveries.filter(function (delivery) {
         return delivery.PurchaseAfter;
       }));
     }
 
     function getOnWarehouseDeliveries(deliveries) {
       var onWarehouseDeliveries = [];
-      return (onWarehouseDeliveries = deliveries.filter(function(delivery) {
+      return (onWarehouseDeliveries = deliveries.filter(function (delivery) {
         return !delivery.PurchaseAfter;
       }));
     }
@@ -224,7 +240,7 @@
 
     function assignStoreWarehouseAtTop(warehouses, activeStoreWarehouse) {
       var storeWhsId = activeStoreWarehouse.id;
-      warehouses.sort(function(a, b) {
+      warehouses.sort(function (a, b) {
         return a.id == storeWhsId ? -1 : b.id == storeWhsId ? 1 : 0;
       });
 
@@ -232,7 +248,7 @@
     }
 
     function sortDeliveriesByDate(deliveries) {
-      var sortedByDate = deliveries.sort(function(a, b) {
+      var sortedByDate = deliveries.sort(function (a, b) {
         var dateA = new Date(a.date).getTime();
         var dateB = new Date(b.date).getTime();
         return dateA < dateB ? 1 : -1;
