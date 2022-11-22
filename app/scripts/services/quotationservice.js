@@ -628,6 +628,8 @@
             { label: 'Artila', value: 'artila' },
             { label: 'X Towers', value: 'x-towers' },
             { label: 'Antaal', value: 'antaal' },
+            { label: 'Arkana', value: 'arkana' },
+            { label: 'Vela Towers', value: 'vela-towers' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -664,6 +666,8 @@
             { label: 'Bali', value: 'bali' },
             { label: 'Valenia', value: 'valenia' },
             { label: 'Jardines de Mayakoba', value: 'jardines-de-mayakoba' },
+            { label: 'La Selva Residences', value: 'la-selva-residences' },
+            { label: 'Urbal\'Am', value: 'urbal-am' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -707,6 +711,8 @@
           childs: [
             { label: 'Palma Real', value: 'palma-real' },
             { label: 'Quinta Maretta', value: 'quinta-maretta' },
+            { label: 'Selva Escondida', value: 'selva-escondida' },
+            { label: 'Alborada', value: 'alborada' },
             { label: 'Otro / No recuerda', value: 'otro' }
           ]
         },
@@ -750,6 +756,16 @@
             { label: 'Casa Leo', value: 'casa-leo' },
             { label: 'Folclore', value: 'folclore' },
             { label: 'Otro / No recuerda', value: 'otro' }
+          ]
+        },
+        {
+          label: 'Recomendado Cozumel',
+          value: 'recomendado-cozumel',
+          childs: [
+            { label: 'D\'Maria', value: 'd-maria' },
+            { label: 'Novara', value: 'novara' },
+            { label: 'Athimar', value: 'athimar' },
+            { label: 'Distrito Norte', value: 'distrito-norte' },
           ]
         }
       ];
