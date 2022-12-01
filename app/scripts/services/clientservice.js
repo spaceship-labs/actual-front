@@ -338,7 +338,22 @@
           code: "P01",
           label: "Por definir",
           isMoral: true
-        }
+        },
+        {
+          code: "S01",
+          label: "Sin efectos fiscales.",
+          isMoral: true
+        },
+        {
+          code: "CP01",
+          label: "Pagos",
+          isMoral: true
+        },
+        {
+          code: "CN01",
+          label: "Nómina",
+          isMoral: true
+        },
       ];
 
       return list;
@@ -350,10 +365,10 @@
           code: 'SALARIED_REGIME',
           label: 'Régimen asalariados',
         },
-        {
+        /* {
           code: 'FEES_REGIME',
           label: 'Régimen honorarios (servicios profesionales)',
-        },
+        }, */
         {
           code: 'BUSINESS_ACTIVITIES_REGIME',
           label: 'Régimen actividades empresariales',
@@ -405,6 +420,10 @@
         {
           code: 'SIMPLIFIED_REGIME',
           label: 'Sin obligaciones fiscales',
+        },
+        {
+          code: "DIVIDEND_INCOME",
+          label: "Ingresos por Dividendos (socios y accionistas)",
         },
       ]
       return list;
