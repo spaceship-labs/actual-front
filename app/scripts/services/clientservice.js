@@ -337,11 +337,11 @@
           label: 'Pagos por servicios educativos (colegiaturas)',
           isMoral: false
         },
-        /* {
+        {
           code: 'P01',
           label: 'Por definir',
           isMoral: true
-        }, */
+        },
         {
           code: "S01",
           label: "Sin efectos fiscales.",
