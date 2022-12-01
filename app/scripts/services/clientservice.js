@@ -288,60 +288,60 @@
         {
           code: 'D01',
           label: 'Honorarios médicos, dentales y gastos hospitalarios',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D02',
           label: 'Gastos médicos por incapacidad o discapacidad',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D03',
           label: 'Gastos funerales',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D04',
           label: 'Donativos',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D05',
           label:
             'Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación)',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D06',
           label: 'Aportaciones voluntarias al SAR',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D07',
           label: 'Primas por seguros de gastos médicos',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D08',
           label: 'Gastos de transportación escolar obligatoria',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D09',
           label:
             'Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones',
-          isMoral: true
+          isMoral: false
         },
         {
           code: 'D10',
           label: 'Pagos por servicios educativos (colegiaturas)',
-          isMoral: true
+          isMoral: false
         },
-        {
+        /* {
           code: 'P01',
           label: 'Por definir',
           isMoral: true
-        },
+        }, */
         {
           code: "S01",
           label: "Sin efectos fiscales.",
@@ -355,7 +355,7 @@
         {
           code: "CN01",
           label: "Nómina",
-          isMoral: true
+          isMoral: false
         }
       ];
       return list;
