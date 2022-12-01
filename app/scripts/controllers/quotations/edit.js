@@ -56,6 +56,7 @@ function QuotationsEditCtrl(
     isUserAdminOrManager: authService.isUserAdminOrManager,
     isValidStock: isValidStock,
     print: print,
+    commercialSocieties : quotationService.getCommercialSocieties(),
     promotionPackages: [],
     quotationStore: {},
     removeDetail: removeDetail,
@@ -99,6 +100,9 @@ function QuotationsEditCtrl(
       .then(function (res) {
         vm.isLoading = false;
         vm.quotation = res.data;
+        if (vm.quotation.Client !== undefined){
+          quotationService.itHasCommercialSociety(vm.quotation.Client.CardName);
+        }
         if (vm.quotation.estimatedCloseDate) {
           vm.estimatedCloseDateWrapper.setDate(
             new Date(vm.quotation.estimatedCloseDate)

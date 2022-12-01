@@ -28,6 +28,7 @@ function ClientCreateCtrl(
     isLoadingProgress: false,
     intervalProgress: false,
     cfdiUseList: clientService.getCFDIUseList(),
+    regimes         : clientService.getRegimes(),
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
     states: [],

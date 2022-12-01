@@ -25,6 +25,7 @@ function ClientProfileCtrl(
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
     cfdiUseList: clientService.getCFDIUseList(),
+    regimes: clientService.getRegimes(),
     states: [],
     countries: commonService.getCountries(),
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,

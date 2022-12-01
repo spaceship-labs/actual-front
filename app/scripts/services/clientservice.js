@@ -33,6 +33,7 @@
       syncClientByCardCode: syncClientByCardCode,
       syncClientsCredit: syncClientsCredit,
       getCFDIUseList: getCFDIUseList,
+      getRegimes:  getRegimes,
       mapCFDIuseCode: mapCFDIuseCode,
       validateRfc: validateRfc,
       GENERIC_RFC: GENERIC_RFC,
@@ -340,9 +341,93 @@
           code: 'P01',
           label: 'Por definir',
           isMoral: true
+        },
+        {
+          code: "S01",
+          label: "Sin efectos fiscales.",
+          isMoral: true
+        },
+        {
+          code: "CP01",
+          label: "Pagos",
+          isMoral: true
+        },
+        {
+          code: "CN01",
+          label: "Nómina",
+          isMoral: true
         }
       ];
+      return list;
+    }
 
+    function getRegimes() {
+      var list = [
+        {
+          code: 'SALARIED_REGIME',
+          label: 'Régimen asalariados',
+        },
+        /* {
+          code: 'FEES_REGIME',
+          label: 'Régimen honorarios (servicios profesionales)',
+        }, */
+        {
+          code: 'BUSINESS_ACTIVITIES_REGIME',
+          label: 'Régimen actividades empresariales',
+        },
+        {
+          code: 'LEASEHOLD_REGIME',
+          label: 'Régimen de arrendamiento',
+        },
+        {
+          code: 'GENERAL_REGIME_OF_MORAL_PEOPLE_LAW',
+          label: 'Régimen General de Ley Personas Morales',
+        },
+        {
+          code: 'REGIME_OF_MORAL_PEOPLE_NOT_PROFIT',
+          label: 'Régimen de las Personas Morales con Fines No Lucrativos',
+        },
+        {
+          code: 'FISCAL_INCORPORATION_REGIME',
+          label: 'Régimen de Incorporación Fiscal',
+        },
+        {
+          code: 'PRIMARY_SECTOR_REGIME',
+          label: 'Régimen de Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras',
+        },
+        {
+          code: 'REGIME_OF_THE_COORDINATED',
+          label: 'Régimen de los Coordinados',
+        },
+        {
+          code: 'REGIME_OF_THE_TECHNOLOGICAL_PLATFORMS_INCOME_ACTIVITIES',
+          label: 'Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas',
+        },
+        {
+          code: 'REGIME_OF_COOPERATIVE_PRODUCTION_SOCIETIES',
+          label: 'Sociedades Cooperativas de Producción que optan por diferir sus ingresos',
+        },
+        {
+          code: 'REGIME_OF_TRUST',
+          label: 'Régimen simplificado de confianza (RESICO)',
+        },
+        {
+          code: 'SOCIETIES_OPTIONAL_REGIME',
+          label: 'Régimen Opcional para Grupos de Sociedades',
+        },
+        {
+          code: 'NO_REGIME',
+          label: 'Sin régimen',
+        },
+        {
+          code: 'SIMPLIFIED_REGIME',
+          label: 'Sin obligaciones fiscales',
+        },
+        {
+          code: "DIVIDEND_INCOME",
+          label: "Ingresos por Dividendos (socios y accionistas)",
+        }
+      ]
       return list;
     }
   }
