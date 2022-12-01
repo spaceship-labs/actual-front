@@ -353,7 +353,7 @@
           code: "CN01",
           label: "Nómina",
           isMoral: true
-        },
+        }
       ];
 
       return list;
@@ -424,7 +424,7 @@
         {
           code: "DIVIDEND_INCOME",
           label: "Ingresos por Dividendos (socios y accionistas)",
-        },
+        }
       ]
       return list;
     }
