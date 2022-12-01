@@ -323,6 +323,7 @@ function ClientProfileCtrl(
       var params = _.clone(vm.client.FiscalAddress);
       params.LicTradNum = _.clone(vm.client.LicTradNum);
       params.cfdiUse = vm.client.cfdiUse;
+      params.regime = vm.client.regime;
 
       clientService
         .updateFiscalAddress(params.id, vm.client.CardCode, params)
