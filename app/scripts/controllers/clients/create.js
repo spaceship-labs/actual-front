@@ -20,15 +20,19 @@ function ClientCreateCtrl(
 
   angular.extend(vm, {
     activeTab: 0,
-    client: {},
+    client: {LicTradNum:"XAXX010101000"},
     contacts: [{}],
     fiscalAddress: {},
     loadingEstimate: 0,
     companyNameMaxLength: 50,
     isLoadingProgress: false,
     intervalProgress: false,
-    cfdiUseList: clientService.getCFDIUseList(),
-    regimes         : clientService.getRegimes(),
+    CFDIUseListLegalPerson : clientService.getCFDIUseListLegalPerson(),
+    CFDIUseListNaturalPerson : clientService.getCFDIUseListNaturalPerson(),
+    RegimesLegalPerson : clientService.getRegimesLegalPerson(),
+    RegimesNaturalPerson : clientService.getRegimesNaturalPerson(),
+    getCFDIUseListSelect : getCFDIUseListSelect,
+    getRegimesSelect : getRegimesSelect,
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
     states: [],
@@ -385,6 +389,32 @@ function ClientCreateCtrl(
         .catch(function(err) {
           console.log('err', err);
         });
+    }
+  }
+
+  function getCFDIUseListSelect (rfc) {
+    var LicTradNum = rfc;
+    if ( LicTradNum ) {
+      if ( LicTradNum.length == 12 ) {
+        return vm.CFDIUseListLegalPerson;
+      }else if ( LicTradNum.length == 13) {
+        return vm.CFDIUseListNaturalPerson;
+      }
+    }else{
+      console.log("Simon")
+    }
+  }
+
+  function getRegimesSelect (rfc) {
+    var LicTradNum = rfc;
+    if ( LicTradNum ) {
+      if ( LicTradNum.length == 12 ) {
+        return vm.RegimesLegalPerson;
+      }else if ( LicTradNum.length == 13) {
+        return vm.RegimesNaturalPerson;
+      }
+    }else{
+      console.log("Error getRegimesSelect")
     }
   }
 

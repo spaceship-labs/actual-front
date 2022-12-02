@@ -60,7 +60,7 @@
           <select
             class="select-element"
             ng-model="vm.client.cfdiUse"
-            ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.cfdiUseList | orderBy:'label'"
+            ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.getCFDIUseListSelect(vm.client.LicTradNum) | orderBy:'label'"
           >
           </select>
         </div>
@@ -72,7 +72,7 @@
             <select
               class="select-element"
               ng-model="vm.client.regime"
-              ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.regimes | orderBy:'label'"
+              ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.getRegimesSelect(vm.client.LicTradNum) | orderBy:'label'"
             >
             </select>
           </div>

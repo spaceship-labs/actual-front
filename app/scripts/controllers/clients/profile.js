@@ -24,8 +24,6 @@ function ClientProfileCtrl(
     personalEditEnabled: false,
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
-    cfdiUseList: clientService.getCFDIUseList(),
-    regimes: clientService.getRegimes(),
     states: [],
     countries: commonService.getCountries(),
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
@@ -72,7 +70,14 @@ function ClientProfileCtrl(
     isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
     showNewAddressForm: showNewAddressForm,
-    isUserAdminOrManager: authService.isUserAdminOrManager()
+    isUserAdminOrManager: authService.isUserAdminOrManager(),
+
+    CFDIUseListLegalPerson : clientService.getCFDIUseListLegalPerson(),
+    CFDIUseListNaturalPerson : clientService.getCFDIUseListNaturalPerson(),
+    RegimesLegalPerson : clientService.getRegimesLegalPerson(),
+    RegimesNaturalPerson : clientService.getRegimesNaturalPerson(),
+    getCFDIUseListSelect : getCFDIUseListSelect,
+    getRegimesSelect : getRegimesSelect,
   });
 
   function init() {
@@ -348,6 +353,32 @@ function ClientProfileCtrl(
     } else {
       vm.isLoading = false;
       dialogService.showDialog('Campos incompletos');
+    }
+  }
+
+  function getCFDIUseListSelect (rfc) {
+    var LicTradNum = rfc;
+    if ( LicTradNum ) {
+      if ( LicTradNum.length == 12 ) {
+        return vm.CFDIUseListLegalPerson;
+      }else if ( LicTradNum.length == 13) {
+        return vm.CFDIUseListNaturalPerson;
+      }
+    }else{
+      console.log("Simon")
+    }
+  }
+
+  function getRegimesSelect (rfc) {
+    var LicTradNum = rfc;
+    if ( LicTradNum ) {
+      if ( LicTradNum.length == 12 ) {
+        return vm.RegimesLegalPerson;
+      }else if ( LicTradNum.length == 13) {
+        return vm.RegimesNaturalPerson;
+      }
+    }else{
+      console.log("Error getRegimesSelect")
     }
   }
 
