@@ -20,15 +20,21 @@ function ClientCreateCtrl(
 
   angular.extend(vm, {
     activeTab: 0,
-    client: {},
+    client: {LicTradNum:"XAXX010101000"},
     contacts: [{}],
     fiscalAddress: {},
     loadingEstimate: 0,
     companyNameMaxLength: 50,
     isLoadingProgress: false,
     intervalProgress: false,
-    cfdiUseList: clientService.getCFDIUseList(),
-    regimes         : clientService.getRegimes(),
+    CFDIUseListLegalPerson : clientService.getCFDIUseListLegalPerson(),
+    CFDIUseListNaturalPerson : clientService.getCFDIUseListNaturalPerson(),
+    RegimesLegalPerson : clientService.getRegimesLegalPerson(),
+    RegimesNaturalPerson : clientService.getRegimesNaturalPerson(),
+    getCFDIUseListSelect : getCFDIUseListSelect,
+    getRegimesSelect : getRegimesSelect,
+    genericRfc : true,
+    isGenericRFC : isGenericRFC,
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
     states: [],
@@ -42,7 +48,7 @@ function ClientCreateCtrl(
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
     PERSONAL_DATA_TAB: 0,
     FISCAL_DATA_TAB: 1,
-    DELIVERY_DATA_TAB: 3
+    DELIVERY_DATA_TAB: 3,
   });
 
   function onPikadaySelect(pikaday) {
@@ -103,6 +109,7 @@ function ClientCreateCtrl(
       .catch(function(err) {
         console.log(err);
       });
+      isGenericRFC(vm.client.LicTradNum);
   }
 
   function filterContacts(contact) {
@@ -385,6 +392,50 @@ function ClientCreateCtrl(
         .catch(function(err) {
           console.log('err', err);
         });
+    }
+  }
+
+  function getCFDIUseListSelect (rfc) {
+    var LicTradNum = rfc;
+    if ( LicTradNum ) {
+      if ( LicTradNum.length == 12 ) {
+        return vm.CFDIUseListLegalPerson;
+      }else if ( LicTradNum.length == 13) {
+        return vm.CFDIUseListNaturalPerson;
+      }
+    }
+  }
+
+  function getRegimesSelect (rfc) {
+    var LicTradNum = rfc;
+    if ( LicTradNum ) {
+      if ( LicTradNum.length == 12 ) {
+        vm.client.regime = "GENERAL_REGIME_OF_MORAL_PEOPLE_LAW";
+        vm.client.cfdiUse = "S01";
+        return vm.RegimesLegalPerson;
+      }else if ( LicTradNum.length == 13) {
+        vm.client.regime = "SIMPLIFIED_REGIME";
+        vm.client.cfdiUse = "S01";
+        return vm.RegimesNaturalPerson;
+      }
+    }
+  }
+
+  function isGenericRFC ( rfc ){
+    if(rfc == clientService.GENERIC_RFC){
+      vm.genericRfc = true;
+      vm.client.regime = "SIMPLIFIED_REGIME";
+      vm.client.cfdiUse = "S01";
+      vm.fiscalAddress.companyName = "PUBLICO EN GENERAL";
+      vm.fiscalAddress.ZipCode = "77507";
+      return true;
+    }else{
+      vm.genericRfc = false;
+      //vm.client.regime = "";
+      //vm.client.cfdiUse = "";
+      vm.fiscalAddress.companyName = "";
+      vm.fiscalAddress.ZipCode = "";
+      return false;
     }
   }
 
