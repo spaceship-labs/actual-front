@@ -66,6 +66,8 @@ function ClientProfileCtrl(
     apiResourceOrders: orderService.getList,
     updateContact: updateContact,
     createContact: createContact,
+    genericRfc : true,
+    isGenericRFC : isGenericRFC,
     personalDataAction: personalDataAction,
     isContactEditModeActive: isContactEditModeActive,
     showNewFiscalForm: showNewFiscalForm,
@@ -104,6 +106,8 @@ function ClientProfileCtrl(
       }
 
       vm.client = clientService.setClientDefaultData(vm.client);
+
+      isGenericRFC(vm.client.LicTradNum)
 
       commonService
         .getStatesSap()
@@ -364,8 +368,6 @@ function ClientProfileCtrl(
       }else if ( LicTradNum.length == 13) {
         return vm.CFDIUseListNaturalPerson;
       }
-    }else{
-      console.log("Simon")
     }
   }
 
@@ -377,8 +379,21 @@ function ClientProfileCtrl(
       }else if ( LicTradNum.length == 13) {
         return vm.RegimesNaturalPerson;
       }
+    }
+  }
+
+  function isGenericRFC ( rfc ){
+    if(rfc == clientService.GENERIC_RFC){
+      vm.genericRfc = true;
+      vm.client.regime = "SIMPLIFIED_REGIME";
+      vm.client.cfdiUse = "S01";
+      vm.client.FiscalAddress.companyName = "PUBLICO EN GENERAL";
+      vm.client.FiscalAddress.ZipCode = "77507";
+
+      return true;
     }else{
-      console.log("Error getRegimesSelect")
+      vm.genericRfc = false;
+      return false;
     }
   }
 

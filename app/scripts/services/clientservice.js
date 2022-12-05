@@ -578,30 +578,37 @@
     function getRegimesLegalPerson() {
       var list = [
         {
+          //601
           code: 'GENERAL_REGIME_OF_MORAL_PEOPLE_LAW',
           label: 'Régimen General de Ley Personas Morales',
         },
         {
+          //603
           code: 'REGIME_OF_MORAL_PEOPLE_NOT_PROFIT',
           label: 'Régimen de las Personas Morales con Fines No Lucrativos',
         },
         {
+          //620
           code: 'REGIME_OF_COOPERATIVE_PRODUCTION_SOCIETIES',
           label: 'Sociedades Cooperativas de Producción que optan por diferir sus ingresos',
         },
         {
+          //622
           code: 'PRIMARY_SECTOR_REGIME',
           label: 'Régimen de Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras',
         },
         {
+          //623
           code: 'SOCIETIES_OPTIONAL_REGIME',
           label: 'Régimen Opcional para Grupos de Sociedades',
         },
         {
+          //624
           code: 'REGIME_OF_THE_COORDINATED',
           label: 'Régimen de los Coordinados',
         },
         {
+          //626
           code: 'REGIME_OF_TRUST',
           label: 'Régimen simplificado de confianza (RESICO)',
         },
@@ -620,34 +627,42 @@
     function getRegimesNaturalPerson() {
       var list = [
         {
+          //605
           code: 'SALARIED_REGIME',
           label: 'Sueldos y Salarios e Ingresos Asimilados a Salarios',
         },
         {
+          //606
           code: 'LEASEHOLD_REGIME',
           label: 'Régimen de arrendamiento',
         },
         {
+          //611
           code: "DIVIDEND_INCOME",
           label: "Ingresos por Dividendos (socios y accionistas)",
         },
         {
+          //612
           code: 'BUSINESS_ACTIVITIES_REGIME',
           label: 'Personas Físicas con Actividades Empresariales y Profesionales',
         },
         {
+          //616
           code: 'SIMPLIFIED_REGIME',
           label: 'Sin obligaciones fiscales',
         },
         {
+          //621
           code: 'FISCAL_INCORPORATION_REGIME',
           label: 'Régimen de Incorporación Fiscal',
         },
         {
+          //625
           code: 'REGIME_OF_THE_TECHNOLOGICAL_PLATFORMS_INCOME_ACTIVITIES',
           label: 'Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas',
         },
         {
+          //626
           code: 'REGIME_OF_TRUST',
           label: 'Régimen simplificado de confianza (RESICO)',
         },

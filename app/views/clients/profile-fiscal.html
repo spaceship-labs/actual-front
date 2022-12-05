@@ -16,6 +16,7 @@
           ng-model="vm.client.LicTradNum"
           rfc-input-validator
           required
+          ng-blur="vm.isGenericRFC(vm.client.LicTradNum)"
         />
       </div>
       <br/>
@@ -81,23 +82,25 @@
       <div layout="row">
 
         <div flex="25" class="input-element">
-          <label><strong>Teléfono <span class="ast">*</span></strong></label>
+          <label><strong>Teléfono <span ng-if="!vm.genericRfc" class="ast">*</span></strong></label>
           <div class="input-element-inner">
             <input
               type="text"
               placeholder="Lada + Número"
               ng-model="vm.client.FiscalAddress.Phone1"
-              required>
+              ng-required="vm.genericRfc"
+              >
           </div>
           <p class="input-note">Caracteres numéricos</p>
         </div>
 
         <div flex="30" class="input-element">
-          <label><strong>Email</strong><span class="ast">*</span> </label>
+          <label><strong>Email</strong><span ng-if="!vm.genericRfc" class="ast">*</span> </label>
           <div class="input-element-inner">
             <input
               type="email"
-              ng-model="vm.client.FiscalAddress.U_Correos" required
+              ng-model="vm.client.FiscalAddress.U_Correos"
+              ng-required="vm.genericRfc"
             >
           </div>
         </div>
@@ -199,11 +202,12 @@
 
 
         <div flex="30" class="input-element select-element-wrapper">
-          <label><strong>Estado</strong></label>
+          <label><strong>Estado</strong><span ng-if="vm.genericRfc" class="ast">*</span></label>
           <md-select
             ng-model="vm.client.FiscalAddress.State"
             class="select-element"
-            required>
+            ng-required="!vm.genericRfc"
+            >
             <md-option ng-repeat="state in vm.states" ng-value="state.Code">
               {{state.Name}}
             </md-option>

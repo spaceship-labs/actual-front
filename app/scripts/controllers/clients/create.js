@@ -33,6 +33,8 @@ function ClientCreateCtrl(
     RegimesNaturalPerson : clientService.getRegimesNaturalPerson(),
     getCFDIUseListSelect : getCFDIUseListSelect,
     getRegimesSelect : getRegimesSelect,
+    genericRfc : true,
+    isGenericRFC : isGenericRFC,
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
     states: [],
@@ -46,7 +48,7 @@ function ClientCreateCtrl(
     fiscalAddressConstraints: clientService.fiscalAddressConstraints,
     PERSONAL_DATA_TAB: 0,
     FISCAL_DATA_TAB: 1,
-    DELIVERY_DATA_TAB: 3
+    DELIVERY_DATA_TAB: 3,
   });
 
   function onPikadaySelect(pikaday) {
@@ -107,6 +109,7 @@ function ClientCreateCtrl(
       .catch(function(err) {
         console.log(err);
       });
+      isGenericRFC(vm.client.LicTradNum);
   }
 
   function filterContacts(contact) {
@@ -400,8 +403,6 @@ function ClientCreateCtrl(
       }else if ( LicTradNum.length == 13) {
         return vm.CFDIUseListNaturalPerson;
       }
-    }else{
-      console.log("Simon")
     }
   }
 
@@ -409,12 +410,32 @@ function ClientCreateCtrl(
     var LicTradNum = rfc;
     if ( LicTradNum ) {
       if ( LicTradNum.length == 12 ) {
+        vm.client.regime = "GENERAL_REGIME_OF_MORAL_PEOPLE_LAW";
+        vm.client.cfdiUse = "S01";
         return vm.RegimesLegalPerson;
       }else if ( LicTradNum.length == 13) {
+        vm.client.regime = "SIMPLIFIED_REGIME";
+        vm.client.cfdiUse = "S01";
         return vm.RegimesNaturalPerson;
       }
+    }
+  }
+
+  function isGenericRFC ( rfc ){
+    if(rfc == clientService.GENERIC_RFC){
+      vm.genericRfc = true;
+      vm.client.regime = "SIMPLIFIED_REGIME";
+      vm.client.cfdiUse = "S01";
+      vm.fiscalAddress.companyName = "PUBLICO EN GENERAL";
+      vm.fiscalAddress.ZipCode = "77507";
+      return true;
     }else{
-      console.log("Error getRegimesSelect")
+      vm.genericRfc = false;
+      //vm.client.regime = "";
+      //vm.client.cfdiUse = "";
+      vm.fiscalAddress.companyName = "";
+      vm.fiscalAddress.ZipCode = "";
+      return false;
     }
   }
 
