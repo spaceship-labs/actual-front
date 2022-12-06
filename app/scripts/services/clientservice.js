@@ -33,7 +33,6 @@
       syncClientByCardCode: syncClientByCardCode,
       syncClientsCredit: syncClientsCredit,
       getCFDIUseList: getCFDIUseList,
-      getRegimes:  getRegimes,
       mapCFDIuseCode: mapCFDIuseCode,
       validateRfc: validateRfc,
       GENERIC_RFC: GENERIC_RFC,
