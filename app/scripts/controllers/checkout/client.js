@@ -3,18 +3,18 @@ angular.module('actualApp')
   .controller('CheckoutClientCtrl', CheckoutClientCtrl);
 
 function CheckoutClientCtrl(
-  commonService, 
+  commonService,
   clientService ,
   $timeout,
   $q,
-  $routeParams, 
-  $rootScope, 
+  $routeParams,
+  $rootScope,
   $location,
   $mdDialog,
   $mdMedia,
-  categoriesService, 
-  productService, 
-  quotationService, 
+  categoriesService,
+  productService,
+  quotationService,
   orderService,
   dialogService,
   authService
@@ -23,6 +23,7 @@ function CheckoutClientCtrl(
   angular.extend(vm,{
     continueProcess: continueProcess,
     getContactName: getContactName,
+    commercialSocieties : quotationService.getCommercialSocieties(),
     mapCFDIuseCode: clientService.mapCFDIuseCode,
     isClientFiscalDataValid: clientService.isClientFiscalDataValid
   });
@@ -31,12 +32,15 @@ function CheckoutClientCtrl(
     $location.search({});
     vm.isLoading = true;
     vm.isLoadingClient = true;
-    
+
     quotationService.getById($routeParams.id)
       .then(function(res){
         vm.quotation = res.data;
         vm.isLoading = false;
-        return quotationService.validateQuotationStockById(vm.quotation.id); 
+        if(res.data.Client !== undefined){
+          quotationService.itHasCommercialSociety(res.data.Client.CardName);
+        }
+        return quotationService.validateQuotationStockById(vm.quotation.id);
       })
       .then(function(isValidStock){
         if( !isValidStock){
@@ -60,7 +64,7 @@ function CheckoutClientCtrl(
 
               if( !vm.isClientFiscalDataValid(vm.client)){
                 dialogService.showDialog('Los datos fiscales estan incompletos o no son validos');
-              }              
+              }
 
               vm.contacts = vm.client.Contacts.map(function(contact){
                 contact.completeAdrress = clientService.buildAddressStringByContact(contact);
@@ -68,18 +72,18 @@ function CheckoutClientCtrl(
               });
               if(!vm.quotation.Address && vm.contacts.length > 0){
                 vm.quotation.Address = vm.contacts[0].id;
-              }            
+              }
             })
             .catch(function(err){
               vm.isLoadingClient = false;
               var error = err.data || err;
               console.log('err', err);
               error = error ? error.toString() : '';
-              dialogService.showDialog('Hubo un error: ' + error );          
+              dialogService.showDialog('Hubo un error: ' + error );
 
             });
         }
-        
+
       });
   }
 
@@ -99,10 +103,10 @@ function CheckoutClientCtrl(
 
   function showInvoiceDataAlert(ev){
     var controller = InvoiceDialogController;
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));    
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
     return $mdDialog.show({
       controller: [
-        '$scope', 
+        '$scope',
         '$mdDialog',
         '$location',
         'quotation',
@@ -119,7 +123,7 @@ function CheckoutClientCtrl(
         client: vm.client
       }
     });
-  }  
+  }
 
   function continueProcess(){
     if(!vm.quotation.Details || vm.quotation.Details.length === 0){
@@ -167,9 +171,9 @@ function CheckoutClientCtrl(
           authService.showUnauthorizedDialogIfNeeded(err);
           var error = err.data || err;
           error = error ? error.toString() : '';
-          dialogService.showDialog('Hubo un error: ' + error );          
+          dialogService.showDialog('Hubo un error: ' + error );
         });
-  
+
     }
 
     else{

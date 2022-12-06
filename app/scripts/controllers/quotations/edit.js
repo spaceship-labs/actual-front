@@ -56,7 +56,7 @@ function QuotationsEditCtrl(
     isUserAdminOrManager: authService.isUserAdminOrManager,
     isValidStock: isValidStock,
     print: print,
-    // commercialSocieties: quotationService.getCommercialSocieties(),
+    commercialSocieties: quotationService.getCommercialSocieties(),
     promotionPackages: [],
     quotationStore: {},
     removeDetail: removeDetail,
@@ -99,10 +99,10 @@ function QuotationsEditCtrl(
       .getById(quotationId)
       .then(function (res) {
         vm.isLoading = false;
-        vm.quotation = res.data;/*
-        if (vm.quotation.Client !== undefined) {
+        vm.quotation = res.data;
+        if (vm.quotation.Client !== undefined){
           quotationService.itHasCommercialSociety(vm.quotation.Client.CardName);
-        } */
+        }
         if (vm.quotation.estimatedCloseDate) {
           vm.estimatedCloseDateWrapper.setDate(
             new Date(vm.quotation.estimatedCloseDate)
@@ -363,7 +363,7 @@ function QuotationsEditCtrl(
   function setLastShippingDate() {
     var oldDetails = vm.quotation.DetailsGroups;
     var lastDeliveryDate = vm.quotation.DetailsGroups[0].shipDate;
-    
+
     for (var i = 0; i < oldDetails.length; i++) {
       if (moment(oldDetails[i].shipDate) > moment(lastDeliveryDate)) {
         lastDeliveryDate = oldDetails[i].shipDate;

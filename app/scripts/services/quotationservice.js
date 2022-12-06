@@ -36,6 +36,8 @@
       getQuotationTotals: getQuotationTotals,
       getCurrentStock: getCurrentStock,
       getRecords: getRecords,
+      getCommercialSocieties : getCommercialSocieties,
+      itHasCommercialSociety : itHasCommercialSociety,
       getTotalsByUser: getTotalsByUser,
       getClosingReasons: getClosingReasons,
       getPaymentOptions: getPaymentOptions,
@@ -768,6 +770,106 @@
     function showStockAlert() {
       var msg = 'Hay un cambio de disponibilidad en uno o más de tus articulos';
       dialogService.showDialog(msg);
+    }
+
+    function findCommercialSociety( cardName ){
+      var upperCaseCardName = cardName.toUpperCase();
+      var upperCaseCardNameNoSpaces = cardName.toUpperCase().replace(/\s/g, '');
+      var commercialSocieties = getCommercialSocieties();
+      var result = false;
+      for(var commercialSociety of commercialSocieties){
+        if(upperCaseCardName.indexOf(commercialSociety) !== -1){
+          result = true;
+        }
+        if(upperCaseCardNameNoSpaces.indexOf(commercialSociety.replace(/\s/g, '')) !== 1){
+          result = true;
+        }
+      }
+      if (result === true){
+        return true;
+      }
+      return false;
+    }
+
+    function itHasCommercialSociety(cardName) {
+      if(cardName !== undefined){
+        var result = findCommercialSociety(cardName);
+        if(result === true){
+          dialogService.showDialog('Se ha detectado sociedad mercantil en el nombre del cliente, se debe actualizar la razón social del cliente para remover la sociedad mercantil.');
+        }
+      }
+    }
+
+    function getCommercialSocieties(){
+      // Sociedades mercantiles
+      var list = [
+        "S. EN N.C.",
+        "S. EN N.C",
+        "S EN N.C",
+        "S EN NC",
+        "S. EN N.C. DE C.V.",
+        "S. EN N.C. DE C.V",
+        "S. EN N.C DE C.V",
+        "S EN N.C DE C.V",
+        "S EN NC DE CV",
+        "S. DE C.S.",
+        "S. DE C.S",
+        "S DE C.S",
+        "S DE CS",
+        "S. DE C.S. DE C.V.",
+        "S. DE C.S. DE C.V",
+        "S. DE C.S DE C.V",
+        "S DE C.S DE C.V",
+        "S DE CS DE CV",
+        "S. DE R.L.",
+        "S. DE R.L",
+        "S DE R.L",
+        "S DE RL",
+        "S. DE R.L. DE C.V.",
+        "S. DE R.L. DE C.V",
+        "S. DE R.L DE C.V",
+        "S DE R.L DE C.V",
+        "S DE RL DE CV",
+        "S.A.",
+        "S.A",
+        "SA",
+        "S.A. DE C.V.",
+        "S.A. DE C.V",
+        "S.A DE C.V",
+        "SA DE CV",
+        "S. EN C. POR A.",
+        "S. EN C. POR A",
+        "S. EN C POR A",
+        "S EN C POR A",
+        "S. EN C. POR A. DE C.V.",
+        "S. EN C. POR A. DE C.V",
+        "S. EN C. POR A DE C.V",
+        "S. EN C POR A DE C.V",
+        "S EN C POR A DE C.V",
+        "S EN C POR A DE CV",
+        "S.C.",
+        "S.C",
+        "SC",
+        "S.C. DE C.V.",
+        "S.C. DE C.V",
+        "S.C DE C.V",
+        "SC DE CV",
+        "S.A.S.",
+        "S.A.S",
+        "SAS",
+        "S.A.S. DE C.V.",
+        "S.A.S. DE C.V",
+        "S.A.S DE C.V",
+        "SAS DE CV",
+        "S.A.P.I.",
+        "S.A.P.I",
+        "SAPI",
+        "S.A.P.I. DE C.V.",
+        "S.A.P.I. DE C.V",
+        "S.A.P.I DE C.V",
+        "SAPI DE CV",
+      ]
+      return list;
     }
   }
 })();
