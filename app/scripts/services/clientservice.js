@@ -341,6 +341,21 @@
           code: 'P01',
           label: 'Por definir',
           isMoral: true
+        },
+        {
+          code: "S01",
+          label: "Sin efectos fiscales.",
+          isMoral: true
+        },
+        {
+          code: "CP01",
+          label: "Pagos",
+          isMoral: true
+        },
+        {
+          code: "CN01",
+          label: "Nómina",
+          isMoral: true
         }
       ];
 
@@ -409,6 +424,10 @@
           code: 'SIMPLIFIED_REGIME',
           label: 'Sin obligaciones fiscales',
         },
+        {
+          code: "DIVIDEND_INCOME",
+          label: "Ingresos por Dividendos (socios y accionistas)",
+        }
       ]
 
       return list;
