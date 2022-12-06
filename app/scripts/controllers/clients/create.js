@@ -129,9 +129,8 @@ function ClientCreateCtrl(
         }
       }
     }
-
     //if(client.fiscalAddress && !_.isEmpty(client.fiscalAddress) && !_.isEmpty(client.fiscalAddress.U_Correos)){
-    if (client.fiscalAddress && !_.isEmpty(client.fiscalAddress)) {
+    if (client.fiscalAddress && !_.isEmpty(client.fiscalAddress) && !_.isEmpty(client.fiscalAddress.U_Correos)) {
       if (
         !commonService.isValidEmail(client.fiscalAddress.U_Correos, {
           excludeActualDomains: true
@@ -270,6 +269,9 @@ function ClientCreateCtrl(
     var validateFormsResult = validateForms(filledForms);
     var areFormsValid = validateFormsResult.valid;
     var formsValidationErrors = validateFormsResult.errorTabs;
+
+    console.log({areValidEmails})
+
     if (
       areFormsValid &&
       createPersonalForm.$valid &&
@@ -307,6 +309,8 @@ function ClientCreateCtrl(
           dialogService.showDialog('Hubo un error: ' + error);
         });
     } else if (!areValidEmails) {
+      console.log({areValidEmails})
+
       vm.isLoadingProgress = false;
       cancelProgressInterval();
       dialogService.showDialog('Emails no validos');
