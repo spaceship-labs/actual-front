@@ -92,7 +92,7 @@
             type="tel"
             name="phone"
             ng-model="vm.fiscalAddress.Phone1"
-            ng-required="vm.genericRfc"
+            ng-required="!vm.genericRfc"
             autocomplete="tel"
             placeholder="Lada + Número">
         </div>
@@ -106,7 +106,7 @@
             type="email"
             name="email"
             ng-model="vm.fiscalAddress.U_Correos"
-            ng-required="vm.genericRfc"
+            ng-required="!vm.genericRfc"
             autocomplete="email">
         </div>
       </div>
@@ -220,7 +220,7 @@
         <label><strong>Estado</strong><span ng-if="!vm.genericRfc" class="ast">*</span></label>
         <md-select
           ng-model="vm.fiscalAddress.State"
-          ng-required="vm.genericRfc"
+          ng-required="!vm.genericRfc"
           class="select-element">
           <md-option ng-repeat="state in vm.states" ng-value="state.Code">
             {{state.Name}}
