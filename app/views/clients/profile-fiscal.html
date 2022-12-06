@@ -88,7 +88,7 @@
               type="text"
               placeholder="Lada + Número"
               ng-model="vm.client.FiscalAddress.Phone1"
-              ng-required="vm.genericRfc"
+              ng-required="!vm.genericRfc"
               >
           </div>
           <p class="input-note">Caracteres numéricos</p>
@@ -100,7 +100,7 @@
             <input
               type="email"
               ng-model="vm.client.FiscalAddress.U_Correos"
-              ng-required="vm.genericRfc"
+              ng-required="!vm.genericRfc"
             >
           </div>
         </div>
