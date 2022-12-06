@@ -270,7 +270,6 @@ function ClientCreateCtrl(
     var areFormsValid = validateFormsResult.valid;
     var formsValidationErrors = validateFormsResult.errorTabs;
 
-    console.log({areValidEmails})
 
     if (
       areFormsValid &&
@@ -309,7 +308,6 @@ function ClientCreateCtrl(
           dialogService.showDialog('Hubo un error: ' + error);
         });
     } else if (!areValidEmails) {
-      console.log({areValidEmails})
 
       vm.isLoadingProgress = false;
       cancelProgressInterval();
