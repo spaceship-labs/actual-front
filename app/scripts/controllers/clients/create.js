@@ -131,7 +131,7 @@ function ClientCreateCtrl(
     }
 
     //if(client.fiscalAddress && !_.isEmpty(client.fiscalAddress) && !_.isEmpty(client.fiscalAddress.U_Correos)){
-    if (client.fiscalAddress && !_.isEmpty(client.fiscalAddress)) {
+    if(client.fiscalAddress && !_.isEmpty(client.fiscalAddress) && !_.isEmpty(client.fiscalAddress.U_Correos)){
       if (
         !commonService.isValidEmail(client.fiscalAddress.U_Correos, {
           excludeActualDomains: true
