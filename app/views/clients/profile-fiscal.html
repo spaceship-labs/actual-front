@@ -57,11 +57,12 @@
         </div>
 
         <div flex="40" class="input-element select-element-wrapper">
-          <label><strong>Uso CFDI</strong></label>
+          <label><strong>Uso CFDI <span ng-if="!vm.genericRfc" class="ast">*</span></strong></label>
           <select
             class="select-element"
             ng-model="vm.client.cfdiUse"
             ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.getCFDIUseListSelect(vm.client.LicTradNum) | orderBy:'label'"
+            required
           >
           </select>
         </div>
@@ -69,11 +70,12 @@
         </div>
         <div layout="row">
           <div flex="100" class="input-element select-element-wrapper">
-            <label><strong>Régimen</strong></label>
+            <label><strong>Régimen <span ng-if="!vm.genericRfc" class="ast">*</span></strong></label>
             <select
               class="select-element"
               ng-model="vm.client.regime"
               ng-options="use.code as use.label + ' (' + use.code +  ')' for use in vm.getRegimesSelect(vm.client.LicTradNum) | orderBy:'label'"
+              required
             >
             </select>
           </div>
