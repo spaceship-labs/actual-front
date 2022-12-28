@@ -154,7 +154,10 @@
 
     function isClientFiscalDataValid(client) {
       if (client && client.FiscalAddress) {
-        if (client.LicTradNum === GENERIC_RFC) {
+        if (client.LicTradNum === GENERIC_RFC &&
+            client.regime &&
+            client.cfdiUse
+            ) {
           return true;
         }
 
@@ -162,7 +165,12 @@
           validateRfc(client.LicTradNum) &&
           client.LicTradNum &&
           client.FiscalAddress.companyName &&
-          client.FiscalAddress.companyName != ''
+          client.FiscalAddress.companyName != '' &&
+          client.regime &&
+          client.regime != null &&
+          client.regime != '' &&
+          client.cfdiUse != null &&
+          client.cfdiUse != ''
         );
       }
       return false;
