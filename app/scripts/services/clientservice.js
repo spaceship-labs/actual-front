@@ -349,12 +349,12 @@
           label: 'Pagos por servicios educativos (colegiaturas)',
           isMoral: false
         },
-        /* {
+        {
           code: "S01",
           label: "Sin efectos fiscales.",
           isMoral: true
         },
-        {
+        /* {
           code: "CP01",
           label: "Pagos",
           isMoral: true
@@ -426,12 +426,12 @@
           label: 'Otra maquinaria y equipo',
           isMoral: true
         },
-        /* {
+        {
           code: "S01",
           label: "Sin efectos fiscales.",
           isMoral: true
         },
-        {
+        /* {
           code: "CP01",
           label: "Pagos",
           isMoral: true
@@ -549,12 +549,12 @@
           label: 'Pagos por servicios educativos (colegiaturas)',
           isMoral: false
         },
-        /* {
+        {
           code: "S01",
           label: "Sin efectos fiscales.",
           isMoral: true
         },
-        {
+        /* {
           code: "CP01",
           label: "Pagos",
           isMoral: true
