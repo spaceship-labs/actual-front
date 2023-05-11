@@ -248,11 +248,11 @@
           label: 'Adquisición de mercancias',
           isMoral: true
         },
-        {
+        /* {
           code: 'G02',
           label: 'Devoluciones, descuentos o bonificaciones',
           isMoral: true
-        },
+        }, */
         {
           code: 'G03',
           label: 'Gastos en general',
@@ -355,7 +355,7 @@
           label: "Sin efectos fiscales.",
           isMoral: true
         },
-        {
+        /* {
           code: "CP01",
           label: "Pagos",
           isMoral: true
@@ -364,7 +364,7 @@
           code: "CN01",
           label: "Nómina",
           isMoral: false
-        }
+        } */
       ];
       return list;
     }
@@ -376,11 +376,11 @@
           label: 'Adquisición de mercancias',
           isMoral: true
         },
-        {
+        /* {
           code: 'G02',
           label: 'Devoluciones, descuentos o bonificaciones',
           isMoral: true
-        },
+        }, */
         {
           code: 'G03',
           label: 'Gastos en general',
@@ -431,11 +431,11 @@
           label: "Sin efectos fiscales.",
           isMoral: true
         },
-        {
+        /* {
           code: "CP01",
           label: "Pagos",
           isMoral: true
-        }
+        } */
       ];
       return list;
     }
@@ -447,11 +447,11 @@
           label: 'Adquisición de mercancias',
           isMoral: true
         },
-        {
+        /* {
           code: 'G02',
           label: 'Devoluciones, descuentos o bonificaciones',
           isMoral: true
-        },
+        }, */
         {
           code: 'G03',
           label: 'Gastos en general',
@@ -554,7 +554,7 @@
           label: "Sin efectos fiscales.",
           isMoral: true
         },
-        {
+        /* {
           code: "CP01",
           label: "Pagos",
           isMoral: true
@@ -563,7 +563,7 @@
           code: "CN01",
           label: "Nómina",
           isMoral: false
-        }
+        } */
       ];
       return list;
     }
