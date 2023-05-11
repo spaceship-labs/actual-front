@@ -247,11 +247,11 @@
           label: 'Adquisición de mercancias',
           isMoral: true
         },
-        {
+        /* {
           code: 'G02',
           label: 'Devoluciones, descuentos o bonificaciones',
           isMoral: true
-        },
+        }, */
         {
           code: 'G03',
           label: 'Gastos en general',
@@ -349,7 +349,7 @@
           label: 'Pagos por servicios educativos (colegiaturas)',
           isMoral: false
         },
-        {
+        /* {
           code: "S01",
           label: "Sin efectos fiscales.",
           isMoral: true
@@ -363,7 +363,7 @@
           code: "CN01",
           label: "Nómina",
           isMoral: false
-        }
+        } */
       ];
 
       return list;
@@ -376,11 +376,11 @@
           label: 'Adquisición de mercancias',
           isMoral: true
         },
-        {
+        /* {
           code: 'G02',
           label: 'Devoluciones, descuentos o bonificaciones',
           isMoral: true
-        },
+        }, */
         {
           code: 'G03',
           label: 'Gastos en general',
@@ -426,7 +426,7 @@
           label: 'Otra maquinaria y equipo',
           isMoral: true
         },
-        {
+        /* {
           code: "S01",
           label: "Sin efectos fiscales.",
           isMoral: true
@@ -435,7 +435,7 @@
           code: "CP01",
           label: "Pagos",
           isMoral: true
-        }
+        } */
       ];
       return list;
     }
@@ -447,11 +447,11 @@
           label: 'Adquisición de mercancias',
           isMoral: true
         },
-        {
+        /* {
           code: 'G02',
           label: 'Devoluciones, descuentos o bonificaciones',
           isMoral: true
-        },
+        }, */
         {
           code: 'G03',
           label: 'Gastos en general',
@@ -549,7 +549,7 @@
           label: 'Pagos por servicios educativos (colegiaturas)',
           isMoral: false
         },
-        {
+        /* {
           code: "S01",
           label: "Sin efectos fiscales.",
           isMoral: true
@@ -563,7 +563,7 @@
           code: "CN01",
           label: "Nómina",
           isMoral: false
-        }
+        } */
       ];
       return list;
     }
