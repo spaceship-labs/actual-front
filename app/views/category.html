@@ -2,7 +2,7 @@
 
   <ng-include ng-show="vm.enableFiltersTrigger" src="'views/partials/search-filters-trigger.html'"></ng-include>
   <ng-include src="'views/partials/search-filters.html'"></ng-include>
-  
+
   <div class="container container-xxlg" layout="row" layout-align="space-between start">
     <!--START NAV-->
     <aside flex="20">
@@ -12,8 +12,8 @@
         active-store="main.activeStore">
       </sidebar-categories>
 
-      <ng-include src="'views/partials/search-filters.html'"></ng-include>  
-      
+      <ng-include src="'views/partials/search-filters.html'"></ng-include>
+
     </aside>
     <!--END NAV-->
 
@@ -33,10 +33,10 @@
       <div ng-if="!vm.isLoading" class="subs-container">
         <h2 class="listing-view-title">{{vm.category.Name}}</h2>
         <!--SUBCATEGORIES LIST LEVEL 2-->
-        <div 
-          ng-if="vm.category.Childs.length > 0 && vm.showLevel2" 
-          class="subs-container-list" 
-          layout="row" 
+        <div
+          ng-if="vm.category.Childs.length > 0 && vm.showLevel2"
+          class="subs-container-list"
+          layout="row"
           layout-wrap
         >
           <div
@@ -45,7 +45,7 @@
             ng-if="subcategory[main.activeStore.code] > 0"
             flex="33"
           >
-            <category-item category="subcategory" stock-key="{{main.activeStore.code}}" />            
+            <category-item category="subcategory" stock-key="{{main.activeStore.code}}" />
           </div>
         </div>
         <!--END SUBCATEGORIES LIST LEVEL 2-->
@@ -69,7 +69,7 @@
 
           <ng-include src="'views/partials/search-options.html'"></ng-include>
 
-          <div 
+          <div
             ng-if="!vm.isLoadingProducts || vm.search.page > 1"
             class="results"
             infinite-scroll="vm.loadMore()"

@@ -3,10 +3,10 @@ angular.module('actualApp')
   .controller('CategoryCtrl', CategoryCtrl);
 
 function CategoryCtrl(
-  $routeParams, 
-  $mdSidenav, 
+  $routeParams,
+  $mdSidenav,
   $timeout,
-  categoriesService, 
+  categoriesService,
   productService,
   productSearchService
 ){
@@ -49,7 +49,7 @@ function CategoryCtrl(
   function init(){
     var activeSortOptionKey = 'slowMovement';
     vm.activeSortOption = _.findWhere(vm.sortOptions,{key: activeSortOptionKey});
-        
+
     vm.search = {
       items: 10,
       page: 1,
@@ -107,7 +107,7 @@ function CategoryCtrl(
       vm.isDiscountFilterActive = false;
       vm.isStockFilterActive = false;
     });
-  }  
+  }
 
   function sortFiltersByList(filters){
     var sortList = ['estilo','material','color','forma'];
@@ -125,7 +125,7 @@ function CategoryCtrl(
       })
       .catch(function(err){
         console.log('err', err);
-      });    
+      });
   }
 
   function doInitialProductsSearch(){
@@ -135,8 +135,8 @@ function CategoryCtrl(
       vm.search.slowMovement = true;
     }else{
       vm.search.slowMovement = false;
-    } 
-    */   
+    }
+    */
     productService.searchCategoryByFilters(vm.search)
       .then(function(res){
         console.log('res', res);
@@ -152,7 +152,7 @@ function CategoryCtrl(
       .catch(function(err){
         console.log('err', err);
       });
-  }  
+  }
 
   function searchByFilters(options){
     if(!options || !angular.isDefined(options.isLoadingMore)){
@@ -215,7 +215,7 @@ function CategoryCtrl(
 
     /*
     if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement' && vm.enableSortOptions){
-      params.slowMovement = true;      
+      params.slowMovement = true;
     }
     */
 
@@ -226,14 +226,24 @@ function CategoryCtrl(
         return productService.formatProducts(products);
       })
       .then(function(productsFormatted){
-        if(options && options.isLoadingMore){
-          var productsAux = angular.copy(vm.products);
-          vm.products = productsAux.concat(productsFormatted);
+        if(productsFormatted <= 0){
+          vm.isLoadingProducts = false;
+          vm.allProductsShown = true;
         }else{
-          vm.products = productsFormatted;
-          vm.scrollTo('category-page');
+          if(options && options.isLoadingMore){
+            var productsAux = angular.copy(vm.products);
+            var products = productsAux.concat(productsFormatted);
+            //Delete duplicates
+            vm.products = products.filter(function(product, index) {
+              return products.findIndex(function(obj) {
+                return obj.ItemCode === product.ItemCode && obj.id === product.id;
+              }) === index;
+            });
+          }else{
+            vm.products = productsFormatted;
+            vm.scrollTo('category-page');
+          }
         }
-
         vm.isLoadingProducts = false;
       })
       .catch(function(err){
@@ -298,7 +308,7 @@ function CategoryCtrl(
     });
 
     searchByFilters();
-  }  
+  }
 
   function removeSelectedSocietyFilter(society){
     var removeIndex = vm.societyFiltersSelected.indexOf(society);
@@ -312,7 +322,7 @@ function CategoryCtrl(
     });
 
     searchByFilters();
-  } 
+  }
 
 
   function removeMinPrice(){
@@ -323,7 +333,7 @@ function CategoryCtrl(
   function removeMaxPrice(){
     delete vm.maxPrice;
     searchByFilters();
-  }  
+  }
 
   function scrollTo(target){
     $timeout(
@@ -334,11 +344,15 @@ function CategoryCtrl(
         },
         300
     );
-  }  
+  }
 
   function loadMore(){
-    vm.search.page++;
-    vm.searchByFilters({isLoadingMore: true});
+    if(vm.allProductsShown == true){
+      return;
+    }else{
+      vm.search.page++;
+      vm.searchByFilters({isLoadingMore: true});
+    }
   }
 
   function toggleColorFilter(value, filter){
@@ -348,7 +362,7 @@ function CategoryCtrl(
 
   function toggleSearchSidenav(filterHandleToOpen){
     $mdSidenav('searchFilters').toggle();
-    
+
     if(filterHandleToOpen){
       var filterIndexToOpen = _.findIndex(vm.filters, function(filter){
         return filter.Handle === filterHandleToOpen;
