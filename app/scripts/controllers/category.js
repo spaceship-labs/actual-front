@@ -239,6 +239,7 @@ function CategoryCtrl(
                 return obj.ItemCode === product.ItemCode && obj.id === product.id;
               }) === index;
             });
+            console.log("vm.products length: ",vm.products.length)
           }else{
             vm.products = productsFormatted;
             vm.scrollTo('category-page');
