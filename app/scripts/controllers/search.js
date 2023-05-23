@@ -5,12 +5,12 @@ angular.module('actualApp')
 function SearchCtrl(
   $scope,
   $rootScope,
-  $location, 
+  $location,
   $timeout,
-  $routeParams, 
+  $routeParams,
   $q ,
   $mdSidenav,
-  productService, 
+  productService,
   dialogService,
   productSearchService,
   activeStore
@@ -23,8 +23,8 @@ function SearchCtrl(
     filters: [],
     searchValues: [],
     syncProcessActive: false,
-    enableSortOptions: true,  
-    activeStore: activeStore,  
+    enableSortOptions: true,
+    activeStore: activeStore,
     discountFilters: productSearchService.DISCOUNTS_SEARCH_OPTIONS,
     stockFilters: productSearchService.STOCK_SEARCH_OPTIONS,
     societyFilters: productSearchService.SOCIETY_OPTIONS,
@@ -98,8 +98,8 @@ function SearchCtrl(
       console.log(err);
       var error = err.data || err;
       error = error ? error.toString() : '';
-      dialogService.showDialog('Hubo un error: ' + error );           
-    });    
+      dialogService.showDialog('Hubo un error: ' + error );
+    });
   }
 
   function syncProduct(itemcode){
@@ -122,9 +122,9 @@ function SearchCtrl(
         console.log(err);
         var error = err.data || err;
         error = error ? error.toString() : '';
-        dialogService.showDialog('Hubo un error: ' + error );           
+        dialogService.showDialog('Hubo un error: ' + error );
         vm.isLoading = false;
-      });    
+      });
   }
 
   function loadFilters(){
@@ -144,7 +144,7 @@ function SearchCtrl(
       })
       .catch(function(err){
         console.log('err', err);
-      });    
+      });
   }
 
   function onCloseSidenav(){
@@ -156,7 +156,7 @@ function SearchCtrl(
       vm.isDiscountFilterActive = false;
       vm.isStockFilterActive = false;
     });
-  }  
+  }
 
   function sortFiltersByList(filters){
     var sortList = ['estilo','material','color','forma'];
@@ -174,12 +174,12 @@ function SearchCtrl(
       })
       .catch(function(err){
         console.log('err', err);
-      });    
+      });
   }
 
   function toggleSearchSidenav(filterHandleToOpen){
     $mdSidenav('searchFilters').toggle();
-    
+
     if(filterHandleToOpen){
       var filterIndexToOpen = _.findIndex(vm.filters, function(filter){
         return filter.Handle === filterHandleToOpen;
@@ -262,7 +262,7 @@ function SearchCtrl(
 
     searchByFilters();
 
-  }  
+  }
 
   function removeSelectedStockFilter(stockRangeObject){
     var removeIndex = vm.stockFiltersSelected.indexOf(stockRangeObject);
@@ -277,7 +277,7 @@ function SearchCtrl(
 
     searchByFilters();
 
-  }  
+  }
 
   function removeMinPrice(){
     delete vm.minPrice;
@@ -295,7 +295,7 @@ function SearchCtrl(
       vm.search.page = 1;
     }
     vm.isLoading = true;
-    
+
     //SEARCH VALUES
     vm.searchValues = productSearchService.getSearchValuesByFilters(vm.filters);
     var searchValuesIds = productSearchService.getSearchValuesIds(vm.searchValues);
@@ -348,7 +348,7 @@ function SearchCtrl(
 
     /*
     if(vm.activeSortOption && vm.activeSortOption.key === 'slowMovement'){
-      params.slowMovement = true;      
+      params.slowMovement = true;
     }
     */
 
@@ -357,12 +357,24 @@ function SearchCtrl(
       return productService.formatProducts(res.data.products);
     })
     .then(function(fProducts){
-      if(options && options.isLoadingMore){
-        var productsAux = angular.copy(vm.products);
-        vm.products = productsAux.concat(fProducts);
+      if(fProducts <= 0){
+        vm.isLoadingProducts = false;
+        vm.allProductsShown = true;
       }else{
-        vm.products = fProducts;
-        vm.scrollTo('search-page');
+        if(options && options.isLoadingMore){
+          var productsAux = angular.copy(vm.products);
+          var products = productsAux.concat(fProducts);
+          //Delete duplicates
+          vm.products = products.filter(function(product, index) {
+            return products.findIndex(function(obj) {
+              return obj.ItemCode === product.ItemCode && obj.id === product.id;
+            }) === index;
+          });
+          console.log("vm.products length: ",vm.products.length)
+        }else{
+          vm.products = fProducts;
+          vm.scrollTo('search-page');
+        }
       }
       vm.isLoading = false;
     });
@@ -394,8 +406,12 @@ function SearchCtrl(
   }
 
   function loadMore(){
-    vm.search.page++;
-    vm.searchByFilters({isLoadingMore: true});
+    if(vm.allProductsShown == true){
+      return;
+    }else{
+      vm.search.page++;
+      vm.searchByFilters({isLoadingMore: true});
+    }
   }
 
   function scrollTo(target){
