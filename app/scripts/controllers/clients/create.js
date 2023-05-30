@@ -35,6 +35,7 @@ function ClientCreateCtrl(
     getRegimesSelect : getRegimesSelect,
     genericRfc : true,
     isGenericRFC : isGenericRFC,
+    setCompanyName : setCompanyName,
     titles: clientService.getTitles(),
     genders: clientService.getGenders(),
     states: [],
@@ -437,6 +438,18 @@ function ClientCreateCtrl(
       vm.fiscalAddress.ZipCode = "";
       return false;
     }
+  }
+
+  function setCompanyName ( firstName, lastName ){
+    if ( firstName == undefined || firstName == null){
+      firstName = "";
+    }
+    if ( lastName == undefined || lastName == null ){
+      lastName = "";
+    }
+    console.log(firstName)
+    console.log(lastName)
+    vm.fiscalAddress.companyName = firstName + " " + lastName;
   }
 
   $scope.$on('$destroy', function() {
