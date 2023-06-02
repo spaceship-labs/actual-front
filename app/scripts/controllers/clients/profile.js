@@ -80,6 +80,7 @@ function ClientProfileCtrl(
     RegimesNaturalPerson : clientService.getRegimesNaturalPerson(),
     getCFDIUseListSelect : getCFDIUseListSelect,
     getRegimesSelect : getRegimesSelect,
+    setCompanyName : setCompanyName,
   });
 
   function init() {
@@ -395,6 +396,18 @@ function ClientProfileCtrl(
       vm.genericRfc = false;
       return false;
     }
+  }
+
+  function setCompanyName ( firstName, lastName ){
+    if ( firstName == undefined || firstName == null){
+      firstName = "";
+    }
+    if ( lastName == undefined || lastName == null ){
+      lastName = "";
+    }
+    console.log(firstName)
+    console.log(lastName)
+    vm.fiscalAddress.companyName = firstName + " " + lastName;
   }
 
   init();
