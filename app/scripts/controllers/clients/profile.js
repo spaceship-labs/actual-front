@@ -107,7 +107,7 @@ function ClientProfileCtrl(
       }
 
       vm.client = clientService.setClientDefaultData(vm.client);
-
+      console.log("vm.client",vm.client);
       isGenericRFC(vm.client.LicTradNum)
 
       commonService
@@ -418,7 +418,6 @@ function ClientProfileCtrl(
       vm.genericRfc = true;
       vm.client.regime = "SIMPLIFIED_REGIME";
       vm.client.cfdiUse = "S01";
-      vm.client.FiscalAddress.companyName = "PUBLICO EN GENERAL";
       vm.client.FiscalAddress.ZipCode = "77507";
 
       return true;
