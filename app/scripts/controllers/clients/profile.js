@@ -193,36 +193,64 @@ function ClientProfileCtrl(
     var isValidEmail = commonService.isValidEmail(vm.client.E_Mail, {
       excludeActualDomains: true
     });
-    if (form.$valid && isValidEmail) {
-      vm.isLoading = true;
-      var params = _.clone(vm.client);
-      delete params.FiscalAddress;
-      delete params.Contacts;
-      console.log('params', params);
-      clientService
-        .update(vm.client.CardCode, params)
-        .then(function(res) {
-          console.log(res);
-          vm.isLoading = false;
-          dialogService.showDialog(
-            'Datos personales actualizados',
-            checkoutService.returnToCheckout
-          );
-        })
-        .catch(function(err) {
-          console.log('err', err);
-          var error = err.data || err;
-          error = error ? error.toString() : '';
-          dialogService.showDialog('Hubo un error: ' + error);
-          vm.isLoading = false;
-        });
-    } else if (!isValidEmail) {
-      vm.isLoading = false;
-      dialogService.showDialog('Email no valido');
-    } else {
-      vm.isLoading = false;
-      dialogService.showDialog('Campos incompletos');
+    
+    var fiscalAddress = vm.client.FiscalAddress;
+    var fiscalAddressForm = [
+      {
+        form: vm.fiscalForm,
+        data: fiscalAddress,
+      },
+    ];
+
+    fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
+    fiscalAddress.cfdiUse = vm.client.cfdiUse;
+    fiscalAddress.regime = vm.client.regime;
+    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+
+    var filledForm = getFilledForms(fiscalAddressForm);
+    var validateFormsResult = validateForms(filledForm);
+    var areFormsValid = validateFormsResult.valid;
+    console.log('fiscalAddressForm', fiscalAddressForm);
+    
+    if(!areFormsValid){
+      dialogService.showDialog("Error en formulario fiscal");
+    }else{
+      updateFiscalAddress(filledForm[0]);
+
+      if (form.$valid && isValidEmail) {
+        vm.isLoading = true;
+        var params = _.clone(vm.client);
+        delete params.FiscalAddress;
+        delete params.Contacts;
+        console.log('params', params);
+        clientService
+          .update(vm.client.CardCode, params)
+          .then(function(res) {
+            console.log(res);
+            vm.isLoading = false;
+            dialogService.showDialog(
+              'Datos personales actualizados',
+              checkoutService.returnToCheckout
+            );
+          })
+          .catch(function(err) {
+            console.log('err', err);
+            var error = err.data || err;
+            error = error ? error.toString() : '';
+            dialogService.showDialog('Hubo un error: ' + error);
+            vm.isLoading = false;
+          });
+      } else if (!isValidEmail) {
+        vm.isLoading = false;
+        dialogService.showDialog('Email no valido');
+      } else {
+        vm.isLoading = false;
+        dialogService.showDialog('Campos incompletos');
+      }
     }
+
+    vm.personalEditEnabled = false;
+
   }
 
   function createQuotation() {
@@ -405,9 +433,43 @@ function ClientProfileCtrl(
     if ( lastName == undefined || lastName == null ){
       lastName = "";
     }
-    console.log(firstName)
-    console.log(lastName)
     vm.fiscalAddress.companyName = firstName + " " + lastName;
+  }
+
+  function validateForms(forms) {
+    if (forms.length > 0) {
+      var validFlag = true;
+      var errorTabs = [];
+
+      for (var i = 0; i < forms.length; i++) {
+        if (!forms[i].$valid) {
+          validFlag = false;
+          errorTabs = errorTabs.concat(forms[i].tab);
+        }
+      }
+      return {
+        valid: validFlag,
+        errorTabs: errorTabs
+      };
+    }
+    return {
+      valid: true
+    };
+  }
+
+  function getFilledForms(formsRelations) {
+    console.log("enters",formsRelations);
+    var filledForms = formsRelations.reduce(function(acum, formRelation) {
+      //Validation for fiscal form
+      console.log("enters");
+
+      if (!_.isEmpty(formRelation.data) || formRelation.isRequired) {
+        acum.push(formRelation.form);
+      }
+      return acum;
+    }, []);
+
+    return filledForms;
   }
 
   init();
