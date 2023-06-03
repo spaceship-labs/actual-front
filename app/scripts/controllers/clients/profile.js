@@ -195,17 +195,18 @@ function ClientProfileCtrl(
     });
     
     var fiscalAddress = vm.client.FiscalAddress;
+    
+    fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
+    fiscalAddress.cfdiUse = vm.client.cfdiUse;
+    fiscalAddress.regime = vm.client.regime;
+    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+    
     var fiscalAddressForm = [
       {
         form: vm.fiscalForm,
         data: fiscalAddress,
       },
     ];
-
-    fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
-    fiscalAddress.cfdiUse = vm.client.cfdiUse;
-    fiscalAddress.regime = vm.client.regime;
-    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
 
     var filledForm = getFilledForms(fiscalAddressForm);
     var validateFormsResult = validateForms(filledForm);
