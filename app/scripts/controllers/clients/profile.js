@@ -416,7 +416,6 @@ function ClientProfileCtrl(
       vm.genericRfc = true;
       vm.client.regime = "SIMPLIFIED_REGIME";
       vm.client.cfdiUse = "S01";
-      vm.client.FiscalAddress.companyName = "PUBLICO EN GENERAL";
       vm.client.FiscalAddress.ZipCode = "77507";
 
       return true;
