@@ -195,17 +195,18 @@ function ClientProfileCtrl(
     });
 
     var fiscalAddress = vm.client.FiscalAddress;
+    
+    fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
+    fiscalAddress.cfdiUse = vm.client.cfdiUse;
+    fiscalAddress.regime = vm.client.regime;
+    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+
     var fiscalAddressForm = [
       {
         form: vm.fiscalForm,
         data: fiscalAddress,
       },
     ];
-
-    fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
-    fiscalAddress.cfdiUse = vm.client.cfdiUse;
-    fiscalAddress.regime = vm.client.regime;
-    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
 
     var filledForm = getFilledForms(fiscalAddressForm);
     var validateFormsResult = validateForms(filledForm);
@@ -362,6 +363,7 @@ function ClientProfileCtrl(
       params.LicTradNum = _.clone(vm.client.LicTradNum);
       params.cfdiUse = vm.client.cfdiUse;
       params.regime = vm.client.regime;
+      console.log({params})
 
       clientService
         .updateFiscalAddress(params.id, vm.client.CardCode, params)
@@ -458,10 +460,8 @@ function ClientProfileCtrl(
   }
 
   function getFilledForms(formsRelations) {
-    console.log("enters",formsRelations);
     var filledForms = formsRelations.reduce(function(acum, formRelation) {
       //Validation for fiscal form
-      console.log("enters");
 
       if (!_.isEmpty(formRelation.data) || formRelation.isRequired) {
         acum.push(formRelation.form);
