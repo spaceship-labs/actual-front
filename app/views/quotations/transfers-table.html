@@ -16,7 +16,7 @@
       </thead>
 
       <tbody
-        ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida'"
+        ng-if="vm.quotationStore.group === 'studio' && vm.quotationStore.code !== 'actual_studio_merida' && vm.quotationStore.code !== 'actual_atelier'"
       >
         <tr>
           <td>Pesos</td>
@@ -41,7 +41,31 @@
       </tbody>
 
       <tbody
-        ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida' && vm.quotationStore.code !== 'actual_marketplace'"
+        ng-if="vm.quotationStore.code === 'actual_atelier'"
+      >
+        <tr>
+          <td>Pesos</td>
+          <td>Bancomer</td>
+          <td></td>
+          <td>0119271430</td>
+          <td>012691001192714309</td>
+          <td>BCMRMXMMPYM</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Dólares</td>
+          <td>Bancomer</td>
+          <td></td>
+          <td>0119364919</td>
+          <td>012691001193649198</td>
+          <td>BCMRMXMMPYM</td>
+          <td>AH ACTUAL SA DE CV XCARET MZ 2 LT3 04 SMZ 36, BENITO JUAREZ QUINTANA ROO MEXICO CP 77507
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody
+        ng-if="vm.quotationStore.group !== 'studio' || vm.quotationStore.code === 'actual_studio_merida' && vm.quotationStore.code !== 'actual_marketplace' && vm.quotationStore.code !== 'actual_atelier'"
       >
         <tr>
           <td>Pesos</td>
