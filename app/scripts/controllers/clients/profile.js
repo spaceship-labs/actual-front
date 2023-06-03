@@ -363,7 +363,6 @@ function ClientProfileCtrl(
       params.LicTradNum = _.clone(vm.client.LicTradNum);
       params.cfdiUse = vm.client.cfdiUse;
       params.regime = vm.client.regime;
-      console.log({params})
 
       clientService
         .updateFiscalAddress(params.id, vm.client.CardCode, params)
