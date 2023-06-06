@@ -234,7 +234,7 @@
     {
       card: { label: 'Liga Banorte USD', value: 'banorte' },
       paymentTypes: ['credit-card-usd'],
-      storesTypes: ['home', 'studio', 'proyectos'],
+      storesTypes: ['home', 'studio', 'proyectos', 'atelier'],
       terminal: { label: 'Banamex', value: 'banamex' }
     },
 
