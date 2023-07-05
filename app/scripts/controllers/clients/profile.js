@@ -199,7 +199,12 @@ function ClientProfileCtrl(
     fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
     fiscalAddress.cfdiUse = vm.client.cfdiUse;
     fiscalAddress.regime = vm.client.regime;
-    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+    
+    if(vm.client.isMoral){
+      fiscalAddress.companyName = vm.client.FirstName;
+    }else{
+      fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+    }
 
     var fiscalAddressForm = [
       {
@@ -211,7 +216,6 @@ function ClientProfileCtrl(
     var filledForm = getFilledForms(fiscalAddressForm);
     var validateFormsResult = validateForms(filledForm);
     var areFormsValid = validateFormsResult.valid;
-    console.log('fiscalAddressForm', fiscalAddressForm);
     
     if(!areFormsValid){
       dialogService.showDialog("Error en formulario fiscal");
@@ -428,10 +432,10 @@ function ClientProfileCtrl(
 
   function setCompanyName ( firstName, lastName ){
     if ( firstName == undefined || firstName == null){
-      firstName = "";
+      firstName = null;
     }
     if ( lastName == undefined || lastName == null ){
-      lastName = "";
+      lastName = null;
     }
     vm.fiscalAddress.companyName = firstName + " " + lastName;
   }
@@ -466,7 +470,6 @@ function ClientProfileCtrl(
       }
       return acum;
     }, []);
-
     return filledForms;
   }
 
