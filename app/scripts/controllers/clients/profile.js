@@ -199,7 +199,12 @@ function ClientProfileCtrl(
     fiscalAddress.LicTradNum = _.clone(vm.client.LicTradNum);
     fiscalAddress.cfdiUse = vm.client.cfdiUse;
     fiscalAddress.regime = vm.client.regime;
-    fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+
+    if(vm.client.isMoral){
+      fiscalAddress.companyName = vm.client.FirstName;
+    }else{
+      fiscalAddress.companyName = vm.client.FirstName + ' ' + vm.client.LastName;
+    }
     
     var fiscalAddressForm = [
       {
@@ -428,10 +433,10 @@ function ClientProfileCtrl(
 
   function setCompanyName ( firstName, lastName ){
     if ( firstName == undefined || firstName == null){
-      firstName = "";
+      firstName = null;
     }
     if ( lastName == undefined || lastName == null ){
-      lastName = "";
+      lastName = null;
     }
     vm.fiscalAddress.companyName = firstName + " " + lastName;
   }
