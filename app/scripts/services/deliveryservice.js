@@ -366,6 +366,7 @@
             STUDIO_PLAYA,
             STUDIO_CUMBRES,
             ISLA_MERIDA,
+            ACTUAL_ATELIER
 
           ];
           //hierarchy = ["10","01","11","81","82","02","03","05"];
@@ -381,6 +382,7 @@
             STUDIO_MALECON,
             STUDIO_PLAYA,
             STUDIO_CUMBRES,
+            ACTUAL_ATELIER
           ];
           break;
         case ACTUAL_ATELIER:
