@@ -475,7 +475,7 @@ module.exports = function(grunt) {
         constants: {
           ENV: {
             name: 'staged',
-            apiEndpoint: 'https://stagingapi.miactual.com',
+            apiEndpoint: 'http://stagingapi.miactual.com',
             adminUrl: 'http://stagingadmin.miactual.com',
             tokenPrefix: 'sandbox',
           },
