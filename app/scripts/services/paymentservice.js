@@ -34,6 +34,8 @@
       TRANSFER_USD: 'transfer-usd',
       CREDIT_CARD: 'credit-card',
       DEBIT_CARD: 'debit-card',
+      DEBIT_CARD_AMEX: 'debit-card-amex',
+      CREDIT_CARD_AMEX: 'credit-card-amex',
       CREDIT_CARD_USD : 'credit-card-usd',
       EWALLET: 'ewallet',
       SINGLE_PAYMENT_TERMINAL: 'single-payment-terminal',
@@ -108,6 +110,8 @@
         payment.msi ||
         payment.type === types.CREDIT_CARD ||
         payment.type === types.DEBIT_CARD ||
+        payment.type === types.DEBIT_CARD_AMEX ||
+        payment.type === types.CREDIT_CARD_AMEX ||
         payment.type === types.SINGLE_PAYMENT_TERMINAL ||
         payment.type === types.CREDIT_CARD_USD
       );
@@ -115,7 +119,7 @@
 
     function isCardCreditOrDebitPayment(payment) {
       return (
-        payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD || payment.type === types.CREDIT_CARD_USD
+        payment.type === types.CREDIT_CARD || payment.type === types.DEBIT_CARD || payment.type === types.CREDIT_CARD_USD || payment.type === types.DEBIT_CARD_AMEX || payment.type === types.CREDIT_CARD_AMEX
       );
     }
 
@@ -145,15 +149,15 @@
       return (
         payment.type === types.SINGLE_PAYMENT_TERMINAL ||
         payment.type === types.DEBIT_CARD ||
-        payment.type === types.CREDIT_CARD
+        payment.type === types.CREDIT_CARD ||
+        payment.type === types.DEBIT_CARD_AMEX ||
+        payment.type === types.CREDIT_CARD_AMEX
       );
     }
 
     function getPaymentOptionsByMethod(method) {
-      console.log('method', method);
       var STUDIO_CUMBRES_CODE = 'actual_studio_cumbres';
       var STUDIO_PLAYA_CODE = 'actual_studio_playa_del_carmen';
-      console.log('paymentOptions config', paymentOptions);
       var options = _.filter(paymentOptions, function(option) {
         var hasPaymentType = false;
         var hasStore = false;

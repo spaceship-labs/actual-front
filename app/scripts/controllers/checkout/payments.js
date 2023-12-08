@@ -59,11 +59,32 @@ function CheckoutPaymentsCtrl(
     setQuotationTotalsByGroup: setQuotationTotalsByGroup,
     updateVMQuotation: updateVMQuotation,
     isUserAdmin: authService.isAdmin($rootScope.user),
-    isStoreManager: authService.isStoreManager($rootScope.user)
+    isStoreManager: authService.isStoreManager($rootScope.user),
+    hasExtraDiscount:checkoutService.hasExtraDiscount,
+    itHasMethodsWithExtraDiscount:checkoutService.itHasMethodsWithExtraDiscount
   });
 
   var EWALLET_TYPE = ewalletService.ewalletType;
   var CLIENT_BALANCE_TYPE = vm.CLIENT_BALANCE_TYPE;
+
+  const extraDiscountTypes = [
+    'debit-card-amex', 
+    'credit-card-amex', 
+    'debit-card', 
+    'credit-card', 
+    'credit-card-usd'
+  ];
+  
+  const extra4PercentDiscountTypes = [
+    "debit-card-amex", 
+    "credit-card-amex"
+  ];
+  
+  const extra2PercentDiscountTypes = [
+    "debit-card", 
+    "credit-card",
+    "credit-card-usd"
+  ];
 
   init();
 
@@ -165,6 +186,7 @@ function CheckoutPaymentsCtrl(
         );
 
         vm.quotation = setQuotationTotalsByGroup(vm.quotation);
+        console.log(vm.quotation)
         deferred.resolve();
       })
       .catch(function(err) {
@@ -207,7 +229,6 @@ function CheckoutPaymentsCtrl(
 
   function choosePaymentMethod(method, quotation) {
     vm.activeMethod = setupActiveMethod(method, quotation);
-
     if (
       vm.activeMethod.maxAmount < 0.01 &&
       paymentService.isClientBalanceOrEwalletPayment(method)
@@ -245,7 +266,6 @@ function CheckoutPaymentsCtrl(
   function setQuotationTotalsByGroup(quotation) {
     var paymentGroupNumber = quotation.paymentGroup;
     console.log('paymentGroupNumber', paymentGroupNumber);
-    console.log('vm.paymentMethodsGrous', vm.paymentMethodsGroups);
     var currentGroup = _.findWhere(vm.paymentMethodsGroups, {
       group: paymentGroupNumber
     });
@@ -254,6 +274,15 @@ function CheckoutPaymentsCtrl(
     quotation.total = _.clone(firstMethod.total);
     quotation.subtotal = _.clone(firstMethod.subtotal);
     quotation.discount = _.clone(firstMethod.discount);
+
+    if( quotation.applied2PercentDiscount === true ) {
+      quotation.total = _.clone(currentGroup.totalExtra2PercentDiscount);
+      quotation.discount = _.clone(currentGroup.discount);
+    }
+    if( quotation.applied4PercentDiscount === true ) {
+      quotation.total = _.clone(currentGroup.totalExtra4PercentDiscount);
+      quotation.discount = _.clone(currentGroup.discount);
+    }
     return quotation;
   }
 
@@ -293,6 +322,21 @@ function CheckoutPaymentsCtrl(
       paymentService
         .addPayment(vm.quotation.id, payment)
         .then(function(_createdPayment) {
+          if ( _createdPayment.data ){
+            if ( extraDiscountTypes.indexOf( _createdPayment.data.type ) != -1 ){
+              if ( extra4PercentDiscountTypes.indexOf( _createdPayment.data.type ) != -1 ){
+              vm.quotation.applied4PercentDiscount = true;
+              vm.quotation.applied2PercentDiscount = false;
+              } else if ( extra2PercentDiscountTypes.indexOf( _createdPayment.data.type ) != -1 ){
+              vm.quotation.applied4PercentDiscount = false;
+              vm.quotation.applied2PercentDiscount = true;
+              }else{
+                vm.quotation.applied4PercentDiscount = false;
+                vm.quotation.applied2PercentDiscount = false;
+              }
+            }
+          }
+
           createdPayment = _createdPayment;
           return quotationService.getById($routeParams.id);
         })
@@ -347,7 +391,6 @@ function CheckoutPaymentsCtrl(
         currency: activeMethod.currency || paymentService.currencyTypes.MXN,
         ammount: _.clone(amount)
       });
-
       if (paymentConfig.terminals) {
         templateUrl = 'views/checkout/payment-dialog.html';
         controller = TerminalController;
@@ -473,7 +516,8 @@ function CheckoutPaymentsCtrl(
       vm.isLoadingProgress = true;
       vm.loadingEstimate = 0;
       var createParams = {
-        quotationId: vm.quotation.id
+        quotationId: vm.quotation.id,
+        VMquotation: vm.quotation,
       };
       animateProgress();
       orderService
