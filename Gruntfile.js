@@ -510,6 +510,20 @@ module.exports = function(grunt) {
             tokenPrefix: 'dev'
           }
         }
+      },
+      staged: {
+        options: {
+          dest: '<%= yeoman.app %>/scripts/envconfig.js'
+        },
+        constants: {
+          ENV: {
+            name: 'dev',
+            apiEndpoint: 'http://localhost:1341',
+            cdnUrl: 'https://d116li125og699.cloudfront.net',
+            adminUrl: 'http://localhost:3000',
+            tokenPrefix: 'staged'
+          }
+        }
       }
     }
   });
