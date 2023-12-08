@@ -517,7 +517,7 @@ module.exports = function(grunt) {
         },
         constants: {
           ENV: {
-            name: 'dev',
+            name: 'staged',
             apiEndpoint: 'http://localhost:1341',
             cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://localhost:3000',
@@ -608,6 +608,9 @@ function getEnvironmentTask(envOption) {
       break;
     case 'production':
       task = 'ngconstant:production';
+      break;
+    case 'staged':
+      task = 'ngconstant:staged';
       break;
     default:
       task = 'ngconstant:dev';
