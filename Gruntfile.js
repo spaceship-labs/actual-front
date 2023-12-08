@@ -518,7 +518,7 @@ module.exports = function(grunt) {
         constants: {
           ENV: {
             name: 'staged',
-            apiEndpoint: 'http://localhost:1341',
+            apiEndpoint: 'http://stagingapi.miactual.com/',
             cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://localhost:3000',
             tokenPrefix: 'staged'
