@@ -504,7 +504,7 @@ module.exports = function(grunt) {
         constants: {
           ENV: {
             name: 'dev',
-            apiEndpoint: 'http://localhost:1341',
+            apiEndpoint: 'http://localhost:1337',
             cdnUrl: 'https://d116li125og699.cloudfront.net',
             adminUrl: 'http://localhost:3000',
             tokenPrefix: 'dev'
@@ -579,7 +579,7 @@ module.exports = function(grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    //'cdnify',
     'cssmin',
     'uglify',
     'filerev',
