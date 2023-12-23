@@ -20,9 +20,7 @@
       isActiveMethod: isActiveMethod,
       getPaidPercentage: getPaidPercentage,
       isMinimumPaid: isMinimumPaid,
-      returnToCheckout: returnToCheckout,
-      hasExtraDiscount:hasExtraDiscount,
-      itHasMethodsWithExtraDiscount:itHasMethodsWithExtraDiscount
+      returnToCheckout: returnToCheckout
     };
 
     function getPaidPercentage(quotation) {
@@ -42,6 +40,7 @@
       if (quotation.ammountPaid === quotation.total) {
         percentage = 100;
       }
+
       return percentage;
     }
 
@@ -117,16 +116,6 @@
           $location.path('/checkout/paymentmethod/' + quotationId);
         }
       }
-    }
-    
-    function hasExtraDiscount(item){
-      return angular.isDefined(item.extraDiscount);
-    };
-
-    function itHasMethodsWithExtraDiscount(paymentGroup){
-      return paymentGroup.methods.some(function(element) {
-        return angular.isDefined(element.extraDiscount);
-      });
     }
 
     return service;

@@ -57,16 +57,15 @@
     //AMERICAN EXPRESS (International)
     {
       card: { label: 'American Express', value: 'american-express' },
-      paymentTypes: ['credit-card-amex',"debit-card-amex"],
+      paymentTypes: ['credit-card'],
       storesTypes: ['home', 'studio', 'proyectos'],
       isInternational: true,
       terminal: { label: 'American Express', value: 'american-express' }
     },
-    
 
     {
       card: { label: 'American Express', value: 'american-express' },
-      paymentTypes: ['credit-card-amex','debit-card-amex'],
+      paymentTypes: ['credit-card'],
       storesTypes: ['home', 'studio', 'proyectos'],
       storeCodes: ['actual_studio_cumbres'],
       isInternational: true,
@@ -77,8 +76,7 @@
     {
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: [
-        'credit-card-amex',
-        'debit-card-amex',
+        'credit-card',
         '3-msi',
         '6-msi',
         '9-msi',
@@ -93,7 +91,7 @@
     {
       card: { label: 'American Express', value: 'american-express' },
       paymentTypes: [
-        'credit-card-amex',
+        'credit-card',
         '3-msi',
         '6-msi',
         '9-msi',

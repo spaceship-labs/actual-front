@@ -14,65 +14,8 @@
 		<div flex="25" class="data-cell"><p>1 pago de contado</p></div>
 		<div flex="60" class="data-cell">
 			<p>
-				Tarjeta de crédito American Express
+				Efectivo, cheque, deposito en ventanilla, transferencia, Visa, Mastercard, American Express
 			</p>
-		</div>
-		<div 
-			ng-if="vm.paymentMethodsGroups && vm.paymentMethodsGroups.length > 0" 
-			flex="15" 
-			class="totals data-cell">
-			<p><strong>MXN {{ vm.paymentMethodsGroups[0].methods[9].total | roundCurrency  }}</strong></p>
-		</div>
-	</div>
-	<div layout="row">
-		<div flex="25" class="data-cell"><p>1 pago de contado</p></div>
-		<div flex="60" class="data-cell">
-			<p>
-				Tarjeta de débito American Express
-			</p>
-		</div>
-		<div 
-			ng-if="vm.paymentMethodsGroups && vm.paymentMethodsGroups.length > 0" 
-			flex="15" 
-			class="totals data-cell">
-			<p><strong>MXN {{ vm.paymentMethodsGroups[0].methods[7].total | roundCurrency  }}</strong></p>
-		</div>
-	</div>
-	<div layout="row">
-		<div flex="25" class="data-cell"><p>1 pago de contado</p></div>
-		<div flex="60" class="data-cell">
-			<p>
-				Tarjeta de crédito Visa o Mastercard
-			</p>
-			</p>
-		</div>
-		<div 
-			ng-if="vm.paymentMethodsGroups && vm.paymentMethodsGroups.length > 0" 
-			flex="15" 
-			class="totals data-cell">
-			<p><strong>MXN {{ vm.paymentMethodsGroups[0].methods[8].total | roundCurrency  }}</strong></p>
-		</div>
-	</div>
-	<div layout="row">
-		<div flex="25" class="data-cell"><p>1 pago de contado</p></div>
-		<div flex="60" class="data-cell">
-			<p>
-				Tarjeta de débito Visa o Mastercard
-			</p>
-			</p>
-		</div>
-		<div 
-			ng-if="vm.paymentMethodsGroups && vm.paymentMethodsGroups.length > 0" 
-			flex="15" 
-			class="totals data-cell">
-			<p><strong>MXN {{ vm.paymentMethodsGroups[0].methods[6].total | roundCurrency  }}</strong></p>
-		</div>
-	</div>	
-	<div layout="row">
-		<div flex="25" class="data-cell"><p>1 pago de contado</p></div>
-		<div flex="60" class="data-cell">
-			<p>
-				Efectivo, cheque, deposito en ventanilla, transferencia
 		</div>
 		<div 
 			ng-if="vm.paymentMethodsGroups && vm.paymentMethodsGroups.length > 0" 
