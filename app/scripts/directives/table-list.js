@@ -194,7 +194,7 @@
           }
           else if(query.filters[key] != 'none'){
             if(!isNaN(query.filters[key])){
-              aux[key] = parseFloat(query.filters[key]);
+              aux[key] = key === "Client" ? query.filters[key].toString() : parseFloat(query.filters[key]);
             }else{
               aux[key] = query.filters[key];
             }
